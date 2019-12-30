@@ -5,6 +5,10 @@ This is Melvor Idle Cheat Engine version 0.1.1, a Firefox browser extension for 
 * Auto-combat: eat food and loot automatically
 * Helps you become a dirty nasty rotten cheater and ruin the game a little bit
 
+Download it here at the Mozilla addon database: https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/
+
+Or download the source code, open the url "about:debugging" without quotes, and install the addon by opening either manifest.json or MICE.js in the folder.
+
 Things that are possible and soon to be worked on:
 * Add mastery
 * Better UI/menu for Adding Loot Cheat
