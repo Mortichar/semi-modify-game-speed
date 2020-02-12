@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Melvor Idle Cheat Engine",
-  "version": "0.1.1",
+  "version": "0.2dev",
 
   "description": "Hacking Melvor Idle, the fun idle browser game. More to come.",
 
@@ -15,6 +15,14 @@
       "matches": ["*://*.melvoridle.com/*"],
       "js": ["MICE.js"]
     }
-  ]
+  ],
+
+  "web_accessible_resources": [
+    "images/*.png",
+    "script/*.js",
+    "inject.js",
+    "icons/*.png"
+  ]  
+  
 
 }
