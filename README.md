@@ -3,6 +3,7 @@ This is Melvor Idle Cheat Engine version 0.2, a Firefox browser extension for th
 * Add loot
 * Level up a skill
 * Auto-combat: eat food and loot automatically, exit combat if you're out of food/ammo/runes.
+* Auto-cook: permanently unlocked Cook All button in the Cooking skill page
 * Change your name without limits using the cheat menu
 * Unlocked banner ad setting in the cheat menu, still enabled by default because those ads support the dev!
 * List of all Loot IDs and names to use the loot cheats
