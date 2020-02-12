@@ -210,6 +210,5 @@ function showItems() {
 	document.getElementById("listheader").textContent = "Ctrl+F is your friend here. :)";
 }
 
-//upon addon loading, the NORMAL settings menu gets weird, all radio buttons disappear, but if you use the enemy skills button, all pops back
-updateTooltips(); //going to try adding this to reload settings after addon loads? i think it worked.
+updateTooltips(); //should fix settings page from being messed up by MICE, radio buttons can be blank sometimes
 //end of injected script.

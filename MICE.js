@@ -1,15 +1,11 @@
-// Melvor Idle Cheat Engine v0.1.1dev by aldousWatts on GitLab
-// Currently developing on Waterfox 2019.12 KDE version. I'm guessing it's roughly equivalent to slightly-old firefox. Come to think of it, I have Chromium KDE too...
+// Melvor Idle Cheat Engine v0.2 by aldousWatts on GitLab
 // Hacking Melvor Idle for dummies! And learning/relearning Javascript along the way
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
-// //What version of Melvor was it in MICEv0.1.1? 0.8? something like that. 
-// //2-8-20: working on MI 0.11.2. Double comments are from this major overhaul
-// //sniff... sniff... is there a memory leak 'round here?
+// //2-8-20: working on MI v0.11.2. Double comments are from this major overhaul
 
-//document.body.style.border = "5px solid red"; //buggy
 document.getElementsByClassName('content-side content-side-full')[0].style.border = "2px solid red"; //nav border
-// commenting out alert for dev purposes... ugh so tedious to reload the cloud shit now... window.onload retriggers it somehow? no need for onload.
+//opening alert
 alert('Melvor Idle Cheat Engine v0.2 is running. Sweet! \n \
 The red sidebar border is a friendly reminder that MICE is running, but can be turned off. \n \
 Developed in Dark Mode, which looks great and saves your eyes! Check normal settings menu for that. \n \n \
@@ -20,9 +16,6 @@ Also, be careful about using Ctrl+F5 with this game, I\'ve had it completely cor
 That may or may not be the impetus for cheating. ;) \n \n \
 You should leave page alerts on because MICE uses js prompts for certain cheats at this point. \n \
 Check the bottom of the sidebar for cheats. Have fun. :)' );
-
-// //also for dev, going to kill this modal cloud loading shit. fukoff i already wait for the loading screen to finish
-//document.getElementById('modal-cloud-loading').remove(); //works like a cherm. sometimes i think this does weird things where a gray overlay is on top of the entire game and you can't load. gotta close tab and reopen.
 
 // //*%*%*%*%*%*%*%* Begin GUI Manipulation *%*%*%*%*%*%*%*%*
 // adding nav bar entries for hacked stuff
@@ -212,9 +205,8 @@ gpinput.childNodes[1].remove();
 gpinput.childNodes[1].setAttribute('placeholder', 'Numbers only, no decimals or commas etc. Careful, you can go negative.');
 gpinput.childNodes[1].setAttribute('data-kpxc-id', 'gpadd');
 gpinput.childNodes[1].setAttribute('id', 'gpinput');
-// //Since we have a nav button for this now, hiding these elements
+// //Since we have a nav button for this now, hiding these elements. commenting them out broke the thing.
 cheatmenu.childNodes[19].hidden = true;
-
 
 // //CLEANUP?...
 // //hide child nodes 20-25 to get rid of radio buttons below Level Up.
@@ -238,7 +230,6 @@ cheatmenu.childNodes[39].textContent = "I hate ads, but they support the dev. So
 cheatmenu.childNodes[41].childNodes[1].childNodes[1].textContent = "Show Banner Ad - these buttons work, but the cheat UI doesn't reflect it:" ;
 cheatmenu.childNodes[41].childNodes[3].className = "col-6 col-lg-8"; //show banner ad setting without lv99
 cheatmenu.childNodes[41].childNodes[5].className = "d-none"; //hides the "reach lv99" text
-// //is it possible to have these buttons LITERALLY be the buttons from the settings page? not cloned? re-assign to the real ones? if it is, idk, i think this is too buggy with the radio buttons being linked to the settings page. nixing.
 
 // //Adding unlimited name changer, heading & input field & button
 const namechnghead = document.createElement('h2'); //custom bustom
@@ -257,7 +248,7 @@ namechngdiv.getElementsByClassName('form-control')[0].setAttribute('data-kpxc-id
 namechngdiv.getElementsByClassName('form-control')[0].id = 'unameinput';
 cheatmenu.appendChild(namechngdiv);
 
-// //Item List Scroll Box... must be button to call function to create loot scroll box.
+// //Item List Scroll Box
 const listheader = document.createElement('h3'); //heading first
 listheader.textContent = 'The Button Below Shows THE List of All Loot Items';
 listheader.style = "color: cyan";
@@ -269,8 +260,6 @@ cheatbutton8.childNodes[0].src = 'assets/media/main/bank_header.svg';
 cheatbutton8.setAttribute('onclick', 'showItems();');
 cheatbutton8.setAttribute('id', 'showItemsBut');
 
-
-// //maybe best to put cheat menu cleanup stuff here and just prevent all the errors
 // //del child nodes 0-10 to get rid of top space
 cheatmenu.childNodes[10].remove();
 cheatmenu.childNodes[9].remove();
@@ -282,7 +271,6 @@ cheatmenu.childNodes[4].remove();
 cheatmenu.childNodes[3].remove();
 cheatmenu.childNodes[2].remove();
 cheatmenu.childNodes[1].remove();
-// //honestly it might just be easier to completely customize this stuff based on class etc and build the cheat menu from scratch.
 
 // //End of Cheat Menu -----------------------------------------------------------------------------------------
 
@@ -295,8 +283,6 @@ alwayscookallbut.textContent = 'Cook All (MICE Permanently Unlocked Cook All But
 alwayscookallbut.id = 'alwayscookallbut';
 alwayscookallbut.style = 'background-color: red;';
 
-// //Modifying firemaking to have an Always-On Burn All button... nevermind, it's automatic now. Good!
-
 // //END OF GUI. ***********************************************************************************************
 
 
@@ -304,7 +290,6 @@ alwayscookallbut.style = 'background-color: red;';
 	//...........................................................................................................
 	//below is the lynchpin of the extension: injecting javascript functions into the body of the website.
 	//this allows access to the page scripts using code inside the external content script within the extension.
-    
 ////SCRIPT INJECTION -------------------------------------------------------------------------------------------
     
     var script = document.createElement('script');
@@ -312,6 +297,8 @@ alwayscookallbut.style = 'background-color: red;';
     document.body.appendChild(script); //appending to body because that's where all the other page scripts are at. head's probably ok too
 
 // //And that's MICE!
+
+
 
 //~~~---~~~---~~~---~~~---~~~Notes~~~---~~~---~~~---~~~---~~~
 
