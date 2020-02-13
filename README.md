@@ -1,4 +1,4 @@
-This is Melvor Idle Cheat Engine version 0.2.1, a Firefox browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
+This is Melvor Idle Cheat Engine version 0.2.2, a Firefox browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
 * Add gold
 * Add loot
 * Level up a skill
