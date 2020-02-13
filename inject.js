@@ -112,8 +112,8 @@ function autocombatfunc() {
     if (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isMagic && !checkRuneCount(selectedSpell) ) { 
 		terminateAutoCombat('runes.');
     }
-    lootAll();
-}
+    if (droppedLoot) { lootAll(); } //lootAll() causes about 50ms hang. noticeable. conditionalized so it doesn't run every 500ms.
+} //even with the conditional for the loot, still causes a slight hang about every 500ms when the autocombatfunc runs. eh, it's just barely noticeable when watching the animated progress bars.
 //***************************END AUTO COMBAT*******************************
 
 //Autocombat Auxiliaries
@@ -123,8 +123,6 @@ function terminateAutoCombat(reason) {
    autocombat = false;
    alert('MICE: Exited Auto Combat @ '+dateTime+' because '+username+' is out of '+reason);
    autocombatNavBut.style.border = '';
-   //clearInterval(looper); //stop rotation
-   //document.getElementById('autocombatImg').style.MozTransform = "rotate(0deg)"; //fix rotation
 }
 
 function toggleautocombat() { //button -> function that enables auto combat
@@ -134,8 +132,6 @@ function toggleautocombat() { //button -> function that enables auto combat
         clearInterval(autocombatloop);
         alert("Auto combat is terminated. You're in the danger zone now, baby.");
         autocombatNavBut.style.border = ''; //removes cyan border when off
-        //clearInterval(looper); //stop rotation
-        //document.getElementById('autocombatImg').style.MozTransform = "rotate(0deg)"; //fix rotation
     }
     else {
         autocombatloop = setInterval(autocombatfunc, 500);
@@ -145,34 +141,8 @@ This will auto-eat if injured as well as pick up any loot that was dropped autom
 To turn auto combat off, hit the auto combat nav button again. \n \
 Auto combat will automatically cancel combat if you are out of food, ammo, or runes.");
         autocombatNavBut.style.border = '5px solid cyan'; //adds cyan border when on
-        //rotateAnimation('autocombatImg', 10); //rotate combat icon while combat is on...? lol
     }
 }
-
-/* too resource heavy, switching to bg color
-//awesome script from https://www.developphp.com/video/JavaScript/Transform-Rotate-Image-Spin-Smooth-Animation-Tutorial
-var looper; //clearInterval this to stop rotation. 5-10 is a good speed?
-var degrees = 0;
-function rotateAnimation(el,speed){
-	var elem = document.getElementById(el);
-	if(navigator.userAgent.match("Chrome")){
-		elem.style.WebkitTransform = "rotate("+degrees+"deg)"; //could probably delete these others since it is a firefox extension but it's not broke so i won't
-	} else if(navigator.userAgent.match("Firefox")){
-		elem.style.MozTransform = "rotate("+degrees+"deg)";
-	} else if(navigator.userAgent.match("MSIE")){
-		elem.style.msTransform = "rotate("+degrees+"deg)";
-	} else if(navigator.userAgent.match("Opera")){
-		elem.style.OTransform = "rotate("+degrees+"deg)";
-	} else {
-		elem.style.transform = "rotate("+degrees+"deg)";
-	}
-	looper = setTimeout('rotateAnimation(\''+el+'\','+speed+')',speed);
-	degrees++;
-	if(degrees > 359){
-		degrees = 1;
-	}
-}
-*/
 //End of Autocombat Auxiliaries
 
     var menuOn;
