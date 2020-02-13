@@ -183,6 +183,7 @@ function showItems() {
 	document.getElementById("listheader").textContent = "Ctrl+F is your friend here. :)";
 }
 
+updateTooltips(); //should fix settings page from being messed up by MICE, radio buttons can be blank sometimes
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 
