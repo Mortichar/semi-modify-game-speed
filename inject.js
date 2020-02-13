@@ -1,9 +1,9 @@
 //figured out how to inject in a new way. this way i'll be able to add comments and such here. better for dev.
 //these are the real cheats right here.
-//MICEv0.2.1dev by AW 2-10-20
+//MICEv0.2.1 by AW 2-10-20
 
 //DEV//open cheat menu automatically
-$("#cheat-container").removeClass('d-none');
+//DEV//$("#cheat-container").removeClass('d-none');
 
 function unlockAdSet() { $("#setting-ad-options-enabled").removeClass('d-none'); } //shows the ad setting.
 
@@ -122,9 +122,9 @@ function terminateAutoCombat(reason) {
    stopCombat(false, true, true);
    autocombat = false;
    alert('MICE: Exited Auto Combat @ '+dateTime+' because '+username+' is out of '+reason);
-   //document.getElementById('autocombatNavBut').childNodes[3].textContent = '[Off] Toggle Auto Combat';
-   clearInterval(looper); //stop rotation
-   document.getElementById('autocombatImg').style.MozTransform = "rotate(0deg)"; //fix rotation
+   autocombatNavBut.style.border = '';
+   //clearInterval(looper); //stop rotation
+   //document.getElementById('autocombatImg').style.MozTransform = "rotate(0deg)"; //fix rotation
 }
 
 function toggleautocombat() { //button -> function that enables auto combat
@@ -133,22 +133,23 @@ function toggleautocombat() { //button -> function that enables auto combat
         autocombat = false;
         clearInterval(autocombatloop);
         alert("Auto combat is terminated. You're in the danger zone now, baby.");
-        //document.getElementById('autocombatNavBut').childNodes[3].textContent = '[Off] Toggle Auto Combat';
-        clearInterval(looper); //stop rotation
-        document.getElementById('autocombatImg').style.MozTransform = "rotate(0deg)"; //fix rotation
+        autocombatNavBut.style.border = ''; //removes cyan border when off
+        //clearInterval(looper); //stop rotation
+        //document.getElementById('autocombatImg').style.MozTransform = "rotate(0deg)"; //fix rotation
     }
     else {
         autocombatloop = setInterval(autocombatfunc, 500);
         autocombat = true;
-        alert("Auto combat is now running while the combat logo is rotating.\n \n \
+        alert("Auto combat is now running while the nav button is highlighted by a cyan border.\n \n \
 This will auto-eat if injured as well as pick up any loot that was dropped automatically every half second. \n \
 To turn auto combat off, hit the auto combat nav button again. \n \
 Auto combat will automatically cancel combat if you are out of food, ammo, or runes.");
-        //document.getElementById('autocombatNavBut').childNodes[3].textContent = '[ON] Toggle Auto Combat';
-        rotateAnimation('autocombatImg', 10); //rotate combat icon while combat is on...? lol
+        autocombatNavBut.style.border = '5px solid cyan'; //adds cyan border when on
+        //rotateAnimation('autocombatImg', 10); //rotate combat icon while combat is on...? lol
     }
 }
 
+/* too resource heavy, switching to bg color
 //awesome script from https://www.developphp.com/video/JavaScript/Transform-Rotate-Image-Spin-Smooth-Animation-Tutorial
 var looper; //clearInterval this to stop rotation. 5-10 is a good speed?
 var degrees = 0;
@@ -171,6 +172,7 @@ function rotateAnimation(el,speed){
 		degrees = 1;
 	}
 }
+*/
 //End of Autocombat Auxiliaries
 
     var menuOn;

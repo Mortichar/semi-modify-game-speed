@@ -1,14 +1,13 @@
-// Melvor Idle Cheat Engine v0.2.1dev by aldousWatts on GitLab
+// Melvor Idle Cheat Engine v0.2.1 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12
 // Currently developing on Waterfox 2019.12 KDE version. I'm guessing it's roughly equivalent to slightly-old firefox.
 // Hacking Melvor Idle for dummies! And learning/relearning Javascript along the way
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 // //2-8-20: working on MI 0.11.2. Double comments are from this major overhaul
-// Damn! Another update. Here we go again. Really makes me want to rewrite the whole cheat menu as a custom element.
 
 document.getElementsByClassName('content-side content-side-full')[0].style.border = "2px solid red"; //nav border
-/* commenting out alert for dev purposes
-alert('Melvor Idle Cheat Engine v0.2 is running. Sweet! \n \
+//DEV// /* commenting out alert
+alert('Melvor Idle Cheat Engine v0.2.1 is running. Sweet! \n \
 The red sidebar border is a friendly reminder that MICE is running, but can be turned off. \n \
 Developed in Dark Mode, which looks great and saves your eyes! Check normal settings menu for that. \n \n \
 BEWARE, YE CHEATER! \n \
@@ -18,10 +17,10 @@ Also, be careful about using Ctrl+F5 with this game, I\'ve had it completely cor
 That may or may not be the impetus for cheating. ;) \n \n \
 You should leave page alerts on because MICE uses js prompts for certain cheats at this point. \n \
 Check the bottom of the sidebar for cheats. Have fun. :)' );
-*/
+// */
 
-// //also for dev, going to kill this modal cloud loading popup
-document.getElementById('modal-cloud-loading').remove(); //works like a cherm. sometimes i think this does weird things where a gray overlay is on top of the entire game and you can't load. gotta close tab and reopen.
+//DEV//kill modal cloud loading popup
+//DEV//document.getElementById('modal-cloud-loading').remove(); //works like a cherm. sometimes i think this does weird things where a gray overlay is on top of the entire game and you can't load. gotta close tab and reopen.
 
 // //*%*%*%*%*%*%*%* Begin GUI Manipulation *%*%*%*%*%*%*%*%* //probably should rewrite all this to customized entries since the UI is liable to change at the dev's whim
 
@@ -34,7 +33,7 @@ navbutDeMoney.childNodes[1].childNodes[4].remove(); //running it twice also take
 
 // //found a test environment header hidden in array pos 0. This will be useful for showing cheating. 
 const testCheatHeader = document.getElementsByClassName("nav-main-heading")[0];
-testCheatHeader.textContent = "Cheat Environment: MICEv0.2.1dev"; //change text content from Test Environment -> Cheat "" +MICE
+testCheatHeader.textContent = "Cheat Environment: MICEv0.2.1"; //change text content from Test Environment -> Cheat "" +MICE
 testCheatHeader.className = "nav-main-heading text-uppercase text-danger"; //makes visible, deletes d-none from class
 
 const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.11.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
