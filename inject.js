@@ -69,7 +69,7 @@ function masterycheat() {
 }
 
 function lootcheat() {
-    var lootnameask = prompt("What loot do you want? Type or copy the name here. Use underscores for spaces, delete any parenthesis.", "Normal_Shortbow_U");
+    var lootnameask = prompt("What loot do you want? Type or copy the name here. Use underscores for spaces, delete any parentheses.", "Normal_Shortbow_U");
     if (lootnameask === null) { return; } //if cancel or blank kill function
     var lootqtyask = prompt("How many?", "1");
     var lootqty = Number(lootqtyask);
