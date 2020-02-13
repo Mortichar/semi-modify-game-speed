@@ -1,8 +1,12 @@
 //figured out how to inject in a new way. this way i'll be able to add comments and such here. better for dev.
 //these are the real cheats right here.
-//MICEv0.2 by AW 2-10-20
+//MICEv0.2.1dev by AW 2-10-20
 
-//start of injected script
+//DEV//open cheat menu automatically
+$("#cheat-container").removeClass('d-none');
+
+function unlockAdSet() { $("#setting-ad-options-enabled").removeClass('d-none'); } //shows the ad setting.
+
 var cheatborder = true;
 function toggleborder() {
 	if(cheatborder) { borderOff(); }
@@ -21,9 +25,9 @@ function borderOff() {
 
     var skillPick; //selecting which skill you want to do level up cheat on
 function cheatSkill(x) {
-    $("#cheatSkillBut" + skillPick).attr("class", "btn btn-outline-primary"); //de-highlight previous selection
+    $("#skillBut" + skillPick).attr("class", "btn btn-outline-primary"); //de-highlight previous selection
 	 skillPick = x; //update selection 
-	 $("#cheatSkillBut" + x).attr("class", "btn btn-primary"); //highlight selection
+	 $("#skillBut" + x).attr("class", "btn btn-primary"); //highlight selection
 }
 
 function levelUpCheat() {
@@ -151,7 +155,7 @@ var degrees = 0;
 function rotateAnimation(el,speed){
 	var elem = document.getElementById(el);
 	if(navigator.userAgent.match("Chrome")){
-		elem.style.WebkitTransform = "rotate("+degrees+"deg)";
+		elem.style.WebkitTransform = "rotate("+degrees+"deg)"; //could probably delete these others since it is a firefox extension but it's not broke so i won't
 	} else if(navigator.userAgent.match("Firefox")){
 		elem.style.MozTransform = "rotate("+degrees+"deg)";
 	} else if(navigator.userAgent.match("MSIE")){
@@ -166,7 +170,6 @@ function rotateAnimation(el,speed){
 	if(degrees > 359){
 		degrees = 1;
 	}
-	//deleted the line from the script that used an element from an example page. no need
 }
 //End of Autocombat Auxiliaries
 
@@ -179,16 +182,14 @@ function openCheatMenu() {
     else {
     menuOn = true;
     $('[data-toggle="tooltip"]').tooltip('hide');
-	let pages = ["woodcutting", "shop", "bank", "settings", "changelog", "milestones", "statistics", "fishing", "firemaking", "cooking", "mining", "smithing", "mastery", "combat", "thieving", "farming", "fletching","crafting","runecrafting"];
-	$("#" + pages[currentPage] + "-container").attr("class", "content d-none");
-	$("#cheat-container").attr("class", "content");
-	$("#header-title").text("Cheat Menu: persistent across other pages. To close, click nav button again.");
-	$("#header-icon").attr("src", "assets/media/main/logo-xmas.svg");
-	$("#header-theme").attr("class", "content-header bg-settings");
-	if( $(window).width() < 992) {
-		  One.layout('sidebar_toggle');
-        }
-	}
+	 let pages = ["woodcutting", "shop", "bank", "settings", "changelog", "milestones", "statistics", "fishing", "firemaking", "cooking", "mining", "smithing", "mastery", "combat", "thieving", "farming", "fletching","crafting","runecrafting","herblore"];
+	 $("#" + pages[currentPage] + "-container").attr("class", "content d-none");
+	 $("#cheat-container").attr("class", "content");
+	 $("#header-title").text("Cheat Menu: persistent across other pages. To close, click nav button again.");
+	 $("#header-icon").attr("src", "assets/media/main/logo-xmas.svg");
+	 $("#header-theme").attr("class", "content-header bg-settings");
+	 if ( $(window).width() < 992 ) { One.layout('sidebar_toggle'); }
+	 }
 }
 
 function changeNameInf() {
@@ -210,5 +211,7 @@ function showItems() {
 	document.getElementById("listheader").textContent = "Ctrl+F is your friend here. :)";
 }
 
-updateTooltips(); //should fix settings page from being messed up by MICE, radio buttons can be blank sometimes
-//end of injected script.
+
+/* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
+
+*/
