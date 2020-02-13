@@ -1,11 +1,11 @@
-This is Melvor Idle Cheat Engine version 0.2, a Firefox browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
+This is Melvor Idle Cheat Engine version 0.2.1, a Firefox browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
 * Add gold
 * Add loot
 * Level up a skill
 * Auto-combat: eat food and loot automatically, exit combat if you're out of food/ammo/runes.
 * Auto-cook: permanently unlocked Cook All button in the Cooking skill page
 * Change your name without limits using the cheat menu
-* Unlocked banner ad setting in the cheat menu, still enabled by default because those ads support the dev!
+* Ability to unlock the banner ad setting in the regular settings menu without skill at 99, still enabled by default because those ads support the dev!
 * List of all Loot IDs and names to use the loot cheats
 * Helps you become a dirty nasty rotten cheater and ruin the game a little bit
 
@@ -20,4 +20,4 @@ Things that are possible:
 * &more
 
 Will the creator patch it up? Who knows.
-This was built around Melvor Idle alpha v0.11.2.
+This was built around Melvor Idle alpha v0.12.
