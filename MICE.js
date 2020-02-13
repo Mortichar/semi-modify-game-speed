@@ -1,11 +1,13 @@
-// Melvor Idle Cheat Engine v0.2 by aldousWatts on GitLab
+// Melvor Idle Cheat Engine v0.2.1dev by aldousWatts on GitLab
+// Currently developing on Waterfox 2019.12 KDE version. I'm guessing it's roughly equivalent to slightly-old firefox.
 // Hacking Melvor Idle for dummies! And learning/relearning Javascript along the way
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
-// //2-8-20: working on MI v0.11.2. Double comments are from this major overhaul
+// //2-8-20: working on MI 0.11.2. Double comments are from this major overhaul
+// Damn! Another update. Here we go again. Really makes me want to rewrite the whole cheat menu as a custom element.
 
 document.getElementsByClassName('content-side content-side-full')[0].style.border = "2px solid red"; //nav border
-//opening alert
+/* commenting out alert for dev purposes
 alert('Melvor Idle Cheat Engine v0.2 is running. Sweet! \n \
 The red sidebar border is a friendly reminder that MICE is running, but can be turned off. \n \
 Developed in Dark Mode, which looks great and saves your eyes! Check normal settings menu for that. \n \n \
@@ -16,17 +18,23 @@ Also, be careful about using Ctrl+F5 with this game, I\'ve had it completely cor
 That may or may not be the impetus for cheating. ;) \n \n \
 You should leave page alerts on because MICE uses js prompts for certain cheats at this point. \n \
 Check the bottom of the sidebar for cheats. Have fun. :)' );
+*/
 
-// //*%*%*%*%*%*%*%* Begin GUI Manipulation *%*%*%*%*%*%*%*%*
-// adding nav bar entries for hacked stuff
-const navbar = document.getElementsByClassName("nav-main")[0]; // create element for the nav list itself, navbar
+// //also for dev, going to kill this modal cloud loading popup
+document.getElementById('modal-cloud-loading').remove(); //works like a cherm. sometimes i think this does weird things where a gray overlay is on top of the entire game and you can't load. gotta close tab and reopen.
+
+// //*%*%*%*%*%*%*%* Begin GUI Manipulation *%*%*%*%*%*%*%*%* //probably should rewrite all this to customized entries since the UI is liable to change at the dev's whim
+
+//Sidebar = navbar = navigator definition
+const navbar = document.getElementsByClassName("nav-main")[0]; //defines the nav list itself as navbar
 const navbut = document.getElementsByClassName("nav-main-item")[0]; // //gives us the shop button to reassemble.
 const navbutDeMoney = navbut.cloneNode(true); // //cloning button to have a template without money icon/text in the button
 navbutDeMoney.childNodes[1].childNodes[4].remove(); //take away money img
 navbutDeMoney.childNodes[1].childNodes[4].remove(); //running it twice also takes away the gp counter. nice.
+
 // //found a test environment header hidden in array pos 0. This will be useful for showing cheating. 
 const testCheatHeader = document.getElementsByClassName("nav-main-heading")[0];
-testCheatHeader.textContent = "Cheat Environment: MICEv0.2"; //change text content from Test Environment -> Cheat "" +MICE
+testCheatHeader.textContent = "Cheat Environment: MICEv0.2.1dev"; //change text content from Test Environment -> Cheat "" +MICE
 testCheatHeader.className = "nav-main-heading text-uppercase text-danger"; //makes visible, deletes d-none from class
 
 const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.11.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
@@ -35,7 +43,7 @@ clnheading.childNodes[0].textContent = "Cheat Tools";
 clnheading.style = "font-size: 12pt; color: cyan;";
 clnheading.title = "Ooooh, we cheatin' now!";
 
-// //creating cheat menu button  
+// //Creating cheat menu button  
 const cheatMenuNavBut = navbutDeMoney.cloneNode(true);
 navbar.appendChild(cheatMenuNavBut);
 cheatMenuNavBut.childNodes[1].setAttribute('href', 'javascript:openCheatMenu();'); // //change nav button function, calls injected function
@@ -50,14 +58,14 @@ goldNavBut.childNodes[1].setAttribute('href', 'javascript:giveGPcheatNav();');
 goldNavBut.childNodes[1].childNodes[3].textContent = 'Get GP';
 goldNavBut.childNodes[1].childNodes[5].id = "nav-current-gp2";
 
-// //creating loot cheat nav button... probably soon defunct    //This one is begging for a UI
+//Loot Cheat by Name btn
 const lootcheatNavBut = navbutDeMoney.cloneNode(true);
 navbar.appendChild(lootcheatNavBut);
 lootcheatNavBut.childNodes[1].setAttribute('href', 'javascript:lootcheat();');
 lootcheatNavBut.childNodes[1].childNodes[3].textContent = 'Get Loot by Name';
 lootcheatNavBut.childNodes[1].childNodes[1].src = "assets/media/main/bank_header.svg"; //changes button img
 
-// //creating loot cheat nav button... probably soon defunct    //This one is begging for a UI
+//Loot Cheat by ID btn
 const lootcheatIDNavBut = navbutDeMoney.cloneNode(true);
 navbar.appendChild(lootcheatIDNavBut);
 lootcheatIDNavBut.childNodes[1].setAttribute('href', 'javascript:lootcheatID();');
@@ -83,7 +91,8 @@ borderNavBut.childNodes[1].childNodes[1].src = "assets/media/skills/combat/ship.
 // //End of Nav Edits***************************************************
     
 // *** *** *** *** *** ***Creating the Cheat Menu*** *** *** *** *** ***
-// //There was an extra radio button option added in or before v0.11.2 it seems, threw off child node array values for the settings page clone.
+//That dirty delicious dev done did it now. He changed the settings menu, AGAIN, and added a new skill. Awesome!
+//MICEv0.2.1: rewriting how we create the cheat menu. Delete all internal elements, then add custom ones. No more editing cloned settings menu items.
 const mainpage = document.getElementById('main-container'); //define main page container
 const settingspagecln = document.getElementById('settings-container').cloneNode(true); //clone settings page, was done previously using settingpage var
 mainpage.appendChild(settingspagecln); //append clone
@@ -91,186 +100,235 @@ settingspagecln.id = 'cheat-container'; //proper name for cloned page
 const cheatmenu = settingspagecln.childNodes[3].childNodes[1].childNodes[1].childNodes[1]; //the actual menu in the settings/cheat page
 cheatmenu.id = "cheatmenu"; //good for calling cheat menu with the injected script, which does not share env with this content script
 cheatmenu.style.border = "4px solid cyan"; //adds a uniquely distinct border to the cheat menu
+while (cheatmenu.firstChild) { cheatmenu.removeChild(cheatmenu.firstChild); } //COMPLETELY CLEAN OUT THE CHEAT MENU.
 
-// //hiding radio buttons and the title for them
-cheatmenu.childNodes[3].hidden = true; //title. child nodes 0-2 are blank text space, a comment, and more blank respectively.
-cheatmenu.childNodes[4].hidden = true; //i think this is unneeded blank text space, nope but it didnt break anything
-cheatmenu.childNodes[5].hidden = true; //buttons
+//Main Header
+const cheatmenuTitle = document.createElement('h2');
+cheatmenuTitle.className = "content-heading border-bottom mb-4 pb-2";
+cheatmenuTitle.textContent = 'MICEv0.2.1 Cheat Menu!';
+cheatmenuTitle.style.color = "cyan"; //makes the heading cyan
+cheatmenuTitle.style.fontSize = "14pt"; //phatt
+cheatmenu.appendChild(cheatmenuTitle);
 
-// //First Cheat Menu Heading
-cheatmenu.childNodes[13].textContent = 'MICEv0.2 Cheat Menu!'; //modifies second header
-cheatmenu.childNodes[13].style.color = "cyan"; //makes the first heading cyan
-cheatmenu.childNodes[15].childNodes[1].childNodes[1].textContent = 'Skill to modify:'; //modifies text of the skill selector left col
+//Skill Leveler Menu container(s)
+const skillCheatDiv = document.createElement('div');
+skillCheatDiv.className = "row push";
+const skillCheatLabelDiv = document.createElement('div');
+skillCheatLabelDiv.className = "col-6 col-lg-4"; //left column
+skillCheatDiv.appendChild(skillCheatLabelDiv); 
+const skillselector = document.createElement('div');
+skillselector.className = "col-6 col-lg-8";
+skillCheatDiv.appendChild(skillselector);
+const skillCheatLabel = document.createElement('p'); //is there a tool that does this for me? probably. sigh.
+skillCheatLabel.className = "font-size-sm text-muted";
+skillCheatLabel.textContent = "Level Up Cheat! Skill to modify:";
+skillCheatLabelDiv.appendChild(skillCheatLabel);
+const cheatmenuDiv = skillCheatDiv.cloneNode(true); //saving above as template
+skillselector.id = "skillselector";
+skillCheatDiv.id = "skillCheatDiv";
+cheatmenu.appendChild(skillCheatDiv); //adding to the menu
 
-// //Modifying cheat menu buttons: selecting combat button, and the div that contains all the buttons.    
-const combatbutton = cheatmenu.getElementsByClassName('btn')[0]; //moving to class name assignment, pos 0 is still the combat button
-const skillselector = combatbutton.parentNode; //same as above, more direct reference to the button.
-combatbutton.setAttribute('onclick', 'cheatSkill(16);'); //modifying combat button to be magic skill button
-combatbutton.setAttribute('id', 'cheatSkillBut16');
-combatbutton.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/magic/magic.svg';
-combatbutton.className = "btn btn-outline-primary"; //prevents the cloned buttons from all being highlighted if combat page is default load page
+//Creating Buttons
+const btnTemplate = document.createElement('button');
+btnTemplate.id = "btnTemplate";
+btnTemplate.className = "btn btn-outline-primary"; //'empty' button/ non-highlighted
+btnTemplate.type = 'button'; //you can add textcontent to make a regular non-image button
+const btnImgTemplate = btnTemplate.cloneNode(true); //making image button template
+btnImgTemplate.id = "btnImgTemplate";
+const btnImg = document.createElement('img'); //img element
+btnImg.src = browser.runtime.getURL("icons/border-48.png");
+btnImg.height = 32;
+btnImg.width = 32;
+btnImgTemplate.appendChild(btnImg);
 
-// //modifying skill buttons normally used for default page setting to point to cheats
-skillselector.childNodes[3].setAttribute('id', 'cheatSkillBut0'); //woodcutting
-skillselector.childNodes[3].setAttribute('onclick', 'cheatSkill(0);');
-skillselector.childNodes[5].setAttribute('id', 'cheatSkillBut1'); //fishing
-skillselector.childNodes[5].setAttribute('onclick', 'cheatSkill(1);');
-skillselector.childNodes[7].setAttribute('id', 'cheatSkillBut2'); //firemaking
-skillselector.childNodes[7].setAttribute('onclick', 'cheatSkill(2);');
-skillselector.childNodes[9].setAttribute('id', 'cheatSkillBut3'); //cooking
-skillselector.childNodes[9].setAttribute('onclick', 'cheatSkill(3);');
-skillselector.childNodes[11].setAttribute('id', 'cheatSkillBut4'); //mining
-skillselector.childNodes[11].setAttribute('onclick', 'cheatSkill(4);');
-skillselector.childNodes[13].setAttribute('id', 'cheatSkillBut5'); //smithing
-skillselector.childNodes[13].setAttribute('onclick', 'cheatSkill(5);');
-skillselector.childNodes[15].setAttribute('id', 'cheatSkillBut10'); //thieving
-skillselector.childNodes[15].setAttribute('onclick', 'cheatSkill(10);');
-skillselector.childNodes[17].setAttribute('id', 'cheatSkillBut11'); //farming
-skillselector.childNodes[17].setAttribute('onclick', 'cheatSkill(11);');
-skillselector.childNodes[19].setAttribute('id', 'cheatSkillBut13'); //fletching
-skillselector.childNodes[19].setAttribute('onclick', 'cheatSkill(13);');
-skillselector.childNodes[21].setAttribute('id', 'cheatSkillBut14'); //crafting
-skillselector.childNodes[21].setAttribute('onclick', 'cheatSkill(14);');
-skillselector.childNodes[23].setAttribute('id', 'cheatSkillBut15'); //runecrafting
-skillselector.childNodes[23].setAttribute('onclick', 'cheatSkill(15);');
+//Adding & customizing Skill Buttons=====================
+const skillBut0 = btnImgTemplate.cloneNode(true);
+skillBut0.id = "skillBut0"; //woodcutting
+skillBut0.childNodes[0].src = "assets/media/skills/woodcutting/woodcutting.svg";
+skillBut0.setAttribute('onclick', 'cheatSkill(0);');
+skillselector.appendChild(skillBut0);
+skillselector.append("\n \n"); //adds spacing: newline text element
 
-// //cloning combat button to make custom buttons for combat skills (except magic, which is above) and append to the skill selector div
-const cheatbutton1 = combatbutton.cloneNode(true);
-skillselector.appendChild(cheatbutton1);
-cheatbutton1.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/combat/attack.svg';
-cheatbutton1.setAttribute('onclick', 'cheatSkill(6);');
-cheatbutton1.setAttribute('id', 'cheatSkillBut6');
-skillselector.appendChild(skillselector.childNodes[0].cloneNode()); //adds spacing: empty text element
+const skillBut1 = btnImgTemplate.cloneNode(true);
+skillBut1.id = "skillBut1"; //fishing
+skillBut1.childNodes[0].src = "assets/media/skills/fishing/fishing.svg";
+skillBut1.setAttribute('onclick', 'cheatSkill(1);');
+skillselector.appendChild(skillBut1);
+skillselector.append("\n \n");
 
-const cheatbutton2 = combatbutton.cloneNode(true);
-skillselector.appendChild(cheatbutton2);
-cheatbutton2.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/combat/strength.svg';
-cheatbutton2.setAttribute('onclick', 'cheatSkill(7);');
-cheatbutton2.setAttribute('id', 'cheatSkillBut7');
-skillselector.appendChild(skillselector.childNodes[0].cloneNode());
+const skillBut2 = btnImgTemplate.cloneNode(true);
+skillBut2.id = "skillBut2"; //firemaking
+skillBut2.childNodes[0].src = "assets/media/skills/firemaking/firemaking.svg";
+skillBut2.setAttribute('onclick', 'cheatSkill(2);');
+skillselector.appendChild(skillBut2);
+skillselector.append("\n \n");
 
-const cheatbutton3 = combatbutton.cloneNode(true);
-skillselector.appendChild(cheatbutton3);
-cheatbutton3.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/combat/defence.svg';
-cheatbutton3.setAttribute('onclick', 'cheatSkill(8);');
-cheatbutton3.setAttribute('id', 'cheatSkillBut8');
-skillselector.appendChild(skillselector.childNodes[0].cloneNode());
+const skillBut3 = btnImgTemplate.cloneNode(true);
+skillBut3.id = "skillBut3"; //cooking
+skillBut3.childNodes[0].src = "assets/media/skills/cooking/cooking.svg";
+skillBut3.setAttribute('onclick', 'cheatSkill(3);');
+skillselector.appendChild(skillBut3);
+skillselector.append("\n \n");
 
-const cheatbutton4 = combatbutton.cloneNode(true);
-skillselector.appendChild(cheatbutton4);
-cheatbutton4.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/combat/hitpoints.svg';
-cheatbutton4.setAttribute('onclick', 'cheatSkill(9);');
-cheatbutton4.setAttribute('id', 'cheatSkillBut9');
-skillselector.appendChild(skillselector.childNodes[0].cloneNode());
+const skillBut4 = btnImgTemplate.cloneNode(true);
+skillBut4.id = "skillBut4"; //mining
+skillBut4.childNodes[0].src = "assets/media/skills/mining/mining.svg";
+skillBut4.setAttribute('onclick', 'cheatSkill(4);');
+skillselector.appendChild(skillBut4);
+skillselector.append("\n \n");
 
-const cheatbutton5 = combatbutton.cloneNode(true);
-skillselector.appendChild(cheatbutton5);
-cheatbutton5.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/ranged/ranged.svg';
-cheatbutton5.setAttribute('onclick', 'cheatSkill(12);');
-cheatbutton5.setAttribute('id', 'cheatSkillBut12'); 
-skillselector.appendChild(skillselector.childNodes[0].cloneNode());
+const skillBut5 = btnImgTemplate.cloneNode(true);
+skillBut5.id = "skillBut5"; //smithing
+skillBut5.childNodes[0].src = "assets/media/skills/smithing/smithing.svg";
+skillBut5.setAttribute('onclick', 'cheatSkill(5);');
+skillselector.appendChild(skillBut5);
+skillselector.append("\n \n");
 
-const cheatbutton6 = combatbutton.cloneNode(true);
-skillselector.appendChild(cheatbutton6);
-cheatbutton6.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/prayer/prayer.svg';
-cheatbutton6.setAttribute('onclick', 'cheatSkill(17);'); //check MI src for real #s. i was right!!! <3
-cheatbutton6.setAttribute('id', 'cheatSkillBut17'); 
-skillselector.appendChild(skillselector.childNodes[0].cloneNode());
+const skillBut6 = btnImgTemplate.cloneNode(true);
+skillBut6.id = "skillBut6"; //attack
+skillBut6.childNodes[0].src = "assets/media/skills/combat/attack.svg";
+skillBut6.setAttribute('onclick', 'cheatSkill(6);');
+skillselector.appendChild(skillBut6);
+skillselector.append("\n \n");
 
-const cheatbutton7 = combatbutton.cloneNode(true);
-skillselector.appendChild(cheatbutton7);
-cheatbutton7.childNodes[0].src = 'https://melvoridle.com/assets/media/skills/slayer/slayer.svg';
-cheatbutton7.setAttribute('onclick', 'cheatSkill(18);');
-cheatbutton7.setAttribute('id', 'cheatSkillBut18');
+const skillBut7 = btnImgTemplate.cloneNode(true);
+skillBut7.id = "skillBut7"; //strength
+skillBut7.childNodes[0].src = "assets/media/skills/combat/strength.svg";
+skillBut7.setAttribute('onclick', 'cheatSkill(7);');
+skillselector.appendChild(skillBut7);
+skillselector.append("\n \n");
 
-// //finishing skill level up cheat GUI... still worried about using all these childNodes calls, should be more discrete
-cheatmenu.childNodes[17].childNodes[1].childNodes[1].textContent = 'Level Up Once:'; //this one changed. is now setting label. adding 2 to index values for the next 12 lines or so.
-cheatmenu.childNodes[17].childNodes[3].childNodes[3].remove(); //removes "small" button that we copied for "level up once" button
-cheatmenu.childNodes[17].childNodes[3].childNodes[1].setAttribute('id', 'levelupbutton');
-cheatmenu.childNodes[17].childNodes[3].childNodes[1].setAttribute('onclick', 'levelUpCheat();');
-cheatmenu.childNodes[17].childNodes[3].childNodes[1].textContent = 'Level up my selected skill!'; //after adding 2 to indexes here for first child node, looks good again.
-//cheatmenu.childNodes[17].className = "row push border-bottom"; //adds border after skill leveler
+const skillBut8 = btnImgTemplate.cloneNode(true);
+skillBut8.id = "skillBut8"; //defense
+skillBut8.childNodes[0].src = "assets/media/skills/combat/defence.svg";
+skillBut8.setAttribute('onclick', 'cheatSkill(8);');
+skillselector.appendChild(skillBut8);
+skillselector.append("\n \n");
 
-// //Gold Cheat Menu GUI
-cheatmenu.childNodes[19].childNodes[1].childNodes[1].textContent = 'Gimme Gold!'; 
+const skillBut9 = btnImgTemplate.cloneNode(true);
+skillBut9.id = "skillBut9"; //hitpoints
+skillBut9.childNodes[0].src = "assets/media/skills/combat/hitpoints.svg";
+skillBut9.setAttribute('onclick', 'cheatSkill(9);');
+skillselector.appendChild(skillBut9);
+skillselector.append("\n \n");
+
+const skillBut10 = btnImgTemplate.cloneNode(true);
+skillBut10.id = "skillBut10"; //thieving
+skillBut10.childNodes[0].src = "assets/media/skills/thieving/thieving.svg";
+skillBut10.setAttribute('onclick', 'cheatSkill(10);');
+skillselector.appendChild(skillBut10);
+skillselector.append("\n \n");
+
+const skillBut11 = btnImgTemplate.cloneNode(true);
+skillBut11.id = "skillBut11"; //farming
+skillBut11.childNodes[0].src = "assets/media/skills/farming/farming.svg";
+skillBut11.setAttribute('onclick', 'cheatSkill(11);');
+skillselector.appendChild(skillBut11);
+skillselector.append("\n \n");
+
+const skillBut12 = btnImgTemplate.cloneNode(true);
+skillBut12.id = "skillBut12"; //ranged
+skillBut12.childNodes[0].src = "assets/media/skills/ranged/ranged.svg";
+skillBut12.setAttribute('onclick', 'cheatSkill(12);');
+skillselector.appendChild(skillBut12);
+skillselector.append("\n \n");
+
+const skillBut13 = btnImgTemplate.cloneNode(true);
+skillBut13.id = "skillBut13"; //fletching
+skillBut13.childNodes[0].src = "assets/media/skills/fletching/fletching.svg";
+skillBut13.setAttribute('onclick', 'cheatSkill(13);');
+skillselector.appendChild(skillBut13);
+skillselector.append("\n \n");
+
+const skillBut14 = btnImgTemplate.cloneNode(true);
+skillBut14.id = "skillBut14"; //crafting
+skillBut14.childNodes[0].src = "assets/media/skills/crafting/crafting.svg";
+skillBut14.setAttribute('onclick', 'cheatSkill(14);');
+skillselector.appendChild(skillBut14);
+skillselector.append("\n \n");
+
+const skillBut15 = btnImgTemplate.cloneNode(true);
+skillBut15.id = "skillBut15"; //runecrafting
+skillBut15.childNodes[0].src = "assets/media/skills/runecrafting/runecrafting.svg";
+skillBut15.setAttribute('onclick', 'cheatSkill(15);');
+skillselector.appendChild(skillBut15);
+skillselector.append("\n \n");
+
+const skillBut16 = btnImgTemplate.cloneNode(true);
+skillBut16.id = "skillBut16"; //magic
+skillBut16.childNodes[0].src = "assets/media/skills/magic/magic.svg";
+skillBut16.setAttribute('onclick', 'cheatSkill(16);');
+skillselector.appendChild(skillBut16);
+skillselector.append("\n \n");
+
+const skillBut17 = btnImgTemplate.cloneNode(true);
+skillBut17.id = "skillBut17"; //prayer
+skillBut17.childNodes[0].src = "assets/media/skills/prayer/prayer.svg";
+skillBut17.setAttribute('onclick', 'cheatSkill(17);');
+skillselector.appendChild(skillBut17);
+skillselector.append("\n \n");
+
+const skillBut18 = btnImgTemplate.cloneNode(true);
+skillBut18.id = "skillBut18"; //slayer
+skillBut18.childNodes[0].src = "assets/media/skills/slayer/slayer.svg";
+skillBut18.setAttribute('onclick', 'cheatSkill(18);');
+skillselector.appendChild(skillBut18);
+skillselector.append("\n \n");
+
+const skillBut19 = btnImgTemplate.cloneNode(true);
+skillBut19.id = "skillBut19"; //herblore
+skillBut19.childNodes[0].src = "assets/media/skills/herblore/herblore.svg";
+skillBut19.setAttribute('onclick', 'cheatSkill(19);');
+skillselector.appendChild(skillBut19);
+skillselector.append("\n \n");
+//========================End Skill Buttons
+
+//Level-up Button
+const levelBtnDiv = cheatmenuDiv.cloneNode(true);
+cheatmenu.appendChild(levelBtnDiv);
+levelBtnDiv.getElementsByTagName('p')[0].textContent = "Level up once:";
+const levelBtn = btnTemplate.cloneNode(true);
+levelBtn.textContent = "Level Up Selected Skill Once";
+levelBtn.setAttribute('onclick', 'levelUpCheat();');
+levelBtnDiv.childNodes[1].appendChild(levelBtn);
+levelBtn.id = "levelupbutton";
+
+//Unlimited Name Changes
+const nameChngTitle = cheatmenuTitle.cloneNode(true);
+nameChngTitle.textContent = "Unlimited Name Changes";
+nameChngTitle.style.fontSize = "10pt";
+cheatmenu.appendChild(nameChngTitle);
+
+const nameChngDiv = cheatmenuDiv.cloneNode(true);
+cheatmenu.appendChild(nameChngDiv);
+nameChngDiv.getElementsByTagName('p')[0].textContent = "";
 const textinput = document.getElementById('username-change-form'); //was gonna combine into one but this could be useful to clone for the infinite name change.
-const gpinput = textinput.cloneNode(true);
-cheatmenu.childNodes[19].childNodes[3].childNodes[1].setAttribute('data-action', '');
-cheatmenu.childNodes[19].childNodes[3].childNodes[1].textContent = 'Click this button to get this much gold:';
-cheatmenu.childNodes[19].childNodes[3].childNodes[1].setAttribute('onclick', 'giveGPcheat();');
-cheatmenu.childNodes[19].childNodes[3].appendChild(gpinput); //adding the gpinput text form/field into the menu
-gpinput.setAttribute('id', 'gpinputform');
-gpinput.childNodes[1].remove(); //removing other buttons and such i guess or text thingies
-gpinput.childNodes[1].remove();
-gpinput.childNodes[1].setAttribute('placeholder', 'Numbers only, no decimals or commas etc. Careful, you can go negative.');
-gpinput.childNodes[1].setAttribute('data-kpxc-id', 'gpadd');
-gpinput.childNodes[1].setAttribute('id', 'gpinput');
-// //Since we have a nav button for this now, hiding these elements. commenting them out broke the thing.
-cheatmenu.childNodes[19].hidden = true;
+const unameformDiv = textinput.cloneNode(true); //child node 1 is label, child node 3 is form-control
+unameformDiv.id = "unameform";
+//unameformDiv.childNodes[1].textContent = "";
+unameformDiv.childNodes[3].id = "unameinput";
+unameformDiv.childNodes[3].setAttribute('placeholder', "Jock Jorkenston, the Third Turd from the Sun's Buns");
+unameformDiv.childNodes[3].setAttribute('data-kpxc-id', 'unameinfchange');
+nameChngDiv.childNodes[1].appendChild(unameformDiv);
 
-// //CLEANUP?...
-// //hide child nodes 20-25 to get rid of radio buttons below Level Up.
-cheatmenu.childNodes[20].hidden = true;
-cheatmenu.childNodes[21].hidden = true;
-cheatmenu.childNodes[22].hidden = true;
-cheatmenu.childNodes[23].hidden = true;
-cheatmenu.childNodes[24].hidden = true;
-cheatmenu.childNodes[25].hidden = true;
-
-// //hide child nodes 30-35 to get rid of account settings. not deleting in case we want to use those elements/better for DOM consistency
-cheatmenu.childNodes[30].hidden = true;
-cheatmenu.childNodes[31].hidden = true;
-cheatmenu.childNodes[32].hidden = true;
-cheatmenu.childNodes[33].hidden = true;
-cheatmenu.childNodes[34].hidden = true;
-cheatmenu.childNodes[35].hidden = true;
-
-// //KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. KILL ALL ADS. 
-cheatmenu.childNodes[39].textContent = "I hate ads, but they support the dev. So here's the option for the ads, not disabled by default, though it easily could be.";
-cheatmenu.childNodes[41].childNodes[1].childNodes[1].textContent = "Show Banner Ad - these buttons work, but the cheat UI doesn't reflect it:" ;
-cheatmenu.childNodes[41].childNodes[3].className = "col-6 col-lg-8"; //show banner ad setting without lv99
-cheatmenu.childNodes[41].childNodes[5].className = "d-none"; //hides the "reach lv99" text
-
-// //Adding unlimited name changer, heading & input field & button
-const namechnghead = document.createElement('h2'); //custom bustom
-namechnghead.textContent = "Unlimited Name Changing Cheat";
-namechnghead.className = "content-heading border-bottom mb-4 pb-2";
-cheatmenu.appendChild(namechnghead); //worked like a charm
-const namechngdiv = cheatmenu.getElementsByClassName('row push')[2].cloneNode(true); //clone gimme gold cheat div
-namechngdiv.hidden = false; //unhiding since we hid the gp cheat menu and we cloned that to make this.
-namechngdiv.childNodes[3].appendChild(namechngdiv.childNodes[3].childNodes[1]); //change order of button and field
-namechngdiv.childNodes[1].childNodes[1].textContent = "Your New Name:"; //left col div is array pos 1
-namechngdiv.getElementsByClassName('btn')[0].textContent = "Change My Name Now"; //change name of button specifically
-namechngdiv.getElementsByClassName('btn')[0].setAttribute('onclick', 'changeNameInf();');
-namechngdiv.getElementsByClassName('form-group')[0].id= 'unameform';
-namechngdiv.getElementsByClassName('form-control')[0].setAttribute('placeholder', 'Careful what you type. You have been warned.');
-namechngdiv.getElementsByClassName('form-control')[0].setAttribute('data-kpxc-id', 'unameinfchange');
-namechngdiv.getElementsByClassName('form-control')[0].id = 'unameinput';
-cheatmenu.appendChild(namechngdiv);
+const nameChngBut = btnTemplate.cloneNode(true);
+nameChngBut.id = "nameChngBut";
+nameChngBut.textContent = "Change my name now";
+nameChngBut.setAttribute('onclick', 'changeNameInf();');
+nameChngDiv.childNodes[1].appendChild(nameChngBut);
 
 // //Item List Scroll Box
-const listheader = document.createElement('h3'); //heading first
+const listheader = cheatmenuTitle.cloneNode(true); //heading first
 listheader.textContent = 'The Button Below Shows THE List of All Loot Items';
-listheader.style = "color: cyan";
+listheader.style = "color: cyan; font-size: 10pt;";
 listheader.id = 'listheader';
 cheatmenu.appendChild(listheader);
-const cheatbutton8 = combatbutton.cloneNode(true);
-cheatmenu.appendChild(cheatbutton8);
-cheatbutton8.childNodes[0].src = 'assets/media/main/bank_header.svg';
-cheatbutton8.setAttribute('onclick', 'showItems();');
-cheatbutton8.setAttribute('id', 'showItemsBut');
 
-// //del child nodes 0-10 to get rid of top space
-cheatmenu.childNodes[10].remove();
-cheatmenu.childNodes[9].remove();
-cheatmenu.childNodes[8].remove();
-cheatmenu.childNodes[7].remove();
-cheatmenu.childNodes[6].remove();
-cheatmenu.childNodes[5].remove();
-cheatmenu.childNodes[4].remove();
-cheatmenu.childNodes[3].remove();
-cheatmenu.childNodes[2].remove();
-cheatmenu.childNodes[1].remove();
+const lootListBut = btnImgTemplate.cloneNode(true);
+lootListBut.childNodes[0].src = 'assets/media/main/bank_header.svg';
+lootListBut.setAttribute('onclick', 'showItems();');
+lootListBut.setAttribute('id', 'showItemsBut');
+cheatmenu.appendChild(lootListBut);
 
 // //End of Cheat Menu -----------------------------------------------------------------------------------------
 
@@ -283,6 +341,10 @@ alwayscookallbut.textContent = 'Cook All (MICE Permanently Unlocked Cook All But
 alwayscookallbut.id = 'alwayscookallbut';
 alwayscookallbut.style = 'background-color: red;';
 
+//Unlocking the banner ad setting
+document.getElementById('setting-ad-options-disabled').textContent = "MICE: This setting can be unlocked without needing a skill at 99. Just click this text. Support the developer by leaving ads on.";
+document.getElementById('setting-ad-options-disabled').setAttribute('onclick', 'unlockAdSet();');
+
 // //END OF GUI. ***********************************************************************************************
 
 
@@ -290,6 +352,7 @@ alwayscookallbut.style = 'background-color: red;';
 	//...........................................................................................................
 	//below is the lynchpin of the extension: injecting javascript functions into the body of the website.
 	//this allows access to the page scripts using code inside the external content script within the extension.
+    
 ////SCRIPT INJECTION -------------------------------------------------------------------------------------------
     
     var script = document.createElement('script');
@@ -298,17 +361,16 @@ alwayscookallbut.style = 'background-color: red;';
 
 // //And that's MICE!
 
+/*~~~---~~~---~~~---~~~---~~~Notes~~~---~~~---~~~---~~~---~~~
 
+there's always something you can tinker, something you can tweak, play with, get more.
 
-//~~~---~~~---~~~---~~~---~~~Notes~~~---~~~---~~~---~~~---~~~
-
-//there's always something you can tinker, something you can tweak, play with, get more.
-
-// *** desired functions:  ***
-//about button that talks about javascript hacking in browser, some of the things you can do. 
-//export and import saves that are not encrypted? (but why, maybe you prefer to edit, and then import those)
-//auto Bonfire?
-//mastery increaser: gonna need to create a gui menu for it or something, it's ridiculous. or add a button to each style container with mastery content, and add a button there specific for each one. big project... but, now that mastery tokens are a thing, who cares? ezpz, just give yourself mastery tokens, win win win win win.
-//loot creator gui or autofill list; would love to have a copied bank page that's just populated with items, and you select them. hmm... god this could be tedious.
-//set extra attacks in combat? doable but dirty. basically setting attack speed i think, which way ups dps, which way OPs you.
-//happy new year 2020! 
+ *** desired functions:  ***
+about button that talks about javascript hacking in browser, some of the things you can do. 
+export and import saves that are not encrypted? (but why, maybe you prefer to edit, and then import those)
+auto Bonfire?
+mastery increaser: gonna need to create a gui menu for it or something, it's ridiculous. or add a button to each style container with mastery content, and add a button there specific for each one. big project... but, now that mastery tokens are a thing, who cares? ezpz, just give yourself mastery tokens, win win win win win.
+loot creator gui or autofill list; would love to have a copied bank page that's just populated with items, and you select them. hmm... god this could be tedious.
+set extra attacks in combat? doable but dirty. basically setting attack speed i think, which way ups dps, which way OPs you.
+happy new year 2020! 
+*/
