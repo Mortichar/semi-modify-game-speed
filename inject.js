@@ -98,21 +98,24 @@ function lootcheatID() {
     var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date+' @ '+time;
+    var hp;
+    var hpfoox;
+    var hpmax;
 function autocombatfunc() {
-    var hp = Number(document.getElementById("combat-player-hitpoints-current").textContent);
-    var hpfood = 10 * items[equippedFood[currentCombatFood].itemID].healsFor;
-    var hpmax = Number(document.getElementById("combat-player-hitpoints-max").textContent);
-    if (hp < hpmax-hpfood || hp<50) { eatFood(); }
+    hp = combatData.player.hitpoints;
+    hpfood = 10 * items[equippedFood[currentCombatFood].itemID].healsFor;
+    hpmax = skillLevel[CONSTANTS.skill.Hitpoints] * numberMultiplier;
+    if (hp < (hpmax-hpfood) || hp<50) { eatFood(); }
     if (equippedFood[currentCombatFood].qty < 1) { 
     	terminateAutoCombat('food.');
     }
-    if (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") && ammo < 1) { 
+    if ((items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") ) && ammo < 1) { 
     	terminateAutoCombat('ammo.');
     }
     if (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isMagic && !checkRuneCount(selectedSpell) ) { 
 		terminateAutoCombat('runes.');
     }
-    if (droppedLoot) { lootAll(); } //lootAll() causes about 50ms hang. noticeable. conditionalized so it doesn't run every 500ms.
+    if (!(droppedLoot == "")) { lootAll(); } //the truth condition was always true. now it ACTUALLY checks when empty and shouldn't run lootAll() every half-second, which caused big issues.
 } //even with the conditional for the loot, still causes a slight hang about every 500ms when the autocombatfunc runs. eh, it's just barely noticeable when watching the animated progress bars.
 //***************************END AUTO COMBAT*******************************
 
@@ -134,7 +137,7 @@ function toggleautocombat() { //button -> function that enables auto combat
         autocombatNavBut.style.border = ''; //removes cyan border when off
     }
     else {
-        autocombatloop = setInterval(autocombatfunc, 500);
+        autocombatloop = setInterval(() => { autocombatfunc(); }, 500);
         autocombat = true;
         alert("Auto combat is now running while the nav button is highlighted by a cyan border.\n \n \
 This will auto-eat if injured as well as pick up any loot that was dropped automatically every half second. \n \
@@ -148,7 +151,7 @@ Auto combat will automatically cancel combat if you are out of food, ammo, or ru
     var menuOn;
 function openCheatMenu() {
     if(menuOn) {
-    $("#cheat-container").attr("class", "content d-none");
+    $("#cheat-container").attr("class", "content d-none"); //adding d-none to class hides elements, bootstrap+jqueryui methinks
     menuOn = false;
     }
     else {
