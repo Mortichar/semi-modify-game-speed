@@ -1,6 +1,6 @@
 //figured out how to inject in a new way. this way i'll be able to add comments and such here. better for dev.
 //these are the real cheats right here.
-//MICEv0.2.2 by AW 2-10-20
+//MICEv0.2.3 by AW 2-10-20
 
 //DEV//open cheat menu automatically
 //DEV//$("#cheat-container").removeClass('d-none');
