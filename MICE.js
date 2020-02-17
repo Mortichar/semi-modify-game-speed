@@ -340,6 +340,24 @@ alwayscookallbut.textContent = 'Cook All (MICE Permanently Unlocked Cook All But
 alwayscookallbut.id = 'alwayscookallbut';
 alwayscookallbut.style = 'background-color: red;';
 
+//Modifying farming page to have instant-grow bone meal button
+const bonemealBtn0 = document.getElementsByClassName('block block-content block-rounded block-link-pop border-top border-farming border-4x')[0].parentNode.cloneNode(true);
+bonemealBtn0.style.float = "left";
+bonemealBtn0.childNodes[1].childNodes[1].childNodes[1].childNodes[1].src = "assets/media/bank/bones.svg";
+const farmingPg = document.getElementById('farming-container'); //no jquery in this content script
+const bonemealBtn1 = bonemealBtn0.cloneNode(true);
+const bonemealBtn2 = bonemealBtn0.cloneNode(true);
+farmingPg.appendChild(bonemealBtn0);
+farmingPg.appendChild(bonemealBtn1);
+farmingPg.appendChild(bonemealBtn2);
+bonemealBtn0.childNodes[1].href = "javascript: instantFarm(0)";
+bonemealBtn1.childNodes[1].href = "javascript: instantFarm(1)"; 
+bonemealBtn2.childNodes[1].href = "javascript: instantFarm(2)";
+bonemealBtn0.childNodes[1].childNodes[1].childNodes[3].childNodes[3].textContent = "Apply MICE bonemeal (instantly grows plants) to your Allotments.";
+bonemealBtn1.childNodes[1].childNodes[1].childNodes[3].childNodes[3].textContent = "Apply MICE bonemeal (instantly grows plants) to your Herbs.";
+bonemealBtn2.childNodes[1].childNodes[1].childNodes[3].childNodes[3].textContent = "Apply MICE bonemeal (instantly grows plants) to your Trees.";
+
+
 //Unlocking the banner ad setting
 document.getElementById('setting-ad-options-disabled').textContent = "MICE: This setting can be unlocked without needing a skill at 99. Just click this text. Support the developer by leaving ads on.";
 document.getElementById('setting-ad-options-disabled').setAttribute('onclick', 'unlockAdSet();');

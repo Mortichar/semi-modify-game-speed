@@ -183,6 +183,15 @@ function showItems() {
 	document.getElementById("listheader").textContent = "Ctrl+F is your friend here. :)";
 }
 
+function instantFarm(x=0) { //0 crops, 1 herbs, 2 trees.
+	for (i=0; i<newFarmingAreas[x].patches.length; i++) { 
+		newFarmingAreas[x].patches[i].timePlanted = 1; //sets all herb patches to time immemorial (1970) where all herbs are ready to harvest now
+	}
+}
+
+
+
+
 updateTooltips(); //should fix settings page from being messed up by MICE, radio buttons can be blank sometimes
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
