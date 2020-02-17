@@ -353,10 +353,22 @@ farmingPg.appendChild(bonemealBtn2);
 bonemealBtn0.childNodes[1].href = "javascript: instantFarm(0)";
 bonemealBtn1.childNodes[1].href = "javascript: instantFarm(1)"; 
 bonemealBtn2.childNodes[1].href = "javascript: instantFarm(2)";
+bonemealBtn0.childNodes[1].childNodes[1].childNodes[3].childNodes[1].textContent = "Grow Allotments Now";
+bonemealBtn1.childNodes[1].childNodes[1].childNodes[3].childNodes[1].textContent = "Grow Herbs Now";
+bonemealBtn2.childNodes[1].childNodes[1].childNodes[3].childNodes[1].textContent = "Grow Trees Now";
 bonemealBtn0.childNodes[1].childNodes[1].childNodes[3].childNodes[3].textContent = "Apply MICE bonemeal (instantly grows plants) to your Allotments.";
 bonemealBtn1.childNodes[1].childNodes[1].childNodes[3].childNodes[3].textContent = "Apply MICE bonemeal (instantly grows plants) to your Herbs.";
 bonemealBtn2.childNodes[1].childNodes[1].childNodes[3].childNodes[3].textContent = "Apply MICE bonemeal (instantly grows plants) to your Trees.";
 
+//Modifying combat page to have an extra unlimited instant attack button
+const extraAtkBtn = document.getElementById('combat-attack-style-0').cloneNode(true);
+extraAtkBtn.id = "extraAtkBtn";
+document.getElementById('combat-attack-style-0').parentNode.appendChild(extraAtkBtn);
+extraAtkBtn.className = "btn btn-outline-secondary";
+extraAtkBtn.style.backgroundColor = "orange";
+extraAtkBtn.setAttribute('onclick', 'attack(0)');
+extraAtkBtn.childNodes[1].src = "assets/media/skills/slayer/slayer.svg";
+extraAtkBtn.childNodes[3].textContent = "MICE Extra Dirty Instant-Attack Button";
 
 //Unlocking the banner ad setting
 document.getElementById('setting-ad-options-disabled').textContent = "MICE: This setting can be unlocked without needing a skill at 99. Just click this text. Support the developer by leaving ads on.";
