@@ -192,10 +192,7 @@ function instantFarm(x=0) { //0 crops, 1 herbs, 2 trees.
 	}
 }
 
-
-
-
-updateTooltips(); //should fix settings page from being messed up by MICE, radio buttons can be blank sometimes
+updateTooltips(); //should fix settings page from being messed up by MICE, radio buttons can be blank sometimes. but it doesn't fix.
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 
