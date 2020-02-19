@@ -1,6 +1,6 @@
 //figured out how to inject in a new way. this way i'll be able to add comments and such here. better for dev.
 //these are the real cheats right here.
-//MICEv0.2.3 by AW 2-10-20
+//MICEv0.2.4dev by AW 2-10-20
 
 //DEV//open cheat menu automatically
 //DEV//$("#cheat-container").removeClass('d-none');
@@ -8,9 +8,9 @@
 function unlockAdSet() { $("#setting-ad-options-enabled").removeClass('d-none'); } //shows the ad setting.
 
 var cheatborder = true;
-function toggleborder() {
-	if(cheatborder) { borderOff(); }
-	else { borderOn(); }
+function toggleborder() { 
+    cheatborder = !cheatborder;
+    (cheatborder) ? borderOff(); : borderOn(); 
 }
 
 function borderOn() {
@@ -61,7 +61,17 @@ function updateGetGP() { //immediately updates custom nav button gp amount
 	 $("#nav-current-gp2").attr("data-original-title", numberWithCommas(gp) + " GP");
 }
 var cheatgpupdate = setInterval(function() { updateGetGP(); }, 1500); //looping function to constantly update the cheat clone gp count
-    
+
+function giveSCcheat(n) {
+//design this one based on jquery etc
+	//$(?).prompt(create) { whatever, whatever }, 5000
+	if (!isNaN(n) && n>0) {
+		slayerCoins += n;
+		slayerNotify(n);
+		updateSlayerCoins();
+		//updateSlayerCoinsNav();
+}
+
 function masterycheat() {
     var masteryadd = prompt("What item would you like to add mastery XP to?", "Normal_Bow_u");
     var masteryamtadd = prompt("How many XP?", "10000");

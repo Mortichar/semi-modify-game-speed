@@ -1,13 +1,14 @@
-// Melvor Idle Cheat Engine v0.2.3 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
-// Currently developing on Waterfox 2019.12 KDE version. I'm guessing it's roughly equivalent to slightly-old firefox.
+// Melvor Idle Cheat Engine v0.2.4dev by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
+// Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3). I'm guessing it's roughly equivalent to slightly-old firefox, probably v56.3.
 // Hacking Melvor Idle for dummies! And learning/relearning Javascript along the way
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
+// I have decided that farming isn't terrible after all.
 // //2-8-20: working on MI 0.11.2. Double comments are from this major overhaul
 
 document.getElementsByClassName('content-side content-side-full')[0].style.border = "2px solid red"; //nav border
 //DEV// /* commenting out alert
-alert('Melvor Idle Cheat Engine v0.2.3 is running. Sweet! \n \
+alert('Melvor Idle Cheat Engine v0.2.4dev is running. Sweet! \n \
 The red sidebar border is a friendly reminder that MICE is running, but can be turned off. \n \
 Developed in Dark Mode, which looks great and saves your eyes! Check normal settings menu for that. \n \n \
 BEWARE, YE CHEATER! \n \
@@ -33,7 +34,7 @@ navbutDeMoney.childNodes[1].childNodes[4].remove(); //running it twice also take
 
 // //found a test environment header hidden in array pos 0. This will be useful for showing cheating. 
 const testCheatHeader = document.getElementsByClassName("nav-main-heading")[0];
-testCheatHeader.textContent = "Cheat Environment: MICEv0.2.3"; //change text content from Test Environment -> Cheat "" +MICE
+testCheatHeader.textContent = "Cheat Environment: MICEv0.2.4dev"; //change text content from Test Environment -> Cheat "" +MICE
 testCheatHeader.className = "nav-main-heading text-uppercase text-danger"; //makes visible, deletes d-none from class
 
 const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.11.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
@@ -71,7 +72,8 @@ lootcheatIDNavBut.childNodes[1].setAttribute('href', 'javascript:lootcheatID();'
 lootcheatIDNavBut.childNodes[1].childNodes[3].textContent = 'Get Loot by ID';
 lootcheatIDNavBut.childNodes[1].childNodes[1].src = "assets/media/main/bank_header.svg"; //changes button img
 
-// //AutoCombat (new ideas for on/off indicators... pic changes n shit)
+// //AutoCombat (going to rip the AutoSlayer script here soon, credits to Bubbalova)
+//Maybe even change it all the way to an accordion menu to open up toggle auto loot/slayer/refill-ammo etc
 const autocombatNavBut = navbutDeMoney.cloneNode(true);
 navbar.appendChild(autocombatNavBut);
 autocombatNavBut.childNodes[1].setAttribute('href', 'javascript:toggleautocombat();');
@@ -98,13 +100,14 @@ mainpage.appendChild(settingspagecln); //append clone
 settingspagecln.id = 'cheat-container'; //proper name for cloned page
 const cheatmenu = settingspagecln.childNodes[3].childNodes[1].childNodes[1].childNodes[1]; //the actual menu in the settings/cheat page
 cheatmenu.id = "cheatmenu"; //good for calling cheat menu with the injected script, which does not share env with this content script
-cheatmenu.style.border = "4px solid cyan"; //adds a uniquely distinct border to the cheat menu
+cheatmenu.style.border = "2px solid cyan";//adds a uniquely distinct border to the cheat menu
+cheatmenu.style.borderRadius = "4px";//does this work?
 while (cheatmenu.firstChild) { cheatmenu.removeChild(cheatmenu.firstChild); } //COMPLETELY CLEAN OUT THE CHEAT MENU.
 
 //Main Header
 const cheatmenuTitle = document.createElement('h2');
 cheatmenuTitle.className = "content-heading border-bottom mb-4 pb-2";
-cheatmenuTitle.textContent = 'MICEv0.2.3 Cheat Menu!';
+cheatmenuTitle.textContent = 'MICEv0.2.4dev Cheat Menu!';
 cheatmenuTitle.style.color = "cyan"; //makes the heading cyan
 cheatmenuTitle.style.fontSize = "14pt"; //phatt
 cheatmenu.appendChild(cheatmenuTitle);
@@ -395,6 +398,9 @@ document.getElementById('setting-ad-options-disabled').setAttribute('onclick', '
 there's always something you can tinker, something you can tweak, play with, get more.
 
  *** desired functions:  ***
+ Talk to Bubbalova, ask if we can use parts of the autoslayer script (and the lovely button) in MICE. 
+ More settings for autocombat: auto loot toggle, auto slayer toggle (if above happens), auto re-equip arrows? neato.
+ MICE Masochistic "Hurt Me Good" Enemy Instant Attack Button in combat page (attack(1))
 about button that talks about javascript hacking in browser, some of the things you can do. 
 export and import saves that are not encrypted? (but why, maybe you prefer to edit, and then import those)
 auto Bonfire?
