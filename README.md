@@ -1,4 +1,5 @@
 ## This is Melvor Idle Cheat Engine version 0.3.
+Download it here at the Mozilla addon database: https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/
 ### It's a Firefox browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
 * Add gold
 * Add loot
@@ -23,9 +24,7 @@ Added in MICEv0.3:
 * Calculate number of selected potions needed until next level button in Herblore page
 * Coming soon: cheat-free extension SEMI, or Scripting Engine for Melvor Idle. No cheats, all automation scripts.
 
-Download it here at the Mozilla addon database: https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/
-
-Or download the source code, open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or MICE.js in the folder.
+**Alternative install:** open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or MICE.js in the folder.
 
 Things that are possible:
 * Add mastery, but now that mastery coins have been added to the game, not as relevant
