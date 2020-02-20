@@ -1,4 +1,4 @@
-// Melvor Idle Cheat Engine v0.3dev by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
+// Melvor Idle Cheat Engine v0.3 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
 // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3). I'm guessing it's roughly equivalent to slightly-old firefox, probably v56.3.
 // Hacking Melvor Idle for dummies! And learning/relearning Javascript along the way
 // As always, use and modify at your own risk. But hey, contribute and share!
@@ -19,7 +19,7 @@ navbutDeMoney.childNodes[1].childNodes[4].remove(); //running it twice also take
 
 // //found a test environment header hidden in array pos 0. This will be useful for showing cheating. 
 const testCheatHeader = document.getElementsByClassName("nav-main-heading")[0];
-testCheatHeader.textContent = "Cheat Environment: MICEv0.3dev"; //change text content from Test Environment -> Cheat "" +MICE
+testCheatHeader.textContent = "Cheat Environment: MICEv0.3"; //change text content from Test Environment -> Cheat "" +MICE
 testCheatHeader.className = "nav-main-heading text-uppercase text-danger"; //makes visible, deletes d-none from class
 
 const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.12.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
@@ -156,7 +156,7 @@ btnImgTemplate.appendChild(btnImg);
 //Main Header
 const cheatmenuTitle = document.createElement('h2');
 cheatmenuTitle.className = "content-heading border-bottom mb-4 pb-2";
-cheatmenuTitle.textContent = 'MICEv0.3dev Cheat Menu!';
+cheatmenuTitle.textContent = 'MICEv0.3 Cheat Menu!';
 cheatmenuTitle.style.color = "cyan"; //makes the heading cyan
 cheatmenuTitle.style.fontSize = "14pt"; //phatt
 cheatmenu.appendChild(cheatmenuTitle);
@@ -172,7 +172,7 @@ cheatmenu.appendChild(hideCheatInfoBtn);
 const cheatmenuInfo = document.createElement('div');
 cheatmenuInfo.id = "cheatmenuInfo"; //font:16px/26px monospace, monospace; 
 cheatmenuInfo.style = "height: 222px; padding: 10px; width: 66%; border: 1px solid #ccc; white-space: pre-wrap; overflow: auto; color: cyan;";
-cheatmenuInfo.textContent = ` *** Melvor Idle Cheat Engine v0.3dev is running. Sweet!
+cheatmenuInfo.textContent = ` *** Melvor Idle Cheat Engine v0.3 is running. Sweet!
  * The red sidebar border is a friendly reminder that MICE is running, but can be turned off.
 
 -BEWARE, YE CHEATER!-

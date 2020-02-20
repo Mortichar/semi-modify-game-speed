@@ -1,4 +1,4 @@
-//MICEv0.3dev by AW. these are the real cheats right here.
+//MICEv0.3 by AW. these are the real cheats right here.
 //DEV//$("#cheat-container").removeClass('d-none'); //DEV//open cheat menu automatically
 
 /*//::from Bioniclegenius in Melvor discord
@@ -502,7 +502,7 @@ function XPH(running,stat) {
 }
 //::what a great utility! to get current page: XPH(1,currentPage);... won't work for combat
 
-customNotify('','Melvor Idle Cheat Engine v0.3dev is now loaded and running! Check the bottom of the sidebar for cheats.',22000);
+customNotify('','Melvor Idle Cheat Engine v0.3 is now loaded and running! Check the bottom of the sidebar for cheats.',22000);
 
 /*//are we ever gonna do this?
 function masterycheat() {
