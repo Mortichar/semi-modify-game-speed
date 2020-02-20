@@ -1,4 +1,4 @@
-// Melvor Idle Cheat Engine v0.2.4dev by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
+// Melvor Idle Cheat Engine v0.3dev by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
 // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3). I'm guessing it's roughly equivalent to slightly-old firefox, probably v56.3.
 // Hacking Melvor Idle for dummies! And learning/relearning Javascript along the way
 // As always, use and modify at your own risk. But hey, contribute and share!
@@ -6,24 +6,9 @@
 // I have decided that farming isn't terrible after all.
 // //2-8-20: working on MI 0.11.2. Double comments are from this major overhaul
 
+// //*%*%*%*%*%*%*%* Begin GUI Manipulation *%*%*%*%*%*%*%*%*
+
 document.getElementsByClassName('content-side content-side-full')[0].style.border = "2px solid red"; //nav border
-//DEV// /* commenting out alert
-alert('Melvor Idle Cheat Engine v0.2.4dev is running. Sweet! \n \
-The red sidebar border is a friendly reminder that MICE is running, but can be turned off. \n \
-Developed in Dark Mode, which looks great and saves your eyes! Check normal settings menu for that. \n \n \
-BEWARE, YE CHEATER! \n \
-Use such software at your own risk! Back up ye game before modifying! \n \
-This extension may completely break the save if used wrongly. You have been warned. \n \
-Also, be careful about using Ctrl+F5 with this game, I\'ve had it completely corrupt a save. \n \
-That may or may not be the impetus for cheating. ;) \n \n \
-You should leave page alerts on because MICE uses js prompts for certain cheats at this point. \n \
-Check the bottom of the sidebar for cheats. Have fun. :)' );
-// */
-
-//DEV//kill modal cloud loading popup
-//DEV//document.getElementById('modal-cloud-loading').remove(); //works like a cherm. sometimes i think this does weird things where a gray overlay is on top of the entire game and you can't load. gotta close tab and reopen.
-
-// //*%*%*%*%*%*%*%* Begin GUI Manipulation *%*%*%*%*%*%*%*%* //probably should rewrite all this to customized entries since the UI is liable to change at the dev's whim
 
 //Sidebar = navbar = navigator definition
 const navbar = document.getElementsByClassName("nav-main")[0]; //defines the nav list itself as navbar
@@ -34,10 +19,10 @@ navbutDeMoney.childNodes[1].childNodes[4].remove(); //running it twice also take
 
 // //found a test environment header hidden in array pos 0. This will be useful for showing cheating. 
 const testCheatHeader = document.getElementsByClassName("nav-main-heading")[0];
-testCheatHeader.textContent = "Cheat Environment: MICEv0.2.4dev"; //change text content from Test Environment -> Cheat "" +MICE
+testCheatHeader.textContent = "Cheat Environment: MICEv0.3dev"; //change text content from Test Environment -> Cheat "" +MICE
 testCheatHeader.className = "nav-main-heading text-uppercase text-danger"; //makes visible, deletes d-none from class
 
-const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.11.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
+const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.12.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
 navbar.appendChild(clnheading); // append title and change it
 clnheading.childNodes[0].textContent = "Cheat Tools";
 clnheading.style = "font-size: 12pt; color: cyan;";
@@ -49,7 +34,8 @@ navbar.appendChild(cheatMenuNavBut);
 cheatMenuNavBut.childNodes[1].setAttribute('href', 'javascript:openCheatMenu();'); // //change nav button function, calls injected function
 cheatMenuNavBut.childNodes[1].childNodes[3].textContent = 'Cheat Menu'; //change nav button text
 cheatMenuNavBut.childNodes[1].childNodes[3].style.color = 'cyan'; //change nav button text color
-cheatMenuNavBut.childNodes[1].childNodes[1].src = browser.runtime.getURL("icons/border-48.png"); // //omfg worked perfectly. fixed the json issue and bam. goddamn. excellent.
+cheatMenuNavBut.childNodes[1].childNodes[1].src = browser.runtime.getURL("icons/border-48.png");// //omfg worked perfectly. fixed the json issue and bam. goddamn. excellent.
+cheatMenuNavBut.childNodes[1].childNodes[1].id = "MICEicon"; //to call the MICE icon URL from Jquery in injected scripts: $("#MICEicon").src()
 
 // //Gold giver nav button
 const goldNavBut = navbut.cloneNode(true);
@@ -58,31 +44,82 @@ goldNavBut.childNodes[1].setAttribute('href', 'javascript:giveGPcheatNav();');
 goldNavBut.childNodes[1].childNodes[3].textContent = 'Get GP';
 goldNavBut.childNodes[1].childNodes[5].id = "nav-current-gp2";
 
+// //Slayer Coins giver nav button
+const scNavBut = navbut.cloneNode(true);
+navbar.appendChild(scNavBut);
+scNavBut.childNodes[1].setAttribute('href', 'javascript:giveSCcheatNav();');
+scNavBut.childNodes[1].childNodes[1].src = "assets/media/main/slayer_coins.svg";
+scNavBut.childNodes[1].childNodes[3].textContent = 'Get SC';
+scNavBut.childNodes[1].childNodes[4].src = "assets/media/main/slayer_coins.svg";
+scNavBut.childNodes[1].childNodes[5].id = "nav-current-sc";
+
 //Loot Cheat by Name btn
 const lootcheatNavBut = navbutDeMoney.cloneNode(true);
 navbar.appendChild(lootcheatNavBut);
 lootcheatNavBut.childNodes[1].setAttribute('href', 'javascript:lootcheat();');
 lootcheatNavBut.childNodes[1].childNodes[3].textContent = 'Get Loot by Name';
-lootcheatNavBut.childNodes[1].childNodes[1].src = "assets/media/main/bank_header.svg"; //changes button img
+lootcheatNavBut.childNodes[1].childNodes[1].src = "assets/media/bank/elite_chest.svg"; //changes button img
 
 //Loot Cheat by ID btn
 const lootcheatIDNavBut = navbutDeMoney.cloneNode(true);
 navbar.appendChild(lootcheatIDNavBut);
 lootcheatIDNavBut.childNodes[1].setAttribute('href', 'javascript:lootcheatID();');
 lootcheatIDNavBut.childNodes[1].childNodes[3].textContent = 'Get Loot by ID';
-lootcheatIDNavBut.childNodes[1].childNodes[1].src = "assets/media/main/bank_header.svg"; //changes button img
+lootcheatIDNavBut.childNodes[1].childNodes[1].src = "assets/media/bank/elite_chest.svg"; //changes button img
+//navbar.appendChild(document.createElement('hr')); //horiz line after the big cheaties. header seems good enough
+const scriptHeader = document.createElement('li');
+scriptHeader.className = "nav-main-heading";
+scriptHeader.textContent = "Scripts for Automation";
+navbar.appendChild(scriptHeader);
 
-// //AutoCombat (going to rip the AutoSlayer script here soon, credits to Bubbalova)
-//Maybe even change it all the way to an accordion menu to open up toggle auto loot/slayer/refill-ammo etc
+// //AutoCombat (+AutoSlayer attaches before this button)
 const autocombatNavBut = navbutDeMoney.cloneNode(true);
+autocombatNavBut.title = "AutoCombat will automatically continue combat until you're either out of food in your equipped food slot, out of ranged ammo, or out of runes if using magic. It will safely exit combat if any of those conditions occur. Options include automatically looting and eating, shown below in the sidebar. Combines well with AutoSlayer.";
 navbar.appendChild(autocombatNavBut);
+const autocombatStatus = document.createElement('small');
+autocombatStatus.id = "autocombatStatus";
+autocombatNavBut.childNodes[1].appendChild(autocombatStatus);
+autocombatStatus.textContent = "Disabled"; //inspired by Bubbalova
 autocombatNavBut.childNodes[1].setAttribute('href', 'javascript:toggleautocombat();');
-autocombatNavBut.childNodes[1].childNodes[3].textContent = 'Toggle Auto Combat';
+autocombatNavBut.childNodes[1].childNodes[3].textContent = 'AutoCombat';
 autocombatNavBut.childNodes[1].childNodes[1].src = "assets/media/skills/combat/combat.svg";
 autocombatNavBut.childNodes[1].id = 'autocombatNavBut';
 autocombatNavBut.childNodes[1].childNodes[1].id = "autocombatImg";
 
+//AutoCombat Options
+const autoCombatOptNavHeader = document.createElement('li');
+autoCombatOptNavHeader.className = "nav-main-heading";
+autoCombatOptNavHeader.textContent = "AutoCombat Options";
+navbar.appendChild(autoCombatOptNavHeader);
+
+const autoEatNavBut = navbutDeMoney.cloneNode(true);
+autoEatNavBut.title = "AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.";
+navbar.appendChild(autoEatNavBut);
+const autoEatStatus = document.createElement('small');
+autoEatStatus.id = "autoEatStatus";
+autoEatNavBut.childNodes[1].appendChild(autoEatStatus);
+autoEatStatus.textContent = "Enabled"; //inspired by Bubbalova
+autoEatNavBut.childNodes[1].setAttribute('href', 'javascript:toggleAutoEat();');
+autoEatNavBut.childNodes[1].childNodes[3].textContent = 'AC Auto Eat';
+autoEatNavBut.childNodes[1].childNodes[1].src = "assets/media/shop/autoeat.svg";
+autoEatNavBut.childNodes[1].id = 'autoEatNavBut';
+autoEatNavBut.childNodes[1].childNodes[1].id = "autoEatImg";
+
+const autoLootNavBut = navbutDeMoney.cloneNode(true);
+autoLootNavBut.title = "Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!";
+navbar.appendChild(autoLootNavBut);
+const autoLootStatus = document.createElement('small');
+autoLootStatus.id = "autoLootStatus";
+autoLootNavBut.childNodes[1].appendChild(autoLootStatus);
+autoLootStatus.textContent = "Enabled"; //inspired by Bubbalova
+autoLootNavBut.childNodes[1].setAttribute('href', 'javascript:toggleAutoLoot();');
+autoLootNavBut.childNodes[1].childNodes[3].textContent = 'AC Auto Loot';
+autoLootNavBut.childNodes[1].childNodes[1].src = "assets/media/main/bank_header.svg";
+autoLootNavBut.childNodes[1].id = 'autoLootNavBut';
+autoLootNavBut.childNodes[1].childNodes[1].id = "autoLootImg";
+
 // //Toggle red border nav button
+navbar.appendChild(document.createElement('hr'));
 const borderNavBut = navbutDeMoney.cloneNode(true);
 navbar.appendChild(borderNavBut);
 borderNavBut.childNodes[1].setAttribute('href', 'javascript:toggleborder();');
@@ -92,7 +129,6 @@ borderNavBut.childNodes[1].childNodes[1].src = "assets/media/skills/combat/ship.
 // //End of Nav Edits***************************************************
     
 // *** *** *** *** *** ***Creating the Cheat Menu*** *** *** *** *** ***
-//That dirty delicious dev done did it now. He changed the settings menu, AGAIN, and added a new skill. Awesome!
 //MICEv0.2.2: rewriting how we create the cheat menu. Delete all internal elements, then add custom ones. No more editing cloned settings menu items.
 const mainpage = document.getElementById('main-container'); //define main page container
 const settingspagecln = document.getElementById('settings-container').cloneNode(true); //clone settings page, was done previously using settingpage var
@@ -104,13 +140,61 @@ cheatmenu.style.border = "2px solid cyan";//adds a uniquely distinct border to t
 cheatmenu.style.borderRadius = "4px";//does this work?
 while (cheatmenu.firstChild) { cheatmenu.removeChild(cheatmenu.firstChild); } //COMPLETELY CLEAN OUT THE CHEAT MENU.
 
+//Creating Buttons
+const btnTemplate = document.createElement('button');
+btnTemplate.id = "btnTemplate";
+btnTemplate.className = "btn btn-outline-primary"; //'empty' button/ non-highlighted
+btnTemplate.type = 'button'; //you can add textcontent to make a regular non-image button
+const btnImgTemplate = btnTemplate.cloneNode(true); //making image button template
+btnImgTemplate.id = "btnImgTemplate";
+const btnImg = document.createElement('img'); //img element
+btnImg.src = browser.runtime.getURL("icons/border-48.png");
+btnImg.height = 32;
+btnImg.width = 32;
+btnImgTemplate.appendChild(btnImg);
+
 //Main Header
 const cheatmenuTitle = document.createElement('h2');
 cheatmenuTitle.className = "content-heading border-bottom mb-4 pb-2";
-cheatmenuTitle.textContent = 'MICEv0.2.4dev Cheat Menu!';
+cheatmenuTitle.textContent = 'MICEv0.3dev Cheat Menu!';
 cheatmenuTitle.style.color = "cyan"; //makes the heading cyan
 cheatmenuTitle.style.fontSize = "14pt"; //phatt
 cheatmenu.appendChild(cheatmenuTitle);
+
+//hide cheat info btn
+const hideCheatInfoBtn = btnTemplate.cloneNode(true);
+hideCheatInfoBtn.textContent = "Hide Info";
+hideCheatInfoBtn.id = "hideCheatInfoBtn";
+hideCheatInfoBtn.setAttribute('onclick', 'toggleInfo()');
+cheatmenu.appendChild(hideCheatInfoBtn);
+
+//Adding the info paragraph
+const cheatmenuInfo = document.createElement('div');
+cheatmenuInfo.id = "cheatmenuInfo"; //font:16px/26px monospace, monospace; 
+cheatmenuInfo.style = "height: 222px; padding: 10px; width: 66%; border: 1px solid #ccc; white-space: pre-wrap; overflow: auto; color: cyan;";
+cheatmenuInfo.textContent = ` *** Melvor Idle Cheat Engine v0.3dev is running. Sweet!
+ * The red sidebar border is a friendly reminder that MICE is running, but can be turned off.
+
+-BEWARE, YE CHEATER!-
+Use such software at your own risk! Back up ye game before modifying!
+This extension may completely break the save if used wrongly. You have been warned.
+Also, be careful about using Ctrl+F5 with this game, I've had it completely corrupt a save. That may or may not be the impetus for cheating. ;)
+
+-Tips-
+ * Hover over the cheat sidebar buttons to get some more info/help in the title tooltip.
+ * Don't forget there are extra buttons added by MICE in the Farming, Combat, Cooking, and now Herblore pages.
+ * GP/SC cheats won't run if you've entered text or negative numbers to help prevent breaking the game data. Strings and ints mix badly.
+ * You should leave page alerts on because MICE uses js prompts for certain cheats at this point. (Moving to modals like GP/SC now)
+ * If you're willing to open up the console (Ctrl+Shift+K) the XHP script is running, so you can run XHP([0|1],[0-19]) in the console to get a handy XP per hour utility. Ideally this information will be embedded in the UI.
+ 
+-Thanks and More-
+ * Huge thanks to Mr Frux, the developer who created this awesome game!
+ * Tampermonkey can help you run simpler user scripts on Melvor. For instance, Melvor Auto Replant automates your farming for you, and works perfectly alongside MICE. You can find it here at greasyfork: https://greasyfork.org/en/scripts/394855-melvor-auto-replant
+ * Thanks to Bubbalova & nysos3 for the AutoSlayer script framework (found here: https://greasyfork.org/en/scripts/396400-melvor-auto-slayer/code ) and other ideas!
+ * I'll likely fork this extension into a cheat-free one for automation only, such as AutoCombat/Slayer and the cook all button, etc.
+ 
+ Have fun! :D`;
+cheatmenu.appendChild(cheatmenuInfo);
 
 //Skill Leveler Menu container(s)
 const skillCheatDiv = document.createElement('div');
@@ -126,22 +210,17 @@ skillCheatLabel.className = "font-size-sm text-muted";
 skillCheatLabel.textContent = "Level Up Cheat! Skill to modify:";
 skillCheatLabelDiv.appendChild(skillCheatLabel);
 const cheatmenuDiv = skillCheatDiv.cloneNode(true); //saving above as template
+
+//Continuing with skill cheat div
+const skillCheatHeader = cheatmenuTitle.cloneNode(true);
+skillCheatHeader.textContent = "Skill Level-up Cheat";
+skillCheatHeader.id = "skillCheatHeader";
+skillCheatHeader.style.fontSize = "10pt";
+cheatmenu.appendChild(skillCheatHeader);
+
 skillselector.id = "skillselector";
 skillCheatDiv.id = "skillCheatDiv";
 cheatmenu.appendChild(skillCheatDiv); //adding to the menu
-
-//Creating Buttons
-const btnTemplate = document.createElement('button');
-btnTemplate.id = "btnTemplate";
-btnTemplate.className = "btn btn-outline-primary"; //'empty' button/ non-highlighted
-btnTemplate.type = 'button'; //you can add textcontent to make a regular non-image button
-const btnImgTemplate = btnTemplate.cloneNode(true); //making image button template
-btnImgTemplate.id = "btnImgTemplate";
-const btnImg = document.createElement('img'); //img element
-btnImg.src = browser.runtime.getURL("icons/border-48.png");
-btnImg.height = 32;
-btnImg.width = 32;
-btnImgTemplate.appendChild(btnImg);
 
 //Adding & customizing Skill Buttons=====================
 const skillBut0 = btnImgTemplate.cloneNode(true);
@@ -307,9 +386,9 @@ nameChngDiv.getElementsByTagName('p')[0].textContent = "";
 const textinput = document.getElementById('username-change-form'); //was gonna combine into one but this could be useful to clone for the infinite name change.
 const unameformDiv = textinput.cloneNode(true); //child node 1 is label, child node 3 is form-control
 unameformDiv.id = "unameform";
-//unameformDiv.childNodes[1].textContent = "";
+//unameformDiv.childNodes[1].textContent = ""; //?
 unameformDiv.childNodes[3].id = "unameinput";
-unameformDiv.childNodes[3].setAttribute('placeholder', "Jock Jorkenston, the Third Turd from the Sun's Buns");
+unameformDiv.childNodes[3].setAttribute('placeholder', "Turd Ferguson");
 unameformDiv.childNodes[3].setAttribute('data-kpxc-id', 'unameinfchange');
 nameChngDiv.childNodes[1].appendChild(unameformDiv);
 
@@ -327,9 +406,11 @@ listheader.id = 'listheader';
 cheatmenu.appendChild(listheader);
 
 const lootListBut = btnImgTemplate.cloneNode(true);
+lootListBut.style.marginBottom = "20px";
 lootListBut.childNodes[0].src = 'assets/media/main/bank_header.svg';
 lootListBut.setAttribute('onclick', 'showItems();');
 lootListBut.setAttribute('id', 'showItemsBut');
+
 cheatmenu.appendChild(lootListBut);
 
 // //End of Cheat Menu -----------------------------------------------------------------------------------------
@@ -372,6 +453,17 @@ extraAtkBtn.style.backgroundColor = "orange";
 extraAtkBtn.setAttribute('onclick', 'attack(0)');
 extraAtkBtn.childNodes[1].src = "assets/media/skills/slayer/slayer.svg";
 extraAtkBtn.childNodes[3].textContent = "MICE Extra Dirty Instant-Attack Button";
+/*//and an enemy attack button lol. too big though, gonna comment out for now, maybe add later.
+const masoAtkBtn = document.getElementById('combat-attack-style-0').cloneNode(true);
+masoAtkBtn.id = "masoAtkBtn";
+document.getElementById('combat-enemy-options').parentNode.appendChild(masoAtkBtn);
+masoAtkBtn.className = "btn btn-outline-secondary";
+masoAtkBtn.style.backgroundColor = "red";
+masoAtkBtn.setAttribute('onclick', 'attack(1)');
+masoAtkBtn.childNodes[1].src = "assets/media/skills/slayer/slayer.svg";
+masoAtkBtn.childNodes[3].textContent = 'MICE "Hurt Me Plenty" Enemy Instant-Attack Button';
+masoAtkBtn.title = "You gotta give them a chance, too!";
+*/
 
 //Unlocking the banner ad setting
 document.getElementById('setting-ad-options-disabled').textContent = "MICE: This setting can be unlocked without needing a skill at 99. Just click this text. Support the developer by leaving ads on.";
@@ -379,11 +471,7 @@ document.getElementById('setting-ad-options-disabled').setAttribute('onclick', '
 
 // //END OF GUI. ***********************************************************************************************
 
-
-
-	//...........................................................................................................
-	//below is the lynchpin of the extension: injecting javascript functions into the body of the website.
-	//this allows access to the page scripts using code inside the external content script within the extension.
+	//below is the lynchpin of the extension: injecting javascript functions into the body of the website. this allows access to the page scripts using code inside the external content script within the extension.
     
 ////SCRIPT INJECTION -------------------------------------------------------------------------------------------
     
@@ -398,14 +486,9 @@ document.getElementById('setting-ad-options-disabled').setAttribute('onclick', '
 there's always something you can tinker, something you can tweak, play with, get more.
 
  *** desired functions:  ***
- Talk to Bubbalova, ask if we can use parts of the autoslayer script (and the lovely button) in MICE. 
- More settings for autocombat: auto loot toggle, auto slayer toggle (if above happens), auto re-equip arrows? neato.
- MICE Masochistic "Hurt Me Good" Enemy Instant Attack Button in combat page (attack(1))
-about button that talks about javascript hacking in browser, some of the things you can do. 
+ More settings for autocombat: auto re-equip arrows? Auto only-loot bones/etc? neato.
 export and import saves that are not encrypted? (but why, maybe you prefer to edit, and then import those)
-auto Bonfire?
+auto Bonfire? there's a script for it out there already.
 mastery increaser: gonna need to create a gui menu for it or something, it's ridiculous. or add a button to each style container with mastery content, and add a button there specific for each one. big project... but, now that mastery tokens are a thing, who cares? ezpz, just give yourself mastery tokens, win win win win win.
 loot creator gui or autofill list; would love to have a copied bank page that's just populated with items, and you select them. hmm... god this could be tedious.
-set extra attacks in combat? doable but dirty. basically setting attack speed i think, which way ups dps, which way OPs you.
-happy new year 2020! 
 */
