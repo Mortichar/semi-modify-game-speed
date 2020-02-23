@@ -24,6 +24,21 @@ function calcToLvl(current=0) {
     $("#"+current+"xpCalc").text(itemsToLvl);
 }
 
+$('#extraAtkBtn').parent().append('<button type="button" class="btn btn-success m-3" onclick="giveDust();">Toggle Magic Dust! [<span id="dustLabel">?</span>]</button>');
+var magicDust;
+var magicDustOn = false;
+function giveDust() {
+    magicDustOn = !magicDustOn;
+    $("#dustLabel").text((magicDustOn) ? 'High' : 'Sober');
+    if(magicDustOn) {
+        magicDust = setInterval( ()=> { if(enemyInCombat && combatData.enemy.hitpoints>0) attack(0) }, 1000);
+        customNotify('','WOW! What a rush! You feel a surging, stimulating power.',5000);
+    } else { 
+        clearInterval(magicDust); 
+        customNotify('','You put away the good stuff and drink some water. Here comes sobriety.');
+    }
+}
+
 /*//wc calc hrs to next lvl
 $('#woodcutting-container').append('<button id="wcCalcBtn" type="button" class="btn btn-success m-3" onclick="calcWCTimeToLvl();">Calculate Time Needed to Next Level</button>');
 $('#woodcutting-container').append('<p class="text-size-sm text-muted">You need to cut for <span id="wcCalc">#</span> more minutes, or <span id="wcCalcHrs">#</span> more hours before leveling up.</p>');
@@ -198,10 +213,6 @@ function lootcheatID() {
 //***************************AUTO COMBAT***********************************
     var autocombat;
     var autocombatloop;
-    var today = new Date(); //this and next three lines are date & time function from https://tecadmin.net/get-current-date-time-javascript/
-    var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' @ '+time;
     var hp;
     var hpfoox;
     var hpmax;
@@ -229,6 +240,10 @@ function autocombatfunc() {
 
 //Autocombat Auxiliaries
 function terminateAutoCombat(reason) { 
+    var today = new Date(); //this and next three lines are date & time function from https://tecadmin.net/get-current-date-time-javascript/
+    var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' @ '+time;
     clearInterval(autocombatloop); 
     stopCombat(false, true, true);
     autocombat = false;
