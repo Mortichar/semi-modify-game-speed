@@ -311,7 +311,7 @@ function changeNameInf() {
 }
 
 function showItems() {
-	var list = "List of items and IDs: \n"+CONSTANTS.item.toSource(); 
+	var list = "List of items and IDs: \n"+CONSTANTS.item.toSource(); //DOES NOT WORK IN CHROME.
 	var listBox = document.createElement('pre'); //use pre html tag for the string's new lines to format properly
 	listBox.style = "height:80px; width: 100%; border: 1px solid #ccc; font:16px/26px monospace, monospace; overflow: auto; color:cyan;";
 	listBox.textContent = list;
