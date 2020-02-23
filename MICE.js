@@ -34,7 +34,11 @@ navbar.appendChild(cheatMenuNavBut);
 cheatMenuNavBut.childNodes[1].setAttribute('href', 'javascript:openCheatMenu();'); // //change nav button function, calls injected function
 cheatMenuNavBut.childNodes[1].childNodes[3].textContent = 'Cheat Menu'; //change nav button text
 cheatMenuNavBut.childNodes[1].childNodes[3].style.color = 'cyan'; //change nav button text color
-cheatMenuNavBut.childNodes[1].childNodes[1].src = browser.runtime.getURL("icons/border-48.png"); //doesn't work in chrome, obv. how do we? if (firefox), this line, if (chrome), different code.
+if(navigator.userAgent.match("Chrome")){
+    cheatMenuNavBut.childNodes[1].childNodes[1].src = chrome.runtime.getURL("icons/border-48.png");
+} else if(navigator.userAgent.match("Firefox")){
+	cheatMenuNavBut.childNodes[1].childNodes[1].src = browser.runtime.getURL("icons/border-48.png"); 
+}
 cheatMenuNavBut.childNodes[1].childNodes[1].id = "MICEicon"; //to call the MICE icon URL from Jquery in injected scripts: $("#MICEicon").src()
 
 // //Gold giver nav button
@@ -148,7 +152,7 @@ btnTemplate.type = 'button'; //you can add textcontent to make a regular non-ima
 const btnImgTemplate = btnTemplate.cloneNode(true); //making image button template
 btnImgTemplate.id = "btnImgTemplate";
 const btnImg = document.createElement('img'); //img element
-btnImg.src = browser.runtime.getURL("icons/border-48.png");
+btnImg.src = document.getElementById("MICEicon").src;
 btnImg.height = 32;
 btnImg.width = 32;
 btnImgTemplate.appendChild(btnImg);
@@ -476,7 +480,11 @@ document.getElementById('setting-ad-options-disabled').setAttribute('onclick', '
 ////SCRIPT INJECTION -------------------------------------------------------------------------------------------
     
     var script = document.createElement('script');
-    script.src = browser.runtime.getURL("inject.js");
+if(navigator.userAgent.match("Chrome")){
+    script.src = chrome.runtime.getURL("inject.js");
+} else if(navigator.userAgent.match("Firefox")){
+	script.src = browser.runtime.getURL("inject.js");
+}
     document.body.appendChild(script); //appending to body because that's where all the other page scripts are at. head's probably ok too
 
 // //And that's MICE!
