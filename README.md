@@ -1,7 +1,7 @@
 ## This is Melvor Idle Cheat Engine version 0.3.1.
 Download it here at the Mozilla addon database: [![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-cheat-engine?label=Melvor%20Idle%20Cheat%20Engine%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/)
 
-Download from Chrome web store coming soon! Maybe! Not sure how I feel about paying $5 just to publish an extension.
+Download from Chrome web store coming soon! Maybe! Not sure how I feel about paying Google $5 just to publish a FOSS extension.
 
 ### Alternative install
 Download the entire MICE directory, including the .js files as well as icon folder.
