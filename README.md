@@ -1,6 +1,8 @@
 ## This is Melvor Idle Cheat Engine version 0.3.1.
 Download it here at the Mozilla addon database: [![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-cheat-engine?label=Melvor%20Idle%20Cheat%20Engine%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/)
+
 Download from Chrome web store coming soon!
+
 ### It's a Firefox & Chrome browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
 * Add gold
 * Add loot
