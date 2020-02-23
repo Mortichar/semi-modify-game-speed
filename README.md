@@ -34,8 +34,12 @@ Download from Chrome web store coming soon!
 
 ### Alternative install
 Download the entire MICE directory, including the .js files as well as icon folder.
+
 Firefox: open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or MICE.js in the folder.
+
 Chrome: open settings > tools > extensions, enable developer options in the top right, and click load unpacked. Open the MICE containing folder to load the add-on.
+
+*** 
 
 Things that are possible:
 * Add mastery, but now that mastery coins have been added to the game, not as relevant
