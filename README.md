@@ -1,5 +1,5 @@
 ## This is Melvor Idle Cheat Engine version 0.3.
-Download it here at the Mozilla addon database: https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/
+Download it here at the Mozilla addon database: [![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-cheat-engine?label=Melvor%20Idle%20Cheat%20Engine%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/)
 ### It's a Firefox browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
 * Add gold
 * Add loot
@@ -19,7 +19,7 @@ Added in MICEv0.3:
 * UI Changes: info section in cheat menu, hints in tooltips, custom modals, custom notifications, less intrusive overall
 * Add Slayer Coins cheat
 * AutoSlayer script by Bubbalova
-* XHP script by Breakit
+* XPH script by Breakit
 * AutoCombat Options: Toggle auto eat and loot
 * Calculate number of selected potions needed until next level button in Herblore page
 * Coming soon: cheat-free extension SEMI, or Scripting Engine for Melvor Idle. No cheats, all automation scripts.
