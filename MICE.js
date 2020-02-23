@@ -185,7 +185,7 @@ Also, be careful about using Ctrl+F5 with this game, I've had it completely corr
  * Don't forget there are extra buttons added by MICE in the Farming, Combat, Cooking, and now Herblore pages.
  * GP/SC cheats won't run if you've entered text or negative numbers to help prevent breaking the game data. Strings and ints mix badly.
  * You should leave page alerts on because MICE uses js prompts for certain cheats at this point. (Moving to modals like GP/SC now)
- * If you're willing to open up the console (Ctrl+Shift+K) the XHP script is running, so you can run XHP([0|1],[0-19]) in the console to get a handy XP per hour utility. Ideally this information will be embedded in the UI.
+ * If you're willing to open up the console (Ctrl+Shift+K) the XPH script is running, so you can run XPH([0|1],[0-19]) in the console to get a handy XP per hour utility. Ideally this information will be embedded in the UI.
  
 -Thanks and More-
  * Huge thanks to Mr Frux, the developer who created this awesome game!
