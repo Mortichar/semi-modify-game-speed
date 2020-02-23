@@ -19,7 +19,7 @@ Added in MICEv0.3:
 * UI Changes: info section in cheat menu, hints in tooltips, custom modals, custom notifications, less intrusive overall
 * Add Slayer Coins cheat
 * AutoSlayer script by Bubbalova
-* XHP script by Breakit
+* XPH script by Breakit
 * AutoCombat Options: Toggle auto eat and loot
 * Calculate number of selected potions needed until next level button in Herblore page
 * Coming soon: cheat-free extension SEMI, or Scripting Engine for Melvor Idle. No cheats, all automation scripts.
