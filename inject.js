@@ -1,18 +1,31 @@
-//MICEv0.3 by AW. these are the real cheats right here.
+//MICEv0.3.1 by AW. these are the real cheats right here.
 //DEV//$("#cheat-container").removeClass('d-none'); //DEV//open cheat menu automatically
 
-/*//::from Bioniclegenius in Melvor discord
-var smithingHUD = window.setInterval(function() {
-    var xpLeft = exp.level_to_xp(skillLevel[5] + 1) - skillXP[5];
-    var smithItemXP = items[smithingItems[selectedSmith].itemID].smithingXP;
-    var itemsLeft = Math.ceil(xpLeft / smithItemXP);
-    var oldText = numberWithCommas(Math.floor(skillXP[5])) + " / " + numberWithCommas(exp.level_to_xp(skillLevel[5] + 1));
-    $("#skill-progress-xp-5").text(oldText + " - " + numberWithCommas(xpLeft) + " - " + numberWithCommas(itemsLeft));
-}, 1000 / 60);
-//::*/
+$("#cheatmenuInfo").append($(`<p>Melvor Idle Cheat Engine v0.3.1 is running. Sweet!
+The red sidebar border is a friendly reminder that MICE is running, but can be turned off.
+
+-BEWARE, YE CHEATER!-
+Use such software at your own risk! Back up ye game before modifying!
+This extension may completely break the save if used wrongly. You have been warned.
+Also, be careful about using Ctrl+F5 with this game, I've had it completely corrupt a save. That may or may not be the impetus for cheating. ;)
+
+-Tips-
+ * Hover over the cheat sidebar buttons to get some more info/help in the title tooltip.
+ * Don't forget there are extra buttons added by MICE in the Farming, Combat, Cooking, and now Herblore pages.
+ * GP/SC cheats won't run if you've entered text or negative numbers to help prevent breaking the game data. Strings and ints mix badly.
+ * You should leave page alerts on because MICE uses js prompts for certain cheats at this point. (Moving to modals like GP/SC now)
+ * If you're willing to open up the console (Ctrl+Shift+K) the XPH script is running, so you can run XPH([0|1],[0-19]) in the console to get a handy XP per hour utility. Ideally this information will be embedded in the UI.
+ 
+-Thanks and More-
+ * Huge thanks to Mr Frux, the developer who created this awesome game!
+ * Tampermonkey, a general use userscript add-on, can help you run simpler user scripts on Melvor. For instance, Melvor Auto Replant automates your farming for you, and works perfectly alongside MICE. <a href="https://greasyfork.org/en/scripts/394855-melvor-auto-replant" target="_blank">You can find it here at greasyfork.</a>
+ * Thanks to Bubbalova & nysos3 for the <a href="https://greasyfork.org/en/scripts/396400-melvor-auto-slayer/code" target="_blank">AutoSlayer script framework</a> and other ideas!
+ * I'll likely fork this extension into a cheat-free one for automation only, such as AutoCombat/Slayer and the cook all button, etc.
+ 
+ Have fun! :D</p>`));
 
 //herblore calc # items needed to level.
-$('#herblore-container .col-12 .mr-2 .btn').parent().append('<button type="button" class="btn btn-success m-3" onclick="calcHerbItemsToLvl();">Calculate # Needed to Next Level</button>');
+$('#herblore-container .col-12 .mr-2 .btn').parent().append('<button type="button" class="btn btn-success m-3" onclick="calcHerbItemsToLvl();" title="Select a potion then hit this button.">Calculate # Needed to Next Level</button>');
 $('#herblore-container .col-12 .mr-2 .btn').parent().append('<p>You need to make <span id="herbCalc">#</span> of this item before leveling up.</p>');
 function calcHerbItemsToLvl() {
     var itemsToLvl = Math.round((exp.level_to_xp(skillLevel[19]+1) +1 - skillXP[19])/herbloreItemData[selectedHerblore].herbloreXP)+1 ;
@@ -24,18 +37,18 @@ function calcToLvl(current=0) {
     $("#"+current+"xpCalc").text(itemsToLvl);
 }
 
-$('#extraAtkBtn').parent().append('<button type="button" class="btn btn-success m-3" onclick="giveDust();">Toggle Magic Dust! [<span id="dustLabel">?</span>]</button>');
+$('#extraAtkBtn').parent().append('<button type="button" class="btn btn-success m-3" onclick="giveDust();" title="Does an extra attack every half second.">Toggle Magic Dust! [<span id="dustLabel">?</span>]</button>');
 var magicDust;
 var magicDustOn = false;
 function giveDust() {
     magicDustOn = !magicDustOn;
-    $("#dustLabel").text((magicDustOn) ? 'High' : 'Sober');
+    $("#dustLabel").text((magicDustOn) ? 'Feelin\' it' : 'No Dust');
     if(magicDustOn) {
         magicDust = setInterval( ()=> { if(enemyInCombat && combatData.enemy.hitpoints>0) attack(0) }, 1000);
-        customNotify('','WOW! What a rush! You feel a surging, stimulating power.',5000);
+        customNotify('assets/media/bank/holy_dust.svg','WOW! What a rush! You feel a surging, stimulating power.',5000);
     } else { 
         clearInterval(magicDust); 
-        customNotify('','You put away the good stuff and drink some water. Here comes sobriety.');
+        customNotify('assets/media/bank/holy_dust.svg','You put away the good stuff and drink some water. Here comes sobriety.');
     }
 }
 
@@ -225,7 +238,7 @@ function autocombatfunc() {
     hpfood = numberMultiplier * items[equippedFood[currentCombatFood].itemID].healsFor; //numberMultiplier = 10, adjusts hp math
     hpmax = skillLevel[CONSTANTS.skill.Hitpoints] * numberMultiplier; //same here
     if ( (hp < (hpmax-hpfood) || hp<50) && autoEat ) eatFood(); //autoEat toggle here now
-    if (equippedFood[currentCombatFood].qty < 1) { 
+    if (equippedFood[currentCombatFood].qty < 1 && autoEat) { 
     	terminateAutoCombat('food.');
     }
     if ((items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") ) && ammo < 1) { 
@@ -310,10 +323,46 @@ function changeNameInf() {
 	}
 }
 
+//for chrome users: Inspector script to deconstruct the Item constant object to display the names & IDs. https://gist.github.com/archan937/1961799
+function inspect(object) {
+  switch (typeof(object)) {
+  case "undefined":
+    return "undefined";
+  case "string":
+    return "\"" + object.replace(/\n/g, "\\n").replace(/\"/g, "\\\"") + "\"";
+  case "object":
+    if (object == null) {
+      return "null";
+    }
+    var a = [];
+    if (object instanceof Array) {
+      for (var i in object) {
+        a.push(inspect(object[i]));
+      };
+      return "[" + a.join(", ") + "]";
+    } else {
+      for (var key in object) {
+        if (object.hasOwnProperty(key)) {
+          a.push(key + ": " + inspect(object[key]));
+        }
+      };
+      return "{" + a.join(", ") + "}";
+    }
+  default:
+    return object.toString();
+  }
+};
+
 function showItems() {
-	var list = "List of items and IDs: \n"+CONSTANTS.item.toSource(); //DOES NOT WORK IN CHROME.
+    if(navigator.userAgent.match("Chrome")){
+        var itemSplit = inspect(CONSTANTS.item).split(',').join('\n');
+        var list = "List of items and IDs: \n" + itemSplit;
+    } else if(navigator.userAgent.match("Firefox")) { 
+        var itemSplit = CONSTANTS.item.toSource().split(',').join('\n');
+        var list = "List of items and IDs: \n"+itemSplit; 
+    }
 	var listBox = document.createElement('pre'); //use pre html tag for the string's new lines to format properly
-	listBox.style = "height:80px; width: 100%; border: 1px solid #ccc; font:16px/26px monospace, monospace; overflow: auto; color:cyan;";
+	listBox.style = "height:333px; width: 33%; border: 1px solid #ccc; font:16px/26px monospace, monospace; overflow: auto; color:cyan;";
 	listBox.textContent = list;
 	document.getElementById("cheatmenu").appendChild(listBox);
 	document.getElementById("showItemsBut").remove();
@@ -517,7 +566,12 @@ function XPH(running,stat) {
 }
 //::what a great utility! to get current page: XPH(1,currentPage);... won't work for combat
 
-customNotify('','Melvor Idle Cheat Engine v0.3 is now loaded and running! Check the bottom of the sidebar for cheats.',22000);
+//Loaded notification
+if(navigator.userAgent.match("Chrome")){
+    customNotify('assets/media/monsters/dragon_black.svg','Melvor Idle Cheat Engine v0.3.1 is now loaded and running! Check the bottom of the sidebar for cheats.',22000);
+} else if(navigator.userAgent.match("Firefox")) { 
+    customNotify('','Melvor Idle Cheat Engine v0.3.1 is now loaded and running! Check the bottom of the sidebar for cheats.',22000);
+}
 
 /*//are we ever gonna do this?
 function masterycheat() {

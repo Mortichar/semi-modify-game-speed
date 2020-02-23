@@ -1,4 +1,4 @@
-## This is Melvor Idle Cheat Engine version 0.3.
+## This is Melvor Idle Cheat Engine version 0.3.1.
 Download it here at the Mozilla addon database: [![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-cheat-engine?label=Melvor%20Idle%20Cheat%20Engine%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-cheat-engine/)
 ### It's a Firefox browser extension for the fun idle web game Melvor Idle. It helps you cheat and such, doing these things so far:
 * Add gold
@@ -11,11 +11,11 @@ Download it here at the Mozilla addon database: [![Mozilla Firefox](https://img.
 * List of all Loot IDs and names to use the loot cheats
 * Helps you become a dirty nasty rotten cheater and ruin the game a little bit
 
-Added in MICEv0.2.3:
+#### Added in MICEv0.2.3:
 * Instantly grow your crops, herbs, or trees with new buttons in the farming page
 * Instantly attack your enemies without limits with a savage, dirty button in the combat page
 
-Added in MICEv0.3: 
+#### Added in MICEv0.3: 
 * UI Changes: info section in cheat menu, hints in tooltips, custom modals, custom notifications, less intrusive overall
 * Add Slayer Coins cheat
 * AutoSlayer script by Bubbalova
@@ -24,7 +24,17 @@ Added in MICEv0.3:
 * Calculate number of selected potions needed until next level button in Herblore page
 * Coming soon: cheat-free extension SEMI, or Scripting Engine for Melvor Idle. No cheats, all automation scripts.
 
-**Alternative install:** open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or MICE.js in the folder.
+#### Added in 0.3.1:
+* Chrome support! Web store availability soon
+* Cheat menu is now black background by default to prevent light theme eye strain
+* Cheat menu info and loot list formatted a little better
+* If Auto-Eat is off and AutoCombat is running, it will no longer terminate auto combat when out of food. 
+* Another wacky button in the combat page for automatically attackin' faster than normal. Jeeze, pardner, slow down!
+
+### Alternative install
+Download the entire MICE directory, including the .js files as well as icon folder.
+Firefox: open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or MICE.js in the folder.
+Chrome: open settings > tools > extensions, enable developer options in the top right, and click load unpacked. Open the MICE containing folder to load the add-on.
 
 Things that are possible:
 * Add mastery, but now that mastery coins have been added to the game, not as relevant
@@ -33,4 +43,4 @@ Things that are possible:
 * &more
 
 Will the creator patch it up? Who knows.
-MICEv0.2.2 was built around Melvor Idle alpha v0.12. MICEv0.3 is built around Melvor v0.12.2.
+MICEv0.3.1 is built around Melvor v0.12.2.

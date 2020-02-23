@@ -1,4 +1,4 @@
-// Melvor Idle Cheat Engine v0.3 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
+// Melvor Idle Cheat Engine v0.3.1 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
 // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3). I'm guessing it's roughly equivalent to slightly-old firefox, probably v56.3.
 // Hacking Melvor Idle for dummies! And learning/relearning Javascript along the way
 // As always, use and modify at your own risk. But hey, contribute and share!
@@ -19,7 +19,7 @@ navbutDeMoney.childNodes[1].childNodes[4].remove(); //running it twice also take
 
 // //found a test environment header hidden in array pos 0. This will be useful for showing cheating. 
 const testCheatHeader = document.getElementsByClassName("nav-main-heading")[0];
-testCheatHeader.textContent = "Cheat Environment: MICEv0.3"; //change text content from Test Environment -> Cheat "" +MICE
+testCheatHeader.textContent = "Cheat Environment: MICEv0.3.1"; //change text content from Test Environment -> Cheat "" +MICE
 testCheatHeader.className = "nav-main-heading text-uppercase text-danger"; //makes visible, deletes d-none from class
 
 const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.12.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
@@ -97,7 +97,7 @@ autoCombatOptNavHeader.textContent = "AutoCombat Options";
 navbar.appendChild(autoCombatOptNavHeader);
 
 const autoEatNavBut = navbutDeMoney.cloneNode(true);
-autoEatNavBut.title = "AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.";
+autoEatNavBut.title = "AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal, AND exit combat when out of food. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.";
 navbar.appendChild(autoEatNavBut);
 const autoEatStatus = document.createElement('small');
 autoEatStatus.id = "autoEatStatus";
@@ -142,6 +142,7 @@ const cheatmenu = settingspagecln.childNodes[3].childNodes[1].childNodes[1].chil
 cheatmenu.id = "cheatmenu"; //good for calling cheat menu with the injected script, which does not share env with this content script
 cheatmenu.style.border = "2px solid cyan";//adds a uniquely distinct border to the cheat menu
 cheatmenu.style.borderRadius = "4px";//does this work?
+cheatmenu.style.backgroundColor = "#242424";
 while (cheatmenu.firstChild) { cheatmenu.removeChild(cheatmenu.firstChild); } //COMPLETELY CLEAN OUT THE CHEAT MENU.
 
 //Creating Buttons
@@ -160,7 +161,7 @@ btnImgTemplate.appendChild(btnImg);
 //Main Header
 const cheatmenuTitle = document.createElement('h2');
 cheatmenuTitle.className = "content-heading border-bottom mb-4 pb-2";
-cheatmenuTitle.textContent = 'MICEv0.3 Cheat Menu!';
+cheatmenuTitle.textContent = 'MICEv0.3.1 Cheat Menu!';
 cheatmenuTitle.style.color = "cyan"; //makes the heading cyan
 cheatmenuTitle.style.fontSize = "14pt"; //phatt
 cheatmenu.appendChild(cheatmenuTitle);
@@ -176,7 +177,9 @@ cheatmenu.appendChild(hideCheatInfoBtn);
 const cheatmenuInfo = document.createElement('div');
 cheatmenuInfo.id = "cheatmenuInfo"; //font:16px/26px monospace, monospace; 
 cheatmenuInfo.style = "height: 222px; padding: 10px; width: 66%; border: 1px solid #ccc; white-space: pre-wrap; overflow: auto; color: cyan;";
-cheatmenuInfo.textContent = ` *** Melvor Idle Cheat Engine v0.3 is running. Sweet!
+
+/* trying to move this to jquery in inject
+cheatmenuInfo.textContent = ` *** Melvor Idle Cheat Engine v0.3.1 is running. Sweet!
  * The red sidebar border is a friendly reminder that MICE is running, but can be turned off.
 
 -BEWARE, YE CHEATER!-
@@ -198,6 +201,8 @@ Also, be careful about using Ctrl+F5 with this game, I've had it completely corr
  * I'll likely fork this extension into a cheat-free one for automation only, such as AutoCombat/Slayer and the cook all button, etc.
  
  Have fun! :D`;
+*/
+
 cheatmenu.appendChild(cheatmenuInfo);
 
 //Skill Leveler Menu container(s)
