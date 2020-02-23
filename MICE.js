@@ -34,7 +34,7 @@ navbar.appendChild(cheatMenuNavBut);
 cheatMenuNavBut.childNodes[1].setAttribute('href', 'javascript:openCheatMenu();'); // //change nav button function, calls injected function
 cheatMenuNavBut.childNodes[1].childNodes[3].textContent = 'Cheat Menu'; //change nav button text
 cheatMenuNavBut.childNodes[1].childNodes[3].style.color = 'cyan'; //change nav button text color
-cheatMenuNavBut.childNodes[1].childNodes[1].src = browser.runtime.getURL("icons/border-48.png");// //omfg worked perfectly. fixed the json issue and bam. goddamn. excellent.
+cheatMenuNavBut.childNodes[1].childNodes[1].src = browser.runtime.getURL("icons/border-48.png"); //doesn't work in chrome, obv. how do we? if (firefox), this line, if (chrome), different code.
 cheatMenuNavBut.childNodes[1].childNodes[1].id = "MICEicon"; //to call the MICE icon URL from Jquery in injected scripts: $("#MICEicon").src()
 
 // //Gold giver nav button
