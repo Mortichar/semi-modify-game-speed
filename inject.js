@@ -96,24 +96,21 @@ $('#modal-account-change').before($(`
                     
                     <h2 style="color: white;">SEMI v0.1 by AW 2020.</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
-                    <br>
+                    <br><br>
                     Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
                     or another more general-purpose add-on like Tampermonkey to run userscripts. 
-                    <br>
-                    Either way, the end result is extra functionality. 
-                    <br>
+                    Either way, the end result is extra functionality, like automating a task or adding calculated info to the page.
+                    <br><br>
                     The basis of this add-on comes from my own scripts as well as others'. Currently running:
-                    <br>
                     <ul>
                         <li>Melvor AutoSlayer by Bubbalova, modified for more general use</li>
-                        <li>XPH by Breakit</li>
+                        <li>Melvor Auto Replant by Arcanus</li>
+                        <li>Melvor Percent Accuracy by Arcanus</li>
+                        <li>XPH by Breakit. For now, console only: Ctrl+Shift+K for console, type XPH() for the tool.</li>
+                        <li>Thieving Calculator from Melvor Idle Helper by RedSparr0w</li>
                     </ul>
-                    <br>
-                    Working on incorporating Melvor Idle Helper's source into this add-on.
-                    <br>
                     Source code can be found <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
                     <br><br>
-                    
                 </div>
                 <div class="block-content block-content-full text-right border-top">
                     <button type="button" id="semiInfoModalBtn" class="btn btn-sm btn-primary" data-dismiss="modal" onclick=""><i class="fa fa-check mr-1"></i>Cool!</button>
@@ -474,6 +471,56 @@ const thievingCalc = () => {
     });
 }
 //:: end of import of scraps from Melvor Idle Helper
+
+//:: straight-up importing Melvor Auto Replant 1.6 by Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394855-melvor-auto-replant
+this.autoReplant = setInterval(()=>{
+    for (let i = 0; i < newFarmingAreas.length; i++) {
+        for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {
+            if(newFarmingAreas[i].patches[j].hasGrown) {
+                let lastSeed = newFarmingAreas[i].patches[j].seedID
+                let grownID = items[newFarmingAreas[i].patches[j].seedID].grownItemID
+                if(checkBankForItem(grownID) || bankMax+baseBankMax > bank.length) {
+                    harvestSeed(i,j)
+                    if(checkBankForItem(lastSeed)) {
+                        if(farmingMastery[items[lastSeed].masteryID].mastery < 50) {
+                            if(equippedItems[CONSTANTS.equipmentSlot.Cape] !== CONSTANTS.item.Farming_Skillcape) {
+                                if(checkBankForItem(CONSTANTS.item.Compost)) {
+                                    if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
+                                        buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
+                                        buyCompost()
+                                    }
+                                } else {
+                                    buyQty = 5
+                                    buyCompost()
+                                }
+                            }
+                            addCompost(i,j,5)
+                        }
+                        selectedPatch = [i,j]
+                        selectedSeed = lastSeed
+                        plantSeed()
+                    }
+                    if (equippedFood.find(food => food.itemID === grownID) && checkBankForItem(grownID))
+                        equipFood(getBankId(grownID),grownID,bank[getBankId(grownID)].qty)
+                }
+            }
+        }
+    }
+},5000)
+//:: end of import of Melvor Auto Replant
+
+//:: straight-up importing Melvor Percent Accuracy 1.1 by Not Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy
+this.setAccuracyPercent = setInterval(() =>{
+    if(isInCombat) {
+        let playerDodge = combatData.enemy.attackType === CONSTANTS.attackType.Melee ? maximumDefenceRoll : combatData.enemy.attackType === CONSTANTS.attackType.Ranged ? maximumRangedDefenceRoll : maximumMagicDefenceRoll
+        let enemyDodge = attackStyle < 3 ? combatData.enemy.maximumDefenceRoll : attackStyle < 6 ? combatData.enemy.maximumRangedDefenceRoll : combatData.enemy.maximumMagicDefenceRoll
+        let playerAccuracy = maximumAttackRoll < enemyDodge ? (0.5 * maximumAttackRoll / enemyDodge) * 100 : (1 - 0.5 * enemyDodge / maximumAttackRoll) * 100
+        let enemyAccuracy = combatData.enemy.maximumAttackRoll < playerDodge ? (0.5 * combatData.enemy.maximumAttackRoll / playerDodge) * 100 : (1 - 0.5 * playerDodge / combatData.enemy.maximumAttackRoll) * 100
+        $("#combat-player-attack-bonus").text(Math.floor(playerAccuracy)+ "%")
+        $("#combat-enemy-attack-bonus").text(Math.floor(enemyAccuracy)+ "%")
+    }
+},500)
+//:: end of %acc
 
 //The End
 //SEMI loaded custom notification
