@@ -97,16 +97,19 @@ $('#modal-account-change').before($(`
                     <h2 style="color: white;">SEMI v0.1 by AW 2020.</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
-                    Scripting Melvor can be done through injected user scripts, either through a browser add-on like this, 
+                    Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
                     or another more general-purpose add-on like Tampermonkey to run userscripts. 
+                    <br>
                     Either way, the end result is extra functionality. 
                     <br>
                     The basis of this add-on comes from my own scripts as well as others'. Currently running:
                     <br>
                     <ul>
                         <li>Melvor AutoSlayer by Bubbalova, modified for more general use</li>
-                        <li>
+                        <li>XPH by Breakit</li>
                     </ul>
+                    <br>
+                    Working on incorporating Melvor Idle Helper's source into this add-on.
                     <br>
                     Source code can be found <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
                     <br><br>
@@ -192,13 +195,35 @@ function toggleAutoLoot() {
 }
 //End of Autocombat Auxiliaries
 
+//Button for toggling Auto Slayer Auto-equip scripts
+$("#sidebar hr").before($(`<li class="nav-main-heading">AutoSlayer Options</li>
+<li class="nav-main-item" title="The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on.">
+    <a class="nav-main-link nav-compact" href="javascript:toggleAutoEquip();" id="autoEquipNavBut">
+        <img class="nav-img" src="assets/media/bank/mirror_shield.svg" id="autoEquipImg">
+        <span class="nav-main-link-name">AS Auto Equip</span>
+    <small id="autoEquipStatus">Disabled</small></a>
+</li>`));
+
+var autoEquipZone = false;
+
+function toggleAutoEquip() {
+    autoEquipZone = !autoEquipZone;
+    $("#autoEquipStatus").text( (autoEquipZone) ? 'Enabled' : 'Disabled');
+}
+
 // Imported code section/authored by others. Comments like this //::show the script name & author.
 
 // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-// Importing Auto Slayer by Bubbalova. Using a modified version of script v1.1.7.
+// Importing Auto Slayer by Bubbalova. Using a modified version of script v1.2.1.
 // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 
 var autoSlayerEnabled = false;
+var autoSlayerCheck = 0;
+
+//Holds values for unequipped equipment
+    var originalRing;
+    var originalShield;
+    var originalCape;
 
 var updateAutoSlayerButtonText = function () { 
     $('#auto-slayer-button-status').text((autoSlayerEnabled) ? 'Enabled' : 'Disabled'); 
@@ -236,23 +261,27 @@ var setupAutoSlayer = function() { //aw: wonderful! injecting ui elements using 
     li.append(button); //well yeah
     button.on("click", toggleAutoSlayer); //duh. looks like you dont need () here for some reason
     updateAutoSlayerButtonText(); //ez. aw added tooltip title below.
-    li.attr('title', 'aw-AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on. This is meant to help those using ranged or magic avoid force-equipping a shield, which would leave you unable to attack.');
+    li.attr('title', 'aw-AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default.');
 }
 
 //Main function
 var autoSlayer = function() {
-    if (!autoSlayerEnabled) return; //aw: one line
-    //Holds values for unequipped equipment
-    /*aw: probably comment out since we ain't gonna mess with equipments. cept maybe arrows later.
-    var originalRing;
-    var originalShield;
-    var originalCape;
-    */
+    if (!autoSlayerEnabled) {
+        autoSlayerCheck = 0;
+        return; //aw: one line
+    }
     //Slayer areas that require items
     var strangeCave = 10;
     var highLands = 11;
 
     if (!slayerTask.length) getSlayerTask(); //If there is no slayer task, get one
+    
+    if(autoSlayerCheck == 0){
+        autoSlayerCheck = 1;
+        originalCape = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Cape];
+        originalShield = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield];
+        originalRing = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring];
+    }
 
     //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
     if (forcedEnemy !== slayerTask[0].monsterID || !isInCombat) {
@@ -276,10 +305,9 @@ var autoSlayer = function() {
                 }
             }
         }
-        else if(selectedCombatArea == strangeCave || selectedCombatArea == highLands) newSlayerTask(); //aw: ranged & autoslayer: no good. just rerolling when combat area is the cave or highlands. but it costs
-        /* aw: commenting out equipment changes, will have it reroll if it lands on one of these
+        else if( (selectedCombatArea == strangeCave || selectedCombatArea == highLands) && !autoEquipZone ) newSlayerTask(); //aw: ranged & autoslayer: no good. just rerolling when combat area is the cave or highlands. but it costs
         //Equips Mirror Shield for area
-        else if(selectedCombatArea == strangeCave) {
+        else if(selectedCombatArea == strangeCave && autoEquipZone) {
             if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] != CONSTANTS.item.Mirror_Shield) {
                 originalShield = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield];
                 if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] == 0) {
@@ -297,7 +325,7 @@ var autoSlayer = function() {
             }
         }
         //Equips Magical Ring for area
-        else if(selectedCombatArea == highLands) {
+        else if(selectedCombatArea == highLands && autoEquipZone) {
             if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] != CONSTANTS.item.Magical_Ring) {
                 originalRing = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring];
                 for (let i = 0; i < bank.length; i++) {
@@ -309,10 +337,12 @@ var autoSlayer = function() {
                 }
             }
         }
-        else if(selectedCombatArea != strangeCave || selectedCombatArea != highLands){
-
+        else if( (selectedCombatArea != strangeCave || selectedCombatArea != highLands) && autoEquipZone){
+            
+            slayerLockedItem = null; //not sure what this does, added in Auto Slayer 1.2.1
+            
             //Equips original shield when not in Area
-            if (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] == CONSTANTS.item.Mirror_Shield && originalShield != CONSTANTS.item.Mirror_Shield){
+            if ( (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] == CONSTANTS.item.Mirror_Shield && originalShield != CONSTANTS.item.Mirror_Shield && originalShield != undefined) && autoEquipZone){
                 for (let i = 0; i < bank.length; i++) {
                     if(typeof(items[bank[i].id].name) == items[originalShield].name) {
                         equipItem(i, originalShield, 1, selectedEquipmentSet)
@@ -321,9 +351,8 @@ var autoSlayer = function() {
                     }
                 }
             }
-
             //Equips original ring when not in Area
-            if (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] == CONSTANTS.item.Magical_Ring && originalRing != CONSTANTS.item.Magical_Ring){
+            if ( (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] == CONSTANTS.item.Magical_Ring && originalRing != CONSTANTS.item.Magical_Ring && originalRing != undefined) && autoEquipZone){
                 for (let i = 0; i < bank.length; i++) {
                     if(typeof(items[bank[i].id].name) == items[originalRing].name) {
                         equipItem(i, originalRing, 1, selectedEquipmentSet)
@@ -332,7 +361,7 @@ var autoSlayer = function() {
                     }
                 }
             }
-        } */
+        } 
         selectMonster(slayerTask[0].monsterID);
     }
 }
