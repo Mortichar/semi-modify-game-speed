@@ -94,7 +94,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.1 by AW 2020.</h2>
+                    <h2 style="color: white;">SEMI v0.1 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br><br>
                     Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
