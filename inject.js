@@ -1,67 +1,12 @@
-//MICEv0.3.1 by AW. these are the real cheats right here.
-//DEV//$("#cheat-container").removeClass('d-none'); //DEV//open cheat menu automatically
+//SEMIv0.1 by AW.
 
-$("#cheatmenuInfo").append($(`<p>Melvor Idle Cheat Engine v0.3.1 is running. Sweet!
-The red sidebar border is a friendly reminder that MICE is running, but can be turned off.
+//AldousWatts code section 
 
--BEWARE, YE CHEATER!-
-Use such software at your own risk! Back up ye game before modifying!
-This extension may completely break the save if used wrongly. You have been warned.
-Also, be careful about using Ctrl+F5 with this game, I've had it completely corrupt a save. That may or may not be the impetus for cheating. ;)
-
--Tips-
- * Hover over the cheat sidebar buttons to get some more info/help in the title tooltip.
- * Don't forget there are extra buttons added by MICE in the Farming, Combat, Cooking, and now Herblore pages.
- * GP/SC cheats won't run if you've entered text or negative numbers to help prevent breaking the game data. Strings and ints mix badly.
- * You should leave page alerts on because MICE uses js prompts for certain cheats at this point. (Moving to modals like GP/SC now)
- * If you're willing to open up the console (Ctrl+Shift+K) the XPH script is running, so you can run XPH([0|1],[0-19]) in the console to get a handy XP per hour utility. Ideally this information will be embedded in the UI.
- 
--Thanks and More-
- * Huge thanks to Mr Frux, the developer who created this awesome game!
- * Tampermonkey, a general use userscript add-on, can help you run simpler user scripts on Melvor. For instance, Melvor Auto Replant automates your farming for you, and works perfectly alongside MICE. <a href="https://greasyfork.org/en/scripts/394855-melvor-auto-replant" target="_blank">You can find it here at greasyfork.</a>
- * Thanks to Bubbalova & nysos3 for the <a href="https://greasyfork.org/en/scripts/396400-melvor-auto-slayer/code" target="_blank">AutoSlayer script framework</a> and other ideas!
- * I'll likely fork this extension into a cheat-free one for automation only, such as AutoCombat/Slayer and the cook all button, etc.
- 
- Have fun! :D</p>`));
-
-//herblore calc # items needed to level.
-$('#herblore-container .col-12 .mr-2 .btn').parent().append('<button type="button" class="btn btn-success m-3" onclick="calcHerbItemsToLvl();" title="Select a potion then hit this button.">Calculate # Needed to Next Level</button>');
-$('#herblore-container .col-12 .mr-2 .btn').parent().append('<p>You need to make <span id="herbCalc">#</span> of this item before leveling up.</p>');
-function calcHerbItemsToLvl() {
-    var itemsToLvl = Math.round((exp.level_to_xp(skillLevel[19]+1) +1 - skillXP[19])/herbloreItemData[selectedHerblore].herbloreXP)+1 ;
-    $("#herbCalc").text(itemsToLvl);
-}
-
-function calcToLvl(current=0) {
-    var expToLvl = exp.level_to_xp(skillLevel[current]+1) +1 - skillXP[current];
-    $("#"+current+"xpCalc").text(itemsToLvl);
-}
-
-$('#extraAtkBtn').parent().append('<button type="button" class="btn btn-success m-3" onclick="giveDust();" title="Does an extra attack every half second.">Toggle Magic Dust! [<span id="dustLabel">?</span>]</button>');
-var magicDust;
-var magicDustOn = false;
-function giveDust() {
-    magicDustOn = !magicDustOn;
-    $("#dustLabel").text((magicDustOn) ? 'Feelin\' it' : 'No Dust');
-    if(magicDustOn) {
-        magicDust = setInterval( ()=> { if(enemyInCombat && combatData.enemy.hitpoints>0) attack(0) }, 1000);
-        customNotify('assets/media/bank/holy_dust.svg','WOW! What a rush! You feel a surging, stimulating power.',5000);
-    } else { 
-        clearInterval(magicDust); 
-        customNotify('assets/media/bank/holy_dust.svg','You put away the good stuff and drink some water. Here comes sobriety.');
-    }
-}
-
-/*//wc calc hrs to next lvl
-$('#woodcutting-container').append('<button id="wcCalcBtn" type="button" class="btn btn-success m-3" onclick="calcWCTimeToLvl();">Calculate Time Needed to Next Level</button>');
-$('#woodcutting-container').append('<p class="text-size-sm text-muted">You need to cut for <span id="wcCalc">#</span> more minutes, or <span id="wcCalcHrs">#</span> more hours before leveling up.</p>');
-//function whatever */
-
-//custom notifications!
-function customNotify(imgsrc="", msg="Custom Notifications!", n=3000) { //outputs a custom notification with optional first image, MICE icon, and message.
+//custom notifications! green background txt.
+function customNotify(imgsrc="", msg="Custom Notifications!", n=3000) { //outputs a custom notification with optional first image, SEMI icon, and message.
     $.notify(
 		{
-			message: '<img class="notification-img" src="' + imgsrc + '"><img src="'+ $("#MICEicon").attr('src') +'" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success">' + msg + '</span>'
+			message: '<img class="notification-img" src="' + imgsrc + '"><img src="'+ $("#iconImg").attr('src') +'" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success">' + msg + '</span>'
 		},
 		{
 			type: 'light', 
@@ -80,148 +25,100 @@ function customNotify(imgsrc="", msg="Custom Notifications!", n=3000) { //output
 	);
 }
 
-var cheatborder = true;
-function toggleborder() { 
-    cheatborder = !cheatborder;
-    (cheatborder) ? borderOn() : borderOff();
+//herblore calc # items needed to level.
+$('#herblore-container .col-12 .mr-2 .btn').parent().append('<button type="button" class="btn btn-success m-3" onclick="calcHerbItemsToLvl();">Calculate # Needed to Next Level</button>');
+$('#herblore-container .col-12 .mr-2 .btn').parent().append('<p>You need to make <span id="herbCalc">#</span> of this item before leveling up.</p>');
+function calcHerbItemsToLvl() {
+    var itemsToLvl = Math.round((exp.level_to_xp(skillLevel[19]+1) +1 - skillXP[19])/herbloreItemData[selectedHerblore].herbloreXP)+1 ;
+    $("#herbCalc").text(itemsToLvl);
 }
 
-function borderOn() { document.getElementsByClassName('content-side content-side-full')[0].style.border = "2px solid red"; }
-function borderOff() { document.getElementsByClassName('content-side content-side-full')[0].style.border = ""; }
-
-var cheatInfoVisible = true;
-function toggleInfo() {
-    cheatInfoVisible = !cheatInfoVisible;
-    updateCheatInfoBtn();
-    (cheatInfoVisible) ? $("#cheatmenuInfo").show() : $("#cheatmenuInfo").hide();
+function calcToLvl(current=0) { 
+    var expToLvl = exp.level_to_xp(skillLevel[current]+1) +1 - skillXP[current];
+    $("#"+current+"xpCalc").text(itemsToLvl);
 }
-function updateCheatInfoBtn() { $("#hideCheatInfoBtn").text((cheatInfoVisible) ? 'Hide Info' : 'Show Info'); }
 
+/* wc calc hrs to next lvl
+$('#woodcutting-container').append('<button id="wcCalcBtn" type="button" class="btn btn-success m-3" onclick="calcWCTimeToLvl();">Calculate Time Needed to Next Level</button>');
+$('#woodcutting-container').append('<p class="text-size-sm text-muted">You need to cut for <span id="wcCalc">#</span> more minutes, or <span id="wcCalcHrs">#</span> more hours before leveling up.</p>');
+*/
+//function etc... should we do this as a main header button that calcs based on open page?
+
+/* well, i don't like the xph function in this, but this is a good way to create a fresh, working dropdown addon button to the left of the potions header button.
+//add xhp... XPH dammit! not x hitpoints... xp hour. feel like it should be xpph...
+$("#page-header-potions-dropdown").parent().before($(`
+<div class="dropdown d-inline-block ml-2">
+    <button type="button" class="btn btn-sm btn-dual" id="page-header-xph-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        XPH
+    </button>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 border-0 font-size-sm" id="header-xph-dropdown" aria-labelledby="page-header-xph-dropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-262px, 33px, 0px);">
+        <div class="p-2 bg-primary text-center">
+            <h5 class="dropdown-header text-uppercase">
+                <a class="text-white" href="javascript:viewItemStats(0,0,true);">Use the XPH Script (Experience points per hour)</a>
+            </h5>
+        </div>
+        <div class="block-content block-content-full text-center">
+            <button id="xphBtn" class="btn btn-sm btn-dual" onclick="xphBtn()">Start</button>
+        </div>
+    </div>
+</div>`));
+
+function xphBtn() { 
+    XPH(1,currentPage); //don't like this actually. sigh.
+}
+*/
+/* highlighting buttons
     var skillPick; //selecting which skill you want to do level up cheat on
-function cheatSkill(x) {
     $("#skillBut" + skillPick).attr("class", "btn btn-outline-primary"); //de-highlight previous selection
 	skillPick = x; //update selection 
     $("#skillBut" + x).attr("class", "btn btn-primary"); //highlight selection
-}
+*/
 
-function levelUpCheat() {
-    addXP(skillPick, exp.level_to_xp(skillLevel[skillPick]+1) +1 - skillXP[skillPick]);
-    updateLevelProgress(skillPick);
-    updateSkillWindow(skillPick);
-}
+function semiInfo() { $("#modal-semi-info").modal(open); }
 
-function giveGPcheat() {
-    var gpaddnum = Number(document.getElementById('GPask').value);
-    gpAdd(gpaddnum);
-}
-
-function giveGPcheatNav() { $("#modal-gp-cheat").modal(open); }
-
-//Modal Dialog for GP cheat! --- these modals DO work, which is awesome, but they're kinda phatt here. hmm. good for editing, not great for space.
-$('#modal-account-change').before($(`<div class="modal" id="modal-gp-cheat" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="block block-themed block-transparent mb-0">
-					<div class="block-header bg-primary-dark">
-                        <img class="nav-img" src="assets/media/main/coins.svg">
-						<h3 class="block-title">Pirate some GP</h3>
-						<div class="block-options">
-							<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-								<i class="fa fa-fw fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="block-content font-size-sm">
-						<p id="name-change-text"></p>
-						<div id="GPaskForm" class="form-group">
-							<label for="example-text-input">How many pirated Gold Pieces would you like?</label>
-							<input class="form-control" id="GPask" placeholder="1234567890" type="text">
-						</div>
-					</div>
-					<div class="block-content block-content-full text-right border-top">
-						<button type="button" id="GPcheatNavBtn" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="giveGPcheat();"><i class="fa fa-check mr-1"></i>Plunder Booty!</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-`));
-
-function gpAdd(n) { 
-	if (!isNaN(n) && n>0) {
-	gp += n; 
-	updateGP();
-	gpNotify(n+" Unearned GP"); //unearned gp stats? lol
-	updateGetGP();
-	}
-}
-
-function updateGetGP() { //immediately updates custom nav button gp amount
-    $("#nav-current-gp2").text(convertGP(gp) + " GP"); 
-    $("#nav-current-gp2").attr("data-original-title", numberWithCommas(gp) + " GP");
-    $("#nav-current-sc").text(slayerCoins + " SC"); //and I'm just gonna add SC in here too
-    $("#nav-current-sc").attr("data-original-title", slayerCoins + " SC");
-}
-var cheatgpupdate = setInterval(function() { updateGetGP(); }, 3000); //looping function to constantly update the cheat clone gp count & sc count
-
-function giveSCcheat(n) {
-    n = Number(n); //just in case
-    if (!isNaN(n) && n>0) {
-        slayerCoins += n;
-        notifySlayer("+"+n+" Unearned SC");
-        updateSlayerCoins();
-        updateGetGP();
-    }
-}
-//SC Cheat Modal Dialog -- adds modified modal into the page before the account change one, which it's based on. could use for the others. things of note here: using template literals instead of quotes to make it easily multi-line. injecting a bunch of text into a webpage that becomes a modal element. figuring out that they're not using jqueryui, it's just this modal stuff. got it.
-$('#modal-account-change').before($(`<div class="modal" id="modal-sc-cheat" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="block block-themed block-transparent mb-0">
-					<div class="block-header bg-primary-dark">
-                        <img class="nav-img" src="assets/media/main/slayer_coins.svg">
-						<h3 class="block-title">Cheatin' fer Slayer Coins</h3>
-						<div class="block-options">
-							<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-								<i class="fa fa-fw fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="block-content font-size-sm">
-						<p id="name-change-text"></p>
-						<div id="SCaskForm" class="form-group">
-							<label for="example-text-input">How many ill-gotten Slayer Coins would you like?</label>
-							<input class="form-control" id="SCask" placeholder="1234567890" type="text">
-						</div>
-					</div>
-					<div class="block-content block-content-full text-right border-top">
-						<button type="button" id="SCcheatNavBtn" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="giveSCcheat(Number(document.getElementById('SCask').value));"><i class="fa fa-check mr-1"></i>Gimme!</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-`));
-
-function giveSCcheatNav() { $("#modal-sc-cheat").modal(open); }
-
-function lootcheat() {
-    var lootnameask = prompt("What loot do you want? Type or copy the name here. Use underscores for spaces, delete any parentheses.", "Normal_Shortbow_U");
-    if (lootnameask === null) return; //if cancel or blank kill function
-    var lootqtyask = prompt("How many?", "1");
-    var lootqty = Number(lootqtyask);
-    if (!isNaN(lootqty) && lootqty>0) collectLoot(-1,CONSTANTS.item[lootnameask],lootqty);
-}
-
-function lootcheatID() {
-    var lootidask = prompt("Enter the Loot ID of the item you want.", "222");
-    var lootid = Number(lootidask);
-    if (isNaN(lootid) || lootid === 0) return; //cancel or non-numbers kills function
-    var lootqtyask = prompt("How many?", "222");
-    var lootqty = Number(lootqtyask);
-    if (isNaN(lootqty) || lootqty === 0) return; 
-    if (!isNaN(lootqty) && lootqty>0) collectLoot(-1,lootidask,Number(lootqtyask)); //do we even need the {}? dont think so.
-}
+//Modal for SEMI info popup
+$('#modal-account-change').before($(`
+<div class="modal" id="modal-semi-info" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.1</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <p id="semi-info-text"></p>
+                    
+                    <h2 style="color: white;">SEMI v0.1 by AW 2020.</h2>
+                    Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
+                    <br>
+                    Scripting Melvor can be done through injected user scripts, either through a browser add-on like this, 
+                    or another more general-purpose add-on like Tampermonkey to run userscripts. 
+                    Either way, the end result is extra functionality. 
+                    <br>
+                    The basis of this add-on comes from my own scripts as well as others'. Currently running:
+                    <br>
+                    <ul>
+                        <li>Melvor AutoSlayer by Bubbalova, modified for more general use</li>
+                        <li>
+                    </ul>
+                    <br>
+                    Source code can be found <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
+                    <br><br>
+                    
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <button type="button" id="semiInfoModalBtn" class="btn btn-sm btn-primary" data-dismiss="modal" onclick=""><i class="fa fa-check mr-1"></i>Cool!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>`));
 
 //***************************AUTO COMBAT***********************************
     var autocombat;
@@ -261,14 +158,14 @@ function terminateAutoCombat(reason) {
     stopCombat(false, true, true);
     autocombat = false;
     updateACstatus();
-    alert('MICE: Exited Auto Combat @ '+dateTime+' because '+username+' is out of '+reason);//upgrade to jqueryui modal dialog
+    alert('SEMI: Exited Auto Combat @ '+dateTime+' because '+username+' is out of '+reason);//upgrade to jqueryui modal dialog
     autoSlayerEnabled = false; //connecting to auto slayer script by bubbalova from greasefork in tampermonkey
     updateAutoSlayerButtonText(); //yay, automatically turns off auto slayer! kewls
 }
 
 function updateACstatus() { 
     $("#autocombatStatus").text((autocombat) ? 'Enabled' : 'Disabled'); 
-    $("#autocombatStatus").css('color', (autocombat) ? 'cyan' : '');
+    $("#autocombatStatus").css('color', (autocombat) ? 'gold' : '');
 }
 
 function toggleautocombat() { //button -> function that enables auto combat
@@ -295,88 +192,7 @@ function toggleAutoLoot() {
 }
 //End of Autocombat Auxiliaries
 
-    var menuOn;
-function openCheatMenu() {
-    if(menuOn) {
-    $("#cheat-container").attr("class", "content d-none"); //adding d-none to class hides elements, bootstrap+jqueryui methinks
-    menuOn = false;
-    } else {
-    menuOn = true;
-    $('[data-toggle="tooltip"]').tooltip('hide');
-    let pages = ["woodcutting", "shop", "bank", "settings", "changelog", "milestones", "statistics", "fishing", "firemaking", "cooking", "mining", "smithing", "mastery", "combat", "thieving", "farming", "fletching","crafting","runecrafting","herblore"];
-    $("#" + pages[currentPage] + "-container").attr("class", "content d-none");
-    $("#cheat-container").attr("class", "content");
-    $("#header-title").text("Cheat Menu: persistent across other pages. To close, click nav button again.");
-    $("#header-icon").attr("src", "assets/media/main/logo-xmas.svg");
-    $("#header-theme").attr("class", "content-header bg-settings");
-    if ( $(window).width() < 992 ) { One.layout('sidebar_toggle'); }
-    }
-}
-
-function changeNameInf() {
-	if (document.getElementById('unameinput').value !== "") { //if not blank, change name to whatever's in the box. PUT YOUR ASS IN THE BOOOOX
-	username = document.getElementById('unameinput').value;
-	$("#account-name").text(username); 
-	console.log("Username changed to: " + username); 
-    customNotify('assets/media/main/profile_header.svg','Username changed to: '+username);
-	saveData();
-	}
-}
-
-//for chrome users: Inspector script to deconstruct the Item constant object to display the names & IDs. https://gist.github.com/archan937/1961799
-function inspect(object) {
-  switch (typeof(object)) {
-  case "undefined":
-    return "undefined";
-  case "string":
-    return "\"" + object.replace(/\n/g, "\\n").replace(/\"/g, "\\\"") + "\"";
-  case "object":
-    if (object == null) {
-      return "null";
-    }
-    var a = [];
-    if (object instanceof Array) {
-      for (var i in object) {
-        a.push(inspect(object[i]));
-      };
-      return "[" + a.join(", ") + "]";
-    } else {
-      for (var key in object) {
-        if (object.hasOwnProperty(key)) {
-          a.push(key + ": " + inspect(object[key]));
-        }
-      };
-      return "{" + a.join(", ") + "}";
-    }
-  default:
-    return object.toString();
-  }
-};
-
-function showItems() {
-    if(navigator.userAgent.match("Chrome")){
-        var itemSplit = inspect(CONSTANTS.item).split(',').join('\n');
-        var list = "List of items and IDs: \n" + itemSplit;
-    } else if(navigator.userAgent.match("Firefox")) { 
-        var itemSplit = CONSTANTS.item.toSource().split(',').join('\n');
-        var list = "List of items and IDs: \n"+itemSplit; 
-    }
-	var listBox = document.createElement('pre'); //use pre html tag for the string's new lines to format properly
-	listBox.style = "height:333px; width: 33%; border: 1px solid #ccc; font:16px/26px monospace, monospace; overflow: auto; color:cyan;";
-	listBox.textContent = list;
-	document.getElementById("cheatmenu").appendChild(listBox);
-	document.getElementById("showItemsBut").remove();
-	document.getElementById("listheader").textContent = "Ctrl+F is your friend here. :)";
-}
-
-function instantFarm(x=0) { //0 crops, 1 herbs, 2 trees.
-    customNotify('assets/media/skills/farming/farming.svg','Bonemeal has been added. Please wait for success.');
-	for (i=0; i<newFarmingAreas[x].patches.length; i++) { 
-		newFarmingAreas[x].patches[i].timePlanted = 1; //sets all herb patches to time immemorial (1970) where all herbs are ready to harvest now
-	}
-}
-
-function unlockAdSet() { $("#setting-ad-options-enabled").removeClass('d-none'); } //shows the ad setting.
+// Imported code section/authored by others. Comments like this //::show the script name & author.
 
 // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 // Importing Auto Slayer by Bubbalova. Using a modified version of script v1.1.7.
@@ -386,7 +202,7 @@ var autoSlayerEnabled = false;
 
 var updateAutoSlayerButtonText = function () { 
     $('#auto-slayer-button-status').text((autoSlayerEnabled) ? 'Enabled' : 'Disabled'); 
-    $('#auto-slayer-button-status').css('color', (autoSlayerEnabled) ? 'cyan' : '');
+    $('#auto-slayer-button-status').css('color', (autoSlayerEnabled) ? 'gold' : '');
 } //aw: ?: that shit's a ternary operation. ? and : are ternary operators. (if) ? then : else. goddamn thats good. shorthand if, else. so func does this: set text of button stat to enabled if enabled, disabled else. made this all one line.
 
 var toggleAutoSlayer = function () {
@@ -521,7 +337,7 @@ var autoSlayer = function() {
     }
 }
 
-var autoSlayerTimer = setInterval(function(){autoSlayer();}, 2000); //idk how i feel about this always being on rn
+var autoSlayerTimer = setInterval(function(){autoSlayer();}, 2000); //idk how i feel about this always being on rn... guess it's ok cuz it will just check if running and return. doesn't seem to be heavy in bg.
 
 setTimeout(function() { setupAutoSlayer(); }, 1000); //why not just run it? there must be a reason for delay
 
@@ -566,20 +382,25 @@ function XPH(running,stat) {
 }
 //::what a great utility! to get current page: XPH(1,currentPage);... won't work for combat
 
-//Loaded notification
+/*//::from Bioniclegenius in Melvor discord
+var smithingHUD = window.setInterval(function() {
+    var xpLeft = exp.level_to_xp(skillLevel[5] + 1) - skillXP[5];
+    var smithItemXP = items[smithingItems[selectedSmith].itemID].smithingXP;
+    var itemsLeft = Math.ceil(xpLeft / smithItemXP);
+    var oldText = numberWithCommas(Math.floor(skillXP[5])) + " / " + numberWithCommas(exp.level_to_xp(skillLevel[5] + 1));
+    $("#skill-progress-xp-5").text(oldText + " - " + numberWithCommas(xpLeft) + " - " + numberWithCommas(itemsLeft));
+}, 1000 / 60);
+//::*/
+//hmmm... numberWithCommas eh? is this a game function?
+
+//The End
+//SEMI loaded custom notification
 if(navigator.userAgent.match("Chrome")){
-    customNotify('assets/media/monsters/dragon_black.svg','Melvor Idle Cheat Engine v0.3.1 is now loaded and running! Check the bottom of the sidebar for cheats.',22000);
+    customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
 } else if(navigator.userAgent.match("Firefox")) { 
-    customNotify('','Melvor Idle Cheat Engine v0.3.1 is now loaded and running! Check the bottom of the sidebar for cheats.',22000);
+    customNotify('','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
 }
 
-/*//are we ever gonna do this?
-function masterycheat() {
-    var masteryadd = prompt("What item would you like to add mastery XP to?", "Normal_Bow_u");
-    var masteryamtadd = prompt("How many XP?", "10000");
-    miningOreMastery[miningData[masteryadd].masteryID].masteryXP += Number(masteryamtadd);
-}
-*/
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 
@@ -587,5 +408,12 @@ time until done calculators? more items til done calculators?
 const craftTime = 2; //s
 var numItemsCraftable = math;
 output.text(numItemsCraftable*craftTime+" sec til done");
+
+*** PUT OPTION FOR AUTO-EQUIPMENT during autoslayer IN THIS ***
+
+UI notes for xp/item calc: sliders. Move a slider to set how many levels you want to move up, then once item is selected, calculate and display XP, gp, whatever.
+
+craftInterval: game variable for ms that it takes to craft one item. Halved with skill cape. Could be useful for item/xp time calc.
+
 
 */
