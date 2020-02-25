@@ -1,4 +1,4 @@
-//SEMIv0.1 by AW.
+//SEMIv0.1.1 by AW.
 
 //AldousWatts code section 
 
@@ -62,7 +62,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.1</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.1.1</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -72,7 +72,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.1 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.1.1 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br><br>
                     Don't forget these features of SEMI that aren't in the sidebar:
@@ -556,6 +556,13 @@ function setupSEMI() { // streamlining/simplicity
             <small id="auto-bonfire-button-status">Disabled</small>
         </a>
     </li>
+    <li id="semi-nav-12" class="nav-main-item" title="AutoCook by Unicue will automatically cycle through your fish and cook them all in order.">
+        <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
+            <img class="nav-img" src="assets/media/skills/cooking/cooking.svg">
+            <span class="nav-main-link-name">AutoCook</span>
+            <small id="auto-cook-status">Disabled</small>
+        </a>
+    </li>
     <li id="semi-nav-2" class="nav-main-item" title="AutoMine will mine highest XP ore first automatically. DOES NOT MIX WELL WITH AUTOSLAYER.">
         <a id="auto-mine-button" class="nav-main-link" href="javascript:toggleAutoMine();">
             <img class="nav-img" src="assets/media/skills/mining/mining.svg">
@@ -683,12 +690,33 @@ var autoMine = function(rocks) {
 }
 var autoMineTimer = setInterval(function(){autoMine(mineArray);}, 100);
 
-//aw: attempting to create buttons on each mining ore to set preference...?
-
 //Super Control Panel Builder (now more semi buttons or whatever)
 setTimeout(function() { setupSEMI(); },3000);
-//setTimeout(function() { toggleAutoMine(); },500); //why? no auto automine here.
 //:: end of MSCP
+
+//:://Auto Cooking by Unicue on the Melvor discord: https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992
+let fishTypeCount = 0;
+let fishType = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+function autoCookAll(){
+    if(document.getElementById("skill-cooking-food-selected-qty").innerHTML == "x 0"){
+        fishTypeCount = (fishTypeCount + 1) % fishType.length;
+        selectFood(fishType[fishTypeCount]);
+    }
+    else if(document.getElementById("cook-count").innerHTML == "-"){
+        startCooking(10, false);
+    }    
+}
+var cookInterval;
+var autoCook = false;
+function toggleAutoCook() {
+    autoCook = !autoCook;
+    $("#auto-cook-status").text( (autoCook) ? 'Enabled' : 'Disabled');
+    if (autoCook) {
+        cookInterval = setInterval(autoCookAll, 1000) 
+        changePage(9);
+    } else { clearInterval(cookInterval); }
+}
 
 //:: import this soon: https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js
 
