@@ -31,13 +31,17 @@ $("#semiHeading").append($('<a href="javascript:toggleSemiMenu();"><i class="far
 function toggleSemiMenu() {
     semiMenu = !semiMenu;
     for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).toggleClass("d-none"); } //from 0 to 11 so far.
-    $("#skill-menu-icon-2").attr("class", "far fa-eye" + ((semiMenu) ? '' : '-slash') + " text-muted ml-1");
+    $("#skill-menu-icon2").attr("class", "far fa-eye" + ((semiMenu) ? '' : '-slash') + " text-muted ml-1");
 }
+
+//AutoCook (sorta): insert always-unlocked cooking button.
+$("#cook-button-qty-all").parent().append($('<button type="button" id="alwayscookallbut" class="btn btn-warning mb-1" onclick="startCooking(0, false)" style="width: 100%; border: 2px solid red;">Cook All (Permanently Unlocked by SEMI)</button>'));
 
 //herblore calc # items needed to level.
 $('#herblore-container .col-12 .mr-2 .btn').parent().append('<button type="button" class="btn btn-success m-3" onclick="calcHerbItemsToLvl();">Calculate # Needed to Next Level</button>');
 $('#herblore-container .col-12 .mr-2 .btn').parent().append('<p>You need to make <span id="herbCalc">#</span> of this item before leveling up.</p>');
 function calcHerbItemsToLvl() {
+    if (!selectedHerblore) return;
     var itemsToLvl = Math.round((exp.level_to_xp(skillLevel[19]+1) +1 - skillXP[19])/herbloreItemData[selectedHerblore].herbloreXP)+1 ;
     $("#herbCalc").text(itemsToLvl);
 }
@@ -47,42 +51,6 @@ function calcToLvl(current=0) {
     var expToLvl = exp.level_to_xp(skillLevel[current]+1) +1 - skillXP[current];
     $("#"+current+"xpCalc").text(itemsToLvl);
 }
-
-/* wc calc hrs to next lvl
-$('#woodcutting-container').append('<button id="wcCalcBtn" type="button" class="btn btn-success m-3" onclick="calcWCTimeToLvl();">Calculate Time Needed to Next Level</button>');
-$('#woodcutting-container').append('<p class="text-size-sm text-muted">You need to cut for <span id="wcCalc">#</span> more minutes, or <span id="wcCalcHrs">#</span> more hours before leveling up.</p>');
-*/
-//function etc... should we do this as a main header button that calcs based on open page?
-
-/* well, i don't like the xph function in this, but this is a good way to create a fresh, working dropdown addon button to the left of the potions header button.
-//add xhp... XPH dammit! not x hitpoints... xp hour. feel like it should be xpph...
-$("#page-header-potions-dropdown").parent().before($(`
-<div class="dropdown d-inline-block ml-2">
-    <button type="button" class="btn btn-sm btn-dual" id="page-header-xph-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        XPH
-    </button>
-    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 border-0 font-size-sm" id="header-xph-dropdown" aria-labelledby="page-header-xph-dropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-262px, 33px, 0px);">
-        <div class="p-2 bg-primary text-center">
-            <h5 class="dropdown-header text-uppercase">
-                <a class="text-white" href="javascript:viewItemStats(0,0,true);">Use the XPH Script (Experience points per hour)</a>
-            </h5>
-        </div>
-        <div class="block-content block-content-full text-center">
-            <button id="xphBtn" class="btn btn-sm btn-dual" onclick="xphBtn()">Start</button>
-        </div>
-    </div>
-</div>`));
-
-function xphBtn() { 
-    XPH(1,currentPage); //don't like this actually. sigh.
-}
-*/
-/* highlighting buttons (from MICE skill selector)
-    var skillPick; //selecting which skill you want to do level up cheat on
-    $("#skillBut" + skillPick).attr("class", "btn btn-outline-primary"); //de-highlight previous selection
-	skillPick = x; //update selection 
-    $("#skillBut" + x).attr("class", "btn btn-primary"); //highlight selection
-*/
 
 function semiInfo() { $("#modal-semi-info").modal(open); }
 
@@ -121,6 +89,9 @@ $('#modal-account-change').before($(`
                         <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit.</a> For now, console only: Ctrl+Shift+K for console, type XPH() for the tool.</li>
                         <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
                     </ul>
+                    <br>
+                    I'm definitely eyeballing Katorone's Melvor Idle automation script for extra functionality.
+                    <br><br>
                     Source code for SEMI can be found <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
                     <br><br>
                 </div>
@@ -203,23 +174,13 @@ function toggleAutoLoot() {
 }
 //End of Autocombat Auxiliaries
 
-//Button for toggling Auto Slayer Auto-equip scripts... why doesn't this throw errors since it seems to load before the rest of the page? unlike the thief stuff...argh idk
-$("#sidebar hr").before($(`<li id="semi-nav-8" class="nav-main-heading">AutoSlayer Options</li>
-<li id="semi-nav-9" class="nav-main-item" title="The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on.">
-    <a class="nav-main-link nav-compact" href="javascript:toggleAutoEquip();" id="autoEquipNavBut">
-        <img class="nav-img" src="assets/media/bank/mirror_shield.svg" id="autoEquipImg">
-        <span class="nav-main-link-name">AS Auto Equip</span>
-    <small id="autoEquipStatus">Disabled</small></a>
-</li>`));
+// Imported code section/mostly authored by others. Comments like this //::show the script name & author. Heavy modifications.
 
 var autoEquipZone = false;
-
 function toggleAutoEquip() {
     autoEquipZone = !autoEquipZone;
     $("#autoEquipStatus").text( (autoEquipZone) ? 'Enabled' : 'Disabled');
 }
-
-// Imported code section/authored by others. Comments like this //::show the script name & author. Heavy modifications.
 
 // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 // Importing Auto Slayer by Bubbalova. Using a modified version of script v1.2.1.
@@ -252,27 +213,6 @@ var toggleAutoSlayer = function () {
         }
     }, 100);
 }
-
-/* moving
-var setupAutoSlayer = function() { //aw: wonderful! injecting ui elements using jquery(ui). good to learn
-    if ($("#auto-slayer-button").length) return; //if there's already a button, buzz off ho. super tempted to change this to ? but idk, what if it borks without :?
-    //var containerRef = $(".content-side ul.nav-main li.nav-main-heading:last"); //looks like defining where to put the button... right before the main heading
-    var containerRef = $("#autocombatNavBut").parent();
-    var li = $('<li id="semi-nav-11" class="nav-main-item"></li>'); //setting up button container, the li element
-    containerRef.before(li); // put the button container, li, just before the final header defined in containerRef.
-    var button = $([ //jqueryui stuff: writing the contents of the nav-main-item... makes it as an array in... jquery? why the $?
-        '<a id="auto-slayer-button" class="nav-main-link" href="javascript:void(0);">', //but why void? why not href="func-u-want"? sneeky
-        '<img class="nav-img" src="assets/media/skills/slayer/slayer.svg">', //nice. aw chng: slayer skill icon
-        '<span class="nav-main-link-name">AutoSlayer</span>', // ye boi
-        '<small id="auto-slayer-button-status"></small>', //no comma on final line... reminds a bit of .json. probably just array formatting.
-        '</a>'
-    ].join("")); //join, huh? it makes it into a string. using jquery to make an html block. nice. except it formats like poop.
-    li.append(button); //well yeah
-    button.on("click", toggleAutoSlayer); //duh. looks like you dont need () here for some reason
-    updateAutoSlayerButtonText(); //ez. aw added tooltip title below.
-    li.attr('title', 'aw-AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default.');
-}
-*/
 
 //Main function
 var autoSlayer = function() {
@@ -378,8 +318,6 @@ var autoSlayer = function() {
 
 var autoSlayerTimer = setInterval(function(){autoSlayer();}, 2000); //idk how i feel about this always being on rn... guess it's ok cuz it will just check if running and return. doesn't seem to be heavy in bg.
 
-//setTimeout(function() { setupAutoSlayer(); }, 1000); //why not just run it? there must be a reason for delay. 99% likely page load issues.
-
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 // End of AutoSlayer!
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
@@ -421,15 +359,39 @@ function XPH(running,stat) {
 }
 //::what a great utility! to get current page: XPH(1,currentPage);... won't work for combat
 
+/* well, i don't like the xph function in this, but this is a good way to create a fresh, working dropdown addon button to the left of the potions header button.
+//add xhp... XPH dammit! not x hitpoints... xp hour. feel like it should be xpph...
+$("#page-header-potions-dropdown").parent().before($(`
+<div class="dropdown d-inline-block ml-2">
+    <button type="button" class="btn btn-sm btn-dual" id="page-header-xph-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        XPH
+    </button>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 border-0 font-size-sm" id="header-xph-dropdown" aria-labelledby="page-header-xph-dropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-262px, 33px, 0px);">
+        <div class="p-2 bg-primary text-center">
+            <h5 class="dropdown-header text-uppercase">
+                <a class="text-white" href="javascript:viewItemStats(0,0,true);">Use the XPH Script (Experience points per hour)</a>
+            </h5>
+        </div>
+        <div class="block-content block-content-full text-center">
+            <button id="xphBtn" class="btn btn-sm btn-dual" onclick="xphBtn()">Start</button>
+        </div>
+    </div>
+</div>`));
+
+function xphBtn() { 
+    XPH(1,currentPage); //don't like this actually. sigh.
+}
+*/
+
 //:: Scavenging the Thieving calculator from Melvor Idle Helper by RedSparr0w on GitLab: https://github.com/RedSparr0w/Melvor-Idle-Helper
-setInterval( () => { //setup thieving calcs after 10sec, plenty delay for page load
+setTimeout( () => { //setup thieving calcs after 10sec, plenty delay for page load... should it be interval or timeout? timeout works fine, no need to repeat.
     thievingCalc();
     $('.js-popover').popover({ // Enable the popovers
         container: 'body',
         animation: false,
         trigger: 'hover focus',
     }); 
-}, 10000); //give it a nice long time to load. this one can throw errors.
+}, 5000); //give it a nice long time to load. this one can throw errors.
 
 const addCalcToEl = (el, data = []) => {
     if (!el || !el.appendChild) return;    
@@ -541,10 +503,6 @@ function toggleAutoBonfire() {
 }
 
 //:: importing scraps from Melvor Super Control Panel user script by Strutty on Greasefork: https://greasyfork.org/en/scripts/395834-melvor-super-control-panel
-//TODO:
-//1. Add in switching gloves for mining & smithing //aw: interesting. looks like someone, Katorone, has done this.
-//2. Add level checking for mining in case ores in mineArray are unavailable //hmm. yeah good idea. maybe Katorone? 
-
 //Important Settings
 //AutoMine
 const copper = 0;
@@ -558,12 +516,10 @@ const addy = 7;
 const runite = 8;
 const dragonite = 9;
 const runeEssence = 10;
-var mineArray = ([runeEssence, coal]); //add ui...?
+var mineArray = ([dragonite, runite, addy, mithril, gold, silver, coal, iron, tin, copper, runeEssence]); //add ui...?
 //AutoSellGems
-var targetStack = 100; //max amt of gems to keep
+var targetStack = 100; //once it hits this amount, sell all of them.
 var gemIdList = [128, 129, 130, 131, 132]; //ruby boobies & such
-//AutoSmith
-//var smithIdList = [0, 12, 24, 35, 41, 53, 54, 63];
 
 //General Functions
 function getBankQty(id) {
@@ -575,43 +531,10 @@ function getBankQty(id) {
     return 0;
 }
 
-//AutoSellGems: Will sell gems when they reach the stack amount specified
-var autoSellGemsEnabled = false;
-var updateAutoSellGemsButtonText = function () {
-	$('#auto-sellgems-button-status').text((autoSellGemsEnabled) ? 'Enabled' : 'Disabled');
-}
-var toggleAutoSellGems = function () {
-	autoSellGemsEnabled = !autoSellGemsEnabled;
-	updateAutoSellGemsButtonText();
-	setTimeout(function() {
-		if (!autoSellGemsEnabled) {
-			console.log("Auto Sell Gems Disabled!");
-		}
-	}, 100);
-}
-/* obsoleted
-var setupAutoSellGems = function() {
-  if ($("#auto-sellgems-button").length) return;
-  var containerRef = $(".content-side ul.nav-main li.nav-main-heading:last");
-  containerRef.before($('<li id="autoHeading" class="nav-main-heading">More Automation</li>'));
-  var li = $('<li class="nav-main-item"></li>');
-  containerRef.before(li);
-  var button = $([
-      '<a id="auto-sellgems-button" class="nav-main-link" href="javascript:void(0);">',
-      '<img class="nav-img" src="assets/media/bank/diamond.svg">',
-      '<span class="nav-main-link-name">AutoSell Gems</span>',
-      '<small id="auto-sellgems-button-status"></small>',
-      '</a>'
-  ].join(""));
-  li.append(button);
-  button.on("click", toggleAutoSellGems);
-  updateAutoSellGemsButtonText();
-}
-*/
+//SEMI menu setup function -- big fat template literal append
 function setupSEMI() { // streamlining/simplicity
     if ($("#auto-replant-button").length) return; //probably smarter than the way i inject a lot of elements
-    
-    //sell gems button
+    //Settings menu HTML, attached to the heading anchor set up in SEMI.js content script
     $("#semiHeading").after($(`
     <li id="semi-nav-0" class="nav-main-item" title="AutoReplant will automatically farm everything for you, replanting the same seed when it harvests, buying and using compost when it needs to automatically.">
         <a id="auto-replant-button" class="nav-main-link" href="javascript:toggleAutoReplant();">
@@ -627,7 +550,7 @@ function setupSEMI() { // streamlining/simplicity
             <small id="auto-bonfire-button-status">Disabled</small>
         </a>
     </li>
-    <li id="semi-nav-2" class="nav-main-item" title="AutoMine will mine ores based on priorities that you can choose.">
+    <li id="semi-nav-2" class="nav-main-item" title="AutoMine will mine highest XP ore first automatically. DOES NOT MIX WELL WITH AUTOSLAYER.">
         <a id="auto-mine-button" class="nav-main-link" href="javascript:toggleAutoMine();">
             <img class="nav-img" src="assets/media/skills/mining/mining.svg">
             <span class="nav-main-link-name">AutoMine</span>
@@ -656,14 +579,12 @@ function setupSEMI() { // streamlining/simplicity
     </li>
 
     <li id="semi-nav-6" class="nav-main-heading">AutoCombat Options</li>
-
     <li class="nav-main-item" id="semi-nav-7" title="AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
             <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
             <span class="nav-main-link-name">AC Auto Eat</span>
         <small id="autoEatStatus">Enabled</small></a>
     </li>
-
     <li class="nav-main-item" id="semi-nav-8" title="Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoLoot();" id="autoLootNavBut">
             <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoLootImg">
@@ -680,6 +601,7 @@ function setupSEMI() { // streamlining/simplicity
     </li>
     
     <hr>
+    
     <li id="semi-nav-11" class="nav-main-item">
         <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
             <img class="nav-img" src="chrome-extension://cblkelbabiaipcicpmffoekblphcbkdd/icons/border-48.png">
@@ -690,91 +612,41 @@ function setupSEMI() { // streamlining/simplicity
     updateAutoSellGemsButtonText();    
     updateAutoMineButtonText();    
     updateAutoSlayerButtonText();
-    
-    /* testing mass import
-    //auto mine button
-    $("#semiHeading").after($(`<li id="semi-nav-1" class="nav-main-item" title="AutoMine will mine ores based on priorities that you can choose.">
-        <a id="auto-mine-button" class="nav-main-link" href="javascript:toggleAutoMine();">
-            <img class="nav-img" src="assets/media/skills/mining/mining.svg">
-            <span class="nav-main-link-name">AutoMine</span>
-            <small id="auto-mine-button-status"></small>
-        </a>
-    </li>`));
-    
-    
-    //auto bonfire button: AW
-    $("#semiHeading").after($(`<li id="semi-nav-2" class="nav-main-item" title="AutoBonfire will keep a bonfire lit when you have a type of wood selected in Firemaking. The author suggests having an abundance of wood if using this!">
-        <a id="auto-bonfire-button" class="nav-main-link" href="javascript:toggleAutoBonfire();">
-            <img class="nav-img" src="assets/media/skills/firemaking/bonfire_active.svg">
-            <span class="nav-main-link-name">AutoBonfire</span>
-            <small id="auto-bonfire-button-status">Disabled</small>
-        </a>
-    </li>`));
-    
-    //auto replant button: AW
-    $("#semiHeading").after($(`<li id="semi-nav-0" class="nav-main-item" title="AutoReplant will automatically farm everything for you, replanting the same seed when it harvests, buying and using compost when it needs to automatically.">
-        <a id="auto-replant-button" class="nav-main-link" href="javascript:toggleAutoReplant();">
-            <img class="nav-img" src="assets/media/skills/farming/farming.svg">
-            <span class="nav-main-link-name">AutoReplant</span>
-            <small id="auto-replant-button-status">Enabled</small>
-        </a>
-    </li>`)); */
 }
 
-//Rewriting from semi.js to here, 4 5 6 7 10
-/* raw elements
-<li class="nav-main-item" id="semi-nav-4" title="AutoCombat will automatically continue combat until you're either out of food in your equipped food slot, out of ranged ammo, or out of runes if using magic. It will safely exit combat if any of those conditions occur. Options include automatically looting and eating, shown below in the sidebar. Combines well with AutoSlayer.">
-    <a class="nav-main-link nav-compact" href="javascript:toggleautocombat();" id="autocombatNavBut">
-        <img class="nav-img" src="assets/media/skills/combat/combat.svg" id="autocombatImg">
-        <span class="nav-main-link-name">AutoCombat</span>
-    <small id="autocombatStatus">Disabled</small></a>
-</li>
-
-<li id="semi-nav-10" class="nav-main-heading">AutoCombat Options</li>
-
-<li class="nav-main-item" id="semi-nav-5" title="AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.">
-    <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
-        <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
-        <span class="nav-main-link-name">AC Auto Eat</span>
-    <small id="autoEatStatus">Enabled</small></a>
-</li>
-
-<li class="nav-main-item" id="semi-nav-6" title="Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!">
-    <a class="nav-main-link nav-compact" href="javascript:toggleAutoLoot();" id="autoLootNavBut">
-        <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoLootImg">
-        <span class="nav-main-link-name">AC Auto Loot</span>
-    <small id="autoLootStatus">Enabled</small></a>
-</li>
-
-<li class="nav-main-item" id="semi-nav-7">
-    <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
-        <img class="nav-img" src="chrome-extension://cblkelbabiaipcicpmffoekblphcbkdd/icons/border-48.png">
-        <span class="nav-main-link-name">Show SEMI Info</span>
-    </a>
-</li>
-
-*/
+//AutoSellGems: Will sell gems when they reach the stack amount specified
+var autoSellGemsEnabled = false;
+var updateAutoSellGemsButtonText = function () {
+	$('#auto-sellgems-button-status').text((autoSellGemsEnabled) ? 'Enabled' : 'Disabled');
+}
+var toggleAutoSellGems = function () {
+	autoSellGemsEnabled = !autoSellGemsEnabled;
+	updateAutoSellGemsButtonText();
+	setTimeout(function() {
+		if (!autoSellGemsEnabled) {
+			console.log("Auto Sell Gems Disabled!");
+		}
+	}, 100);
+}
 
 var autoSellGems = function() {
 	if (!autoSellGemsEnabled) {
 		return;
 	}
-	for(const gemId of gemIdList){
+	for(const gemId of gemIdList) {
 		const curQty = getBankQty(gemId);
 		//console.log('GEM ID '+gemId+' you have '+curQty);
 		if(curQty > targetStack){
 			sellItem(getBankId(gemId), targetStack);
-            customNotify('assets/media/main/coins.svg','Auto Sell Gems just sold '+targetStack+' '+ CONSTANTS.item[gemID].name +'.', 10000);
+            customNotify('assets/media/main/coins.svg','Auto Sell Gems just sold '+targetStack+' '+ items[gemId].name +'.', 5000);
 		}
 	}
 }
-var autoSellGemsTimer = setInterval(function(){autoSellGems();}, 10000);
+var autoSellGemsTimer = setInterval(function(){autoSellGems();}, 5000);
 
 //AutoMine: Will mine based on your or priorities set in mineArray //aw: this still works awesomely!
 var autoMineEnabled = false;
-var updateAutoMineButtonText = function () {
-	$('#auto-mine-button-status').text((autoMineEnabled) ? 'Enabled' : 'Disabled');
-}
+var updateAutoMineButtonText = function () { $('#auto-mine-button-status').text((autoMineEnabled) ? 'Enabled' : 'Disabled'); }
 var toggleAutoMine = function () {
 	autoMineEnabled = !autoMineEnabled;
 	updateAutoMineButtonText();
@@ -790,30 +662,12 @@ var toggleAutoMine = function () {
 		}
 	}, 100);
 }
-/* obsoleted
-var setupAutoMine = function() {
-  if ($("#auto-mine-button").length) return; 
-  var containerRef = $("#auto-sellgems-button").parent();
-  var li = $('<li class="nav-main-item"></li>');
-  containerRef.before(li);
-  var button = $([
-      '<a id="auto-mine-button" class="nav-main-link" href="javascript:void(0);">',
-      '<img class="nav-img" src="assets/media/skills/mining/mining.svg">',
-      '<span class="nav-main-link-name">AutoMine</span>',
-      '<small id="auto-mine-button-status"></small>',
-      '</a>'
-  ].join(""));
-  li.append(button);
-  button.on("click", toggleAutoMine);
-  updateAutoMineButtonText();
-}
-*/
 var autoMine = function(rocks) {
 	if (!autoMineEnabled) {
 		return;
 	}
 	for(const rock of rocks) {
-		if(!rockData[rock].depleted) {
+		if(!rockData[rock].depleted && miningData[rock].level <= skillLevel[CONSTANTS.skill.Mining]) { //added extra condition to make universal
 			if(currentRock !== rock) {
 				mineRock(rock);
 			}
@@ -822,6 +676,8 @@ var autoMine = function(rocks) {
 	}
 }
 var autoMineTimer = setInterval(function(){autoMine(mineArray);}, 100);
+
+//aw: attempting to create buttons on each mining ore to set preference...?
 
 //Super Control Panel Builder (now more semi buttons or whatever)
 setTimeout(function() { setupSEMI(); },1000);
@@ -838,25 +694,22 @@ if(navigator.userAgent.match("Chrome")){
 }
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
-//aw: ?: that shit's a ternary operation. ? and : are ternary operators. (if) ? then : else. goddamn thats good. shorthand if, else. so func does this: set text of button stat to enabled if enabled, disabled else. made this all one line.
-
+TODO
+More settings for autocombat: auto re-equip arrows? Auto only-loot bones/etc? neato.
 time until done calculators? more items til done calculators? there may already be utils out there. Link to them in info?
-const craftTime = 2; //s
-var numItemsCraftable = math;
-output.text(numItemsCraftable*craftTime+" sec til done");
-    UI notes for xp/item calc: sliders. Move a slider to set how many levels you want to move up, then once item is selected, calculate and display XP, gp, whatever.
+    const craftTime = 2; //s
+    var numItemsCraftable = math;
+    output.text(numItemsCraftable*craftTime+" sec til done");
+        UI notes for xp/item calc: sliders. Move a slider to set how many levels you want to move up, then once item is selected, calculate and display XP, gp, whatever.
+    craftInterval: game variable for ms that it takes to use crafting to make one item. Halved with skill cape. Could be useful for item/xp time calc. Thief calc does this.
 
-craftInterval: game variable for ms that it takes to use crafting to make one item. Halved with skill cape. Could be useful for item/xp time calc. Thief calc does this.
-
-add custom settings?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
+add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
     idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
     so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
 
-so, since it's super easy to change the button setup functions, just consolidate all functions that need to run later? 
-it's about to be consolidation time for a bit, then we can start adding more settings menus etc.
+make compatible with MICE?... remove all MICE automation and just leave cheats in next ver?
 
-make compatible with MICE?... remove all MICE automation and just leave cheats?
-
+//:: //:: //:: More Imported Scripts
 //:: average hits to kill enemy from https://repl.it/@Dwake5/TightSpringgreenCosmos
 const averageHits = (accuracy, maxHit, enemyHP) => {
     let hits = 0
@@ -892,12 +745,5 @@ var smithingHUD = window.setInterval(function() {
 }, 1000 / 60);
 //::end smith shit//hmmm... numberWithCommas eh? is this a game function? also, i just kinda hate the way this looks. so unintuitive.
 
-//:: Dream's Auto-Bonfire script from Melvor discord
-/* function autoBonfire() {
-    var tx = $.trim($('#skill-fm-bonfire-status').text());
-    var chkTx = $.trim('Inactive') //why not just = "Inactive"????
-    if(tx == chkTx){ lightBonfire(); };
-} 
-//:: End of Auto-Bonfire import
 
 */

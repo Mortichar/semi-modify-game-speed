@@ -1,7 +1,7 @@
 ## This is Script Engine for Melvor Idle v0.1.
 Download from Mozilla add-on database coming soon.
 ### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
-This add-on/extension helps you automate certain aspects of the game, and adds certain useful features.
+This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one.
 * Auto Replant and Percent Accuracy by Arcanus
 * AutoBonfire by Dream
 * Auto Mine & Auto Sell Gems by Strutty & others
@@ -12,6 +12,8 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * Thieving calculators and tooltips by RedSparr0w (scavenged from Melvor Idle Helper)
 * Auto-cook: permanently unlocked Cook All button in the Cooking skill page
 * XHP script by Breakit
+
+Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 #### Temporary install
 
