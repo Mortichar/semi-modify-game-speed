@@ -75,6 +75,12 @@ $('#modal-account-change').before($(`
                     <h2 style="color: white;">SEMI v0.1 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br><br>
+                    Don't forget these features of SEMI that aren't in the sidebar:
+                    <ul>
+                        <li>Always-unlocked Cook All button in the Cooking page</li>
+                        <li>Thieving XP calculators and loot popups in the Thieving page</li>
+                        <li>Number of potions until level-up calculator button in the Herblore page</li>
+                    </ul>
                     Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
                     or another more general-purpose add-on like Tampermonkey to run userscripts. 
                     Either way, the end result is extra functionality, like automating a task or adding calculated info to the page.
