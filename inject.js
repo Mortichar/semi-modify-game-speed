@@ -604,7 +604,7 @@ function setupSEMI() { // streamlining/simplicity
     
     <li id="semi-nav-11" class="nav-main-item">
         <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
-            <img class="nav-img" src="chrome-extension://cblkelbabiaipcicpmffoekblphcbkdd/icons/border-48.png">
+            <img class="nav-img" src="`+$("#iconImg").src()+`">
             <span class="nav-main-link-name">Show SEMI Info</span>
         </a>
     </li>`));
