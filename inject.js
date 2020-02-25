@@ -391,7 +391,7 @@ setTimeout( () => { //setup thieving calcs after 10sec, plenty delay for page lo
         animation: false,
         trigger: 'hover focus',
     }); 
-}, 5000); //give it a nice long time to load. this one can throw errors.
+}, 10000); //give it a nice long time to load. this one can throw errors.
 
 const addCalcToEl = (el, data = []) => {
     if (!el || !el.appendChild) return;    
@@ -557,7 +557,7 @@ function setupSEMI() { // streamlining/simplicity
             <small id="auto-mine-button-status"></small>
         </a>
     </li>    
-    <li id="semi-nav-3" class="nav-main-item" title="AutoSell Gems will sell gems once they've reached a certain stack limit. May change to a different version in a newer script.">
+    <li id="semi-nav-3" class="nav-main-item" title="AutoSell Gems will sell 100 gems once they've reached a stack of 100.">
         <a id="auto-sellgems-button" class="nav-main-link" href="javascript:toggleAutoSellGems();">
             <img class="nav-img" src="assets/media/bank/diamond.svg">
             <span class="nav-main-link-name">AutoSell Gems</span>
@@ -604,7 +604,7 @@ function setupSEMI() { // streamlining/simplicity
     
     <li id="semi-nav-11" class="nav-main-item">
         <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
-            <img class="nav-img" src="`+$("#iconImg").src()+`">
+            <img class="nav-img" src="`+$("#iconImg")[0].src+`">
             <span class="nav-main-link-name">Show SEMI Info</span>
         </a>
     </li>`));
@@ -680,7 +680,7 @@ var autoMineTimer = setInterval(function(){autoMine(mineArray);}, 100);
 //aw: attempting to create buttons on each mining ore to set preference...?
 
 //Super Control Panel Builder (now more semi buttons or whatever)
-setTimeout(function() { setupSEMI(); },1000);
+setTimeout(function() { setupSEMI(); },3000);
 //setTimeout(function() { toggleAutoMine(); },500); //why? no auto automine here.
 //:: end of MSCP
 

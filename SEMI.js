@@ -4,7 +4,6 @@
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
     
 //Injecting Script
-    
 var script = document.createElement('script');
 if(navigator.userAgent.match("Chrome")){
     script.src = chrome.runtime.getURL("inject.js");
