@@ -715,6 +715,11 @@ add custom settings in localstorage?... keeps variables like autoLoot, autoEat, 
 
 make compatible with MICE?... remove all MICE automation and just leave cheats in next ver?
 
+FUNKY IDEAS
+sound plays when idle is done and no task queued? repeats every minute or so
+task queueing
+sounds in combat, alert sound for low health
+
 //:: //:: //:: More Imported Scripts
 //:: average hits to kill enemy from https://repl.it/@Dwake5/TightSpringgreenCosmos
 const averageHits = (accuracy, maxHit, enemyHP) => {
