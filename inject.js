@@ -276,6 +276,8 @@ $('#modal-account-change').before($(`
                         <li><a href="https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy" target="_blank">Melvor Percent Accuracy by Arcanus</a></li>
                         <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit.</a> For now, console only: Ctrl+Shift+K for console, type XPH() for the tool.</li>
                         <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
+                        <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
+                        <li><a href="https://pastebin.com/WKD9R6WY" target="_blank" title="BreakIt's original source">AutoFish by BreakIt, Jarx, and me</a></li>
                     </ul>
                     <br>
                     I'm definitely eyeballing Katorone's Melvor Idle automation script for extra functionality.
@@ -907,8 +909,19 @@ if(navigator.userAgent.match("Chrome")){
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
-More settings for autocombat: auto re-equip arrows? Auto only-loot bones/etc? neato.
-time until done calculators? more items til done calculators? there may already be utils out there. Link to them in info?
+More settings for autocombat
+    auto re-equip arrows 
+    Auto only-loot bones/etc
+    Auto bury bones. 
+    Auto-prayer.
+
+Menus for automation: inject div into skill page containers w/ buttons containing selectors.
+    For instance:
+        Mining: select bar to create. Will try to mine dragonite, rune, and coal in such a way to mine much more coal and twice as much runite.
+        Fishing: select which fish to auto-sell
+        AutoSell Gems: same thing, settings menu for stack amount and which gems to sell
+
+time until done calculators? more items til done calculators? there already be utils/calcs out there. Link to them in info?
     const craftTime = 2; //s
     var numItemsCraftable = math;
     output.text(numItemsCraftable*craftTime+" sec til done");
@@ -919,7 +932,9 @@ add custom settings in localstorage?... keeps variables like autoLoot, autoEat, 
     idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
     so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
 
-make compatible with MICE?... remove all MICE automation and just leave cheats in next ver?
+make compatible with MICE?... remove all MICE automation and just leave cheats in next ver? done
+
+-
 
 FUNKY IDEAS
 sound plays when idle is done and no task queued? repeats every minute or so
@@ -962,8 +977,4 @@ var smithingHUD = window.setInterval(function() {
 }, 1000 / 60);
 //::end smith shit//hmmm... numberWithCommas eh? is this a game function? also, i just kinda hate the way this looks. so unintuitive.
 
-//somehow this creates fishing chests at random
-//fishingArea[Math.floor(Math.random() * (+fishingArea.length - +0)) + +0].currentFish.push(fishData.length-1); updateFishingVisuals(true);
-add chest to first fish area
-fishingArea[0].currentFish.push(fishData.length-1); updateFishingVisuals(true);
 */
