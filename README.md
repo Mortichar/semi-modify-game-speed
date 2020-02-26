@@ -13,6 +13,11 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * Auto-cook: permanently unlocked Cook All button in the Cooking skill page
 * XHP script by Breakit
 
+Added in 0.1.1:
+* AutoCook by Unicue
+* AutoFish by BreakIt, Jarx, and Myself with added options: Max Mode (for use with fishing potions) and Chase Chests (fish treasure chests when spawned)
+* UI updates & more menu toggles, even for native Melvor sidebar sections like Other & Socials
+
 Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 #### Temporary install

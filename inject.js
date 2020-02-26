@@ -25,13 +25,195 @@ function customNotify(imgsrc="", msg="Custom Notifications!", n=3000) { //output
 	);
 }
 
+//SEMI menu setup function -- big fat template literal append
+function setupSEMI() { // streamlining/simplicity
+    if ($("#auto-replant-button").length) return; //probably smarter than the way i inject a lot of elements
+    //Settings menu HTML, attached to the heading anchor set up in SEMI.js content script
+    $("#semiHeading").after($(`
+    <li class="nav-main-heading" title="One at a time, please! Mixing any skill automations will cause problems as you can only idle one thing at once. Mixing these with combat is impossible, except for AutoReplant, the beautiful script that it is.">
+        Auto Skills <a href="javascript:toggleMoreMenus(2);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye2"></i></a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoReplant will automatically farm everything for you, replanting the same seed when it harvests, buying and using compost when it needs to automatically.">
+        <a id="auto-replant-button" class="nav-main-link" href="javascript:toggleAutoReplant();">
+            <img class="nav-img" src="assets/media/skills/farming/farming.svg">
+            <span class="nav-main-link-name">AutoReplant</span>
+            <small id="auto-replant-button-status">Enabled</small>
+        </a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoBonfire will keep a bonfire lit when you have a type of wood selected in Firemaking. The author suggests having an abundance of wood if using this!">
+        <a id="auto-bonfire-button" class="nav-main-link" href="javascript:toggleAutoBonfire();">
+            <img class="nav-img" src="assets/media/skills/firemaking/bonfire_active.svg">
+            <span class="nav-main-link-name">AutoBonfire</span>
+            <small id="auto-bonfire-button-status">Disabled</small>
+        </a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoCook by Unicue will automatically cycle through your fish and cook them all in order.">
+        <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
+            <img class="nav-img" src="assets/media/skills/cooking/cooking.svg">
+            <span class="nav-main-link-name">AutoCook</span>
+            <small id="auto-cook-status">Disabled</small>
+        </a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoMine will mine highest XP ore first automatically.">
+        <a id="auto-mine-button" class="nav-main-link" href="javascript:toggleAutoMine();">
+            <img class="nav-img" src="assets/media/shop/pickaxe_dragon.svg">
+            <span class="nav-main-link-name">AutoMine</span>
+            <small id="auto-mine-button-status"></small>
+        </a>
+    </li>    
+    
+    <li class="nav-main-item" title="AutoSell Gems will sell 100 gems once they've reached a stack of 100.">
+        <a id="auto-sellgems-button" class="nav-main-link" href="javascript:toggleAutoSellGems();">
+            <img class="nav-img" src="assets/media/bank/diamond.svg">
+            <span class="nav-main-link-name">AutoSell Gems</span>
+            <small id="auto-sellgems-button-status"></small>
+        </a>
+    </li>
+    
+    <li class="nav-main-heading">
+        Auto Fishing <a href="javascript:toggleMoreMenus(3);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye3"></i></a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you, either fishing the area with the highest average XP fish, or chasing either chests or highest XP fish in general for maximum efficiency of fishing with potions.">
+        <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
+            <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
+            <span class="nav-main-link-name">AutoFish</span>
+            <small id="auto-fish-status">Disabled</small>
+        </a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoFish by default chases the highest XP fish. This is best for fishing with the fishing potion you can make in herblore. If you'd rather fish in the area with the highest AVERAGE fish XP, then you should turn this option off.">
+        <a id="autoFishMaxNavBut" class="nav-main-link nav-compact" href="javascript:toggleAutoFishMax();">
+            <img class="nav-img" src="assets/media/skills/fishing/whale.svg" id="autoFishMaxImg">
+            <span class="nav-main-link-name">AF Max Mode</span>
+        <small id="max-mode-status">Enabled</small></a>
+    </li>
+    
+    <li class="nav-main-item" title="Chase those chests! This option will prioritize fishing in areas with chests in them.">
+        <a class="nav-main-link nav-compact" href="javascript:toggleAutoFishChest();" id="autoFishChestNavBut">
+            <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoFishChestImg">
+            <span class="nav-main-link-name">AF Chase Chests</span>
+        <small id="chase-chest-status">Enabled</small></a>
+    </li>
+    
+    <li class="nav-main-heading">
+        Auto Combat <a href="javascript:toggleMoreMenus(4);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye4"></i></a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default.">
+        <a id="auto-slayer-button" class="nav-main-link" href="javascript:toggleAutoSlayer();">
+            <img class="nav-img" src="assets/media/skills/slayer/slayer.svg">
+            <span class="nav-main-link-name">AutoSlayer</span>
+            <small id="auto-slayer-button-status">Disabled</small>
+        </a>
+    </li>
+    
+    <li class="nav-main-item" title="AutoCombat will automatically continue combat until you're either out of food in your equipped food slot, out of ranged ammo, or out of runes if using magic. It will safely exit combat if any of those conditions occur. Options include automatically looting and eating, shown below in the sidebar. Combines well with AutoSlayer.">
+        <a class="nav-main-link nav-compact" href="javascript:toggleautocombat();" id="autocombatNavBut">
+            <img class="nav-img" src="assets/media/skills/combat/combat.svg" id="autocombatImg">
+            <span class="nav-main-link-name">AutoCombat</span>
+        <small id="autocombatStatus">Disabled</small></a>
+    </li>
+
+    <li class="nav-main-item" title="AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.">
+        <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
+            <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
+            <span class="nav-main-link-name">AC Auto Eat</span>
+        <small id="autoEatStatus">Enabled</small></a>
+    </li>
+    
+    <li class="nav-main-item" title="Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!">
+        <a class="nav-main-link nav-compact" href="javascript:toggleAutoLoot();" id="autoLootNavBut">
+            <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoLootImg">
+            <span class="nav-main-link-name">AC Auto Loot</span>
+        <small id="autoLootStatus">Enabled</small></a>
+    </li>
+
+    <li class="nav-main-item" title="The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on.">
+        <a class="nav-main-link nav-compact" href="javascript:toggleAutoEquip();" id="autoEquipNavBut">
+            <img class="nav-img" src="assets/media/bank/mirror_shield.svg" id="autoEquipImg">
+            <span class="nav-main-link-name">AS Auto Equip</span>
+        <small id="autoEquipStatus">Disabled</small></a>
+    </li>
+    
+    <hr>
+    
+    <li class="nav-main-item">
+        <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
+            <img class="nav-img" src="`+$("#iconImg")[0].src+`">
+            <span class="nav-main-link-name">Show SEMI Info</span>
+        </a>
+    </li>`));
+    
+    for (i=0; i < $("#semiHeading").nextAll().length; i++) {
+        $("#semiHeading").nextAll()[i].id = 'semi-nav-'+i;
+    } //sets up the nav ids to hide the menu.
+    
+    updateAutoSellGemsButtonText();    
+    updateAutoMineButtonText();    
+    updateAutoSlayerButtonText();
+} //End of SEMI menu injection
+
 //toggle SEMI sidebar menu
 var semiMenu = true;
-$("#semiHeading").append($('<a href="javascript:toggleSemiMenu();"><i class="far fa-eye text-muted ml-1" id="skill-menu-icon2"></i></a>'));
+
+$("#semiHeading").append($('<a href="javascript:toggleSemiMenu();"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="skill-menu-icon2"></i></a>'));
 function toggleSemiMenu() {
     semiMenu = !semiMenu;
-    for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).toggleClass("d-none"); } //from 0 to 11 so far.
+    if (semiMenu) { 
+        for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
+        if (!moreMenus2) {
+            for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,5).toggleClass("d-none"); }
+        }
+        if (!moreMenus3) {
+            for (i=0; i<3; i++) { $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none"); }
+        }
+        if (!moreMenus4) {
+            for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none"); }
+        }
+    }
+        else { for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).addClass("d-none"); } //automated id application in place, all appended will be tagged for invisibilitization
+    }
     $("#skill-menu-icon2").attr("class", "far fa-eye" + ((semiMenu) ? '' : '-slash') + " text-muted ml-1");
+}
+
+//Adjusting main menu so we can toggle other & social menus
+for (i=0; i<6; i++) { $(".nav-main-heading:contains('Other')").nextAll()[i].id = 'other-nav-'+i }
+for (i=0; i<5; i++) { $(".nav-main-heading:contains('Socials')").nextAll()[i].id = 'socials-nav-'+i }
+var moreMenus0 = true;
+var moreMenus1 = true;
+var moreMenus2 = true;
+var moreMenus3 = true;
+var moreMenus4 = true;
+$(".nav-main-heading:contains('Other')").append($('<a href="javascript:toggleMoreMenus(0);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye0"></i></a>'));
+$(".nav-main-heading:contains('Socials')").append($('<a href="javascript:toggleMoreMenus(1);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye1"></i></a>'));
+
+function toggleMoreMenus(x) {
+    if (x==0) {
+        moreMenus0 = !moreMenus0;
+        for (i=0; i < $("[id^=other-nav]").length; i++) { $("#other-nav-" + i).toggleClass("d-none"); } //automated id application, all appended will be tagged for invisibilitization
+        $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus0) ? '' : '-slash') + " text-muted ml-1");
+    } else if (x==1) {
+        moreMenus1 = !moreMenus1;
+        for (i=0; i < $("[id^=socials-nav]").length; i++) { $("#socials-nav-" + i).toggleClass("d-none"); } //automated id application, all appended will be tagged for invisibilitization
+        $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
+    } else if (x==2) { //auto skills 
+        moreMenus2 = !moreMenus2;
+        for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,5).toggleClass("d-none"); }
+        $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
+    } else if (x==3) { //auto fishing
+        moreMenus3 = !moreMenus3;
+        for (i=0; i<3; i++) { $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none"); }
+        $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus3) ? '' : '-slash') + " text-muted ml-1");
+    } else if (x==4) { //auto combat
+        moreMenus4 = !moreMenus4;
+        for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none"); }
+        $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus4) ? '' : '-slash') + " text-muted ml-1");
+    }
 }
 
 //AutoCook (sorta): insert always-unlocked cooking button.
@@ -505,7 +687,11 @@ function toggleAutoBonfire() {
     autoBonOn = !autoBonOn;
     $("#auto-bonfire-button-status").text( (autoBonOn) ? 'Enabled' : 'Disabled');
     $("#auto-bonfire-button-status").css('color', (autoBonOn) ? 'red' : '');
-    (autoBonOn) ? bonLoop = setInterval( () => { autoBonfire(); }, 500) : clearInterval(bonLoop);
+    if (autoBonOn) { 
+        bonLoop = setInterval( () => { autoBonfire(); }, 500);
+        changePage(8);
+        customNotify('assets/media/skills/firemaking/bonfire_active.svg','AutoBonfire initiated. Select your Logs to begin.', 5000);
+    } else { clearInterval(bonLoop); }
 }
 
 //:: importing scraps from Melvor Super Control Panel user script by Strutty on Greasefork: https://greasyfork.org/en/scripts/395834-melvor-super-control-panel
@@ -535,123 +721,6 @@ function getBankQty(id) {
       }
     }
     return 0;
-}
-
-//SEMI menu setup function -- big fat template literal append
-function setupSEMI() { // streamlining/simplicity
-    if ($("#auto-replant-button").length) return; //probably smarter than the way i inject a lot of elements
-    //Settings menu HTML, attached to the heading anchor set up in SEMI.js content script
-    $("#semiHeading").after($(`
-    <li id="semi-nav-0" class="nav-main-item" title="AutoReplant will automatically farm everything for you, replanting the same seed when it harvests, buying and using compost when it needs to automatically.">
-        <a id="auto-replant-button" class="nav-main-link" href="javascript:toggleAutoReplant();">
-            <img class="nav-img" src="assets/media/skills/farming/farming.svg">
-            <span class="nav-main-link-name">AutoReplant</span>
-            <small id="auto-replant-button-status">Enabled</small>
-        </a>
-    </li>
-    <li id="semi-nav-1" class="nav-main-item" title="AutoBonfire will keep a bonfire lit when you have a type of wood selected in Firemaking. The author suggests having an abundance of wood if using this!">
-        <a id="auto-bonfire-button" class="nav-main-link" href="javascript:toggleAutoBonfire();">
-            <img class="nav-img" src="assets/media/skills/firemaking/bonfire_active.svg">
-            <span class="nav-main-link-name">AutoBonfire</span>
-            <small id="auto-bonfire-button-status">Disabled</small>
-        </a>
-    </li>
-    
-    <hr>
-    <li id="semi-nav-13" class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you, either fishing the area with the highest average XP fish, or chasing either chests or highest XP fish in general for maximum efficiency of fishing with potions.">
-        <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
-            <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
-            <span class="nav-main-link-name">AutoFish</span>
-            <small id="auto-fish-status">Disabled</small>
-        </a>
-    </li>
-    
-    <li id="semi-nav-14" class="nav-main-heading">AutoFish Options</li>
-    <li id="semi-nav-15" class="nav-main-item" title="AutoFish by default chases the highest XP fish. This is best for fishing with the fishing potion you can make in herblore. If you'd rather fish in the area with the highest AVERAGE fish XP, then you should turn this option off.">
-        <a id="autoFishMaxNavBut" class="nav-main-link nav-compact" href="javascript:toggleAutoFishMax();">
-            <img class="nav-img" src="assets/media/skills/fishing/whale.svg" id="autoFishMaxImg">
-            <span class="nav-main-link-name">AF Max Mode</span>
-        <small id="max-mode-status">Enabled</small></a>
-    </li>
-    <li id="semi-nav-16" class="nav-main-item" title="Chase those chests! This option will prioritize fishing in areas with chests in them.">
-        <a class="nav-main-link nav-compact" href="javascript:toggleAutoFishChest();" id="autoFishChestNavBut">
-            <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoFishChestImg">
-            <span class="nav-main-link-name">AF Chase Chests</span>
-        <small id="chase-chest-status">Enabled</small></a>
-    </li>
-    <hr>
-    
-    <li id="semi-nav-12" class="nav-main-item" title="AutoCook by Unicue will automatically cycle through your fish and cook them all in order.">
-        <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
-            <img class="nav-img" src="assets/media/skills/cooking/cooking.svg">
-            <span class="nav-main-link-name">AutoCook</span>
-            <small id="auto-cook-status">Disabled</small>
-        </a>
-    </li>
-    <li id="semi-nav-2" class="nav-main-item" title="AutoMine will mine highest XP ore first automatically. DOES NOT MIX WELL WITH AUTOSLAYER.">
-        <a id="auto-mine-button" class="nav-main-link" href="javascript:toggleAutoMine();">
-            <img class="nav-img" src="assets/media/skills/mining/mining.svg">
-            <span class="nav-main-link-name">AutoMine</span>
-            <small id="auto-mine-button-status"></small>
-        </a>
-    </li>    
-    <li id="semi-nav-3" class="nav-main-item" title="AutoSell Gems will sell 100 gems once they've reached a stack of 100.">
-        <a id="auto-sellgems-button" class="nav-main-link" href="javascript:toggleAutoSellGems();">
-            <img class="nav-img" src="assets/media/bank/diamond.svg">
-            <span class="nav-main-link-name">AutoSell Gems</span>
-            <small id="auto-sellgems-button-status"></small>
-        </a>
-    </li>
-    
-    <hr>
-    <li id="semi-nav-4" class="nav-main-item" title="aw-AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default.">
-        <a id="auto-slayer-button" class="nav-main-link" href="javascript:toggleAutoSlayer();">
-            <img class="nav-img" src="assets/media/skills/slayer/slayer.svg">
-            <span class="nav-main-link-name">AutoSlayer</span>
-            <small id="auto-slayer-button-status">Disabled</small>
-        </a>
-    </li>
-    <li id="semi-nav-5" class="nav-main-item" title="AutoCombat will automatically continue combat until you're either out of food in your equipped food slot, out of ranged ammo, or out of runes if using magic. It will safely exit combat if any of those conditions occur. Options include automatically looting and eating, shown below in the sidebar. Combines well with AutoSlayer.">
-        <a class="nav-main-link nav-compact" href="javascript:toggleautocombat();" id="autocombatNavBut">
-            <img class="nav-img" src="assets/media/skills/combat/combat.svg" id="autocombatImg">
-            <span class="nav-main-link-name">AutoCombat</span>
-        <small id="autocombatStatus">Disabled</small></a>
-    </li>
-
-    <li id="semi-nav-6" class="nav-main-heading">AutoCombat Options</li>
-    <li id="semi-nav-7" class="nav-main-item" title="AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.">
-        <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
-            <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
-            <span class="nav-main-link-name">AC Auto Eat</span>
-        <small id="autoEatStatus">Enabled</small></a>
-    </li>
-    <li id="semi-nav-8" class="nav-main-item" title="Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!">
-        <a class="nav-main-link nav-compact" href="javascript:toggleAutoLoot();" id="autoLootNavBut">
-            <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoLootImg">
-            <span class="nav-main-link-name">AC Auto Loot</span>
-        <small id="autoLootStatus">Enabled</small></a>
-    </li>
-
-    <li id="semi-nav-9" class="nav-main-heading">AutoSlayer Options</li>
-    <li id="semi-nav-10" class="nav-main-item" title="The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on.">
-        <a class="nav-main-link nav-compact" href="javascript:toggleAutoEquip();" id="autoEquipNavBut">
-            <img class="nav-img" src="assets/media/bank/mirror_shield.svg" id="autoEquipImg">
-            <span class="nav-main-link-name">AS Auto Equip</span>
-        <small id="autoEquipStatus">Disabled</small></a>
-    </li>
-    
-    <hr>
-    
-    <li id="semi-nav-11" class="nav-main-item">
-        <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
-            <img class="nav-img" src="`+$("#iconImg")[0].src+`">
-            <span class="nav-main-link-name">Show SEMI Info</span>
-        </a>
-    </li>`));
-    
-    updateAutoSellGemsButtonText();    
-    updateAutoMineButtonText();    
-    updateAutoSlayerButtonText();
 }
 
 //AutoSellGems: Will sell gems when they reach the stack amount specified
@@ -795,6 +864,7 @@ function autoFish() {
                 console.log("Switching from " + fishActiveZone + " to " + fishZone);
                 startFishing(0,false);
                 startFishing(fishZone,false);
+                //return; //this may be necessary but it could have also been the userscript running at same time
             }
         }
     fishActiveZone++;
@@ -894,5 +964,6 @@ var smithingHUD = window.setInterval(function() {
 
 //somehow this creates fishing chests at random
 //fishingArea[Math.floor(Math.random() * (+fishingArea.length - +0)) + +0].currentFish.push(fishData.length-1); updateFishingVisuals(true);
-
+add chest to first fish area
+fishingArea[0].currentFish.push(fishData.length-1); updateFishingVisuals(true);
 */
