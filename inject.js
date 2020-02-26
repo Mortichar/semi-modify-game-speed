@@ -556,6 +556,31 @@ function setupSEMI() { // streamlining/simplicity
             <small id="auto-bonfire-button-status">Disabled</small>
         </a>
     </li>
+    
+    <hr>
+    <li id="semi-nav-13" class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you, either fishing the area with the highest average XP fish, or chasing either chests or highest XP fish in general for maximum efficiency of fishing with potions.">
+        <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
+            <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
+            <span class="nav-main-link-name">AutoFish</span>
+            <small id="auto-fish-status">Disabled</small>
+        </a>
+    </li>
+    
+    <li id="semi-nav-14" class="nav-main-heading">AutoFish Options</li>
+    <li id="semi-nav-15" class="nav-main-item" title="AutoFish by default chases the highest XP fish. This is best for fishing with the fishing potion you can make in herblore. If you'd rather fish in the area with the highest AVERAGE fish XP, then you should turn this option off.">
+        <a id="autoFishMaxNavBut" class="nav-main-link nav-compact" href="javascript:toggleAutoFishMax();">
+            <img class="nav-img" src="assets/media/skills/fishing/whale.svg" id="autoFishMaxImg">
+            <span class="nav-main-link-name">AF Max Mode</span>
+        <small id="max-mode-status">Enabled</small></a>
+    </li>
+    <li id="semi-nav-16" class="nav-main-item" title="Chase those chests! This option will prioritize fishing in areas with chests in them.">
+        <a class="nav-main-link nav-compact" href="javascript:toggleAutoFishChest();" id="autoFishChestNavBut">
+            <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoFishChestImg">
+            <span class="nav-main-link-name">AF Chase Chests</span>
+        <small id="chase-chest-status">Enabled</small></a>
+    </li>
+    <hr>
+    
     <li id="semi-nav-12" class="nav-main-item" title="AutoCook by Unicue will automatically cycle through your fish and cook them all in order.">
         <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
             <img class="nav-img" src="assets/media/skills/cooking/cooking.svg">
@@ -577,6 +602,8 @@ function setupSEMI() { // streamlining/simplicity
             <small id="auto-sellgems-button-status"></small>
         </a>
     </li>
+    
+    <hr>
     <li id="semi-nav-4" class="nav-main-item" title="aw-AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default.">
         <a id="auto-slayer-button" class="nav-main-link" href="javascript:toggleAutoSlayer();">
             <img class="nav-img" src="assets/media/skills/slayer/slayer.svg">
@@ -584,7 +611,7 @@ function setupSEMI() { // streamlining/simplicity
             <small id="auto-slayer-button-status">Disabled</small>
         </a>
     </li>
-    <li class="nav-main-item" id="semi-nav-5" title="AutoCombat will automatically continue combat until you're either out of food in your equipped food slot, out of ranged ammo, or out of runes if using magic. It will safely exit combat if any of those conditions occur. Options include automatically looting and eating, shown below in the sidebar. Combines well with AutoSlayer.">
+    <li id="semi-nav-5" class="nav-main-item" title="AutoCombat will automatically continue combat until you're either out of food in your equipped food slot, out of ranged ammo, or out of runes if using magic. It will safely exit combat if any of those conditions occur. Options include automatically looting and eating, shown below in the sidebar. Combines well with AutoSlayer.">
         <a class="nav-main-link nav-compact" href="javascript:toggleautocombat();" id="autocombatNavBut">
             <img class="nav-img" src="assets/media/skills/combat/combat.svg" id="autocombatImg">
             <span class="nav-main-link-name">AutoCombat</span>
@@ -592,13 +619,13 @@ function setupSEMI() { // streamlining/simplicity
     </li>
 
     <li id="semi-nav-6" class="nav-main-heading">AutoCombat Options</li>
-    <li class="nav-main-item" id="semi-nav-7" title="AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.">
+    <li id="semi-nav-7" class="nav-main-item" title="AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
             <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
             <span class="nav-main-link-name">AC Auto Eat</span>
         <small id="autoEatStatus">Enabled</small></a>
     </li>
-    <li class="nav-main-item" id="semi-nav-8" title="Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!">
+    <li id="semi-nav-8" class="nav-main-item" title="Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoLoot();" id="autoLootNavBut">
             <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoLootImg">
             <span class="nav-main-link-name">AC Auto Loot</span>
@@ -717,6 +744,87 @@ function toggleAutoCook() {
         changePage(9);
     } else { clearInterval(cookInterval); }
 }
+//::end autoCook
+
+//:: importing AutoFish by BreakIt, Jarx and me
+var chaseChest = true;
+var maxMode = true;
+
+function autoFish() {
+    let fishMax = []; //set to empty each time autoFish iterates to recalculate
+    let fishAvg = [];
+    let fishZone = 0;
+    var maxXP = 0;
+    
+    if (maxMode) {
+        for (let i = 0; i < fishingArea.length; i++) { //for each available fishing area
+        if (skillLevel[CONSTANTS.skill.Fishing] > fishingArea[i].level) { //if you can fish it
+            maxXP = fishData[Math.max(...fishingArea[i].currentFish)].xp; //find max xp of fish there
+            if (chaseChest && Math.max(...fishingArea[i].currentFish) == 12) {
+                console.log("Found a Chest!");
+                console.log($(this));
+                maxXP = 9000;
+                }
+            fishMax.push(maxXP); //add that max to the array of fish areas to be max'd again
+            }
+        }
+    fishZone = fishMax.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0); //some maths by BreakIt, calcs max of array and outputs the array position.
+    } else { 
+        $("[id^=fishing-area-fish-]").each(function() {
+            var totalexp = 0;
+            $(this).children("img").each(function() {
+                totalexp = totalexp + parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]);
+                if (chaseChest && parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]) == "1") {
+                    console.log("Found a Chest!");
+                    console.log($(this));
+                    totalexp = 9000;
+                }
+            });
+            var toPush = totalexp / $(this).children("img").length;
+            if (toPush == 9000) { toPush = 0; }
+            fishAvg.push(toPush);
+        });
+        fishZone = fishAvg.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+    }
+    
+    let fishActiveZone = 0;
+    $("#fishing-container").find("a").each(function() { //sets the zone if max changed.
+        if ($(this).hasClass("bg-fishing")) { //if the containers are indeed fishing areas
+            if (fishActiveZone != fishZone) { //and if the zone is different from where the max fish is at
+                console.log('Max: '+fishMax+' Avg: '+fishAvg);
+                console.log("Switching from " + fishActiveZone + " to " + fishZone);
+                startFishing(0,false);
+                startFishing(fishZone,false);
+            }
+        }
+    fishActiveZone++;
+    });
+}
+var fishInterval;
+var autoFishing = false;
+function toggleAutoFish() {
+    autoFishing = !autoFishing;
+    $("#auto-fish-status").text( (autoFishing) ? 'Enabled' : 'Disabled' );
+    if (autoFishing) {
+        changePage(7);
+        startFishing(0,false);
+        //customNotify('assets/media/shop/fishing_dragon.svg', 'AutoFish is enabled.', 5000);
+        fishInterval = setInterval( () => { autoFish(); }, 1000); //loop!
+    } else { 
+        clearInterval(fishInterval); 
+        if (currentlyFishingArea !== null) { startFishing(currentlyFishingArea,false); }
+    }
+}
+function toggleAutoFishMax() {
+    maxMode = !maxMode;
+    $("#max-mode-status").text( (maxMode) ? 'Enabled' : 'Disabled' );
+}
+function toggleAutoFishChest() {
+    chaseChest = !chaseChest;
+    $("#chase-chest-status").text( (chaseChest) ? 'Enabled' : 'Disabled' );
+}
+
+//:: end autoFish
 
 //:: import this soon: https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js
 
@@ -784,5 +892,7 @@ var smithingHUD = window.setInterval(function() {
 }, 1000 / 60);
 //::end smith shit//hmmm... numberWithCommas eh? is this a game function? also, i just kinda hate the way this looks. so unintuitive.
 
+//somehow this creates fishing chests at random
+//fishingArea[Math.floor(Math.random() * (+fishingArea.length - +0)) + +0].currentFish.push(fishData.length-1); updateFishingVisuals(true);
 
 */
