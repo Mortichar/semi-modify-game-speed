@@ -140,6 +140,15 @@ function setupSEMI() { // streamlining/simplicity
         <small id="autoEquipStatus">Disabled</small></a>
     </li>
     
+    <li class="nav-main-heading">Katorone Settings</li>
+    
+    <li class="nav-main-item">
+        <a class="nav-main-link nav-compact" href="javascript:semiSetMenu();" id="semiSetsNavBut">
+            <img class="nav-img" src="`+$("#iconImg")[0].src+`">
+            <span class="nav-main-link-name">Automation Menu</span>
+        </a>
+    </li>
+    
     <hr>
     
     <li class="nav-main-item">
@@ -160,10 +169,70 @@ function setupSEMI() { // streamlining/simplicity
         </button>`));
     } //sets up the AM overrides
     
+    $('#modal-account-change').before($(`
+        <div class="modal" id="modal-semi-set-menu" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="block block-themed block-transparent mb-0">
+                        <div class="block-header bg-primary-dark">
+                            <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
+                            <h3 class="block-title">SEMI GUI for Katorone Automation Settings</h3>
+                            <div class="block-options">
+                                <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="block-content font-size-sm m-1">
+                            Warning: the settings <u>are not saved</u> and they will not carry over if the game is refreshed.
+                            <div class="row">
+                                <div class="col-sm-12">
+                                
+                                    <div style="border: 2px solid gold; border-radius: 5px; padding: 10px;" class="custom-control custom-switch mb-1">
+                                        <input type="checkbox" class="custom-control-input" id="auto-x-enabled" name="auto-x-enabled" onchange="katoroneOn = this.checked" ${katoroneOn ? "checked" : ""}>
+                                        <label class="custom-control-label" for="auto-x-enabled"><b>Toggle All Katorone Automation</b></label>
+                                    </div>
+                                    
+                                    <div class="custom-control custom-switch mb-1">
+                                        <input type="checkbox" class="custom-control-input" id="auto-y-enabled" name="auto-y-enabled" onchange="testVar2 = this.checked" ${testVar2 ? "checked" : ""}>
+                                        <label class="custom-control-label" for="auto-y-enabled">Auto Y</label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div id="number-settings-1" class="form-group">
+                                <label for="example-text-input">Amount of GP to keep in the Bank:</label>
+                                <input type="text" class="form-control" id="k-set-1" placeholder="5000000">
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="block-content block-content-full text-right border-top">
+                            <button type="button" id="semiInfoModalBtn" class="btn btn-sm btn-primary" data-dismiss="modal" onclick=""><i class="fa fa-check mr-1"></i>All done. (Settings auto-save)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`));
+    
+    //document.getElementById('k-set-1').value; //gets the current value, as string, of the text inside the form field. 
+    //if (input sterile) { variable = doc.el('set').val } //put this in loop
+    
     updateAutoSellGemsButtonText();    
     updateAutoMineButtonText();    
     updateAutoSlayerButtonText();
+    
+    //if all goes well, yay, it's loaded
+    if(navigator.userAgent.match("Chrome")){
+        customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
+    } else if(navigator.userAgent.match("Firefox")) { 
+        customNotify('','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
+    }
 } //End of SEMI menu injection
+var katoroneOn = false; //called by radio button. works instantly.
+var testVar2 = true;
 
 //toggle SEMI sidebar menu
 var semiMenu = true;
@@ -241,6 +310,10 @@ function calcToLvl(current=0) {
     $("#"+current+"xpCalc").text(itemsToLvl);
 }
 
+//show SEMI katorone automation settings modal called by nav button 
+function semiSetMenu() { $("#modal-semi-set-menu").modal(open); }
+
+//show SEMI info modal function called by nav button
 function semiInfo() { $("#modal-semi-info").modal(open); }
 
 //Modal for SEMI info popup
@@ -924,17 +997,263 @@ function toggleAutoFishChest() {
     chaseChest = !chaseChest;
     $("#chase-chest-status").text( (chaseChest) ? 'Enabled' : 'Disabled' );
 }
-
 //:: end autoFish
 
-//:: import this soon: https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js
+//adding katorone automation settings menu to setupSEMI()
 
-//The end! SEMI loaded custom notification
-if(navigator.userAgent.match("Chrome")){
-    customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
-} else if(navigator.userAgent.match("Firefox")) { 
-    customNotify('','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
+/* from melvor idle helper, will help design our settings gui
+
+$('#page-container').append(`
+    <div class="modal" id="modal-melvor-idle-helper" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="block-header bg-primary-dark">
+                <h3 class="block-title text-light">Melvor Idle Helper</h3>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-fw fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content font-size-sm m-1">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="auto-eat-enabled" name="auto-eat-enabled" onchange="helperSettings.autoEat = this.checked" ${helperSettings.autoEat ? "checked" : ""}>
+                            <label class="custom-control-label" for="auto-eat-enabled">Auto Eat</label>
+                        </div>
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="auto-loot-enabled" name="auto-loot-enabled" onchange="helperSettings.autoLoot = this.checked" ${helperSettings.autoLoot ? "checked" : ""}>
+                            <label class="custom-control-label" for="auto-loot-enabled">Auto Collect Loot</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>`);
+
+*/
+
+//:: import this: https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js
+/* god damn that's gonna be a lot to do. 
+// BANK
+// How much money to keep on reserve?
+// Aim for at least 4.000.000 when also buying bank slots
+var bot_reserveGold = 5000000; //aw: use a form-field in settings menu
+// Sell Bobbys pocket automatically?
+var bot_sellGoldBags = true; //tog button in settings menu
+// Buy new Bank slots when needed?
+// Careful with this setting, this can drain your money fast in early game.
+var bot_buyBankSlots = true; //tog button
+
+// Opening containers automatically will display a popup.
+// The script tries to close this popup automatically, but this might
+// interrupt other actions you're doing in the bank. //aw: but nothing else?...
+// Sadly there's no real way around this.
+
+// Open bird nests automatically?
+var bot_farming_openBirdNests = true;
+// Open herb bags automatically?
+var bot_farming_openHerbBags = true;
+
+// MINING
+// Enable automatic buying of Gem gloves?
+var bot_buyGemGlove_enabled = true;
+// Amount of uses to keep in reserve?
+// Have this larger than 2000.
+var bot_gemGloveUses = 60000; //this guy on crack
+
+// PRAYER
+// Bury bones?
+var bot_buryBones_enabled = true;
+// Amount of bones to keep in reserve?
+// 21.600 bones is enough for 12h of crafting.
+// - Normal bones
+var bot_bonesReserve = 21600;
+// - Dragon bones
+var bot_dragonBonesReserve = 21600;
+// - Magic bones
+var bot_magicBonesReserve = 0;
+// - Holy dust
+var bot_holyDustReserve = 21600;
+// - Big bones
+var bot_bigBonesReserve = 0;
+
+
+// GENERAL
+function bot_getBankCount(id) {
+for (let i = 0; i < bank.length; i++) {
+    if (bank[i].id === id) {return bank[i].qty;}
 }
+return 0;
+}
+
+// Adds an item to the sell list, or merges if it's already queued.
+function bot_addSellList(id, amount) {
+for (let i = 0; i < bot_sellList.length; i++) {
+    if (bot_sellList[i][0] === id) {
+    bot_sellList[i][1] += amount;
+    return;
+    }
+}
+bot_sellList.push([id, amount]);
+}
+
+// Try to sell gems, but keep an equal amount of each in the bank.
+function bot_sellGems(target_gold) {
+// Create an easy to navigate structure
+let bank_gems = [];
+let to_sell = {};
+let value = 0;
+for (let i = 0; i < bot_gemList.length; i++) {
+    let id = bot_gemList[i];
+    let amount = bot_getBankCount(id);
+    bank_gems.push([id, amount, items[id].sellsFor]);
+    to_sell[id] = {};
+    // Little hack to always keep 1 gem in the bank.
+    to_sell[id].amount = -1;
+    value = value + ((amount-1) * items[id].sellsFor);
+}
+// If selling all gems doesn't match target_gold, stop.
+if (value < target_gold) {return;}
+
+let sell_value = 0;
+// Add gems to sell until the target gold is reached
+while (sell_value < target_gold) {
+    // Sort bank_gems on amount
+    bank_gems.sort(function(a,b) {return b[1] - a[1];})
+    // Add gems to the selling queue
+    bank_gems[0][1]--;
+    sell_value = sell_value + bank_gems[0][2];
+    bot_addSellList(bank_gems[0][0], 1)
+}
+}
+
+// MINING
+function bot_checkGloves() {
+// Are we mining? - Do this check to avoid spending saved gp
+if (!isMining) {return;}
+// Is the gem glove equipped? - Same reason
+if (equippedItems[CONSTANTS.equipmentSlot.Gloves] !== CONSTANTS.item.Gem_Gloves) {return;}
+// How many uses left?
+let uses_left = glovesTracker[CONSTANTS.shop.gloves.Gems].remainingActions;
+let to_buy = Math.ceil((bot_gemGloveUses - uses_left)/2000)
+// Quit if we don't need more gloves.
+if (to_buy <= 0) {return;}
+let price = glovesCost[CONSTANTS.shop.gloves.Gems];
+// Buy one if we can afford it
+if (gp >= price) {
+    buyGloves(CONSTANTS.shop.gloves.Gems);
+    return;
+}
+// Do we need to sell gems?
+if (gp < price) {
+    bot_sellGems(price - gp);
+}
+}
+
+function bot_checkBones(b = 0) {
+if (b < bot_bones.length) {
+    let boneId = bot_bones[b][0];
+    let keep = bot_bones[b][1];
+    let inBank = bot_getBankCount(boneId);
+    let bury = inBank - keep;
+    // The code allows us to bypass the 10 bones minimum, but let's not cheat. (TEEHEE)
+    if (inBank > 10 && bury > 0) {
+    buryItem(getBankId(boneId), boneId, bury);
+    }
+    // Delay checking the next bone, so the bank can update.
+    // bankIds shift when all of an item is sold.
+    setTimeout(bot_checkBones(b+1),100);
+}
+}
+
+var bot_sellList = [];
+var bot_gemList = [128, 129, 130, 131, 132];
+var bot_bones = [
+[439, bot_bonesReserve],
+[440, bot_dragonBonesReserve],
+[441, bot_magicBonesReserve],
+[500, bot_holyDustReserve],
+[506, bot_bigBonesReserve]
+];
+
+const bot_birdsNest = 119;
+const bot_herbsBag = 620;
+const bot_goldBag = 482;
+var botSeedStorage = {};
+var equippedCape = 0;
+
+// Delay 10 seconds to allow the game to load. good idea
+setTimeout(function() {
+notifyPlayer(11, "Katorone Automation started.");
+// Do actions every second.
+var mediumLoop = setInterval(function() {
+    // Does anything need selling?
+    let sell = bot_sellList.shift();
+    if (sell) {
+        sellItem(getBankId(sell[0]), sell[1]);
+    }
+}, 1000);
+
+// Do actions every minute.
+var slowLoop = setInterval(function() {
+    // Try buying a bank slot
+    if (bot_buyBankSlots === true &&
+        bank.length >= (baseBankMax + bankMax)) {
+        let cost = Math.min(newNewBankUpgradeCost.level_to_gp(currentBankUpgrade+1), 4000000);
+        // Buy if we have enough gold.
+        if (gp >= cost) {
+            upgradeBank();
+            // Stop script to let the game update.
+            return true;
+        }
+    }
+    // Sell Bobbys pocket
+    if (bot_sellGoldBags === true) {
+        let c = bot_getBankCount(bot_goldBag);
+        if (c > 0) { bot_addSellList(bot_goldBag, c); }
+    }
+    // Open bird nests
+    if (bot_farming_openBirdNests === true) {
+        let c = bot_getBankCount(bot_birdsNest);
+        if (c > 0) {
+            openBankItem(getBankId(bot_birdsNest), bot_birdsNest, true)
+            // Close the popup
+            setTimeout(function() {
+            document.getElementsByClassName("swal2-confirm")[0].click();
+            }, 100);
+        }
+    }
+    // Open herb sacks
+    if (bot_farming_openHerbBags === true) {
+        let c = bot_getBankCount(bot_herbsBag);
+        if (c > 0) {
+            openBankItem(getBankId(bot_herbsBag), bot_herbsBag, true)
+            // Close the popup
+            setTimeout(function() {
+            document.getElementsByClassName("swal2-confirm")[0].click();
+            }, 100);
+        }
+    }
+    // Make sure our money reserves are replenished
+    if (gp < bot_reserveGold) { bot_sellGems(bot_reserveGold - gp); }
+    // One gem glove lasts at least 750 seconds.
+    if (bot_buyGemGlove_enabled) { bot_checkGloves(); }
+    // Bury bones.
+    if (bot_buryBones_enabled) { bot_checkBones(); }
+    // Convenience for Daedalus (sells knight loot)
+    //let knightLoot = [63, 64, 65, 66, 71, 72, 73, 74, 79, 80, 81, 82, 134, 135, 136, 137, 87, 88, 89, 90, 95, 96, 97, 98, 104, 105];
+    //for (let i = 0; i < knightLoot.length; i++) {
+    //    let c = bot_getBankCount(knightLoot[i]);
+    //    if (c > 0) { bot_addSellList(knightLoot[i], c) }
+    //}
+    }, 60000)
+
+    console.log("Started automation.");
+}, 10000); */
+//:: end import Katorone's automation
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
