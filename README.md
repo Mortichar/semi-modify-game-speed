@@ -18,6 +18,10 @@ Added in 0.1.1:
 * AutoFish by BreakIt, Jarx, and Myself with added options: Max Mode (for use with fishing potions) and Chase Chests (fish treasure chests when spawned)
 * UI updates & more menu toggles, even for native Melvor sidebar sections like Other & Socials
 
+Added in 0.1.2:
+* Tweaked AutoMine to only switch if the current mining action is complete (more efficient)
+
+
 *When Melvor Idle updates to Alpha v0.13:*
 * From Discord: ["Confirmed Minor Additions / Cooking is Idle from the start"](https://discordapp.com/channels/625838709203271680/670966404433969172/670969351821590558)
     * AutoCook extra button is obsolete, and should be deleted.

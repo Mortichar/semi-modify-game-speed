@@ -153,6 +153,13 @@ function setupSEMI() { // streamlining/simplicity
         $("#semiHeading").nextAll()[i].id = 'semi-nav-'+i;
     } //sets up the nav ids to hide the menu.
     
+    for (i=0; i<rockData.length; i++) {
+    $("#mining-ore-"+i).prepend($(`
+        <button id="autoMine`+i+`" class="btn btn-outline-primary" style="width: 100%" type="button" onclick="autoMineSet(`+i+`);">
+            AM Priority Override
+        </button>`));
+    } //sets up the AM overrides
+    
     updateAutoSellGemsButtonText();    
     updateAutoMineButtonText();    
     updateAutoSlayerButtonText();
@@ -755,6 +762,28 @@ var autoSellGems = function() {
 }
 var autoSellGemsTimer = setInterval(function(){autoSellGems();}, 5000);
 
+//autoMine Override: buttons injected in setupSEMI
+var autoMineOverride = false;
+var overrideRock;
+var overrideMineArray = [];
+function autoMineSet(x) { 
+    if (x == overrideRock && autoMineOverride) { 
+        mineArray.shift();
+        autoMineOverride = false; 
+        overrideRock = null;
+        $("#autoMine"+x).attr("class", "btn btn-outline-primary"); //de-highlight current selection & turn off
+    } else { 
+        if (overrideRock !== null) { 
+            mineArray.shift(); 
+            $("#autoMine"+overrideRock).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        }
+        mineArray.unshift(x);
+        $("#autoMine"+x).attr("class", "btn btn-primary"); //highlight
+        overrideRock = x;
+        autoMineOverride = true;
+    }
+}
+
 //AutoMine: Will mine based on your or priorities set in mineArray //aw: this still works awesomely!
 var autoMineEnabled = false;
 var updateAutoMineButtonText = function () { $('#auto-mine-button-status').text((autoMineEnabled) ? 'Enabled' : 'Disabled'); }
@@ -779,8 +808,8 @@ var toggleAutoMine = function () {
 }
 var autoMine = function(rocks) {
 	if (!autoMineEnabled) { return; }
-	for(const rock of rocks) {
         var swingRatio = Number(document.getElementById('mining-rock-progress-'+currentRock).style.width.split('%')[0]);
+	for(const rock of rocks) {
 		if(!rockData[rock].depleted && miningData[rock].level <= skillLevel[CONSTANTS.skill.Mining]) { //added extra condition to make universal
 			if(currentRock !== rock && (swingRatio<10) ) {
 				mineRock(rock);
