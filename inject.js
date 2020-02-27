@@ -214,7 +214,10 @@ function setupSEMI() { // streamlining/simplicity
                                         <input type="text" class="form-control" id="k-set-1" placeholder="5000000">
                                     </div>
                                     
-                                    Another word of caution: Katorone's script will automatially sell gems to earn money to do its automation, such as buying more bank space.
+                                    <b>Another word of caution:</b> Katorone's script will automatially sell gems to reach the reserve GP amount set above. 
+                                    This is useful to do its automation, such as buying more bank space or gem glove charges. 
+                                    It is meant as a good companion to AutoMine. If you don't want this feature on, set the value to 0.
+                                
                                     
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="auto-sgb-enabled" name="auto-sgb-enabled" onchange="bot_sellGoldBags = this.checked" ${bot_sellGoldBags ? "checked" : ""}>
@@ -244,7 +247,7 @@ function setupSEMI() { // streamlining/simplicity
                                         <label class="custom-control-label" for="auto-bgg-enabled">Automatically Buy Gem Glove Charges</label>
                                     </div>
                                     
-                                    The script will only buy gem glove charges if you are wearing the gloves.
+                                    The script will only buy gem glove charges if you are wearing the gloves and mining.
                                     
                                     <div id="number-settings-2" class="form-group" title="">
                                         <label for="example-text-input">Amount of Gem Glove Charges to keep:</label>
@@ -788,16 +791,40 @@ function autoReplant() {
                     harvestSeed(i,j)
                     if(checkBankForItem(lastSeed)) {
                         if(farmingMastery[items[lastSeed].masteryID].mastery < 50) {
-                            if(equippedItems[CONSTANTS.equipmentSlot.Cape] !== CONSTANTS.item.Farming_Skillcape) {
-                                if(checkBankForItem(CONSTANTS.item.Compost) && gp < (5*items[159].buysFor + bot_reserveGold) ) { //prevent interference with katorone script as suggested by rebelEpik. 159 = compost
-                                    if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
-                                        buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
-                                        buyCompost()
+                            if(equippedItems[CONSTANTS.equipmentSlot.Cape] !== CONSTANTS.item.Farming_Skillcape) { //adding&tweaking script modification by rebelEpik
+                                if(katoroneOn){
+									if((bot_reserveGold > 0) && ((gp - (5*items[159].buysFor)) > bot_reserveGold)){
+										if(checkBankForItem(CONSTANTS.item.Compost)) {
+											if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
+												buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
+												buyCompost()
+                                            }
+                                        } else {
+											buyQty = 5
+											buyCompost()
+										}
+									} else if(bot_reserveGold==0) {
+                                        if(checkBankForItem(CONSTANTS.item.Compost)) {
+                                            if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
+                                                buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
+                                                buyCompost()
+                                            }
+                                        } else {
+                                            buyQty = 5
+                                            buyCompost()
+                                        }
                                     }
-                                } else {
-                                    buyQty = 5
-                                    buyCompost()
-                                }
+								}else{
+									if(checkBankForItem(CONSTANTS.item.Compost)) {
+										if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
+											buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
+											buyCompost()
+										}
+									} else {
+										buyQty = 5
+										buyCompost()
+									}
+								}
                             }
                             addCompost(i,j,5)
                         }
@@ -1201,7 +1228,7 @@ function bot_checkGloves() {
     if (to_buy <= 0) {return;}
     let price = glovesCost[CONSTANTS.shop.gloves.Gems];
     // Buy one if we can afford it
-    if (gp >= price) {
+    if ((gp - price) >= bot_reserveGold) { //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
         buyGloves(CONSTANTS.shop.gloves.Gems);
         //aw: adding notifications
         notifyPlayer(4, "Katorone Automation just bought Gem Glove charges.");
@@ -1209,7 +1236,7 @@ function bot_checkGloves() {
         return;
     }
     // Do we need to sell gems?
-    if (gp < price) {
+    if (gp < (bot_reserveGold+price)) {
         bot_sellGems(price - gp);
     }
 }
