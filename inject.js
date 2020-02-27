@@ -58,7 +58,7 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>
     
-    <li class="nav-main-item" title="AutoMine will mine highest XP ore first automatically.">
+    <li class="nav-main-item" title="AutoMine will mine highest XP ore first automatically. SEMI's version will not switch ores until mining action is complete. SEMI has added AutoMine Priority Override buttons for each mining ore. Select one ore to prioritize above XP, and AM will still switch automatically.">
         <a id="auto-mine-button" class="nav-main-link" href="javascript:toggleAutoMine();">
             <img class="nav-img" src="assets/media/shop/pickaxe_dragon.svg">
             <span class="nav-main-link-name">AutoMine</span>
