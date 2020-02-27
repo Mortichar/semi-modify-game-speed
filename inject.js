@@ -203,15 +203,15 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==2) { //auto skills 
         moreMenus2 = !moreMenus2;
-        for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,5).toggleClass("d-none"); }
+        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,5).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==3) { //auto fishing
         moreMenus3 = !moreMenus3;
-        for (i=0; i<3; i++) { $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none"); }
+        $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus3) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==4) { //auto combat
         moreMenus4 = !moreMenus4;
-        for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none"); }
+        $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus4) ? '' : '-slash') + " text-muted ml-1");
     }
 }
@@ -758,15 +758,19 @@ var autoSellGemsTimer = setInterval(function(){autoSellGems();}, 5000);
 //AutoMine: Will mine based on your or priorities set in mineArray //aw: this still works awesomely!
 var autoMineEnabled = false;
 var updateAutoMineButtonText = function () { $('#auto-mine-button-status').text((autoMineEnabled) ? 'Enabled' : 'Disabled'); }
+var autoMineLoop;
 var toggleAutoMine = function () {
-	autoMineEnabled = !autoMineEnabled;
-	updateAutoMineButtonText();
 	setTimeout(function() {
+        autoMineEnabled = !autoMineEnabled;
+        updateAutoMineButtonText();
 		if (!autoMineEnabled) {
 			mineRock(currentRock, true);
 			console.log("Auto Mine Disabled!");
+            clearInterval(autoMineLoop);
 		}else{
 			changePage(10);
+            mineRock(0);
+            autoMineLoop = setInterval(function(){autoMine(mineArray);}, 100);
 			if(!glovesTracker[CONSTANTS.shop.gloves.Mining].isActive){
 				//equipItem(34, 399);
 			}
@@ -774,19 +778,18 @@ var toggleAutoMine = function () {
 	}, 100);
 }
 var autoMine = function(rocks) {
-	if (!autoMineEnabled) {
-		return;
-	}
+	if (!autoMineEnabled) { return; }
 	for(const rock of rocks) {
+        var swingRatio = Number(document.getElementById('mining-rock-progress-'+currentRock).style.width.split('%')[0]);
 		if(!rockData[rock].depleted && miningData[rock].level <= skillLevel[CONSTANTS.skill.Mining]) { //added extra condition to make universal
-			if(currentRock !== rock) {
+			if(currentRock !== rock && (swingRatio<10) ) {
 				mineRock(rock);
 			}
 			return;
 		}
 	}
 }
-var autoMineTimer = setInterval(function(){autoMine(mineArray);}, 100);
+//var autoMineLoop = setInterval(function(){autoMine(mineArray);}, 1500);
 
 //Super Control Panel Builder (now more semi buttons or whatever)
 setTimeout(function() { setupSEMI(); },3000);
@@ -909,6 +912,8 @@ if(navigator.userAgent.match("Chrome")){
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
+Kill potion button, or just suggest to ol Fruxy
+
 More settings for autocombat
     auto re-equip arrows 
     Auto only-loot bones/etc
