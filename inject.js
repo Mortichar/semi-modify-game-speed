@@ -789,7 +789,7 @@ function autoReplant() {
                     if(checkBankForItem(lastSeed)) {
                         if(farmingMastery[items[lastSeed].masteryID].mastery < 50) {
                             if(equippedItems[CONSTANTS.equipmentSlot.Cape] !== CONSTANTS.item.Farming_Skillcape) {
-                                if(checkBankForItem(CONSTANTS.item.Compost)) {
+                                if(checkBankForItem(CONSTANTS.item.Compost) && gp < (5*items[159].buysFor + bot_reserveGold) ) { //prevent interference with katorone script as suggested by rebelEpik. 159 = compost
                                     if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
                                         buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
                                         buyCompost()
