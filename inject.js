@@ -921,7 +921,7 @@ function autoMineSet(x) {
         overrideRock = null;
         $("#autoMine"+x).attr("class", "btn btn-outline-primary"); //de-highlight current selection & turn off
     } else { 
-        if (overrideRock !== null) { 
+        if (overrideRock !== null && autoMineOverride) { 
             mineArray.shift(); 
             $("#autoMine"+overrideRock).attr("class", "btn btn-outline-primary"); //de-highlight previous
         }
@@ -1129,7 +1129,7 @@ function updateKatSets() {
     if (!isNaN(ks7n) && ks7n>=0) { bot_bigBonesReserve = ks7n; }
     
     //update bone array
-    bot_bones = [ //update the bone reserve numbers
+    bot_bones = [
         [439, bot_bonesReserve],
         [440, bot_dragonBonesReserve],
         [441, bot_magicBonesReserve],
