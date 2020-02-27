@@ -788,27 +788,25 @@ function autoMineSet(x) {
 var autoMineEnabled = false;
 var updateAutoMineButtonText = function () { $('#auto-mine-button-status').text((autoMineEnabled) ? 'Enabled' : 'Disabled'); }
 var autoMineLoop;
-var toggleAutoMine = function () {
-	setTimeout(function() {
-        autoMineEnabled = !autoMineEnabled;
-        updateAutoMineButtonText();
-		if (!autoMineEnabled) {
-			mineRock(currentRock, true);
-			console.log("Auto Mine Disabled!");
-            clearInterval(autoMineLoop);
-		}else{
-			changePage(10);
-            mineRock(0);
-            autoMineLoop = setInterval(function(){autoMine(mineArray);}, 100);
-			if(!glovesTracker[CONSTANTS.shop.gloves.Mining].isActive){
-				//equipItem(34, 399);
-			}
-		}
-	}, 100);
+function toggleAutoMine() {
+    autoMineEnabled = !autoMineEnabled;
+    updateAutoMineButtonText();
+    if (!autoMineEnabled) {
+        mineRock(currentRock, true);
+        console.log("Auto Mine Disabled!");
+        clearInterval(autoMineLoop);
+    }else{
+        changePage(10);
+        mineRock(0);
+        autoMineLoop = setInterval(function(){autoMine(mineArray);}, 100);
+        /* if(!glovesTracker[CONSTANTS.shop.gloves.Mining].isActive){
+            //equipItem(34, 399);
+        }*/
+    }
 }
-var autoMine = function(rocks) {
+function autoMine(rocks) {
 	if (!autoMineEnabled) { return; }
-        var swingRatio = Number(document.getElementById('mining-rock-progress-'+currentRock).style.width.split('%')[0]);
+    var swingRatio = Number(document.getElementById('mining-rock-progress-'+currentRock).style.width.split('%')[0]);
 	for(const rock of rocks) {
 		if(!rockData[rock].depleted && miningData[rock].level <= skillLevel[CONSTANTS.skill.Mining]) { //added extra condition to make universal
 			if(currentRock !== rock && (swingRatio<10) ) {
@@ -818,7 +816,6 @@ var autoMine = function(rocks) {
 		}
 	}
 }
-//var autoMineLoop = setInterval(function(){autoMine(mineArray);}, 1500);
 
 //Super Control Panel Builder (now more semi buttons or whatever)
 setTimeout(function() { setupSEMI(); },3000);
