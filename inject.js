@@ -216,7 +216,7 @@ function setupSEMI() { // streamlining/simplicity
                                     
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="auto-sgb-enabled" name="auto-sgb-enabled" onchange="bot_sellGoldBags = this.checked" ${bot_sellGoldBags ? "checked" : ""}>
-                                        <label class="custom-control-label" for="auto-sgb-enabled">Automatically Sell Gold Bags</label>
+                                        <label class="custom-control-label" for="auto-sgb-enabled">Automatically Sell Gold Bags (Bobby's Pocket)</label>
                                     </div>
                                     
                                     <div class="custom-control custom-switch mb-1" title="Warning from Katorone: can drain money fast early game.">
@@ -226,12 +226,12 @@ function setupSEMI() { // streamlining/simplicity
                                     
                                     <div class="custom-control custom-switch mb-1" title="Opening anything in the bank will cause a popup and interrupt any bank actions.">
                                         <input type="checkbox" class="custom-control-input" id="auto-obn-enabled" name="auto-obn-enabled" onchange="bot_farming_openBirdNests = this.checked" ${bot_farming_openBirdNests ? "checked" : ""}>
-                                        <label class="custom-control-label" for="auto-obn-enabled">Automatically Open Birds' Nests</label>
+                                        <label class="custom-control-label" for="auto-obn-enabled">Automatically Open Bird Nests</label>
                                     </div>
                                     
                                     <div class="custom-control custom-switch mb-1" title="Opening anything in the bank will cause a popup and interrupt any bank actions.">
                                         <input type="checkbox" class="custom-control-input" id="auto-ohb-enabled" name="auto-ohb-enabled" onchange="bot_farming_openHerbBags = this.checked" ${bot_farming_openHerbBags ? "checked" : ""}>
-                                        <label class="custom-control-label" for="auto-ohb-enabled">Automatically Open Herb Bags</label>
+                                        <label class="custom-control-label" for="auto-ohb-enabled">Automatically Open Herb Sacks</label>
                                     </div>
                                     
                                     <hr>
@@ -947,7 +947,8 @@ function toggleAutoMine() {
         autoMineLoop = setInterval(function(){autoMine(mineArray);}, 100);
         /* if(!glovesTracker[CONSTANTS.shop.gloves.Mining].isActive){
             //equipItem(34, 399);
-        }*/
+        }
+        */
     }
 }
 function autoMine(rocks) {
@@ -1294,8 +1295,8 @@ var slowLoop = setInterval(function() {
         let c = bot_getBankCount(bot_birdsNest);
         if (c > 0) {
             openBankItem(getBankId(bot_birdsNest), bot_birdsNest, true);
-            notifyPlayer(10, "Katorone Automation just auto-opened Birds' Nest(s).");
-            console.log("Katorone Automation just auto-opened Birds' Nest(s).");
+            notifyPlayer(10, "Katorone Automation just auto-opened Bird Nest(s).");
+            console.log("Katorone Automation just auto-opened Bird Nest(s).");
             // Close the popup
             setTimeout(function() {
             document.getElementsByClassName("swal2-confirm")[0].click();
