@@ -26,7 +26,7 @@ Added in 0.2:
 0.2.1:
 * Quick fixes & mods to the Katorone scripts by rebelEpik & me:
     * Auto buy gem glove charges now respects the bank gp limit
-    * AutoReplant respects the bank gp limit when Katorone is enabled and won't buy compost
+    * AutoReplant respects the bank gp limit when Katorone is enabled and won't buy compost unless it has more than the reserve
 
 ***
 
