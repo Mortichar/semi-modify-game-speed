@@ -1,4 +1,4 @@
-## This is Scripting Engine for Melvor Idle v0.1.2.
+## This is Scripting Engine for Melvor Idle v0.2.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 ### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game.
@@ -18,10 +18,12 @@ Added in 0.1.1:
 * AutoFish by BreakIt, Jarx, and Myself with added options: Max Mode (for use with fishing potions) and Chase Chests (fish treasure chests when spawned)
 * UI updates & more menu toggles, even for native Melvor sidebar sections like Other & Socials
 
-Added in 0.1.2:
+Added in 0.2:
+* Huge update: incorporated many functions from Katorone's automation script into SEMI complete with a settings menu.
 * Tweaked AutoMine to only switch if the current mining action is complete (more efficient)
 * Added AutoMine priority override buttons, allows you to select one ore to prioritize above all others (still seeks highest XP)
 
+***
 
 *When Melvor Idle updates to Alpha v0.13:*
 * From Discord: ["Confirmed Minor Additions / Cooking is Idle from the start"](https://discordapp.com/channels/625838709203271680/670966404433969172/670969351821590558)
