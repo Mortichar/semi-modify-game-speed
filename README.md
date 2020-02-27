@@ -23,6 +23,11 @@ Added in 0.2:
 * Tweaked AutoMine to only switch if the current mining action is complete (more efficient)
 * Added AutoMine priority override buttons, allows you to select one ore to prioritize above all others (still seeks highest XP)
 
+0.2.1:
+* Quick fixes & mods to the Katorone scripts by rebelEpik & me:
+    * Auto buy gem glove charges now respects the bank gp limit
+    * AutoReplant respects the bank gp limit when Katorone is enabled and won't buy compost
+
 ***
 
 *When Melvor Idle updates to Alpha v0.13:*
