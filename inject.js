@@ -196,6 +196,8 @@ function setupSEMI() { // streamlining/simplicity
                             <br><br>
                             Katorone's script uses two intervals, one that sells things if there's things to sell every second. 
                             It also loops every half-minute for the larger functions: burial, checking for loot to sell, all the rest. So, be patient!
+                            <br>
+                            <b>SEMI will notify you in-game and in the console when this script completes an action.</b>
                             <br><br>
                             <div class="row">
                                 <div class="col-sm-12">
