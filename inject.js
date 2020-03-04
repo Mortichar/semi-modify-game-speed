@@ -1,4 +1,4 @@
-//SEMIv0.2.2.1 by AW.
+//SEMIv0.2.2.2 by AW.
 
 //AldousWatts code section 
 
@@ -384,7 +384,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.2.2.1</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.2.2.2</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -394,7 +394,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.2.2.1 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.2.2.2 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
                     Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -830,7 +830,7 @@ function autoReplant() {
         }
     }
 }
-var autoReplantLoop = setInterval( () => { autoReplant() }, 5000);
+//var autoReplantLoop = setInterval( () => { autoReplant() }, 5000);
 //:: end of import of Melvor Auto Replant. Beautiful script.
 //adding togbtn functions, togbtn is injected in setupSEMI()
 var autoReplanting = false;
