@@ -1,4 +1,4 @@
-// Scripting Engine for Melvor Idle v0.2.2 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
+// Scripting Engine for Melvor Idle v0.2.2.1 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.12.2
 // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3). I'm guessing it's roughly equivalent to slightly-old firefox, probably v56.3.
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
@@ -17,7 +17,7 @@ const navbar = document.getElementsByClassName("nav-main")[0];
 const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.12.2 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
 navbar.appendChild(clnheading); 
 clnheading.style = "font-size: 12pt; color: gold;";
-clnheading.childNodes[0].textContent = " SEMI v0.2.2";
+clnheading.childNodes[0].textContent = " SEMI v0.2.2.1";
 clnheading.title = "Scripting Engine for Melvor Idle";
 clnheading.id = "semiHeading";
 const iconImg = document.createElement('img');

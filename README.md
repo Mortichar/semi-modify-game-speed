@@ -1,4 +1,4 @@
-## This is Scripting Engine for Melvor Idle v0.2.2.
+## This is Scripting Engine for Melvor Idle v0.2.2.1.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 ### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game.
