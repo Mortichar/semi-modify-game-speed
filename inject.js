@@ -302,14 +302,14 @@ function toggleSemiMenu() {
     if (semiMenu) { 
         for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
         if (!moreMenus2) {
-            for (i=0; i<6; i++) { $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,6).toggleClass("d-none"); }
+            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,6).toggleClass("d-none"); 
         }
         /*
         if (!moreMenus3) {
             for (i=0; i<3; i++) { $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none"); }
         }*/
         if (!moreMenus4) {
-            for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none"); }
+            $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none");
         }
     }
         else { for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).addClass("d-none"); } //automated id application in place, all appended will be tagged for invisibilitization

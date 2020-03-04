@@ -33,6 +33,7 @@ Added in 0.2:
 * getBankQty function updated for efficiency (credit rebelEpik)
 * AutoReplant disabled by default (suggested by Rickardo)
 * AutoFish is now fully automated: it will find max XP fish and stop chasing chests when using fishing potions.
+* 0.2.2.1: quick fix to make sure AutoFish is hidden when Auto Skills visibility is toggled
 
 ***
 
