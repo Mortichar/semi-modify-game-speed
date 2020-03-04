@@ -302,11 +302,12 @@ function toggleSemiMenu() {
     if (semiMenu) { 
         for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
         if (!moreMenus2) {
-            for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,5).toggleClass("d-none"); }
+            for (i=0; i<6; i++) { $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,6).toggleClass("d-none"); }
         }
+        /*
         if (!moreMenus3) {
             for (i=0; i<3; i++) { $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none"); }
-        }
+        }*/
         if (!moreMenus4) {
             for (i=0; i<5; i++) { $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none"); }
         }
@@ -338,7 +339,7 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==2) { //auto skills 
         moreMenus2 = !moreMenus2;
-        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,5).toggleClass("d-none");
+        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,6).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==3) { //auto fishing
         moreMenus3 = !moreMenus3;
