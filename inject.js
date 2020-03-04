@@ -1317,7 +1317,7 @@ var slowLoop = setInterval(function() {
     if (!katoroneOn) { return; }
     
     ////DEV
-    console.log('Katorone long loop running.');
+    //console.log('Katorone long loop running.');
     
     // Try buying a bank slot
     if (bot_buyBankSlots === true &&
