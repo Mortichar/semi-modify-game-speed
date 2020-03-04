@@ -29,9 +29,9 @@ Added in 0.2:
     * AutoReplant respects the bank gp limit when Katorone is enabled and won't buy compost unless it has more than the reserve
 
 0.2.2:
-* AutoEat will now cycle through equipped foods (credit rebelEpik)
+* AutoEat will now cycle through equipped foods before exiting combat (credit rebelEpik)
 * getBankQty function updated for efficiency (credit rebelEpik)
-* AutoReplant disabled by default as suggested by Rickardo
+* AutoReplant disabled by default (suggested by Rickardo)
 * AutoFish is now fully automated: it will find max XP fish and stop chasing chests when using fishing potions.
 
 ***

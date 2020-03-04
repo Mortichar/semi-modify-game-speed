@@ -74,7 +74,7 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>
     
-    <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you. This script will either fish the area with the highest average XP fish and chase chests when you aren't using potions, and will switch to finding the maximum XP fish and stop chasing chests when using potions.">
+    <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you. This script will fish the area with the highest average XP fish and chase chests when you aren't using potions, and will switch to finding the maximum XP fish and stop chasing chests when using potions.">
         <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
             <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
             <span class="nav-main-link-name">AutoFish</span>
