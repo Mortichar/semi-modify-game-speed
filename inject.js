@@ -341,7 +341,7 @@ function toggleMoreMenus(x) {
         moreMenus2 = !moreMenus2;
         $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,6).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
-    } else if (x==3) { //auto fishing
+    } else if (x==3) { //auto fishing... DEFUNCT
         moreMenus3 = !moreMenus3;
         $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus3) ? '' : '-slash') + " text-muted ml-1");
