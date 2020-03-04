@@ -74,30 +74,12 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>
     
-    <li class="nav-main-heading">
-        Auto Fishing <a href="javascript:toggleMoreMenus(3);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye3"></i></a>
-    </li>
-    
-    <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you, either fishing the area with the highest average XP fish, or chasing either chests or highest XP fish in general for maximum efficiency of fishing with potions.">
+    <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you. This script will either fish the area with the highest average XP fish and chase chests when you aren't using potions, and will switch to finding the maximum XP fish and stop chasing chests when using potions.">
         <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
             <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
             <span class="nav-main-link-name">AutoFish</span>
             <small id="auto-fish-status">Disabled</small>
         </a>
-    </li>
-    
-    <li class="nav-main-item" title="AutoFish by default chases the highest average XP fishing area. If you'd rather fish in the area with the highest MAX fish XP, then you should turn this option off. This is best for fishing with the fishing potion you can make in herblore. WARNING: Using fishing potions will prevent you from fishing chests, so disable the chase chests option.">
-        <a id="autoFishMaxNavBut" class="nav-main-link nav-compact" href="javascript:toggleAutoFishMax();">
-            <img class="nav-img" src="assets/media/skills/fishing/whale.svg" id="autoFishMaxImg">
-            <span class="nav-main-link-name">AF Max Mode</span>
-        <small id="max-mode-status">Disabled</small></a>
-    </li>
-    
-    <li class="nav-main-item" title="Chase those chests! This option will prioritize fishing in areas with chests in them.">
-        <a class="nav-main-link nav-compact" href="javascript:toggleAutoFishChest();" id="autoFishChestNavBut">
-            <img class="nav-img" src="assets/media/main/bank_header.svg" id="autoFishChestImg">
-            <span class="nav-main-link-name">AF Chase Chests</span>
-        <small id="chase-chest-status">Enabled</small></a>
     </li>
     
     <li class="nav-main-heading">
@@ -1049,17 +1031,25 @@ function autoFish() {
     let fishAvg = [];
     let fishZone = 0;
     var maxXP = 0;
+    let fishXPs = [];
     
-    if (maxMode) {
+    if (herbloreBonuses[7].itemID > 0) { //if you're using potions on the fishing page, page 7, automatically do max mode & turn off chase chests
+    //if (maxMode) {
         for (let i = 0; i < fishingArea.length; i++) { //for each available fishing area
-        if (skillLevel[CONSTANTS.skill.Fishing] > fishingArea[i].level) { //if you can fish it
-            maxXP = fishData[Math.max(...fishingArea[i].currentFish)].xp; //find max xp of fish there
-            if (chaseChest && Math.max(...fishingArea[i].currentFish) == 12) {
-                console.log("Found a Chest!");
-                console.log($(this));
-                maxXP = 9000;
+            if (skillLevel[CONSTANTS.skill.Fishing] > fishingArea[i].level) { //if you can fish it
+                for (n=0; n<fishingArea[i].currentFish.length; n++) {
+                    fishXPs.push(fishData[fishingArea[i].currentFish[n]].xp);
                 }
-            fishMax.push(maxXP); //add that max to the array of fish areas to be max'd again
+                maxXP = Math.max(...fishXPs);
+                /* no chasing chests in max mode/while potions on! YOU'LL NEVER CATCH 'EM!
+                if (chaseChest && Math.max(...fishingArea[i].currentFish) == 12) {
+                    console.log("Found a Chest!");
+                    console.log($(this));
+                    maxXP = 9000;
+                } */
+                
+                fishMax.push(maxXP); //add that max to the array of fish areas to be max'd again
+                fishXPs = []; //reset the fishXP array
             }
         }
     fishZone = fishMax.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0); //some maths by BreakIt, calcs max of array and outputs the array position.
@@ -1068,7 +1058,7 @@ function autoFish() {
             var totalexp = 0;
             $(this).children("img").each(function() {
                 totalexp = totalexp + parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]);
-                if (chaseChest && parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]) == "1") {
+                if (parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]) == "1") { //removed chase chest toggler
                     console.log("Found a Chest!");
                     console.log($(this));
                     totalexp = 9000;
@@ -1388,7 +1378,6 @@ Kill potion button, or just suggest to ol Fruxy
 More settings for autocombat
     auto re-equip arrows 
     Auto only-loot bones/etc
-    Auto bury bones. 
     Auto-prayer.
 
 Menus for automation: inject div into skill page containers w/ buttons containing selectors.
@@ -1407,8 +1396,6 @@ time until done calculators? more items til done calculators? there already be u
 add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
     idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
     so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
-
-make compatible with MICE?... remove all MICE automation and just leave cheats in next ver? done
 
 -
 
@@ -1456,4 +1443,5 @@ var smithingHUD = window.setInterval(function() {
 items[567].potionPage
 herbloreBonuses[items[569].potionPage].charges
 autofish autochase chests and automax when not using potion
+if (herbloreBonuses[currentPage].itemID > 0) {
 */
