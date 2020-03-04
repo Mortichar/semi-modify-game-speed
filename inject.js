@@ -38,7 +38,7 @@ function setupSEMI() { // streamlining/simplicity
         <a id="auto-replant-button" class="nav-main-link" href="javascript:toggleAutoReplant();">
             <img class="nav-img" src="assets/media/skills/farming/farming.svg">
             <span class="nav-main-link-name">AutoReplant</span>
-            <small id="auto-replant-button-status">Enabled</small>
+            <small id="auto-replant-button-status">Disabled</small>
         </a>
     </li>
     
@@ -466,6 +466,14 @@ function autocombatfunc() {
     hpfood = numberMultiplier * items[equippedFood[currentCombatFood].itemID].healsFor; //numberMultiplier = 10, adjusts hp math
     hpmax = skillLevel[CONSTANTS.skill.Hitpoints] * numberMultiplier; //same here
     if ( (hp < (hpmax-hpfood) || hp<50) && autoEat ) eatFood(); //autoEat toggle here now
+    if(equippedFood[currentCombatFood].qty < 1 && autoEat){ //cycle through food, added by rebelEpik
+        for(i = 0; i < equippedFood.length; i++){
+            if(equippedFood[i].qty > 0){
+                selectEquippedFood(i);
+                return;
+            }
+        }
+    }
     if (equippedFood[currentCombatFood].qty < 1 && autoEat) { 
     	terminateAutoCombat('food.');
     }
@@ -842,7 +850,7 @@ function autoReplant() {
 var autoReplantLoop = setInterval( () => { autoReplant() }, 5000);
 //:: end of import of Melvor Auto Replant. Beautiful script.
 //adding togbtn functions, togbtn is injected in setupSEMI()
-var autoReplanting = true;
+var autoReplanting = false;
 function toggleAutoReplant() {
     autoReplanting = !autoReplanting;
     $("#auto-replant-button-status").text( (autoReplanting) ? 'Enabled' : 'Disabled');
@@ -898,6 +906,7 @@ var targetStack = 100; //once it hits this amount, sell all of them.
 var gemIdList = [128, 129, 130, 131, 132]; //ruby boobies & such
 
 //General Functions
+/* old, improved by rebelEpik below
 function getBankQty(id) {
     for (let i = 0; i < bank.length; i++) {
       if (bank[i].id === id) {
@@ -905,6 +914,15 @@ function getBankQty(id) {
       }
     }
     return 0;
+} */
+
+function getBankQty(id) {
+    var t = bank.find(x=> x.id === id);
+    if(t > 0){
+        return t;
+    }else{
+        return 0;
+    }
 }
 
 //AutoSellGems: Will sell gems when they reach the stack amount specified
@@ -1435,4 +1453,7 @@ var smithingHUD = window.setInterval(function() {
 }, 1000 / 60);
 //::end smith shit//hmmm... numberWithCommas eh? is this a game function? also, i just kinda hate the way this looks. so unintuitive.
 
+items[567].potionPage
+herbloreBonuses[items[569].potionPage].charges
+autofish autochase chests and automax when not using potion
 */
