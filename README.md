@@ -28,6 +28,11 @@ Added in 0.2:
     * Auto buy gem glove charges now respects the bank gp limit
     * AutoReplant respects the bank gp limit when Katorone is enabled and won't buy compost unless it has more than the reserve
 
+0.2.2:
+* AutoEat will now cycle through equipped foods (credit rebelEpik)
+* getBankQty function updated for efficiency (credit rebelEpik)
+* AutoReplant disabled by default as suggested by Rickardo
+
 ***
 
 *When Melvor Idle updates to Alpha v0.13:*
