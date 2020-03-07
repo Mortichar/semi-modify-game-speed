@@ -101,11 +101,11 @@ function setupSEMI() { // streamlining/simplicity
         <small id="autocombatStatus">Disabled</small></a>
     </li>
 
-    <li class="nav-main-item" title="AutoCombat will, by default, eat your food for you if your HP is less than what your food would heal. This option turns that off, if you'd rather rely on the default in-game Auto Eat, or just don't want it. Be warned that even the tier III in-game Auto Eat will leave you vulnerable to one-hits by very powerful mobs when at just above 40% HP.">
+    <li class="nav-main-item" title="AutoEat script will eat if your HP is less than what your food would heal, and automatically cycles to next equipped food if you run out. In SEMIv0.2.3, this AutoEat script is now separated from the AutoCombat function so you can use it for things like thieving. However, it still pairs very well with AutoCombat.">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
             <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
-            <span class="nav-main-link-name">AC Auto Eat</span>
-        <small id="autoEatStatus">Enabled</small></a>
+            <span class="nav-main-link-name">Auto Eat</span>
+        <small id="autoEatStatus">Disabled</small></a>
     </li>
     
     <li class="nav-main-item" title="Tired of that trash loot while your combat robot does its thing? Try the AutoCombat Auto Loot Option today!">
@@ -437,16 +437,16 @@ $('#modal-account-change').before($(`
     var hp;
     var hpfoox;
     var hpmax;
-    var autoEat = true;
+    var autoEating = false;
+    var autoEatLoop;
     var autoLoot = true;
-    
-//AutoCombat Main Function
-function autocombatfunc() {
+
+function autoEat() {
     hp = combatData.player.hitpoints; //this number is already multiplied
     hpfood = numberMultiplier * items[equippedFood[currentCombatFood].itemID].healsFor; //numberMultiplier = 10, adjusts hp math
     hpmax = skillLevel[CONSTANTS.skill.Hitpoints] * numberMultiplier; //same here
-    if ( (hp < (hpmax-hpfood) || hp<50) && autoEat ) eatFood(); //autoEat toggle here now
-    if(equippedFood[currentCombatFood].qty < 1 && autoEat){ //cycle through food, added by rebelEpik
+    if (hp < (hpmax-hpfood) || hp<50) eatFood(); 
+    if(equippedFood[currentCombatFood].qty < 1 ){ //cycle through food, added by rebelEpik
         for(i = 0; i < equippedFood.length; i++){
             if(equippedFood[i].qty > 0){
                 selectEquippedFood(i);
@@ -454,7 +454,11 @@ function autocombatfunc() {
             }
         }
     }
-    if (equippedFood[currentCombatFood].qty < 1 && autoEat) { 
+}
+    
+//AutoCombat Main Function
+function autocombatfunc() {
+    if (equippedFood[currentCombatFood].qty < 1) { 
     	terminateAutoCombat('food.');
     }
     if ((items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") ) && ammo < 1) { 
@@ -464,7 +468,8 @@ function autocombatfunc() {
 		terminateAutoCombat('runes.');
     }
     if (!(droppedLoot == "") && autoLoot) lootAll(); //the truth condition was always true. now it ACTUALLY checks when empty and shouldn't run lootAll() every half-second, which caused big issues.
-} 
+}
+
 //***************************END AUTO COMBAT*******************************
 //Autocombat Auxiliaries
 function terminateAutoCombat(reason) { 
@@ -500,8 +505,9 @@ function toggleautocombat() { //button -> function that enables auto combat
 }
 
 function toggleAutoEat() { 
-    autoEat = !autoEat;
-    $("#autoEatStatus").text((autoEat) ? 'Enabled' : 'Disabled');
+    autoEating = !autoEating;
+    $("#autoEatStatus").text((autoEating) ? 'Enabled' : 'Disabled');
+    (autoEating) ? autoEatLoop = setInterval( () => { autoEat(); }, 500) : clearInterval(autoEatLoop);
 }
 
 function toggleAutoLoot() { 
@@ -836,6 +842,19 @@ function toggleAutoReplant() {
     $("#auto-replant-button-status").text( (autoReplanting) ? 'Enabled' : 'Disabled');
     (autoReplanting) ? autoReplantLoop = setInterval( () => { autoReplant() }, 5000) : clearInterval(autoReplantLoop);
 }
+
+//adding destroy crop functionality by Jarx in discord, modified by me based on game's source
+function destroyCrops() {
+    for (let i = 0; i < newFarmingAreas[currentFarmingArea].patches.length; i++) {
+        if (newFarmingAreas[currentFarmingArea].patches[i].seedID > 0) {
+            removeSeed(newFarmingAreas[currentFarmingArea].id, i);
+        }
+    }
+    customNotify('assets/media/skills/farming/farming.svg', 'SEMI destroyed all of your '+newFarmingAreas[currentFarmingArea].areaName+'.', 4000);
+}
+
+//adding button to the farming page to destroy crops
+$('#farming-container').append($('<button id="destroyCropsBtn" class="btn btn-success m-2" onclick="destroyCrops();">[SEMI] Destroy All Crops in This Area</button>'));
 
 //:: importing Melvor Percent Accuracy 1.1 by (Not) Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy
 this.setAccuracyPercent = setInterval(() =>{
@@ -1375,7 +1394,10 @@ var slowLoop = setInterval(function() {
 TODO
 Kill potion button, or just suggest to ol Fruxy
 
-Make AutoEat script available outside of combat for thieving
+Jarx additions: 
+    automatically upgrade fishing rod or pickaxe or woodcutting axe
+    
+AutoReplant: choose highest available seeds for replanting if you run out of seeds
 
 More settings for autocombat
     auto re-equip arrows 

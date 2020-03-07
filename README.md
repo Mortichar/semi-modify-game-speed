@@ -39,6 +39,8 @@ Added in 0.2:
 0.2.3:
 * AutoSell Gems was broken by the updated getBankQty function, reverted back, the script works again.
 * Removed AutoCook extra button as Cooking is now idle from the start in alpha v0.13
+* AutoEat script is now usable outside of combat, useful for thieving.
+* Destroy All Crops button added to the Farming page: will remove all your plants in the currently selected farming area.
 
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!
