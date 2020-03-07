@@ -774,6 +774,19 @@ const thievingCalc = () => { //this is freshhh - Thieving Calc & Item Popup! SO 
 }
 //:: end of import of scraps from Melvor Idle Helper
 
+//extracting the buy compost sections to make the autoReplant function cleaner
+function bot_getCompost() {
+    if(checkBankForItem(CONSTANTS.item.Compost)) {
+        if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
+            buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
+            buyCompost()
+        }
+    } else {
+        buyQty = 5
+        buyCompost()
+    }
+}
+
 //:: importing Melvor Auto Replant 1.6 by Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394855-melvor-auto-replant
 function autoReplant() {
     for (let i = 0; i < newFarmingAreas.length; i++) {
@@ -788,36 +801,12 @@ function autoReplant() {
                             if(equippedItems[CONSTANTS.equipmentSlot.Cape] !== CONSTANTS.item.Farming_Skillcape) { //adding&tweaking script modification by rebelEpik
                                 if(katoroneOn){
 									if((bot_reserveGold > 0) && ((gp - (5*items[159].buysFor)) > bot_reserveGold)){
-										if(checkBankForItem(CONSTANTS.item.Compost)) {
-											if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
-												buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
-												buyCompost()
-                                            }
-                                        } else {
-											buyQty = 5
-											buyCompost()
-										}
+										bot_getCompost();
 									} else if(bot_reserveGold==0) {
-                                        if(checkBankForItem(CONSTANTS.item.Compost)) {
-                                            if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
-                                                buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
-                                                buyCompost()
-                                            }
-                                        } else {
-                                            buyQty = 5
-                                            buyCompost()
-                                        }
+                                        bot_getCompost();
                                     }
 								}else{
-									if(checkBankForItem(CONSTANTS.item.Compost)) {
-										if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
-											buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
-											buyCompost()
-										}
-									} else {
-										buyQty = 5
-										buyCompost()
-									}
+									bot_getCompost();
 								}
                             }
                             addCompost(i,j,5)
