@@ -39,9 +39,10 @@ Added in 0.2:
 0.2.3:
 * AutoSell Gems was broken by the updated getBankQty function, reverted back, the script works again.
 * Removed AutoCook extra button as Cooking is now idle from the start in alpha v0.13
-* AutoEat script is now usable outside of combat, useful for thieving.
-* Destroy All Crops button added to the Farming page: will remove all your plants in the currently selected farming area.
-* Chase Crabs option for AutoFishing: will hunt down crabs for fishing potions. If using potions, will only hunt them if they are max in an area. Otherwise, will prioritize them after chests.
+* Fixed AutoCook script to work in alpha v0.13
+* AutoEat script is now usable outside of combat, useful for thieving (suggested by Pentharian)
+* Destroy All Crops button added to the Farming page: will remove all your plants in the currently selected farming area (suggested & prototyped by Jarx)
+* Chase Crabs option for AutoFishing: will hunt down crabs for fishing potions. If using potions, will only hunt them if they are max in an area. Otherwise, will prioritize them after chests. (suggested by Jarx)
 
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!

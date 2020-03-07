@@ -1022,8 +1022,8 @@ function autoCookAll(){
         fishTypeCount = (fishTypeCount + 1) % fishType.length;
         selectFood(fishType[fishTypeCount]);
     }
-    else if(document.getElementById("cook-count").innerHTML == "-"){
-        startCooking(10, false);
+    else if(!isCooking){
+        startCooking(0, false);
     }    
 }
 var cookInterval;
