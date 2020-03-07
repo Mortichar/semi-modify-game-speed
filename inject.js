@@ -1,4 +1,4 @@
-//SEMIv0.2.2.2 by AW.
+//SEMIv0.2.3 by AW.
 
 //AldousWatts code section 
 
@@ -329,11 +329,11 @@ $(".nav-main-heading:contains('Other')").append($('<a href="javascript:toggleMor
 $(".nav-main-heading:contains('Socials')").append($('<a href="javascript:toggleMoreMenus(1);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye1"></i></a>'));
 
 function toggleMoreMenus(x) {
-    if (x==0) {
+    if (x==0) { //Other (main menu)
         moreMenus0 = !moreMenus0;
         for (i=0; i < $("[id^=other-nav]").length; i++) { $("#other-nav-" + i).toggleClass("d-none"); } //automated id application, all appended will be tagged for invisibilitization
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus0) ? '' : '-slash') + " text-muted ml-1");
-    } else if (x==1) {
+    } else if (x==1) { //Socials (main menu)
         moreMenus1 = !moreMenus1;
         for (i=0; i < $("[id^=socials-nav]").length; i++) { $("#socials-nav-" + i).toggleClass("d-none"); } //automated id application, all appended will be tagged for invisibilitization
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
@@ -351,9 +351,6 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus4) ? '' : '-slash') + " text-muted ml-1");
     }
 }
-
-//AutoCook (sorta): insert always-unlocked cooking button.
-$("#cook-button-qty-all").parent().append($('<button type="button" id="alwayscookallbut" class="btn btn-warning mb-1" onclick="startCooking(0, false)" style="width: 100%; border: 2px solid red;">Cook All (Permanently Unlocked by SEMI)</button>'));
 
 //herblore calc # items needed to level.
 $('#herblore-container .col-12 .mr-2 .btn').parent().append('<button type="button" class="btn btn-success m-3" onclick="calcHerbItemsToLvl();">Calculate # Needed to Next Level</button>');
@@ -384,7 +381,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.2.2.2</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.2.3</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -394,7 +391,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.2.2.2 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.2.3 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
                     Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -889,7 +886,7 @@ var targetStack = 100; //once it hits this amount, sell all of them.
 var gemIdList = [128, 129, 130, 131, 132]; //ruby boobies & such
 
 //General Functions
-/* old, improved by rebelEpik below
+// old, improved by rebelEpik below
 function getBankQty(id) {
     for (let i = 0; i < bank.length; i++) {
       if (bank[i].id === id) {
@@ -897,8 +894,9 @@ function getBankQty(id) {
       }
     }
     return 0;
-} */
+}
 
+/* more efficient by rebelEpik, however seems to break AutoSellGems
 function getBankQty(id) {
     var t = bank.find(x=> x.id === id);
     if(t > 0){
@@ -907,6 +905,7 @@ function getBankQty(id) {
         return 0;
     }
 }
+*/
 
 //AutoSellGems: Will sell gems when they reach the stack amount specified
 var autoSellGemsEnabled = false;
@@ -1375,6 +1374,8 @@ var slowLoop = setInterval(function() {
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
 Kill potion button, or just suggest to ol Fruxy
+
+Make AutoEat script available outside of combat for thieving
 
 More settings for autocombat
     auto re-equip arrows 

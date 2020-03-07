@@ -1,4 +1,4 @@
-## This is Scripting Engine for Melvor Idle v0.2.2.2.
+## This is Scripting Engine for Melvor Idle v0.2.3.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 ### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game.
@@ -36,11 +36,10 @@ Added in 0.2:
 * 0.2.2.1: quick fix to make sure AutoFish is hidden when Auto Skills visibility is toggled
 * 0.2.2.2: quick fix to make sure AutoReplant is ACTUALLY off when starting SEMI.
 
-***
+0.2.3:
+* AutoSell Gems was broken by the updated getBankQty function, reverted back, the script works again.
+* Removed AutoCook extra button as Cooking is now idle from the start in alpha v0.13
 
-*When Melvor Idle updates to Alpha v0.13:*
-* From Discord: ["Confirmed Minor Additions / Cooking is Idle from the start"](https://discordapp.com/channels/625838709203271680/670966404433969172/670969351821590558)
-    * AutoCook extra button is obsolete, and should be deleted.
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!
 
@@ -57,4 +56,4 @@ Chrome: open settings > tools > extensions, enable developer options in the top 
 ### Goal of the Software
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
 
-This was built around Melvor Idle alpha v0.12.2.
+This was built around Melvor Idle alpha v0.13.
