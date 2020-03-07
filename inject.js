@@ -82,6 +82,14 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>
     
+    <li class="nav-main-item" title="If you want to prioritize fishing areas with crabs to help with making potions, this is the option for you. If you are using potions, it will only seek fishing areas with crabs when it is the max XP fish in the area. Otherwise, it'll prioritize chests and then crabs for fishing.">
+        <a id="chase-crabs-button" class="nav-main-link" href="javascript:toggleAutoFishCrabs();">
+            <img class="nav-img" src="assets/media/skills/fishing/crab.svg">
+            <span class="nav-main-link-name">AF Chase Crabs</span>
+            <small id="chase-crabs-status">Disabled</small>
+        </a>
+    </li>
+    
     <li class="nav-main-heading">
         Auto Combat <a href="javascript:toggleMoreMenus(4);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye4"></i></a>
     </li>
@@ -302,7 +310,7 @@ function toggleSemiMenu() {
     if (semiMenu) { 
         for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
         if (!moreMenus2) {
-            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,6).toggleClass("d-none"); 
+            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none"); 
         }
         /*
         if (!moreMenus3) {
@@ -339,7 +347,7 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==2) { //auto skills 
         moreMenus2 = !moreMenus2;
-        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,6).toggleClass("d-none");
+        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==3) { //auto fishing... DEFUNCT
         moreMenus3 = !moreMenus3;
@@ -980,7 +988,7 @@ function toggleAutoMine() {
         clearInterval(autoMineLoop);
     }else{
         changePage(10);
-        mineRock(0);
+        if (!isMining) mineRock(0);
         autoMineLoop = setInterval(function(){autoMine(mineArray);}, 100);
         /* if(!glovesTracker[CONSTANTS.shop.gloves.Mining].isActive){
             //equipItem(34, 399);
@@ -1031,8 +1039,7 @@ function toggleAutoCook() {
 //::end autoCook
 
 //:: importing AutoFish by BreakIt, Jarx and me
-var chaseChest = true;
-var maxMode = false; //changed because of potions + chests
+var chaseCrabs = false;
 
 function autoFish() {
     let fishMax = []; //set to empty each time autoFish iterates to recalculate
@@ -1055,6 +1062,10 @@ function autoFish() {
                     console.log($(this));
                     maxXP = 9000;
                 } */
+                if (chaseCrabs && Math.max(...fishingArea[i].currentFish) == 7) { //7 is crab, will seek crabs if max in area with potions
+                    console.log("You've Got Crabs!"); //do we really need the console spam? eh whatevs
+                    maxXP = 8000; //second in priority to chests
+                }
                 
                 fishMax.push(maxXP); //add that max to the array of fish areas to be max'd again
                 fishXPs = []; //reset the fishXP array
@@ -1066,6 +1077,12 @@ function autoFish() {
             var totalexp = 0;
             $(this).children("img").each(function() {
                 totalexp = totalexp + parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]);
+                
+                if (chaseCrabs && parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]) == "120") { //120xp is crab
+                    //console.log("You've Got Crabs!"); //do we really need the console spam? eh whatevs
+                    totalexp = 8000; //second in priority to chests
+                }
+                
                 if (parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]) == "1") { //removed chase chest toggler
                     console.log("Found a Chest!");
                     console.log($(this));
@@ -1100,7 +1117,7 @@ function toggleAutoFish() {
     $("#auto-fish-status").text( (autoFishing) ? 'Enabled' : 'Disabled' );
     if (autoFishing) {
         changePage(7);
-        startFishing(0,false);
+        if (!currentlyFishing) startFishing(0,false);
         //customNotify('assets/media/shop/fishing_dragon.svg', 'AutoFish is enabled.', 5000);
         fishInterval = setInterval( () => { autoFish(); }, 1000); //loop!
     } else { 
@@ -1108,13 +1125,10 @@ function toggleAutoFish() {
         if (currentlyFishingArea !== null) { startFishing(currentlyFishingArea,false); }
     }
 }
-function toggleAutoFishMax() {
-    maxMode = !maxMode;
-    $("#max-mode-status").text( (maxMode) ? 'Enabled' : 'Disabled' );
-}
-function toggleAutoFishChest() {
-    chaseChest = !chaseChest;
-    $("#chase-chest-status").text( (chaseChest) ? 'Enabled' : 'Disabled' );
+
+function toggleAutoFishCrabs() {
+    chaseCrabs = !chaseCrabs;
+    $("#chase-crabs-status").text( (chaseCrabs) ? 'Enabled' : 'Disabled' );
 }
 //:: end autoFish
 
@@ -1382,6 +1396,8 @@ var slowLoop = setInterval(function() {
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
 Kill potion button, or just suggest to ol Fruxy
+
+AutoFish: chase crab option
 
 Jarx additions: 
     automatically upgrade fishing rod or pickaxe or woodcutting axe
