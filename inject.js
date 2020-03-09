@@ -406,9 +406,9 @@ $('#modal-account-change').before($(`
                     <br><br>
                     Don't forget these features of SEMI that aren't in the sidebar:
                     <ul>
-                        <li>Always-unlocked Cook All button in the Cooking page</li>
                         <li>Thieving XP calculators and loot popups in the Thieving page</li>
                         <li>Number of potions until level-up calculator button in the Herblore page</li>
+                        <li>Destroy All Crops button in the Farming page</li>
                     </ul>
                     Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
                     or another more general-purpose add-on like Tampermonkey to run userscripts. 
