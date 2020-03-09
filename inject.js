@@ -112,7 +112,7 @@ function setupSEMI() { // streamlining/simplicity
     <li class="nav-main-item" title="AutoEat script will eat if your HP is less than what your food would heal, and automatically cycles to next equipped food if you run out. In SEMIv0.2.3, this AutoEat script is now separated from the AutoCombat function so you can use it for things like thieving. However, it still pairs very well with AutoCombat.">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
             <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
-            <span class="nav-main-link-name">Auto Eat</span>
+            <span class="nav-main-link-name">AutoEat</span>
         <small id="autoEatStatus">Disabled</small></a>
     </li>
     
