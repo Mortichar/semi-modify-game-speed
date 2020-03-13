@@ -1,4 +1,4 @@
-//SEMIv0.2.3 by AW.
+//SEMIv0.2.3.1 by AW.
 
 //AldousWatts code section 
 
@@ -109,7 +109,7 @@ function setupSEMI() { // streamlining/simplicity
         <small id="autocombatStatus">Disabled</small></a>
     </li>
 
-    <li class="nav-main-item" title="AutoEat script will eat if your HP is less than what your food would heal, and automatically cycles to next equipped food if you run out. In SEMIv0.2.3, this AutoEat script is now separated from the AutoCombat function so you can use it for things like thieving. However, it still pairs very well with AutoCombat.">
+    <li class="nav-main-item" title="AutoEat script will eat if your HP is less than what your food would heal, and automatically cycles to next equipped food if you run out. Since SEMIv0.2.3, this AutoEat script is now separated from the AutoCombat function so you can use it for things like thieving. However, it still pairs very well with AutoCombat.">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
             <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
             <span class="nav-main-link-name">AutoEat</span>
@@ -294,11 +294,7 @@ function setupSEMI() { // streamlining/simplicity
     updateAutoSlayerButtonText();
     
     //if all goes well, yay, it's loaded
-    if(navigator.userAgent.match("Chrome")){
         customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
-    } else if(navigator.userAgent.match("Firefox")) { 
-        customNotify('','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
-    }
 } //End of SEMI menu injection
 
 //toggle SEMI sidebar menu
@@ -389,7 +385,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.2.3</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.2.3.1</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -399,7 +395,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.2.3 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.2.3.1 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
                     Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -1267,7 +1263,7 @@ function bot_checkGloves() {
     }
     // Do we need to sell gems?
     if (gp < (bot_reserveGold+price)) {
-        bot_sellGems(price - gp);
+        bot_sellGems( (price+bot_reserveGold) - gp);
     }
 }
 

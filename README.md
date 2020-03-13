@@ -1,4 +1,4 @@
-## This is Scripting Engine for Melvor Idle v0.2.3.
+## This is Scripting Engine for Melvor Idle v0.2.3.1.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 ### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game.
@@ -44,6 +44,12 @@ Added in 0.2:
 * Destroy All Crops button added to the Farming page: will remove all your plants in the currently selected farming area (suggested & prototyped by Jarx)
 * Chase Crabs option for AutoFishing: will hunt down crabs for fishing potions. If using potions, will only hunt them if they are max in an area. Otherwise, will prioritize them after chests. (suggested by Jarx)
 
+0.2.3.1:
+* Some Katorone Automation edits that I did caused an issue with reserve gold and selling gems to pay for glove charges. This hotfix takes care of that issue: Katorone will now sell gems to boost the GP pool past the reserve amount in order to buy gem glove charges, thereby fixing the automation. Previously, it would not sell gems if you were at your reserve gold amount, and could not buy gem glove charges as a result.
+* Minor UI updates
+
+## 0.3
+* Seems to be working on android Firefox. Might as well open it up to that platform as well.
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!
 
