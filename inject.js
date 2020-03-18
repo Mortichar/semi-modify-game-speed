@@ -1,4 +1,4 @@
-//SEMIv0.2.3.1 by AW.
+//SEMIv0.3 by AW.
 
 //AldousWatts code section 
 
@@ -148,9 +148,8 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>`));
     
-    for (i=0; i < $("#semiHeading").nextAll().length; i++) {
-        $("#semiHeading").nextAll()[i].id = 'semi-nav-'+i;
-    } //sets up the nav ids to hide the menu.
+    //sets up the nav ids to hide the menu.
+    for (i=0; i < $("#semiHeading").nextAll().length; i++) { $("#semiHeading").nextAll()[i].id = 'semi-nav-'+i; } 
     
     for (i=0; i<rockData.length; i++) {
     $("#mining-ore-"+i).prepend($(`
@@ -288,6 +287,127 @@ function setupSEMI() { // streamlining/simplicity
                 </div>
             </div>
         </div>`));
+
+    
+    //initiate hidden XP/hr blocks in page containers
+    /* adds extra section to fishing container... maybe the dropdown is worth it after all, always there but page-dependent. how does the potion button handle?
+    $("#fishing-container").prepend($(`
+        <div id="xph-div-1" class="col-md-12 d-none">
+            <div class="block block-rounded block-link-pop border-top border-fishing border-4x">
+                <div class="block-header text-center">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-md-12">
+                                <h3 class="text-muted m-1">You are earning <span class="p-1 bg-info rounded" id="xph-1">8,216</span> XP per hour.</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`));
+    */
+    
+    //XPH GUI
+    $("#page-header-potions-dropdown").parent().before($(`
+        <div class="dropdown d-inline-block ml-2">
+            <button type="button" class="btn btn-sm bg-info" id="page-header-xph-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: 2px solid gold;">
+                XP Per Hr
+            </button>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 border-0 font-size-sm" id="header-equipment-dropdown" aria-labelledby="page-header-xph-dropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-262px, 33px, 0px);">
+                <div class="p-2 bg-primary text-center">
+                    <h5 class="dropdown-header">
+                        <a class="text-white">Use the XPH Script to calculate Experience Points Per Hour</a>
+                    </h5>
+                </div>
+                <div class="block-content block-content-full text-center">
+                    <span class="text-muted m-1">
+                        The button below starts the XPH script for the skill you are currently idling.<br>
+                        SEMI will display your XP per hour in a dialog below the button.<br>
+                        If you're in combat, a custom XPH script will run for all combat skills simultaneously and display in the Combat Page's Skill Progress table.<br><br>
+                        Toggle off and on again if switching idle skills.<br><br>
+                    </span>
+                    <button id="xphBtn" class="btn btn-sm btn-dual" onclick="xphDisplay()">Toggle XPH Display</button>
+                    <br><br>
+                    <div class="text-muted m-1">
+                        Since Farming can be done alongside any skill, SEMI has a specific button and separate script for Farming XPH.
+                    </div>
+                    <button id="xphBtnF" class="btn btn-sm btn-dual" onclick="xphDisplay(11)">Toggle XPH for Farming</button>
+                </div>
+                <div id="xphDialog" class="block-content block-content-full text-center d-none">
+                    <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-rate">...</span> <span id="xph-skill"></span> XP per hour.</h3>
+                    <br>
+                    <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-time">0</span> seconds spent running XPH.</h3>
+                </div>
+                <div id="xphDialogF" class="block-content block-content-full text-center d-none">
+                    <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-rate-f">...</span> Farming XP per hour.</h3>
+                    <br>
+                    <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-time-f">0</span> seconds spent running XPHf.</h3>
+                </div>
+            </div>
+        </div>`));
+    
+    //XPHcombat GUI
+    $("#combat-skill-progress-menu tr:first").append($(`<th id="xphc-th" class="xphc d-none" style="width: 150px;">xp/h (<span id="xphc-time">0</span> s)</th>`));
+    $("#combat-skill-progress-menu tr:not(:first)").append($('<td class="font-w600 xphc d-none"><small>...</small></td>'));
+    for (i=0; i<8; i++) { $(".xphc:not(:first)")[i].id = "xphc-rate-"+i; }
+    
+    //Barf Potion Button
+    $('.row.no-gutters.bg-primary').append($(`
+        <div class="col-12">
+            <div class="p-2 text-center">
+                <button class="btn btn-dual" onclick="barf();" style="border: 2px solid gold" title="This will purge your remaining charges of your potion and immediately remove its effects. Even if Auto-Reuse is on, you will have to select your potion again to restart its effects after barfing.">
+                    <small>BARF MY POTION NOW!<br></small>
+                </button>
+            </div>
+        </div>`));
+    
+    //AutoMine Bar Select GUI
+    $("#mining-container .row:first").after($(`
+        <div class="col-6 col-lg-12" id="AMselector">
+            <div class="block-header text-center m-1" style="color: gold; background: #2c343f !important; border-radius: 5px; border: 2px solid gold;">
+                SEMI AutoMine Bar Selection GUI: Set the robot to mine ores for specific bars.
+            </div>
+            <button id="AMbtn0" class="btn btn-outline-primary" type="button" onclick="AMselect(0);">
+                <img src="assets/media/bank/bronze_bar.svg" width="32" height="32">
+            </button>
+ 
+            <button id="AMbtn1" class="btn btn-outline-primary" type="button" onclick="AMselect(1);">
+                <img src="assets/media/bank/iron_bar.svg" width="32" height="32">
+            </button>
+            
+            <button id="AMbtn2" class="btn btn-outline-primary" type="button" onclick="AMselect(2);">
+                <img src="assets/media/bank/steel_bar.svg" width="32" height="32">
+            </button>
+        
+            <button id="AMbtn3" class="btn btn-outline-primary" type="button" onclick="AMselect(3);">
+                <img src="assets/media/bank/silver_bar.svg" width="32" height="32">
+            </button>
+            
+            <button id="AMbtn4" class="btn btn-outline-primary" type="button" onclick="AMselect(4);">
+                <img src="assets/media/bank/gold_bar.svg" width="32" height="32">
+            </button>
+            
+            <button id="AMbtn5" class="btn btn-outline-primary" type="button" onclick="AMselect(5);">
+                <img src="assets/media/bank/mithril_bar.svg" width="32" height="32">
+            </button>
+            
+            <button id="AMbtn6" class="btn btn-outline-primary" type="button" onclick="AMselect(6);">
+                <img src="assets/media/bank/adamantite_bar.svg" width="32" height="32">
+            </button>
+            
+            <button id="AMbtn7" class="btn btn-outline-primary" type="button" onclick="AMselect(7);">
+                <img src="assets/media/bank/runite_bar.svg" width="32" height="32">
+            </button>
+            
+            <button id="AMbtn8" class="btn btn-outline-primary" type="button" onclick="AMselect(8);">
+                <img src="assets/media/bank/dragonite_bar.svg" width="32" height="32">
+            </button>
+            
+            <button id="AMbtn9" class="btn btn-primary" type="button" onclick="AMselect(9);" title="Default AM mineArray setting: prioritize XP.">
+                <img src="assets/media/shop/pickaxe_dragon.svg" width="32" height="32">
+            </button>
+            
+        </div><br><br>`))
     
     updateAutoSellGemsButtonText();    
     updateAutoMineButtonText();    
@@ -308,7 +428,7 @@ function toggleSemiMenu() {
         if (!moreMenus2) {
             $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none"); 
         }
-        /*
+        /* AF options automated, AF submenu/header removed, now included in skills above
         if (!moreMenus3) {
             for (i=0; i<3; i++) { $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none"); }
         }*/
@@ -385,7 +505,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.2.3.1</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -395,7 +515,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.2.3.1 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.3 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
                     Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -405,6 +525,8 @@ $('#modal-account-change').before($(`
                         <li>Thieving XP calculators and loot popups in the Thieving page</li>
                         <li>Number of potions until level-up calculator button in the Herblore page</li>
                         <li>Destroy All Crops button in the Farming page</li>
+                        <li>Barf My Potion button in the Potion selection menu</li>
+                        <li>XPH GUI: XP per hour calculations done through a button next to the Potion selection button</li>
                     </ul>
                     Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
                     or another more general-purpose add-on like Tampermonkey to run userscripts. 
@@ -417,7 +539,7 @@ $('#modal-account-change').before($(`
                         <li>Auto Mine & Auto Sell Gems from <a href="https://greasyfork.org/en/scripts/395834-melvor-super-control-panel/code" target="_blank">Melvor Super Control Panel by Strutty & others?</a></li>
                         <li><a href="https://greasyfork.org/en/scripts/396400-melvor-auto-slayer" target="_blank">Melvor AutoSlayer by Bubbalova</a></li>
                         <li><a href="https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy" target="_blank">Melvor Percent Accuracy by Arcanus</a></li>
-                        <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit.</a> For now, console only: Ctrl+Shift+K for console, type XPH() for the tool.</li>
+                        <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit.</a></li>
                         <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
                         <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
                         <li><a href="https://pastebin.com/WKD9R6WY" target="_blank" title="BreakIt's original source">AutoFish by BreakIt, Jarx, and me</a></li>
@@ -434,6 +556,16 @@ $('#modal-account-change').before($(`
         </div>
     </div>
 </div>`));
+
+//Barf Up Current Potion
+function barf() {
+    herbloreBonuses[currentPage].itemID = 0;
+    herbloreBonuses[currentPage].bonus = [null, null];
+    herbloreBonuses[currentPage].charges = 0;
+    customNotify('assets/media/skills/herblore/potion_empty.svg', 'Your potion has been BARFED!', 5000);
+    if (currentPage === 13) updatePlayerStats();
+    updatePotionHeader();
+}
 
 //***************************AUTO COMBAT***********************************
     var autocombat;
@@ -564,11 +696,17 @@ var toggleAutoSlayer = function () {
 var autoSlayer = function() {
     if (!autoSlayerEnabled) {
         autoSlayerCheck = 0;
-        return; //aw: one line
+        return;
     }
     //Slayer areas that require items
+    //aw: defunct in melvor v0.13
     var strangeCave = 10;
     var highLands = 11;
+    //slayerAreas[1] = strangeCave
+    //slayerAreas[2] = highLands
+    //probably best to change if conditions to "if slayer monster is in these areas, do this"
+    
+    isDungeon = false; //if you just completed a dungeon, this will be true and throw errors on enemy killed.
 
     if (!slayerTask.length) getSlayerTask(); //If there is no slayer task, get one
     
@@ -578,7 +716,7 @@ var autoSlayer = function() {
         originalShield = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield];
         originalRing = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring];
     }
-
+    
     //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
     if (forcedEnemy !== slayerTask[0].monsterID || !isInCombat) {
         if (isInCombat) stopCombat(false, true, true);
@@ -593,7 +731,7 @@ var autoSlayer = function() {
             if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Cape] != CONSTANTS.item.Slayer_Skillcape){
                 originalCape = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Cape]
                 for (let i = 0; i < bank.length; i++) {
-                    if(typeof(items[bank[i].id].name) == "Slayer Skillcape") {
+                    if(items[bank[i].id].name == "Slayer Skillcape") {
                         equipItem(i, CONSTANTS.item.Slayer_Skillcape, 1, selectedEquipmentSet)
                         found = true
                         break;
@@ -601,9 +739,9 @@ var autoSlayer = function() {
                 }
             }
         }
-        else if( (selectedCombatArea == strangeCave || selectedCombatArea == highLands) && !autoEquipZone ) newSlayerTask(); //aw: ranged & autoslayer: no good. just rerolling when combat area is the cave or highlands. but it costs
+        else if( (slayerAreas[1].monsters.includes(slayerTask[0].monsterID) || slayerAreas[2].monsters.includes(slayerTask[0].monsterID)) && !autoEquipZone ) newSlayerTask(); //aw: ranged & autoslayer: no good. just rerolling when combat area is the cave or highlands. but it costs
         //Equips Mirror Shield for area
-        else if(selectedCombatArea == strangeCave && autoEquipZone) {
+        else if(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) && autoEquipZone) {
             if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] != CONSTANTS.item.Mirror_Shield) {
                 originalShield = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield];
                 if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] == 0) {
@@ -611,7 +749,7 @@ var autoSlayer = function() {
                     notifyPlayer(CONSTANTS.skill.Slayer, "Skipping task due to 2-handed weapon!");
                 } else {
                     for (let i = 0; i < bank.length; i++) {
-                        if(typeof(items[bank[i].id].name) == "Mirror Shield") {
+                        if(items[bank[i].id].name == "Mirror Shield") {
                             equipItem(i, CONSTANTS.item.Mirror_Shield, 1, selectedEquipmentSet)
                             found = true
                             break;
@@ -621,11 +759,11 @@ var autoSlayer = function() {
             }
         }
         //Equips Magical Ring for area
-        else if(selectedCombatArea == highLands && autoEquipZone) {
+        else if(slayerAreas[2].monsters.includes(slayerTask[0].monsterID) && autoEquipZone) {
             if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] != CONSTANTS.item.Magical_Ring) {
                 originalRing = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring];
                 for (let i = 0; i < bank.length; i++) {
-                    if(typeof(items[bank[i].id].name) == "Magical Ring") {
+                    if(items[bank[i].id].name == "Magical Ring") { //aw: removed typeof() because broken.
                         equipItem(i, CONSTANTS.item.Magical_Ring, 1, selectedEquipmentSet)
                         found = true
                         break;
@@ -633,14 +771,14 @@ var autoSlayer = function() {
                 }
             }
         }
-        else if( (selectedCombatArea != strangeCave || selectedCombatArea != highLands) && autoEquipZone){
+        else if( !(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) || slayerAreas[2].monsters.includes(slayerTask[0].monsterID)) && autoEquipZone){
             
             slayerLockedItem = null; //not sure what this does, added in Auto Slayer 1.2.1
             
             //Equips original shield when not in Area
             if ( (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] == CONSTANTS.item.Mirror_Shield && originalShield != CONSTANTS.item.Mirror_Shield && originalShield != undefined) && autoEquipZone){
                 for (let i = 0; i < bank.length; i++) {
-                    if(typeof(items[bank[i].id].name) == items[originalShield].name) {
+                    if(items[bank[i].id].name == items[originalShield].name) {
                         equipItem(i, originalShield, 1, selectedEquipmentSet)
                         found = true
                         break
@@ -650,7 +788,7 @@ var autoSlayer = function() {
             //Equips original ring when not in Area
             if ( (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] == CONSTANTS.item.Magical_Ring && originalRing != CONSTANTS.item.Magical_Ring && originalRing != undefined) && autoEquipZone){
                 for (let i = 0; i < bank.length; i++) {
-                    if(typeof(items[bank[i].id].name) == items[originalRing].name) {
+                    if(items[bank[i].id].name == items[originalRing].name) {
                         equipItem(i, originalRing, 1, selectedEquipmentSet)
                         found = true
                         break
@@ -674,60 +812,211 @@ function XPH(running,stat) {
   if ((running == null) || (stat > 19) || (isNaN(running)) || (isNaN(stat))) {
      for (var i=0; i<XPH.Stats.length; i++) { console.log(i + ': ' + XPH.Stats[i]); }
      console.log('SYNTAX: XPH([1|0],[0-19])');
-     console.log(XPH.Stats.toSource());
+     //console.log(XPH.Stats.toSource()); //breaks XPH in chrome.
+     console.log('["Woodcutting", "Fishing", "Firemaking", "Cooking", "Mining", "Smithing", "Attack", "Strength", "Defence", "Hitpoints", "Thieving", "Farming", "Ranged", "Fletching", "Crafting", "Runecrafting", "Magic", "Prayer", "Slayer", "Herblore"]');
      console.log('Example to Start/Check Strength XPH(1,7)');
      console.log('Example to Stop Strength XPH(0,7)');
      return
-  }
-  else {
+  } else {
     if (XPH.running) {
       XPH.rate = Math.floor((skillXP[stat] - XPH.exp) / ((Date.now() - XPH.time) / 1000) * 3600);
       XPH.rate = XPH.rate.toString();
       
       var pattern = /(-?\d+)(\d{3})/;
       while (pattern.test(XPH.rate)) XPH.rate = XPH.rate.replace(pattern, "$1,$2");
-      console.log('Current xp/hr rate for ' + XPH.Stats[stat] + ': ' + XPH.rate + '/hr -- Test running for ' + ((Date.now() - XPH.time) / 1000) + ' seconds.');
-      if (!running) {
+      //console.log('Current xp/hr rate for ' + XPH.Stats[stat] + ': ' + XPH.rate + '/hr -- Test running for ' + ((Date.now() - XPH.time) / 1000) + ' seconds.');
+        if (!running) {
         console.log('Stopping');
         XPH.running = '';
-      }
-    }
-    else {
+        }
+    } else {
       XPH.exp = skillXP[stat];
       XPH.time = Date.now();
       XPH.running = 1;
+      XPH.skillID = stat;
+      //XPH.testarr = ['testarr0', 'testarr1', '2', 'yo mamam'];
  
       console.log('Starting xp/hr monitoring for: ' + XPH.Stats[stat]);
-      console.log('Use XPH(1,' + stat + ') to view current exp/hr.');
+      //console.log('Use XPH(1,' + stat + ') to view current exp/hr.');
       console.log('Use XPH(0,' + stat + ') to stop.');
     }
   }
 }
-//::what a great utility! to get current page: XPH(1,currentPage);... won't work for combat
+//::what a great utility!
 
-/* well, i don't like the xph function in this, but this is a good way to create a fresh, working dropdown addon button to the left of the potions header button.
-//add xhp... XPH dammit! not x hitpoints... xp hour. feel like it should be xpph...
-$("#page-header-potions-dropdown").parent().before($(`
-<div class="dropdown d-inline-block ml-2">
-    <button type="button" class="btn btn-sm btn-dual" id="page-header-xph-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        XPH
-    </button>
-    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 border-0 font-size-sm" id="header-xph-dropdown" aria-labelledby="page-header-xph-dropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-262px, 33px, 0px);">
-        <div class="p-2 bg-primary text-center">
-            <h5 class="dropdown-header text-uppercase">
-                <a class="text-white" href="javascript:viewItemStats(0,0,true);">Use the XPH Script (Experience points per hour)</a>
-            </h5>
-        </div>
-        <div class="block-content block-content-full text-center">
-            <button id="xphBtn" class="btn btn-sm btn-dual" onclick="xphBtn()">Start</button>
-        </div>
-    </div>
-</div>`));
-
-function xphBtn() { 
-    XPH(1,currentPage); //don't like this actually. sigh.
+//XPH GUI function
+var updateXPHloop;
+function xphDisplay(n) {    
+    if (XPH.running && n !== 11) {
+        $("#xphDialog").toggleClass('d-none');
+        clearInterval(updateXPHloop);
+        XPH(0,0); //stops if running already
+    } else if (XPHf.running && n == 11) {
+        $("#xphDialogF").toggleClass('d-none');
+        clearInterval(updateXPHloopF);
+        XPHf(0);
+    } else if (XPHcombat.running && n !== 11) {
+        $(".xphc").toggleClass('d-none');
+        XPHcombat(0);
+        clearInterval(updateXPHCloop);
+    } else if (n == 11) {
+        startXPHF();
+    } else if (isInCombat) {
+        customNotify('assets/media/main/statistics_header.svg', 'Check Combat Page Skill Progress table for XPH Combat Display!', 10000);
+        startXPHC();
+    } else if (currentlyCutting == 1 || currentlyCutting == 2) {
+        startXPH(0);
+    } else if (currentlyFishing) {
+        startXPH(1);
+    } else if (isBurning) { //we be burning not concerning what nobody wanna say
+        startXPH(2);
+    } else if (isCooking) {
+        startXPH(3);
+    } else if (isMining) {
+        startXPH(4);
+    } else if (isSmithing) {
+        startXPH(5);
+    } else if (isThieving) {
+        startXPH(10);
+    } else if (isFletching) {
+        startXPH(13);
+    } else if (isCrafting) {
+        startXPH(14);
+    } else if (isRunecrafting) {
+        startXPH(15);
+    } else if (isHerblore) {
+        startXPH(19);
+    }
 }
-*/
+
+function startXPH(n) {
+    XPH(1,n);
+    $("#xphDialog").toggleClass('d-none');
+    $("#xph-rate").text('...');
+    $("#xph-time").text('0');
+    $("#xph-skill").text(skillName[XPH.skillID]);
+    updateXPHloop = setInterval( () => {
+        XPH(1,n);
+        $("#xph-rate").text(XPH.rate);
+        $("#xph-time").text(((Date.now() - XPH.time) / 1000).toFixed(0));
+        //should this loop just check for idle switching and switch automatically?!?!?!? dont have time for this tonight
+        //if currentXPHskill !== idleSkill {change}
+    }, 1000);
+}
+
+function XPHf(running) {
+    if (XPHf.running) {
+      XPHf.rate = Math.floor((skillXP[11] - XPHf.exp) / ((Date.now() - XPHf.time) / 1000) * 3600);
+      XPHf.rate = XPHf.rate.toString();
+      var pattern = /(-?\d+)(\d{3})/;
+      while (pattern.test(XPHf.rate)) XPHf.rate = XPHf.rate.replace(pattern, "$1,$2");
+      //console.log('Current xp/hr rate for ' + XPH.Stats[stat] + ': ' + XPH.rate + '/hr -- Test running for ' + ((Date.now() - XPH.time) / 1000) + ' seconds.');
+      if (!running) {
+        console.log('Stopping');
+        XPHf.running = '';
+      }
+    } else {
+      XPHf.exp = skillXP[11];
+      XPHf.time = Date.now();
+      XPHf.running = 1;
+      console.log('Starting xp/hr monitoring for farming.');
+    }
+}
+
+var updateXPHloopF;
+function startXPHF() {
+    XPHf(1);
+    $("#xphDialogF").toggleClass('d-none');
+    $("#xph-rate-f").text('...');
+    $("#xph-time-f").text('0');
+    updateXPHloopF = setInterval( () => {
+        XPHf(1);
+        $("#xph-rate-f").text(XPHf.rate);
+        $("#xph-time-f").text(((Date.now() - XPHf.time) / 1000).toFixed(0));
+    }, 1000);
+}
+
+//Then from there, calculate the time until level up in hours or minutes?
+
+//XPH for all combat skills at once
+function XPHcombat(running) {
+    if (XPHcombat.running) {
+      for (i=0; i<8; i++) {
+        XPHcombat.skills[i].rate = Math.floor((skillXP[XPHcombat.skills[i].id] - XPHcombat.skills[i].exp) / ((Date.now() - XPHcombat.time) / 1000) * 3600);
+        XPHcombat.skills[i].rate = XPHcombat.skills[i].rate.toString();
+        var pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(XPHcombat.skills[i].rate)) XPHcombat.skills[i].rate = XPHcombat.skills[i].rate.replace(pattern, "$1,$2");
+      }
+      if (!running) {
+          console.log('Stopping');
+          XPHcombat.running = '';
+      } 
+    } else {
+        XPHcombat.skills = [{
+        name: 'Attack',
+        id: 6,
+        exp: 0,
+        rate: 0
+        }, {
+        name: 'Strength',
+        id: 7,
+        exp: 0,
+        rate: 0
+        }, {
+        name: 'Defense',
+        id: 8,
+        exp: 0,
+        rate: 0
+        }, {
+        name: 'Hitpoints',
+        id: 9,
+        exp: 0,
+        rate: 0
+        }, {
+        name: 'Ranged',
+        id: 12,
+        exp: 0,
+        rate: 0
+        }, {
+        name: 'Magic',
+        id: 16,
+        exp: 0,
+        rate: 0
+        }, {
+        name: 'Slayer',
+        id: 18,
+        exp: 0,
+        rate: 0
+        }, {
+        name: 'Prayer',
+        id: 17,
+        exp: 0,
+        rate: 0
+        }];
+        
+        for (i=0; i<8; i++) { XPHcombat.skills[i].exp = skillXP[XPHcombat.skills[i].id]; }
+        XPHcombat.time = Date.now();
+        XPHcombat.running = 1; 
+      console.log('Starting xp/hr monitoring for combat skills.');
+      console.log('Use XPHcombat(0) or the button to stop.');
+    }
+}
+
+var updateXPHCloop;
+function startXPHC() {
+    XPHcombat(1);
+    //unhide & initialize tables
+    $(".xphc").toggleClass('d-none');
+    for (i=0; i<8; i++) { $("#xphc-rate-"+i).text('...'); }
+    $("#xphc-time").text('0');
+    if ($("#combat-skill-progress-menu").attr('class').split(' ').includes('d-none')) { toggleCombatSkillMenu(); }
+    if (currentPage !== 13) { changePage(13); }
+    updateXPHCloop = setInterval( () => {
+        XPHcombat(1);
+        for (i=0; i<8; i++) { $("#xphc-rate-"+i).text(XPHcombat.skills[i].rate); }
+        $("#xphc-time").text(((Date.now() - XPHcombat.time) / 1000).toFixed(0));
+    }, 1000);
+}
 
 //:: Scavenging the Thieving calculator from Melvor Idle Helper by RedSparr0w on GitLab: https://github.com/RedSparr0w/Melvor-Idle-Helper
 setTimeout( () => { //setup thieving calcs after 10sec, plenty delay for page load... should it be interval or timeout? timeout works fine, no need to repeat.
@@ -892,7 +1181,7 @@ const addy = 7;
 const runite = 8;
 const dragonite = 9;
 const runeEssence = 10;
-var mineArray = ([dragonite, runite, addy, mithril, gold, silver, coal, iron, tin, copper, runeEssence]); //add ui...?
+var mineArray = ([dragonite, runite, addy, mithril, gold, silver, coal, iron, tin, copper, runeEssence]);
 //AutoSellGems
 var targetStack = 100; //once it hits this amount, sell all of them.
 var gemIdList = [128, 129, 130, 131, 132]; //ruby boobies & such
@@ -968,6 +1257,76 @@ function autoMineSet(x) {
         $("#autoMine"+x).attr("class", "btn btn-primary"); //highlight
         overrideRock = x;
         autoMineOverride = true;
+    }
+}
+
+var AMselection = 9;
+//autoMine Selector: GUI for choosing bars to mine for.
+function AMselect(n) {
+    if (n == 0) { 
+        mineArray = [0,1]; //tin & copper = bronze
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 1) {
+        mineArray = [2]; //iron
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 2) {
+        mineArray = [2,3]; //iron & coal = steel
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 3) {
+        mineArray = [4]; //silver
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 4) {
+        mineArray = [5]; //gold
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 5) { 
+        mineArray = [6,3]; //mithril + coal = mith bar
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 6) {
+        mineArray = [7,3]; //adamantite + coal = addy bar
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 7) {
+        mineArray = [8,3]; //runite + coal = rune bar
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 8) {
+        mineArray = [9,8,3]; //dragonite + runite + coal = dragon bar (snack legendarily ®)
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (n == 9) { 
+        mineArray = ([dragonite, runite, addy, mithril, gold, silver, coal, iron, tin, copper, runeEssence]);
+        $("#AMbtn"+AMselection).attr("class", "btn btn-outline-primary"); //de-highlight previous
+        AMselection = n;
+        $("#AMbtn"+AMselection).attr("class", "btn btn-primary"); //highlight current selection
+    }
+    if (autoMineOverride) {
+        autoMineOverride = false; 
+        $("#autoMine"+overrideRock).attr("class", "btn btn-outline-primary"); //de-highlight current selection & turn off
+        overrideRock = null;
     }
 }
 
@@ -1081,7 +1440,7 @@ function autoFish() {
                 
                 if (parseInt($(this).attr("data-original-title").split("+")[1].split(" ")[0]) == "1") { //removed chase chest toggler
                     console.log("Found a Chest!");
-                    console.log($(this));
+                    //console.log($(this)); //makes console spam very annoying.
                     totalexp = 9000;
                 }
             });
@@ -1263,7 +1622,7 @@ function bot_checkGloves() {
     }
     // Do we need to sell gems?
     if (gp < (bot_reserveGold+price)) {
-        bot_sellGems( (price+bot_reserveGold) - gp);
+        bot_sellGems( (price+bot_reserveGold) - gp); //0.2.3.1 hotfix: added bot_reserveGold to this.
     }
 }
 
@@ -1304,7 +1663,7 @@ var equippedCape = 0;
 
 // Delay 10 seconds to allow the game to load. good idea
 setTimeout(function() {
-notifyPlayer(10, "Katorone Automation started.");
+notifyPlayer(10, "Katorone Automation is set up and ready to activate.");
 // Do actions every second. (aw: more like action of selling things.)
 var mediumLoop = setInterval(function() {
     if (!katoroneOn) { return; }
@@ -1385,16 +1744,12 @@ var slowLoop = setInterval(function() {
     //}
     }, 30000) //aw: changed to half-min
 
-    console.log("Started Katorone automation.");
+    console.log("Katorone Automation is set up and ready to activate.");
 }, 10000); 
 //:: end import Katorone's automation
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
-Kill potion button, or just suggest to ol Fruxy
-
-AutoFish: chase crab option
-
 Jarx additions: 
     automatically upgrade fishing rod or pickaxe or woodcutting axe
     
@@ -1406,10 +1761,7 @@ More settings for autocombat
     Auto-prayer.
 
 Menus for automation: inject div into skill page containers w/ buttons containing selectors.
-    For instance:
-        Mining: select bar to create. Will try to mine dragonite, rune, and coal in such a way to mine much more coal and twice as much runite.
-        Fishing: select which fish to auto-sell
-        AutoSell Gems: same thing, settings menu for stack amount and which gems to sell
+    Fishing: select which fish to auto-sell
 
 time until done calculators? more items til done calculators? there already be utils/calcs out there. Link to them in info?
     const craftTime = 2; //s
@@ -1418,55 +1770,76 @@ time until done calculators? more items til done calculators? there already be u
         UI notes for xp/item calc: sliders. Move a slider to set how many levels you want to move up, then once item is selected, calculate and display XP, gp, whatever.
     craftInterval: game variable for ms that it takes to use crafting to make one item. Halved with skill cape. Could be useful for item/xp time calc. Thief calc does this.
 
-add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
-    idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
-    so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
+    add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
+        idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
+        so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
 
--
-
+-----
+    
 FUNKY IDEAS
 sound plays when idle is done and no task queued? repeats every minute or so
 task queueing
 sounds in combat, alert sound for low health
 
-//:: //:: //:: More Imported Scripts
-//:: average hits to kill enemy from https://repl.it/@Dwake5/TightSpringgreenCosmos
-const averageHits = (accuracy, maxHit, enemyHP) => {
-    let hits = 0
-    
-    while (enemyHP > 0) {
-      hits++
-      if (Math.random()*100 <= accuracy) {
-        enemyHP -= Math.floor(Math.random()*maxHit) + 1
-      } 
-    }
+INTENSE CODING
+insert small graphs for xp/h? kinda pointless. 
 
-    return hits
-}
-
-let total  = 0
-
-for (i = 0; i < 10000; i++) {
-  total += averageHits(60.4,420,2200)
-  // Put your accuracy, maxhit and enemys hp above here
-} 
-
-
-total/10000
-//::end hits to kill
-
-//::from Bioniclegenius in Melvor discord
-var smithingHUD = window.setInterval(function() {
-    var xpLeft = exp.level_to_xp(skillLevel[5] + 1) - skillXP[5];
-    var smithItemXP = items[smithingItems[selectedSmith].itemID].smithingXP;
-    var itemsLeft = Math.ceil(xpLeft / smithItemXP);
-    var oldText = numberWithCommas(Math.floor(skillXP[5])) + " / " + numberWithCommas(exp.level_to_xp(skillLevel[5] + 1));
-    $("#skill-progress-xp-5").text(oldText + " - " + numberWithCommas(xpLeft) + " - " + numberWithCommas(itemsLeft));
-}, 1000 / 60);
-//::end smith shit//hmmm... numberWithCommas eh? is this a game function? also, i just kinda hate the way this looks. so unintuitive.
-
-items[567].potionPage
-herbloreBonuses[items[569].potionPage].charges
-autofish autochase chests and automax when not using potion
-if (herbloreBonuses[currentPage].itemID > 0) {
 */
+
+    /* we don't need this after all. maybe useful for something. moving to notes.
+    let pages = [{
+        name: 'woodcutting',
+        skillID: 0
+    }, {
+        name: 'shop',
+        upyourbutt: 'andstuffit'
+    }, {
+        name: 'bank'
+    }, {
+        name: 'settings'
+    }, {
+        name: 'changelog'
+    }, {
+        name: 'milestones'
+    }, {
+        name: 'statistics'
+    }, {
+        name: 'fishing',
+        skillID: 1
+    }, {
+        name: 'firemaking',
+        skillID: 2
+    }, {
+        name: 'cooking',
+        skillID: 3
+    }, {
+        name: 'mining',
+        skillID: 4
+    }, {
+        name: 'smithing',
+        skillID: 5
+    }, {
+        name: 'mastery'
+    }, {
+        name: 'combat',
+        skillID: [6,7,8,9,12,16,18,17]
+    }, {
+        name: 'thieving',
+        skillID: 10
+    }, {
+        name: 'farming',
+        skillID: 11
+    }, {
+        name: 'fletching',
+        skillID: 13
+    }, {
+        name: 'crafting',
+        skillID: 14
+    }, {
+        name: 'runecrafting',
+        skillID: 15
+    }, {
+        name: 'herblore',
+        skillID: 19
+    }];
+    */

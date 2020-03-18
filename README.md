@@ -1,5 +1,7 @@
-## This is Scripting Engine for Melvor Idle v0.2.3.1.
+## This is Scripting Engine for Melvor Idle v0.3.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
+
+To install in chrome,  please look further below in the '0.3' section.
 ### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game.
 * Auto Replant and Percent Accuracy by Arcanus
@@ -50,6 +52,20 @@ Added in 0.2:
 
 ## 0.3
 * Seems to be working on android Firefox. Might as well open it up to that platform as well.
+    * Note: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version.
+
+### Additions:
+* GUI for XPH for every skill. Get crunchy with your XP per hour calculations nicely displayed in-game, no console needed.
+* GUI for AutoMine Bar Selection: with priority override and smithing bar selection, there are plenty of ways to customize AutoMine to your needs without using the console.
+* Barf my potion button: Removes your currently equipped potion on the current page. Handy for chasing down fishing chests when you just drank a fisherman's potion!
+
+### Fixes:
+* AutoSlayer was a little broken after combat was updated in Melvor v0.13, but now seems to run fine. 
+    * Was ignoring equipment requirements for slayer zones. Changed code to fix this.
+    * Was throwing a dungeon complete screen every kill if you had just finished a dungeon then used AutoSlayer. Added a line to fix.
+    * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
+    
+***
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!
 
@@ -59,7 +75,7 @@ Download the entire SEMI directory, including the .js files as well as icon fold
 
 Firefox: open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or either of the .js files in the folder.
 
-Chrome: open settings > tools > extensions, enable developer options in the top right, and click load unpacked. Open the SEMI containing folder to load the add-on.
+Chrome: open settings > tools > extensions, enable developer options in the top right, and click load unpacked. Open the SEMI containing folder to load the add-on. (Please see the note above in the '0.3' section for the harmless error that is thrown on loading the extension into Chrome this way.)
 
 ***
 
