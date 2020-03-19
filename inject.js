@@ -109,10 +109,10 @@ function setupSEMI() { // streamlining/simplicity
         <small id="autocombatStatus">Disabled</small></a>
     </li>
 
-    <li class="nav-main-item" title="AutoEat script will eat if your HP is less than what your food would heal, and automatically cycles to next equipped food if you run out. Since SEMIv0.2.3, this AutoEat script is now separated from the AutoCombat function so you can use it for things like thieving. However, it still pairs very well with AutoCombat.">
+    <li class="nav-main-item" title="Auto Eat script will eat if your HP is less than what your food would heal, and automatically cycles to next equipped food if you run out. Since SEMIv0.2.3, this Auto Eat script is now separated from the AutoCombat function so you can use it for things like thieving. However, it still pairs very well with AutoCombat.">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoEat();" id="autoEatNavBut">
             <img class="nav-img" src="assets/media/shop/autoeat.svg" id="autoEatImg">
-            <span class="nav-main-link-name">AutoEat</span>
+            <span class="nav-main-link-name">Auto Eat</span>
         <small id="autoEatStatus">Disabled</small></a>
     </li>
     
@@ -329,7 +329,7 @@ function setupSEMI() { // streamlining/simplicity
                     <button id="xphBtn" class="btn btn-sm btn-dual" onclick="xphDisplay()">Toggle XPH Display</button>
                     <br><br>
                     <div class="text-muted m-1">
-                        Since Farming can be done alongside any skill, SEMI has a specific button and separate script for Farming XPH.
+                        SEMI has a specific button and separate script for Farming XPH. [NOTE: Only even remotely accurate after calculating for a few hours. Pairs well with AutoReplant.]
                     </div>
                     <button id="xphBtnF" class="btn btn-sm btn-dual" onclick="xphDisplay(11)">Toggle XPH for Farming</button>
                 </div>
@@ -337,19 +337,30 @@ function setupSEMI() { // streamlining/simplicity
                     <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-rate">...</span> <span id="xph-skill"></span> XP per hour.</h3>
                     <br>
                     <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-time">0</span> seconds spent running XPH.</h3>
+                    <h4 class="text-muted m-1"><span id="xph-lvl">... hrs</span> to L<input type="number" id="xph-lvl-in" name="xph-lvl-in" min="2" max="99" style="width: 60px;">
+                    <br>
                 </div>
                 <div id="xphDialogF" class="block-content block-content-full text-center d-none">
                     <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-rate-f">...</span> Farming XP per hour.</h3>
                     <br>
                     <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-time-f">0</span> seconds spent running XPHf.</h3>
+                    <h4 class="text-muted m-1"><span id="xphf-lvl">... hrs</span> to L<input type="number" id="xphf-lvl-in" name="xph-lvl-in" min="2" max="99" style="width: 60px;">
+                    <br>
                 </div>
             </div>
         </div>`));
     
     //XPHcombat GUI
-    $("#combat-skill-progress-menu tr:first").append($(`<th id="xphc-th" class="xphc d-none" style="width: 150px;">xp/h (<span id="xphc-time">0</span> s)</th>`));
+    $("#combat-skill-progress-menu tr:first").append($(`<th id="xphc-th" class="xphc d-none" style="width: 125px;">xp/h (<span id="xphc-time">0</span> s)</th>`));
     $("#combat-skill-progress-menu tr:not(:first)").append($('<td class="font-w600 xphc d-none"><small>...</small></td>'));
     for (i=0; i<8; i++) { $(".xphc:not(:first)")[i].id = "xphc-rate-"+i; }
+    $("#combat-skill-progress-menu tr:first").append($(`<th id="xphc-th2" class="xphc xphcl d-none" style="width: 175px;">Time to Level</th>`)); 
+    $("#combat-skill-progress-menu tr:not(:first)").append($(`
+        <td class="font-w600 xphc xphcl d-none">
+            <span>... hrs</span> to L<input type="number" id="xphc-lvl-in" name="xphc-lvl" min="2" max="99" style="width: 50px; float: right;">
+        </td>`)); //add level selector
+    for (i=0; i<8; i++) { $(".xphcl:not(:first) span")[i].id = "xphc-lvl-"+i; }
+    for (i=0; i<8; i++) { $(".xphcl:not(:first) input")[i].id = "xphc-lvl-in-"+i; }
     
     //Barf Potion Button
     $('.row.no-gutters.bg-primary').append($(`
@@ -414,7 +425,7 @@ function setupSEMI() { // streamlining/simplicity
     updateAutoSlayerButtonText();
     
     //if all goes well, yay, it's loaded
-        customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',22000);
+        customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',10000);
 } //End of SEMI menu injection
 
 //toggle SEMI sidebar menu
@@ -539,7 +550,7 @@ $('#modal-account-change').before($(`
                         <li>Auto Mine & Auto Sell Gems from <a href="https://greasyfork.org/en/scripts/395834-melvor-super-control-panel/code" target="_blank">Melvor Super Control Panel by Strutty & others?</a></li>
                         <li><a href="https://greasyfork.org/en/scripts/396400-melvor-auto-slayer" target="_blank">Melvor AutoSlayer by Bubbalova</a></li>
                         <li><a href="https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy" target="_blank">Melvor Percent Accuracy by Arcanus</a></li>
-                        <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit.</a></li>
+                        <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit</a></li>
                         <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
                         <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
                         <li><a href="https://pastebin.com/WKD9R6WY" target="_blank" title="BreakIt's original source">AutoFish by BreakIt, Jarx, and me</a></li>
@@ -596,6 +607,14 @@ function autoEat() {
 function autocombatfunc() {
     if (equippedFood[currentCombatFood].qty < 1) { 
     	terminateAutoCombat('food.');
+    } 
+    if ((items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") ) && ammo<500) {
+        for (let i = 0; i < bank.length; i++) {
+            if(items[bank[i].id].name == items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name ) { //aw: removed typeof() because broken.
+                equipItem(i, equippedItems[CONSTANTS.equipmentSlot.Quiver], 1000, selectedEquipmentSet);
+                customNotify(items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].media,'SEMI just equipped 1000 '+ items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name+'.',5000);
+            }
+        }
     }
     if ((items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") ) && ammo < 1) { 
     	terminateAutoCombat('ammo.');
@@ -895,10 +914,26 @@ function startXPH(n) {
     $("#xph-rate").text('...');
     $("#xph-time").text('0');
     $("#xph-skill").text(skillName[XPH.skillID]);
+    $("#xph-lvl").text("... hrs");
     updateXPHloop = setInterval( () => {
         XPH(1,n);
         $("#xph-rate").text(XPH.rate);
         $("#xph-time").text(((Date.now() - XPH.time) / 1000).toFixed(0));
+        if($("#xph-lvl-in").val()>99) $("#xph-lvl-in").val(99)
+        if ((Number($("#xph-lvl-in").val()) > skillLevel[XPH.skillID]) && Number(XPH.rate.split(",").join(""))>0) {
+            var timeToLvl = ( exp.level_to_xp(Number($("#xph-lvl-in").val())) - skillXP[XPH.skillID] )/Number(XPH.rate.split(",").join(""));
+            var timeToLvl = timeToLvl.toFixed(1);
+            if (timeToLvl<1000) {
+                $("#xph-lvl").text(timeToLvl + " hrs"); 
+            } else if (timeToLvl>=1000) {
+                timeToLvl = timeToLvl / 24;
+                timeToLvl = timeToLvl.toFixed(0);
+                $("#xph-lvl").text(timeToLvl + " days"); 
+            }
+        } else { 
+            timeToLvl = "..."; 
+            $("#xph-lvl").text(timeToLvl + " hrs"); 
+        }
         //should this loop just check for idle switching and switch automatically?!?!?!? dont have time for this tonight
         //if currentXPHskill !== idleSkill {change}
     }, 1000);
@@ -929,10 +964,26 @@ function startXPHF() {
     $("#xphDialogF").toggleClass('d-none');
     $("#xph-rate-f").text('...');
     $("#xph-time-f").text('0');
+    $("#xphf-lvl").text("... hrs"); 
     updateXPHloopF = setInterval( () => {
         XPHf(1);
         $("#xph-rate-f").text(XPHf.rate);
         $("#xph-time-f").text(((Date.now() - XPHf.time) / 1000).toFixed(0));
+        if($("#xphf-lvl-in").val()>99) $("#xphf-lvl-in").val(99);
+        if ((Number($("#xphf-lvl-in").val()) > skillLevel[11]) && Number(XPHf.rate.split(",").join(""))>0) {
+            var timeToLvl = ( exp.level_to_xp(Number($("#xphf-lvl-in").val())) - skillXP[11] )/Number(XPHf.rate.split(",").join(""));
+            var timeToLvl = timeToLvl.toFixed(1);
+            if (timeToLvl<1000) {
+                $("#xphf-lvl").text(timeToLvl + " hrs"); 
+            } else if (timeToLvl>=1000) {
+                timeToLvl = timeToLvl / 24;
+                timeToLvl = timeToLvl.toFixed(0);
+                $("#xphf-lvl").text(timeToLvl + " days"); 
+            }
+        } else { 
+            timeToLvl = "..."; 
+            $("#xphf-lvl").text(timeToLvl + " hrs"); 
+        }
     }, 1000);
 }
 
@@ -1002,18 +1053,39 @@ function XPHcombat(running) {
     }
 }
 
+//update time to lvl sections... convert from seconds to min if above 1000s, min to hr if above 1000h
+//Number($("#xphc-lvl-in-0").val())
+
 var updateXPHCloop;
 function startXPHC() {
     XPHcombat(1);
     //unhide & initialize tables
     $(".xphc").toggleClass('d-none');
     for (i=0; i<8; i++) { $("#xphc-rate-"+i).text('...'); }
+    for (i=0; i<8; i++) { $("#xphc-lvl-"+i).text('... hrs'); }
     $("#xphc-time").text('0');
     if ($("#combat-skill-progress-menu").attr('class').split(' ').includes('d-none')) { toggleCombatSkillMenu(); }
     if (currentPage !== 13) { changePage(13); }
     updateXPHCloop = setInterval( () => {
         XPHcombat(1);
-        for (i=0; i<8; i++) { $("#xphc-rate-"+i).text(XPHcombat.skills[i].rate); }
+        for (i=0; i<8; i++) { 
+            $("#xphc-rate-"+i).text(XPHcombat.skills[i].rate);
+            if($("#xphc-lvl-in-"+i).val()>99) $("#xphc-lvl-in-"+i).val(99);
+            if ((Number($("#xphc-lvl-in-"+i).val()) > skillLevel[XPHcombat.skills[i].id]) && Number(XPHcombat.skills[i].rate.split(",").join(""))>0) {
+                var timeToLvl = ( exp.level_to_xp(Number($("#xphc-lvl-in-"+i).val())) - skillXP[XPHcombat.skills[i].id] )/Number(XPHcombat.skills[i].rate.split(",").join(""));
+                var timeToLvl = timeToLvl.toFixed(1);
+                if (timeToLvl<1000) {
+                    $("#xphc-lvl-"+i).text(timeToLvl + " hrs"); 
+                } else if (timeToLvl>=1000) {
+                    var timeToLvl = timeToLvl / 24;
+                    var timeToLvl = timeToLvl.toFixed(0);
+                    $("#xphc-lvl-"+i).text(timeToLvl + " days"); 
+                }
+            } else { 
+                timeToLvl = "..."; 
+                $("#xphc-lvl-"+i).text(timeToLvl + " hrs"); 
+            }
+        }
         $("#xphc-time").text(((Date.now() - XPHcombat.time) / 1000).toFixed(0));
     }, 1000);
 }
@@ -1756,7 +1828,6 @@ Jarx additions:
 AutoReplant: choose highest available seeds for replanting if you run out of seeds
 
 More settings for autocombat
-    auto re-equip arrows 
     Auto only-loot bones/etc
     Auto-prayer.
 

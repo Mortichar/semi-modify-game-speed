@@ -55,9 +55,10 @@ Added in 0.2:
     * Note: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version. See [Temporary install](https://gitlab.com/aldousWatts/SEMI#temporary-install) below for installation.
 
 ### Additions:
-* GUI for XPH for every skill. Get crunchy with your XP per hour calculations nicely displayed in-game, no console needed.
+* GUI for XPH for every skill. Get crunchy with your XP per hour calculations nicely displayed in-game, no console needed. Also calculates time until desired level.
 * GUI for AutoMine Bar Selection: with priority override and smithing bar selection, there are plenty of ways to customize AutoMine to your needs without using the console.
 * Barf my potion button: Removes your currently equipped potion on the current page. Handy for chasing down fishing chests when you just drank a fisherman's potion!
+* AutoCombat will now attempt to re-equip 1000 of your currently equipped arrows from your bank if your quiver has less than 500, and will still exit combat if you run out completely.
 
 ### Fixes:
 * AutoSlayer was a little broken after combat was updated in Melvor v0.13, but now seems to run fine. 
