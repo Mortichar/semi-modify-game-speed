@@ -51,7 +51,7 @@ Added in 0.2:
 * Minor UI updates
 
 ## 0.3
-* Seems to be working on android Firefox. Might as well open it up to that platform as well.
+* Seems to be working on android Firefox. Might as well open it up to that platform as well. **Best displayed in landscape view.**
     * Note: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version. See [Temporary install](https://gitlab.com/aldousWatts/SEMI#temporary-install) below for installation.
 
 ### Additions:
