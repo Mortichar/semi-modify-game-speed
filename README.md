@@ -12,11 +12,10 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * AutoCombat Options: Toggle auto eat and loot
 * Calculate number of selected potions needed until next level button in Herblore page
 * Thieving calculators and tooltips by RedSparr0w (scavenged from Melvor Idle Helper)
-* Auto-cook: permanently unlocked Cook All button in the Cooking skill page
 * XHP script by Breakit
 
 Added in 0.1.1:
-* AutoCook by Unicue
+* AutoCook by Unicue (cycles through fish and cooks in order)
 * AutoFish by BreakIt, Jarx, and Myself with added options: Max Mode (for use with fishing potions) and Chase Chests (fish treasure chests when spawned)
 * UI updates & more menu toggles, even for native Melvor sidebar sections like Other & Socials
 
@@ -52,7 +51,7 @@ Added in 0.2:
 
 ## 0.3
 * Seems to be working on android Firefox. Might as well open it up to that platform as well. **Best displayed in landscape view.**
-    * Note: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version. See [Temporary install](https://gitlab.com/aldousWatts/SEMI#temporary-install) below for installation.
+    * **Note for Chrome users**: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version. See [Temporary install](https://gitlab.com/aldousWatts/SEMI#temporary-install) below for installation.
 
 ### Additions:
 * GUI for XPH for every skill. Get crunchy with your XP per hour calculations nicely displayed in-game, no console needed. Also calculates time until desired level.
@@ -76,7 +75,7 @@ Download the entire SEMI directory, including the .js files as well as icon fold
 
 Firefox: open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or either of the .js files in the folder.
 
-Chrome: open settings > tools > extensions, enable developer options in the top right, and click load unpacked. Open the SEMI containing folder to load the add-on. (Please see the note above in the '0.3' section for the harmless error that is thrown on loading the extension into Chrome this way.)
+Chrome: open settings > tools > extensions, enable developer options in the top right, and click load unpacked. Open the SEMI containing folder to load the add-on. Please see the note above in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03) for the harmless error that is thrown on loading the extension into Chrome this way.
 
 ***
 
