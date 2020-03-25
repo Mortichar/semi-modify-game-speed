@@ -1828,6 +1828,8 @@ TODO
 Jarx additions: 
     automatically upgrade fishing rod or pickaxe or woodcutting axe
     
+AutoLoot AutoSell GUI Based on Completion Log - all ? are looted, all known are sold by default, select of the remaining which you want to keep.
+    
 AutoReplant: choose highest available seeds for replanting if you run out of seeds
 
 More settings for autocombat
