@@ -1,4 +1,4 @@
-//SEMIv0.3 by AW.
+//SEMIv0.3.1 by AW.
 
 //AldousWatts code section 
 
@@ -516,7 +516,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.1</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -526,7 +526,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.3 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.3.1 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
                     Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -609,10 +609,12 @@ function autocombatfunc() {
     	terminateAutoCombat('food.');
     } 
     if ((items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") ) && ammo<500) {
-        for (let i = 0; i < bank.length; i++) {
-            if(items[bank[i].id].name == items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name ) { //aw: removed typeof() because broken.
-                equipItem(i, equippedItems[CONSTANTS.equipmentSlot.Quiver], 1000, selectedEquipmentSet);
-                customNotify(items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].media,'SEMI just equipped 1000 '+ items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name+'.',5000);
+        if (!isDungeon) { 
+            for (let i = 0; i < bank.length; i++) {
+                if(items[bank[i].id].name == items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name ) { //aw: removed typeof() because broken.
+                    equipItem(i, equippedItems[CONSTANTS.equipmentSlot.Quiver], 1000, selectedEquipmentSet);
+                    customNotify(items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].media,'SEMI just equipped 1000 '+ items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name+'.',5000);
+                }
             }
         }
     }
@@ -1825,8 +1827,15 @@ var slowLoop = setInterval(function() {
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
+
+**IMPORTANT**
+AutoEquip arrows is weird when you uneqip your arrows. Tried to equip logs?! Luckily nothing seems broken beyond the custom message.
+**  -end-  **
+
 Jarx additions: 
     automatically upgrade fishing rod or pickaxe or woodcutting axe
+    
+AutoSlayer skip-monster menu/setting
     
 AutoLoot AutoSell GUI Based on Completion Log - all ? are looted, all known are sold by default, select of the remaining which you want to keep.
     

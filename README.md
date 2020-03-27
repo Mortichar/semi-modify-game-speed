@@ -1,4 +1,4 @@
-## This is Scripting Engine for Melvor Idle v0.3.
+## This is Scripting Engine for Melvor Idle v0.3.1.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
 To install in chrome,  please look further below in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03).
@@ -66,6 +66,11 @@ Added in 0.2:
     * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
     
 ***
+
+0.3.1.1
+
+* Small fix: when using AutoCombat in dungeons with ranged, attempting to autoequip arrows would cause a broken loop.
+* 
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!
 
