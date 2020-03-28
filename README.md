@@ -55,7 +55,7 @@ Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 #### Alternative Installation
 
-Download the [SEMI/source directory](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file to an empty folder.
+Download the [SEMI/source directory from here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file to an empty folder.
 
 * Firefox Temporary Install
 
