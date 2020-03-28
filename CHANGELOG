@@ -15,21 +15,19 @@ v0.3.1
     * Moved extension code to source subdirectory
     * Created changelog to clean up the readme
 
-## v0.3
+v0.3
 * Seems to be working on android Firefox. Might as well open it up to that platform as well. **Best displayed in landscape view.**
-    * **Note for Chrome users**: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version. See [Temporary install](https://gitlab.com/aldousWatts/SEMI#temporary-install) below for installation.
-
-### Additions:
-* GUI for XPH for every skill. Get crunchy with your XP per hour calculations nicely displayed in-game, no console needed. Also calculates time until desired level.
-* GUI for AutoMine Bar Selection: with priority override and smithing bar selection, there are plenty of ways to customize AutoMine to your needs without using the console.
-* Barf my potion button: Removes your currently equipped potion on the current page. Handy for chasing down fishing chests when you just drank a fisherman's potion!
-* AutoCombat will now attempt to re-equip 1000 of your currently equipped arrows from your bank if your quiver has less than 500, and will still exit combat if you run out completely.
-
-### Fixes:
-* AutoSlayer was a little broken after combat was updated in Melvor v0.13, but now seems to run fine. 
-    * Was ignoring equipment requirements for slayer zones. Changed code to fix this.
-    * Was throwing a dungeon complete screen every kill if you had just finished a dungeon then used AutoSlayer. Added a line to fix.
-    * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
+    * Note for Chrome users: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version.
+* Additions:
+    * GUI for XPH for every skill. Get crunchy with your XP per hour calculations nicely displayed in-game, no console needed. Also calculates time until desired level.
+    * GUI for AutoMine Bar Selection: with priority override and smithing bar selection, there are plenty of ways to customize AutoMine to your needs without using the console.
+    * Barf my potion button: Removes your currently equipped potion on the current page. Handy for chasing down fishing chests when you just drank a fisherman's potion!
+    * AutoCombat will now attempt to re-equip 1000 of your currently equipped arrows from your bank if your quiver has less than 500, and will still exit combat if you run out completely.
+* Fixes:
+    * AutoSlayer was a little broken after combat was updated in Melvor v0.13, but now seems to run fine. 
+        * Was ignoring equipment requirements for slayer zones. Changed code to fix this.
+        * Was throwing a dungeon complete screen every kill if you had just finished a dungeon then used AutoSlayer. Added a line to fix.
+        * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
     
 v0.2.3.1:
 * Some Katorone Automation edits that I did caused an issue with reserve gold and selling gems to pay for glove charges. This hotfix takes care of that issue: Katorone will now sell gems to boost the GP pool past the reserve amount in order to buy gem glove charges, thereby fixing the automation. Previously, it would not sell gems if you were at your reserve gold amount, and could not buy gem glove charges as a result.

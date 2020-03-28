@@ -15,7 +15,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * AutoBonfire by Dream: continuously starts bonfires for you when you have a type of wood selected in Firemaking.
 * AutoFish by BreakIt, Jarx and myself
     * Fishes area with highest average XP fish, but will chase chests when they appear
-    * Detects if you are using fishing potions, will switch to fishing the max XP fish and ignores chests
+    * Detects if you are using fishing potions, will switch to fishing the max XP fish and ignores chests since it's impossible to catch them while using potions
     * Chase Crabs option for prioritizing crabs, useful for creating fisherman's potions
 * AutoCook by Unicue: cycles through fish and cooks them all
 * Auto Mine & Auto Sell Gems by Strutty & others
@@ -53,7 +53,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!
 
-#### Alternative Installation
+### Alternative Installation
 
 Download the [SEMI/source directory from here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file to an empty folder.
 
@@ -63,11 +63,12 @@ Open the url "about:debugging" without quotes, enable add-on debugging if you ne
 
 * Chrome Developer Install
 
-Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the SEMI containing folder to load the add-on. Please see the note above in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03) for the harmless error that is thrown on loading the extension into Chrome this way.
+Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the SEMI source containing folder to load the add-on.
+**Note:** There is a harmless error that is thrown on loading the extension into Chrome this way since version 0.3 because Chrome does not recognize the part of manifest.json necessary for the extension to run on Firefox for Android. Deleting the "browser_specific_settings" section of manifest.json fixes the error, but an alternative chrome version of SEMI without this line will be included in this repository soon.
 
 ***
 
-### Goal of the Software
+## Goal of the Software
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
 
 This was built around Melvor Idle alpha v0.13.

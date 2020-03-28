@@ -1884,7 +1884,7 @@ var slowLoop = setInterval(function() {
 TODO
 
 Jarx additions: 
-    automatically upgrade fishing rod or pickaxe or woodcutting axe
+    automatically upgrade fishing rod (AutoFish) or pickaxe (AutoMine) or woodcutting axe (background script, maybe injected in Percent Accuracy
     
 AutoSlayer skip-monster menu/setting
     
@@ -1896,8 +1896,7 @@ More settings for autocombat
     Auto only-loot bones/etc
     Auto-prayer.
 
-Menus for automation: inject div into skill page containers w/ buttons containing selectors.
-    Fishing: select which fish to auto-sell
+Fishing: select which fish to auto-sell
 
 time until done calculators? more items til done calculators? there already be utils/calcs out there. Link to them in info?
     const craftTime = 2; //s
