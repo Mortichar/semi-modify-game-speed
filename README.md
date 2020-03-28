@@ -3,7 +3,7 @@ Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/script
 
 To install in chrome,  please look further below in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03).
 
-Please note that the repository has changed, and to install in a method other than using the Mozilla Add-on Database you need to download the source subdirectory, not the entire SEMI repository.
+Please note that the repository has changed, and to install in a method other than using the Mozilla Add-on Database above you need to download the source subdirectory, not the entire SEMI repository.
 
 ## SEMI is a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 
@@ -64,6 +64,7 @@ Open the url "about:debugging" without quotes, enable add-on debugging if you ne
 * Chrome Developer Install
 
 Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the SEMI source containing folder to load the add-on.
+
 **Note:** There is a harmless error that is thrown on loading the extension into Chrome this way since version 0.3 because Chrome does not recognize the part of manifest.json necessary for the extension to run on Firefox for Android. Deleting the "browser_specific_settings" section of manifest.json fixes the error, but an alternative chrome version of SEMI without this line will be included in this repository soon.
 
 ***
