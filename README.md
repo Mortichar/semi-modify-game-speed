@@ -1,11 +1,11 @@
-## This is Scripting Engine for Melvor Idle v0.3.1.
+# This is Scripting Engine for Melvor Idle v0.3.1.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
 To install in chrome,  please look further below in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03).
 
 Please note that the repository has changed, and to install in a method other than using the Mozilla Add-on Database you need to download the source subdirectory, not the entire SEMI repository.
 
-### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
+## SEMI is a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
@@ -47,7 +47,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * Destroy All Crops button in the Farming page
     * Barf My Potion button in the Potion selection menu
     * Thieving calculators and tooltips by RedSparr0w (scavenged from Melvor Idle Helper)
-    * XPH script by Breakit, now with an in-game GUI to display XP per hour and estimate time until a level of your choice
+    * XPH script by Breakit, now with an in-game GUI to display XP per hour and estimate time until reaching the level of your choice
 
 ***
 
@@ -55,7 +55,7 @@ Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 #### Alternative Installation
 
-Download the SEMI/source directory, which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file to an empty folder.
+Download the [SEMI/source directory](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file to an empty folder.
 
 * Firefox Temporary Install
 
