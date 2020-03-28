@@ -5,7 +5,7 @@ To install in chrome,  please look further below in the ['Chrome Developer Insta
 
 Please note that the repository has changed, and to install without using the Mozilla Add-on Database above you need to download the source subdirectory, not the entire SEMI repository.
 
-## SEMI is a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
+## SEMI is a Firefox and Chrome web extension for Melvor Idle. 
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
