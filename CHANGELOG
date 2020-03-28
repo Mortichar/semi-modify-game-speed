@@ -14,6 +14,7 @@ v0.3.1
 * Repository changes
     * Moved extension code to source subdirectory
     * Created changelog to clean up the readme
+    * Created chrome release version subdirectory for ez chrome installation without browser_specific_settings error
 
 v0.3
 * Seems to be working on android Firefox. Might as well open it up to that platform as well. **Best displayed in landscape view.**
