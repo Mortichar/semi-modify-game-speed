@@ -64,23 +64,34 @@ Added in 0.2:
     * Was ignoring equipment requirements for slayer zones. Changed code to fix this.
     * Was throwing a dungeon complete screen every kill if you had just finished a dungeon then used AutoSlayer. Added a line to fix.
     * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
-    
+
+0.3.1
+
+* AutoSmith Bars: New skill automation that will cycle through your smeltable bars and smelt them all.
+* UI Changes: 
+    * Katorone settings menu moved to AutoSkills section
+    * AutoSkills rearranged
+* Small fixes
+    * When using AutoCombat in dungeons with ranged, attempting to autoequip arrows would cause a broken loop.
+    * AutoCombat automatically equipping arrows no longer reports equipping Normal Logs when at 0 arrows.
+    * When canceling AutoCook, will stop cooking immediately.
+    * AutoSlayer will no longer skip Slayer tasks when you are properly equipped for a slayer zone and AS Auto Equip is disabled.
+
 ***
-
-0.3.1.1
-
-* Small fix: when using AutoCombat in dungeons with ranged, attempting to autoequip arrows would cause a broken loop.
-* 
 
 Thanks to everyone who writes scripts for Melvor and provides them to others!
 
-#### Temporary install
+#### Alternative Installation
 
 Download the entire SEMI directory, including the .js files as well as icon folder. Extract to an empty folder.
 
-Firefox: open the url "about:debugging" without quotes, enable add-on debugging, and install the addon by opening either manifest.json or either of the .js files in the folder.
+* Firefox Temporary Install
 
-Chrome: open settings > tools > extensions, enable developer options in the top right, and click load unpacked. Open the SEMI containing folder to load the add-on. Please see the note above in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03) for the harmless error that is thrown on loading the extension into Chrome this way.
+Open the url "about:debugging" without quotes, enable add-on debugging if you need to. On newest firefox, go to the "this firefox" page. Install the addon by clicking "Load Temporary Add-on" opening either manifest.json or either of the .js files in the folder. 
+
+* Chrome
+
+Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the SEMI containing folder to load the add-on. Please see the note above in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03) for the harmless error that is thrown on loading the extension into Chrome this way.
 
 ***
 

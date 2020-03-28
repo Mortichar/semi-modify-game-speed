@@ -50,6 +50,22 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>
     
+    <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you. This script will fish the area with the highest average XP fish and chase chests when you aren't using potions, and will switch to finding the maximum XP fish and stop chasing chests when using potions.">
+        <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
+            <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
+            <span class="nav-main-link-name">AutoFish</span>
+            <small id="auto-fish-status">Disabled</small>
+        </a>
+    </li>
+    
+    <li class="nav-main-item" title="If you want to prioritize fishing areas with crabs to help with making potions, this is the option for you. If you are using potions, it will only seek fishing areas with crabs when it is the max XP fish in the area. Otherwise, it'll prioritize chests and then crabs for fishing.">
+        <a id="chase-crabs-button" class="nav-main-link" href="javascript:toggleAutoFishCrabs();">
+            <img class="nav-img" src="assets/media/skills/fishing/crab.svg">
+            <span class="nav-main-link-name">AF Chase Crabs</span>
+            <small id="chase-crabs-status">Disabled</small>
+        </a>
+    </li>
+    
     <li class="nav-main-item" title="AutoCook by Unicue, updated for alpha v0.13 by AldousWatts, will automatically cycle through your fish and cook them all in order.">
         <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
             <img class="nav-img" src="assets/media/skills/cooking/cooking.svg">
@@ -74,19 +90,18 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>
     
-    <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you. This script will fish the area with the highest average XP fish and chase chests when you aren't using potions, and will switch to finding the maximum XP fish and stop chasing chests when using potions.">
-        <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
-            <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
-            <span class="nav-main-link-name">AutoFish</span>
-            <small id="auto-fish-status">Disabled</small>
+    <li class="nav-main-item" title="AutoSmith Bars will cycle through your smithing bars and smelt those you have materials for.">
+        <a id="auto-sellgems-button" class="nav-main-link" href="javascript:toggleAutoSmithBars();">
+            <img class="nav-img" src="assets/media/bank/dragonite_bar.svg">
+            <span class="nav-main-link-name">AutoSmith Bars</span>
+            <small id="auto-sb-status">Disabled</small>
         </a>
     </li>
     
-    <li class="nav-main-item" title="If you want to prioritize fishing areas with crabs to help with making potions, this is the option for you. If you are using potions, it will only seek fishing areas with crabs when it is the max XP fish in the area. Otherwise, it'll prioritize chests and then crabs for fishing.">
-        <a id="chase-crabs-button" class="nav-main-link" href="javascript:toggleAutoFishCrabs();">
-            <img class="nav-img" src="assets/media/skills/fishing/crab.svg">
-            <span class="nav-main-link-name">AF Chase Crabs</span>
-            <small id="chase-crabs-status">Disabled</small>
+    <li class="nav-main-item">
+        <a class="nav-main-link nav-compact" href="javascript:semiSetMenu();" id="semiSetsNavBut">
+            <img class="nav-img" src="assets/media/bank/gloves_gems.svg">
+            <span class="nav-main-link-name"><b>Katorone Menu</b></span>
         </a>
     </li>
     
@@ -129,17 +144,8 @@ function setupSEMI() { // streamlining/simplicity
             <span class="nav-main-link-name">AS Auto Equip</span>
         <small id="autoEquipStatus">Disabled</small></a>
     </li>
-    
-    <li class="nav-main-heading">Katorone Settings</li>
-    
-    <li class="nav-main-item">
-        <a class="nav-main-link nav-compact" href="javascript:semiSetMenu();" id="semiSetsNavBut">
-            <img class="nav-img" src="assets/media/bank/gloves_gems.svg">
-            <span class="nav-main-link-name">Automation Menu</span>
-        </a>
-    </li>
-    
-    <hr>
+
+    <br>
     
     <li class="nav-main-item">
         <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
@@ -424,6 +430,7 @@ function setupSEMI() { // streamlining/simplicity
     updateAutoMineButtonText();    
     updateAutoSlayerButtonText();
     
+    $("#semiHeading").append($('<a href="javascript:toggleSemiMenu();"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="skill-menu-icon2"></i></a>'));
     //if all goes well, yay, it's loaded
         customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',10000);
 } //End of SEMI menu injection
@@ -431,13 +438,12 @@ function setupSEMI() { // streamlining/simplicity
 //toggle SEMI sidebar menu
 var semiMenu = true;
 
-$("#semiHeading").append($('<a href="javascript:toggleSemiMenu();"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="skill-menu-icon2"></i></a>'));
 function toggleSemiMenu() {
     semiMenu = !semiMenu;
     if (semiMenu) { 
         for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
         if (!moreMenus2) {
-            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none"); 
+            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,9).toggleClass("d-none"); 
         }
         /* AF options automated, AF submenu/header removed, now included in skills above
         if (!moreMenus3) {
@@ -474,7 +480,7 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==2) { //auto skills 
         moreMenus2 = !moreMenus2;
-        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none");
+        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,9).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==3) { //auto fishing... DEFUNCT
         moreMenus3 = !moreMenus3;
@@ -578,6 +584,45 @@ function barf() {
     updatePotionHeader();
 }
 
+//Auto Smelt
+var barTypeCount = 0;
+var barType = [0, 11, 24, 26, 35, 41, 54, 61, 74];
+
+function autoSmithBars(){
+    if (document.getElementById("smith-item-have").innerHTML == "-" ) {
+        selectSmith(0);
+        return;
+    }
+    if (document.getElementById("smithing-item-have-2") == null) {
+        if (document.getElementById("smithing-item-have-1") == null) {
+            if (Number(document.getElementById("smithing-item-have-0").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[0]) ){ //< requires
+                barTypeCount = (barTypeCount + 1) % barType.length;
+                selectSmith(barType[barTypeCount]);
+            } else if (!isSmithing) startSmithing(true);
+        } else if (Number(document.getElementById("smithing-item-have-0").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[0]) || Number(document.getElementById("smithing-item-have-1").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[1]) ){
+            barTypeCount = (barTypeCount + 1) % barType.length;
+            selectSmith(barType[barTypeCount]);
+        } else if (!isSmithing) startSmithing(true);
+    } else if (Number(document.getElementById("smithing-item-have-0").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[0]) || Number(document.getElementById("smithing-item-have-1").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[1]) || Number(document.getElementById("smithing-item-have-2").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[2]) ){
+        barTypeCount = (barTypeCount + 1) % barType.length;
+        selectSmith(barType[barTypeCount]);
+    } else if (!isSmithing) startSmithing(true);
+}
+var smithBarsInterval;
+var autoSmithingBars = false;
+function toggleAutoSmithBars() {
+    autoSmithingBars = !autoSmithingBars;
+    $("#auto-sb-status").text( (autoSmithingBars) ? 'Enabled' : 'Disabled');
+    if (autoSmithingBars) {
+        smithBarsInterval = setInterval(autoSmithBars, 1000);
+        changePage(11);
+    } else { 
+        clearInterval(smithBarsInterval);
+        if (isSmithing) startSmithing(true);
+    }
+}
+
+
 //***************************AUTO COMBAT***********************************
     var autocombat;
     var autocombatloop;
@@ -611,7 +656,7 @@ function autocombatfunc() {
     if ((items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].isRanged || (items[equippedItems[CONSTANTS.equipmentSlot.Weapon]].type === "Ranged Weapon") ) && ammo<500) {
         if (!isDungeon) { 
             for (let i = 0; i < bank.length; i++) {
-                if(items[bank[i].id].name == items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name ) { //aw: removed typeof() because broken.
+                if(items[bank[i].id].name == items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name && items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name !== "Normal Logs" ) { 
                     equipItem(i, equippedItems[CONSTANTS.equipmentSlot.Quiver], 1000, selectedEquipmentSet);
                     customNotify(items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].media,'SEMI just equipped 1000 '+ items[equippedItems[CONSTANTS.equipmentSlot.Quiver]].name+'.',5000);
                 }
@@ -760,7 +805,14 @@ var autoSlayer = function() {
                 }
             }
         }
-        else if( (slayerAreas[1].monsters.includes(slayerTask[0].monsterID) || slayerAreas[2].monsters.includes(slayerTask[0].monsterID)) && !autoEquipZone ) newSlayerTask(); //aw: ranged & autoslayer: no good. just rerolling when combat area is the cave or highlands. but it costs
+        //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
+        else if( (slayerAreas[1].monsters.includes(slayerTask[0].monsterID) || slayerAreas[2].monsters.includes(slayerTask[0].monsterID)) && !autoEquipZone ) {
+            if(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) && equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] != CONSTANTS.item.Mirror_Shield) {
+                newSlayerTask(); 
+            } else if (slayerAreas[2].monsters.includes(slayerTask[0].monsterID) && equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] != CONSTANTS.item.Magical_Ring) {
+                newSlayerTask();
+            }
+        }
         //Equips Mirror Shield for area
         else if(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) && autoEquipZone) {
             if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] != CONSTANTS.item.Mirror_Shield) {
@@ -816,7 +868,7 @@ var autoSlayer = function() {
                     }
                 }
             }
-        } 
+        }
         selectMonster(slayerTask[0].monsterID);
     }
 }
@@ -1466,7 +1518,10 @@ function toggleAutoCook() {
     if (autoCook) {
         cookInterval = setInterval(autoCookAll, 1000) 
         changePage(9);
-    } else { clearInterval(cookInterval); }
+    } else { 
+        clearInterval(cookInterval); 
+        if (isCooking) startCooking(0, false);
+    }
 }
 //::end autoCook
 
@@ -1827,10 +1882,6 @@ var slowLoop = setInterval(function() {
 
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
-
-**IMPORTANT**
-AutoEquip arrows is weird when you uneqip your arrows. Tried to equip logs?! Luckily nothing seems broken beyond the custom message.
-**  -end-  **
 
 Jarx additions: 
     automatically upgrade fishing rod or pickaxe or woodcutting axe
