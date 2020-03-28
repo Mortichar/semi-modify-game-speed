@@ -1,9 +1,9 @@
 # This is Scripting Engine for Melvor Idle v0.3.1.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
-To install in chrome,  please look further below in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03).
+To install in chrome,  please look further below in the ['Chrome Developer Install' section](https://gitlab.com/aldousWatts/SEMI#chrome-developer-install).
 
-Please note that the repository has changed, and to install in a method other than using the Mozilla Add-on Database above you need to download the source subdirectory, not the entire SEMI repository.
+Please note that the repository has changed, and to install without using the Mozilla Add-on Database above you need to download the source subdirectory, not the entire SEMI repository.
 
 ## SEMI is a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
 
@@ -55,13 +55,13 @@ Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 ### Alternative Installation
 
-Download the [SEMI/source directory from here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file to an empty folder.
+Download the [SEMI/source directory from here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file, which should be named SEMI-master-source.zip (or .tar*) to an empty folder.
 
-* Firefox Temporary Install
+#### Firefox Temporary Install
 
 Open the url "about:debugging" without quotes, enable add-on debugging if you need to. On newest firefox, go to the "this firefox" page. Install the addon by clicking "Load Temporary Add-on" opening either manifest.json or either of the .js files in the folder. 
 
-* Chrome Developer Install
+#### Chrome Developer Install
 
 Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the SEMI source containing folder to load the add-on.
 
