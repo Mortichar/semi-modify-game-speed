@@ -2,80 +2,50 @@
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
 To install in chrome,  please look further below in the ['0.3' section](https://gitlab.com/aldousWatts/SEMI#anchor-03).
+
 ### It's a Firefox and Chrome browser extension for the fun idle web game Melvor Idle. 
-This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game.
-* Auto Replant and Percent Accuracy by Arcanus
-* AutoBonfire by Dream
+
+This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
+
+* Auto Replant by Arcanus
+    * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
+* Percent Accuracy by Arcanus: calculates percent chance to hit and replaces the in-game accuracy ratings with percentages.
+* AutoBonfire by Dream: continuously starts bonfires for you when you have a type of wood selected in Firemaking.
+* AutoFish by BreakIt, Jarx and myself
+    * Fishes area with highest average XP fish, but will chase chests when they appear
+    * Detects if you are using fishing potions, will switch to fishing the max XP fish and ignores chests
+    * Chase Crabs option for prioritizing crabs, useful for creating fisherman's potions
+* AutoCook by Unicue: cycles through fish and cooks them all
 * Auto Mine & Auto Sell Gems by Strutty & others
-* AutoSlayer by Bubbalova: automates Slayer tasks, optionally automatically equips mirror shield or magic ring.
-* AutoCombat: eat food and loot automatically, exit combat if you're out of food/ammo/runes.
-* AutoCombat Options: Toggle auto eat and loot
-* Calculate number of selected potions needed until next level button in Herblore page
-* Thieving calculators and tooltips by RedSparr0w (scavenged from Melvor Idle Helper)
-* XHP script by Breakit
+    * AutoMine now has a GUI for selecting which bar you'd like to mine
+    * Priority override buttons give even more control over how you want to mine
+* AutoSmith Bars: cycle through smithing bars and smelt them if you have the materials to do so
+* Katorone Automation & GUI
+    * In-game menu for toggling & using Katorone's automation script functions, which can do these things:
+        * Automatically sells Bobby's Pockets from thieving
+        * Automatically buys more bank space when full
+        * Automatically open Bird Nests & Herb Sacks
+        * Automatically buys Gem Glove Charges, selling gems to acquire money for more charges
+        * Automatically bury bones
 
-Added in 0.1.1:
-* AutoCook by Unicue (cycles through fish and cooks in order)
-* AutoFish by BreakIt, Jarx, and Myself with added options: Max Mode (for use with fishing potions) and Chase Chests (fish treasure chests when spawned)
-* UI updates & more menu toggles, even for native Melvor sidebar sections like Other & Socials
+* Combat Scripts
+    * AutoSlayer by Bubbalova, tweaked by myself 
+        * Automates Slayer tasks, entering combat and constantly engaging whatever monster you're assigned.
+        * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done.
+    * AutoCombat
+        * Exit combat if you're out of food/ammo/runes.
+        * Attempts to equip more of the same type of arrow if using ranged before exiting combat.
+            * IGNORES EQUIPPING MORE ARROWS WHEN DOING DUNGEONS. However, will still exit combat when you reach 0.
+        * Options: Toggle auto eat and loot. 
+        * AutoEat script works outside of AutoCombat now and is disabled by default. Useful for thieving.
 
-Added in 0.2:
-* Huge update: incorporated many functions from Katorone's automation script into SEMI complete with a settings menu.
-* Tweaked AutoMine to only switch if the current mining action is complete (more efficient)
-* Added AutoMine priority override buttons, allows you to select one ore to prioritize above all others (still seeks highest XP)
-
-0.2.1:
-* Quick fixes & mods to the Katorone scripts by rebelEpik & me:
-    * Auto buy gem glove charges now respects the bank gp limit
-    * AutoReplant respects the bank gp limit when Katorone is enabled and won't buy compost unless it has more than the reserve
-
-0.2.2:
-* AutoEat will now cycle through equipped foods before exiting combat (credit rebelEpik)
-* getBankQty function updated for efficiency (credit rebelEpik)
-* AutoReplant disabled by default (suggested by Rickardo)
-* AutoFish is now fully automated: it will find max XP fish and stop chasing chests when using fishing potions.
-* 0.2.2.1: quick fix to make sure AutoFish is hidden when Auto Skills visibility is toggled
-* 0.2.2.2: quick fix to make sure AutoReplant is ACTUALLY off when starting SEMI.
-
-0.2.3:
-* AutoSell Gems was broken by the updated getBankQty function, reverted back, the script works again.
-* Removed AutoCook extra button as Cooking is now idle from the start in alpha v0.13
-* Fixed AutoCook script to work in alpha v0.13
-* AutoEat script is now usable outside of combat, useful for thieving (suggested by Pentharian)
-* Destroy All Crops button added to the Farming page: will remove all your plants in the currently selected farming area (suggested & prototyped by Jarx)
-* Chase Crabs option for AutoFishing: will hunt down crabs for fishing potions. If using potions, will only hunt them if they are max in an area. Otherwise, will prioritize them after chests. (suggested by Jarx)
-
-0.2.3.1:
-* Some Katorone Automation edits that I did caused an issue with reserve gold and selling gems to pay for glove charges. This hotfix takes care of that issue: Katorone will now sell gems to boost the GP pool past the reserve amount in order to buy gem glove charges, thereby fixing the automation. Previously, it would not sell gems if you were at your reserve gold amount, and could not buy gem glove charges as a result.
-* Minor UI updates
-
-## 0.3
-* Seems to be working on android Firefox. Might as well open it up to that platform as well. **Best displayed in landscape view.**
-    * **Note for Chrome users**: this version will throw a harmless error when loading into Chrome because Chrome does not recognize a part of the manifest.json necessary to run the extension on Firefox for Android. If you want to get rid of the error, delete the "browser_specific_settings" section in manifest.json. Deleting lines 13-17 of manifest.json will give you a perfectly fine Chrome version. See [Temporary install](https://gitlab.com/aldousWatts/SEMI#temporary-install) below for installation.
-
-### Additions:
-* GUI for XPH for every skill. Get crunchy with your XP per hour calculations nicely displayed in-game, no console needed. Also calculates time until desired level.
-* GUI for AutoMine Bar Selection: with priority override and smithing bar selection, there are plenty of ways to customize AutoMine to your needs without using the console.
-* Barf my potion button: Removes your currently equipped potion on the current page. Handy for chasing down fishing chests when you just drank a fisherman's potion!
-* AutoCombat will now attempt to re-equip 1000 of your currently equipped arrows from your bank if your quiver has less than 500, and will still exit combat if you run out completely.
-
-### Fixes:
-* AutoSlayer was a little broken after combat was updated in Melvor v0.13, but now seems to run fine. 
-    * Was ignoring equipment requirements for slayer zones. Changed code to fix this.
-    * Was throwing a dungeon complete screen every kill if you had just finished a dungeon then used AutoSlayer. Added a line to fix.
-    * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
-
-0.3.1
-
-* AutoSmith Bars: New skill automation that will cycle through your smeltable bars and smelt them all.
-* UI Changes: 
-    * Katorone settings menu moved to AutoSkills section
-    * AutoSkills rearranged
-* Small fixes
-    * When using AutoCombat in dungeons with ranged, attempting to autoequip arrows would cause a broken loop.
-    * AutoCombat automatically equipping arrows no longer reports equipping Normal Logs when at 0 arrows.
-    * When canceling AutoCook, will stop cooking immediately.
-    * AutoSlayer will no longer skip Slayer tasks when you are properly equipped for a slayer zone and AS Auto Equip is disabled.
+* Extra functions & buttons
+    * Toggle "OTHER" & "SOCIALS" Sidebar Button section visibility like you can do for "COMBAT" & "SKILLS".
+    * Calculate number of selected potions needed until next level button in Herblore page
+    * Destroy All Crops button in the Farming page
+    * Barf My Potion button in the Potion selection menu
+    * Thieving calculators and tooltips by RedSparr0w (scavenged from Melvor Idle Helper)
+    * XPH script by Breakit, now with an in-game GUI to display XP per hour and estimate time until a level of your choice
 
 ***
 
