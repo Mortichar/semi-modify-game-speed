@@ -55,17 +55,18 @@ Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 ### Alternative Installation
 
-Download the [SEMI/source directory from here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file, which should be named SEMI-master-source.zip (or .tar*) to an empty folder.
+#### Chrome Developer Install
+
+**Note:** There is a harmless error that is thrown on loading the extension from source into Chrome this way since version 0.3 because Chrome does not recognize the part of manifest.json necessary for the extension to run on Firefox for Android. Deleting the "browser_specific_settings" section of manifest.json fixes the error, but an alternative chrome version of SEMI without this section is now in the repository [here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/releases/chrome). Download this subdirectory which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file, which should be named SEMI-master-releases-chrome.zip (or .tar*) to an empty folder.
+
+Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the folder that contains manifest.json to load the add-on. It will be inside subfolders after extracting, so make sure you select the 'chrome' folder which contains manifest.json.
 
 #### Firefox Temporary Install
 
-Open the url "about:debugging" without quotes, enable add-on debugging if you need to. On newest firefox, go to the "this firefox" page. Install the addon by clicking "Load Temporary Add-on" opening either manifest.json or either of the .js files in the folder. 
+Download the [SEMI/source directory from here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file, which should be named SEMI-master-source.zip (or .tar*) to an empty folder.
 
-#### Chrome Developer Install
+Open the url "about:debugging" without quotes, enable add-on debugging if you need to. On newest firefox, go to the "this firefox" page. Install the addon by clicking "Load Temporary Add-on" opening either manifest.json or either of the .js files in the 'source' subfolder.
 
-Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the SEMI source containing folder to load the add-on.
-
-**Note:** There is a harmless error that is thrown on loading the extension into Chrome this way since version 0.3 because Chrome does not recognize the part of manifest.json necessary for the extension to run on Firefox for Android. Deleting the "browser_specific_settings" section of manifest.json fixes the error, but an alternative chrome version of SEMI without this line will be included in this repository soon.
 
 ***
 
