@@ -1,5 +1,8 @@
 Scripting Engine for Melvor Idle Changelog
 
+** Upcoming:
+    * Added AutoReplant functionality for the Weird Goop update addition
+
 v0.3.2
 
 * Melvor Idle has updated to alpha v0.14!
@@ -8,8 +11,6 @@ v0.3.2
     * XPH for Fishing now works and doesn't break the entire XPH system.
     * AutoCook was broken after the Cooking UI updated, fixed.
     * Not sure when a code typo slipped in for the Destroy All Crops button, but it's fixed.
-* Upcoming:
-    * Added AutoReplant functionality for the Weird Goop update addition
 
 
 v0.3.1
