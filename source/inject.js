@@ -1209,6 +1209,7 @@ function bot_getCompost() {
 }
 
 //:: importing Melvor Auto Replant 1.6 by Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394855-melvor-auto-replant
+// updated with a change from 1.7: gloop!
 function autoReplant() {
     for (let i = 0; i < newFarmingAreas.length; i++) {
         for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {
@@ -1218,7 +1219,9 @@ function autoReplant() {
                 if(checkBankForItem(grownID) || bankMax+baseBankMax > bank.length) {
                     harvestSeed(i,j)
                     if(checkBankForItem(lastSeed)) {
-                        if(farmingMastery[items[lastSeed].masteryID].mastery < 50) {
+                        if(checkBankForItem(CONSTANTS.item.Weird_Gloop)) {
+                            addGloop(i,j)
+                        } else if(farmingMastery[items[lastSeed].masteryID].mastery < 50) {
                             if(equippedItems[CONSTANTS.equipmentSlot.Cape] !== CONSTANTS.item.Farming_Skillcape) { //adding&tweaking script modification by rebelEpik
                                 if(katoroneOn){
 									if((bot_reserveGold > 0) && ((gp - (5*items[159].buysFor)) > bot_reserveGold)){
@@ -1501,7 +1504,7 @@ setTimeout(function() { setupSEMI(); },10000); //following 10s idea by Katorone 
 
 //:://Auto Cooking by Unicue on the Melvor discord: https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992
 let fishTypeCount = 0;
-let fishType = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 656, 657, 658, 660, 661, 662, 663, 664, 665, 666];
+let fishType = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 662, 663, 664, 665]; 
 
 function autoCookAll(){
     if(document.getElementById("skill-cooking-food-selected-qty").innerHTML == "0" || document.getElementById("skill-cooking-food-selected-qty").innerHTML == ""){
