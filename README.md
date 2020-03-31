@@ -1,9 +1,9 @@
-# This is Scripting Engine for Melvor Idle v0.3.1.
+# This is Scripting Engine for Melvor Idle v0.3.2.
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
 To install in chrome,  please look further below in the ['Chrome Developer Install' section](https://gitlab.com/aldousWatts/SEMI#chrome-developer-install).
 
-Please note that the repository has changed, and to install without using the Mozilla Add-on Database above you need to download the source subdirectory, not the entire SEMI repository.
+Please note that the repository has changed, and to install without using the Mozilla Add-on Database above you need to use the source subdirectory, not the entire SEMI repository.
 
 ## SEMI is a Firefox and Chrome web extension for Melvor Idle. 
 

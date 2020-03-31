@@ -1,4 +1,4 @@
-# This is SEMI v0.3.1 for Chrome.
+# This is SEMI v0.3.2 for Chrome.
 
 The main difference is in manifest.json, which doesn't include the browser_specific_settings section that throws errors when loading the extension into Chrome.
 
