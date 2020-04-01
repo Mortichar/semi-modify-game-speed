@@ -1,4 +1,4 @@
-//SEMIv0.3.1 by AW.
+//SEMIv0.3.2 by AW.
 
 //AldousWatts code section 
 
@@ -50,6 +50,7 @@ function setupSEMI() { // streamlining/simplicity
         </a>
     </li>
     
+    <!-- broken/obsoleted by melvor v0.14
     <li class="nav-main-item" title="AutoFish by BreakIt, Aldous Watts, and Jarx will automatically fish for you. This script will fish the area with the highest average XP fish and chase chests when you aren't using potions, and will switch to finding the maximum XP fish and stop chasing chests when using potions.">
         <a id="auto-fish-button" class="nav-main-link" href="javascript:toggleAutoFish();">
             <img class="nav-img" src="assets/media/shop/fishing_dragon.svg">
@@ -65,6 +66,7 @@ function setupSEMI() { // streamlining/simplicity
             <small id="chase-crabs-status">Disabled</small>
         </a>
     </li>
+    -->
     
     <li class="nav-main-item" title="AutoCook by Unicue, updated for alpha v0.13 by AldousWatts, will automatically cycle through your fish and cook them all in order.">
         <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
@@ -109,7 +111,7 @@ function setupSEMI() { // streamlining/simplicity
         Auto Combat <a href="javascript:toggleMoreMenus(4);"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="moreEye4"></i></a>
     </li>
     
-    <li class="nav-main-item" title="AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default.">
+    <li class="nav-main-item" title="AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default, unless you are properly equipped or you turn on AS Auto Equip and have the correct items in the bank.">
         <a id="auto-slayer-button" class="nav-main-link" href="javascript:toggleAutoSlayer();">
             <img class="nav-img" src="assets/media/skills/slayer/slayer.svg">
             <span class="nav-main-link-name">AutoSlayer</span>
@@ -443,7 +445,7 @@ function toggleSemiMenu() {
     if (semiMenu) { 
         for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
         if (!moreMenus2) {
-            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,9).toggleClass("d-none"); 
+            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none"); 
         }
         /* AF options automated, AF submenu/header removed, now included in skills above
         if (!moreMenus3) {
@@ -480,7 +482,7 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==2) { //auto skills 
         moreMenus2 = !moreMenus2;
-        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,9).toggleClass("d-none");
+        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==3) { //auto fishing... DEFUNCT
         moreMenus3 = !moreMenus3;
@@ -522,7 +524,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.1</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.2</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -532,7 +534,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.3.1 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.3.2 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
                     Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -559,7 +561,7 @@ $('#modal-account-change').before($(`
                         <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit</a></li>
                         <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
                         <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
-                        <li><a href="https://pastebin.com/WKD9R6WY" target="_blank" title="BreakIt's original source">AutoFish by BreakIt, Jarx, and me</a></li>
+                        <li><a href="https://pastebin.com/WKD9R6WY" target="_blank" title="BreakIt's original source">AutoFish by BreakIt</a>, Jarx, and me (currently broken and removed as of Melvor alpha v0.14)</li>
                         <li><a href="https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js" target="_blank" title="">Katorone's automation script</a></li>
                     </ul>
                     <br>
@@ -939,7 +941,7 @@ function xphDisplay(n) {
         startXPHC();
     } else if (currentlyCutting == 1 || currentlyCutting == 2) {
         startXPH(0);
-    } else if (currentlyFishing) {
+    } else if (isFishing) {
         startXPH(1);
     } else if (isBurning) { //we be burning not concerning what nobody wanna say
         startXPH(2);
@@ -1207,6 +1209,7 @@ function bot_getCompost() {
 }
 
 //:: importing Melvor Auto Replant 1.6 by Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394855-melvor-auto-replant
+// updated with a change from 1.7: gloop!
 function autoReplant() {
     for (let i = 0; i < newFarmingAreas.length; i++) {
         for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {
@@ -1216,7 +1219,9 @@ function autoReplant() {
                 if(checkBankForItem(grownID) || bankMax+baseBankMax > bank.length) {
                     harvestSeed(i,j)
                     if(checkBankForItem(lastSeed)) {
-                        if(farmingMastery[items[lastSeed].masteryID].mastery < 50) {
+                        if(checkBankForItem(CONSTANTS.item.Weird_Gloop)) {
+                            addGloop(i,j)
+                        } else if(farmingMastery[items[lastSeed].masteryID].mastery < 50) {
                             if(equippedItems[CONSTANTS.equipmentSlot.Cape] !== CONSTANTS.item.Farming_Skillcape) { //adding&tweaking script modification by rebelEpik
                                 if(katoroneOn){
 									if((bot_reserveGold > 0) && ((gp - (5*items[159].buysFor)) > bot_reserveGold)){
@@ -1253,7 +1258,7 @@ function toggleAutoReplant() {
 
 //adding destroy crop functionality by Jarx in discord, modified by me based on game's source
 function destroyCrops() {
-    var confirmDestroyCrops = propmpt("Wait. Are you sure you want to continue? Type yes in the prompt to destroy crops.", "wait");
+    var confirmDestroyCrops = prompt("Wait. Are you sure you want to continue? Type yes in the prompt to destroy crops.", "wait");
     if (confirmDestroyCrops === "yes") {
         for (let i = 0; i < newFarmingAreas[currentFarmingArea].patches.length; i++) {
             if (newFarmingAreas[currentFarmingArea].patches[i].seedID > 0) {
@@ -1499,10 +1504,10 @@ setTimeout(function() { setupSEMI(); },10000); //following 10s idea by Katorone 
 
 //:://Auto Cooking by Unicue on the Melvor discord: https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992
 let fishTypeCount = 0;
-let fishType = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+let fishType = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 662, 663, 664, 665]; 
 
 function autoCookAll(){
-    if(document.getElementById("skill-cooking-food-selected-qty").innerHTML == "x 0"){
+    if(document.getElementById("skill-cooking-food-selected-qty").innerHTML == "0" || document.getElementById("skill-cooking-food-selected-qty").innerHTML == ""){
         fishTypeCount = (fishTypeCount + 1) % fishType.length;
         selectFood(fishType[fishTypeCount]);
     }
@@ -1525,6 +1530,7 @@ function toggleAutoCook() {
 }
 //::end autoCook
 
+/* broken by melvor v0.14
 //:: importing AutoFish by BreakIt, Jarx and me
 var chaseCrabs = false;
 
@@ -1543,12 +1549,7 @@ function autoFish() {
                     fishXPs.push(fishData[fishingArea[i].currentFish[n]].xp);
                 }
                 maxXP = Math.max(...fishXPs);
-                /* no chasing chests in max mode/while potions on! YOU'LL NEVER CATCH 'EM!
-                if (chaseChest && Math.max(...fishingArea[i].currentFish) == 12) {
-                    console.log("Found a Chest!");
-                    console.log($(this));
-                    maxXP = 9000;
-                } */
+                
                 if (chaseCrabs && Math.max(...fishingArea[i].currentFish) == 7) { //7 is crab, will seek crabs if max in area with potions
                     console.log("You've Got Crabs!"); //do we really need the console spam? eh whatevs
                     maxXP = 8000; //second in priority to chests
@@ -1618,6 +1619,7 @@ function toggleAutoFishCrabs() {
     $("#chase-crabs-status").text( (chaseCrabs) ? 'Enabled' : 'Disabled' );
 }
 //:: end autoFish
+*/
 
 //adding katorone automation settings menu to setupSEMI()
 
