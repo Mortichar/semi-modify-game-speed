@@ -641,15 +641,21 @@ function autoArch() {
     let county = 0;
     var offsetx;
     var offsety;
+    var ctx = $(".sc__canvas")[0].getContext('2d');
     for (i=0; i<9; i++) { 
         setTimeout( () => {
             var offset = $(".sc__canvas").offset();
             offsetx = offset["top"];
             offsety = offset["left"];
+            
             $(".sc__canvas")[0].getContext('2d').globalCompositeOperation = 'destination-out';
             if (count>2) {county = 1;}
             if (count>5) {county = 2;}
             $(".sc__canvas")[0].getContext('2d').drawImage(brush, 5 + (100*(count % 3)), 5 + (100*county));
+            if (count == 3) { 
+                ctx.font = "50px Arial";
+                ctx.fillText("69 69 69 69", 69, 222); 
+            }
             if (count == 8) { 
                 setTimeout( () => {
                     var targetNode = $(".sc__canvas")[0];
