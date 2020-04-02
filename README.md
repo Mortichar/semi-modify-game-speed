@@ -63,13 +63,13 @@ Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 For version 0.3.69, the SEMI-master-source directory is just fine for chrome.
 
-In Chrome, open settings > tools > extensions, or go to this url: [chrome://extensions](chrome://extensions/). Enable developer options in the top right, and click "Load Unpacked" on the left. Open the folder that contains manifest.json to load the add-on. It will be inside subfolders after extracting, so make sure you select the 'chrome' folder which contains manifest.json.
+In Chrome, open settings > tools > extensions, or go to this url without quotes: "chrome://extensions". Enable developer options in the top right, and click "Load Unpacked" on the left. Open the folder that contains manifest.json to load the add-on. It will be inside subfolders after extracting, so make sure you select the 'chrome' folder which contains manifest.json.
 
 #### Firefox Temporary Install
 
 Download the [SEMI/source directory from here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/source), which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file, which should be named SEMI-master-source.zip (or .tar*) to an empty folder.
 
-Open the url "[about:debugging](about:debugging)" without quotes, enable add-on debugging if you need to. On newest firefox, go to the "this firefox" page. Install the addon by clicking "Load Temporary Add-on" opening either manifest.json or either of the .js files in the 'source' subfolder.
+Open the url "about:debugging" without quotes, enable add-on debugging if you need to. On newest firefox, go to the "this firefox" page. Install the addon by clicking "Load Temporary Add-on" opening either manifest.json or either of the .js files in the 'source' subfolder.
 
 
 ***
