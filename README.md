@@ -1,5 +1,5 @@
 # This is Scripting Engine for Melvor Idle v0.3.69.
-Technically it's still v0.3.2, but gotta get that ArChAe in. 
+Technically it's still v0.3.2, but gotta get that ArChAe in. All users will have to install from source to use 0.3.69 for now.
 
 Firefox Release Version (NOT v0.3.69): [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
