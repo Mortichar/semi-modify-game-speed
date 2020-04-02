@@ -1,4 +1,6 @@
-# This is Scripting Engine for Melvor Idle v0.3.2.
+# This is Scripting Engine for Melvor Idle v0.3.69.
+Technically it's still v0.3.2, but gotta get that ArChAe in. 
+
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
 To install in chrome,  please look further below in the ['Chrome Developer Install' section](https://gitlab.com/aldousWatts/SEMI#chrome-developer-install).
@@ -58,6 +60,8 @@ Thanks to everyone who writes scripts for Melvor and provides them to others!
 #### Chrome Developer Install
 
 **Note:** There is a harmless error that is thrown on loading the extension from source into Chrome from the main source since version 0.3 because Chrome does not recognize the part of manifest.json necessary for the extension to run on Firefox for Android. Deleting the "browser_specific_settings" section of manifest.json fixes the error, but an alternative chrome version of SEMI without this section is now in the repository [here](https://gitlab.com/aldousWatts/SEMI/-/tree/master/releases/chrome). Download this subdirectory which includes SEMI.js, inject.js, and manifest.json, as well as icons folder. Extract the downloaded compressed file, which should be named SEMI-master-releases-chrome.zip (or .tar*) to an empty folder.
+
+For version 0.3.69, the SEMI-master-source directory is just fine for chrome.
 
 Open settings > tools > extensions, enable developer options in the top right, and click "Load Unpacked" on the left. Open the folder that contains manifest.json to load the add-on. It will be inside subfolders after extracting, so make sure you select the 'chrome' folder which contains manifest.json.
 
