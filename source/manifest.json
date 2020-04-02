@@ -10,12 +10,6 @@
     "48": "icons/border-48.png"
   },
   
-  "browser_specific_settings": {
-    "gecko": {
-        "id": "{b85c9aa4-a6bb-4354-977a-ef07381da0b4}"
-    }
-  },
-
   "content_scripts": [
     {
       "matches": ["*://*.melvoridle.com/*"],
