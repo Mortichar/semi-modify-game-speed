@@ -437,10 +437,15 @@ function setupSEMI() { // streamlining/simplicity
             
         </div><br><br>`))
     
+    //initiate certain button texts
     updateAutoSellGemsButtonText();    
     updateAutoMineButtonText();    
     updateAutoSlayerButtonText();
     
+    //adding button to the farming page to destroy crops
+    $('#farming-container').append($('<button id="destroyCropsBtn" class="btn btn-success m-2" onclick="destroyCrops();">[SEMI] Destroy All Crops in This Area</button>'));
+
+    //SEMI menu hide-eye
     $("#semiHeading").append($('<a href="javascript:toggleSemiMenu();"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="skill-menu-icon2"></i></a>'));
     //if all goes well, yay, it's loaded
         customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',10000);
@@ -448,7 +453,6 @@ function setupSEMI() { // streamlining/simplicity
 
 //toggle SEMI sidebar menu
 var semiMenu = true;
-
 function toggleSemiMenu() {
     semiMenu = !semiMenu;
     if (semiMenu) { 
@@ -1337,10 +1341,7 @@ function destroyCrops() {
     }
 }
 
-//adding button to the farming page to destroy crops
-$('#farming-container').append($('<button id="destroyCropsBtn" class="btn btn-success m-2" onclick="destroyCrops();">[SEMI] Destroy All Crops in This Area</button>'));
-
-/* obsoleted in melvor alpha v0.14.1
+/* obsoleted in melvor alpha v0.14 or .1
 //:: importing Melvor Percent Accuracy 1.1 by (Not) Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy
 this.setAccuracyPercent = setInterval(() =>{
     if(isInCombat) {
