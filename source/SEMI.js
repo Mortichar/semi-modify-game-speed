@@ -1,4 +1,4 @@
-// Scripting Engine for Melvor Idle v0.3.2 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.13
+// Scripting Engine for Melvor Idle v0.3.2 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.14.1
 // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3) and Latest Ubuntu & Android Firefox.
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
@@ -38,8 +38,8 @@ function createImage(name, imgId, height = 32, width = 32) {
 function main() {
     // Only support firefox and chrome
     if(!isChrome && !isFirefox) { 
-        return; 
         alert("SEMI is only officially supported on Firefox and Chrome. To try on another browser, delete lines 39-42 of the main() function in SEMI.js. The addon will not load otherwise."
+        return; 
     } 
     
     const scriptID = 'inject-semi';
