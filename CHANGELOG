@@ -4,6 +4,7 @@ v0.3.3
 
 * Melvor Idle has updated to alpha v0.14.1!
     * It seems Percent Accuracy is now in the game, so the percent accuracy script has been removed from SEMI to prevent redundancy.
+* Code changes: Gearing up to change how SEMI works under the hood.
 * Upcoming: Code changes & cleanup
 
 v0.3.2
