@@ -639,6 +639,7 @@ function toggleAutoSmithBars() {
     }
 }
 
+/* april fools!
 function autoArch() {
     if (currentPage !== 20) changePage(20);
     let brush = document.createElement('img');
@@ -698,6 +699,7 @@ function toggleAutoArch() {
     } else { clearInterval (autoArchLoop); }
     
 }
+*/
 
 //***************************AUTO COMBAT***********************************
     var autocombat;
