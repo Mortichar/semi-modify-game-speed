@@ -1,25 +1,19 @@
 {
-
   "manifest_version": 2,
   "name": "Scripting Engine for Melvor Idle",
   "version": "0.3.2",
-
   "description": "QOL Scripting for Melvor Idle, the fun idle browser game!",
-
   "icons": {
     "48": "icons/border-48.png"
   },
-  
   "content_scripts": [
     {
       "matches": ["*://*.melvoridle.com/*"],
       "js": ["SEMI.js"]
     }
   ],
-
   "web_accessible_resources": [
     "inject.js",
     "icons/*.png"
-  ]  
-
+  ]
 }

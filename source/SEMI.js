@@ -2,45 +2,58 @@
 // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3) and Latest Ubuntu & Android Firefox.
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
-    
+
 //Injecting Script... updated to work better with web-ext inspired by CoolRox95
 
-function main() { 
-    var scriptID = 'inject-semi';
-    //Check if script already exists, if so delete it
-    if (document.contains(document.getElementById(scriptID))) {
-        document.getElementById(scriptID).remove();
-    }
-    //Inject script
-    var script = document.createElement('script');
-    if(navigator.userAgent.match("Chrome")){
-        script.src = chrome.runtime.getURL("inject.js");
-    } else if(navigator.userAgent.match("Firefox")){
-        script.src = browser.runtime.getURL("inject.js");
-    }
-    script.setAttribute('id',scriptID);
+var isChrome = navigator.userAgent.match("Chrome");
+var isFirefox = navigator.userAgent.match("Firefox");
+
+var runtime = (isChrome ? chrome : browser).runtime
+
+// Check if script already exists, if so delete it
+function removeIfExists(scriptID) {
+    const el = document.getElementById(scriptID);
+    if (document.contains(el)) { el.remove(); }
+};
+
+// Inject script
+function addScript(name, scriptID) {
+    const script = document.createElement('script');
+    script.src = runtime.getURL(name);
+    script.setAttribute('id', scriptID);
     document.body.appendChild(script);
+    return script;
+}
+
+// Create image element
+function createImage(name, imgId, height = 32, width = 32) {
+    const img = document.createElement('img');
+    img.src = runtime.getURL(name);
+    img.id = imgId;
+    img.height = height;
+    img.width = width;
+    return img;
+}
+
+function main() {
+    if(!isChrome && !isFirefox) { return; } // Only support firefox and chrome
+    const scriptID = 'inject-semi';
+
+    removeIfExists(scriptID);
+    addScript('inject.js', 'inject-semi');
 
     // not sure how to get the icon otherwise. need to leave the heading addition here, could probably just copy the rest to a big injection.
-
-    if (document.contains(document.getElementById('modal-semi-set-menu')) ) { return; } 
+    if (document.contains(document.getElementById('modal-semi-set-menu')) ) { return; }
     const navbar = document.getElementsByClassName("nav-main")[0];
     const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.13 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
-    navbar.appendChild(clnheading); 
+    navbar.appendChild(clnheading);
     clnheading.style = "font-size: 12pt; color: gold;";
     clnheading.childNodes[0].textContent = " SEMI v0.3.2";
     clnheading.title = "Scripting Engine for Melvor Idle";
     clnheading.id = "semiHeading";
-    const iconImg = document.createElement('img');
-    if(navigator.userAgent.match("Chrome")){
-        iconImg.src = chrome.runtime.getURL("icons/border-48.png");
-    } else if(navigator.userAgent.match("Firefox")){
-        iconImg.src = browser.runtime.getURL("icons/border-48.png");
-    } 
-    iconImg.height = 32;
-    iconImg.width = 32;
-    iconImg.id = "iconImg";
+    const iconImg = createImage("icons/border-48.png", 'iconImg');
     clnheading.insertBefore(iconImg, clnheading.childNodes[0]);
 }
+
 main();
 //And everything else is probably easiest with jquery in inject.js. Whee!
