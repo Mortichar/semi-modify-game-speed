@@ -149,6 +149,7 @@ function setupSEMI() { // streamlining/simplicity
 
     <br>
     
+    <!-- april fools!
     <li class="nav-main-item" title="AUTOMATICALLY SCRATCH! OMG">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoArch();" id="autoArchNavBut">
             <img class="nav-img" src="assets/media/skills/archaeology/archaeology.svg" id="autoArchImg">
@@ -157,6 +158,7 @@ function setupSEMI() { // streamlining/simplicity
     </li>
     
     <br>
+    -->
     
     <li class="nav-main-item">
         <a class="nav-main-link nav-compact" href="javascript:semiInfo();" id="semiInfoNavBut">
