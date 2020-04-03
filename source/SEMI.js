@@ -36,9 +36,13 @@ function createImage(name, imgId, height = 32, width = 32) {
 }
 
 function main() {
-    if(!isChrome && !isFirefox) { return; } // Only support firefox and chrome
+    // Only support firefox and chrome
+    if(!isChrome && !isFirefox) { 
+        return; 
+        alert("SEMI is only officially supported on Firefox and Chrome. To try on another browser, delete lines 39-42 of the main() function in SEMI.js. The addon will not load otherwise."
+    } 
+    
     const scriptID = 'inject-semi';
-
     removeIfExists(scriptID);
     addScript('inject.js', 'inject-semi');
 
