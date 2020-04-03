@@ -1,4 +1,4 @@
-//SEMIv0.3.2 by AW.
+//SEMIv0.3.3 by AW.
 
 //AldousWatts code section 
 
@@ -533,7 +533,7 @@ $('#modal-account-change').before($(`
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.2</h3>
+                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.3</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
@@ -543,7 +543,7 @@ $('#modal-account-change').before($(`
                 <div class="block-content font-size-sm">
                     <p id="semi-info-text"></p>
                     
-                    <h2 style="color: white;">SEMI v0.3.2 by Aldous Watts</h2>
+                    <h2 style="color: white;">SEMI v0.3.3 by Aldous Watts</h2>
                     Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                     <br>
                     Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -1340,6 +1340,7 @@ function destroyCrops() {
 //adding button to the farming page to destroy crops
 $('#farming-container').append($('<button id="destroyCropsBtn" class="btn btn-success m-2" onclick="destroyCrops();">[SEMI] Destroy All Crops in This Area</button>'));
 
+/* obsoleted in melvor alpha v0.14.1
 //:: importing Melvor Percent Accuracy 1.1 by (Not) Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy
 this.setAccuracyPercent = setInterval(() =>{
     if(isInCombat) {
@@ -1352,6 +1353,7 @@ this.setAccuracyPercent = setInterval(() =>{
     }
 },1000)
 //:: end of %acc
+*/
 
 //:: simply rewritten autoBonfire by Dream below
 function autoBonfire() { if ( $.trim($('#skill-fm-bonfire-status').text()) == 'Inactive') lightBonfire(); } //really
