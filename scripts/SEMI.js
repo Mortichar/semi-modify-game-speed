@@ -44,7 +44,7 @@ function main() {
     
     const scriptID = 'inject-semi';
     removeIfExists(scriptID);
-    addScript('inject.js', 'inject-semi');
+    addScript('scripts/inject.js', 'inject-semi');
 
     // not sure how to get the icon otherwise. need to leave the heading addition here, could probably just copy the rest to a big injection.
     if (document.contains(document.getElementById('modal-semi-set-menu')) ) { return; }
