@@ -243,7 +243,7 @@ function XPH(running,stat) {
           XPHcombat(1);
           for (i=0; i<8; i++) { 
               $("#xphc-rate-"+i).text(XPHcombat.skills[i].rate);
-              if($("#xphc-lvl-in-"+i).val()>99) $("#xphc-lvl-in-"+i).val(99);
+              //if($("#xphc-lvl-in-"+i).val()>99) $("#xphc-lvl-in-"+i).val(99); //commenting out to test virtual levels
               if ((Number($("#xphc-lvl-in-"+i).val()) > skillLevel[XPHcombat.skills[i].id]) && Number(XPHcombat.skills[i].rate.split(",").join(""))>0) {
                   var timeToLvl = ( exp.level_to_xp(Number($("#xphc-lvl-in-"+i).val())) - skillXP[XPHcombat.skills[i].id] )/Number(XPHcombat.skills[i].rate.split(",").join(""));
                   var timeToLvl = timeToLvl.toFixed(1);

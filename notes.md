@@ -1,35 +1,10 @@
-/* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
-TODO
+# SEMI General notes
 
-for chrome users: use manifest.json in chrome subfolder? or just chrome.manifest.json, overwrite or delete
+## TODO
 
-custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange?
-    this would require saved semi settings
-
-better loading detection & script setup & version check, mimic Coolrox
-
-virtual level calculation for XPH: simply remove lv99 limit?...
 mastery time calculators?
 
-
 Major script cleanup: moving variables to a SEMI variable container, combining many of the scripts, etc.
-
-Jarx additions: 
-    automatically upgrade fishing rod (AutoFish)
-    pickaxe (AutoMine) 
-    woodcutting axe (background script, maybe injected in Percent Accuracy?)
-    
-AutoSlayer skip-monster menu/setting
-    
-AutoLoot AutoSell GUI Based on Completion Log - all ? are looted, all known are sold by default, select of the remaining which you want to keep.
-    
-AutoReplant: choose highest available seeds for replanting if you run out of seeds
-
-More settings for autocombat
-    Auto only-loot bones/etc... select which items to omit? or certain monsters don't loot?
-    Auto-prayer.
-
-Fishing: select which fish to auto-sell
 
 time until done calculators? more items til done calculators? there already be utils/calcs out there. Link to them in info?
     const craftTime = 2; //s
@@ -41,6 +16,27 @@ time until done calculators? more items til done calculators? there already be u
     add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
         idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
         so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
+
+Jarx additions: 
+    automatically upgrade fishing rod (AutoFish)
+    pickaxe (AutoMine) 
+    woodcutting axe (background script, maybe injected in Percent Accuracy?)
+    
+AutoSlayer skip-monster menu/setting
+    
+AutoLoot AutoSell GUI Based on Completion Log - all ? are looted, all known are sold by default, select of the remaining which you want to keep.
+    
+custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange?
+    this would require saved semi settings
+    
+AutoReplant: choose highest available seeds for replanting if you run out of seeds
+
+More settings for autocombat
+    Auto only-loot bones/etc... select which items to omit? or certain monsters don't loot?
+    Auto-prayer.
+
+Fishing: select which fish to auto-sell
+
 
 -----
     

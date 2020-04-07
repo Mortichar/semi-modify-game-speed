@@ -552,6 +552,30 @@ $('#modal-account-change').before($(`
 </div>`));
 
 //Super Control Panel Builder (now more semi buttons or whatever)
-setTimeout(function() { setupSEMI(); },10000); //following 10s idea by Katorone to try and get override buts back
-//:: end of MSCP
+//setTimeout(function() { setupSEMI(); },10000); //following 10s idea by Katorone to try and get override buts back
 
+// improved loading detection based on CoolRox's excellence. will it work for thieving calcs?
+const semiLoader = setInterval(() => {
+    if (isLoaded) {
+        clearInterval(semiLoader);
+        let tryLoad = true;
+        let wrongVersion = false;
+        if (gameVersion != "Alpha v0.14.1") {
+            wrongVersion = true;
+            tryLoad = window.confirm('SEMI\nThis version of SEMI was made for Melvor Idle Alpha v0.14.1. Loading the extension may cause unexpected behavior or result in errors.\n Try loading it anyways?');
+        }
+        if (tryLoad) {
+            try {
+                setupSEMI();
+                if (wrongVersion) {
+                    console.log('SEMI Loaded, but may experience errors.')
+                } else { console.log('SEMI v0.3.3 Loaded!'); }
+            } catch (error) {
+                console.warn('SEMI was not properly loaded due to the following error:')
+                console.error(error);
+            }
+        } else {
+            console.warn('SEMI was not loaded due to game version incompatability.')
+        }
+    }
+}, 200);

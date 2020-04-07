@@ -12,7 +12,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds! Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14!
 * Percent Accuracy by Arcanus: calculates percent chance to hit and replaces the in-game accuracy ratings with percentages.
 * AutoBonfire by Dream: continuously starts bonfires for you when you have a type of wood selected in Firemaking.
-* [CURRENTLY BROKEN after Melvor alpha v0.14] AutoFish by BreakIt, Jarx and myself
+* [CURRENTLY BROKEN/obsolete after Melvor alpha v0.14] AutoFish by BreakIt, Jarx and myself
     * Fishes area with highest average XP fish, but will chase chests when they appear
     * Detects if you are using fishing potions, will switch to fishing the max XP fish and ignores chests since it's impossible to catch them while using potions
     * Chase Crabs option for prioritizing crabs, useful for creating fisherman's potions
