@@ -43,12 +43,13 @@ function createImage(name, imgId, height = 32, width = 32) {
 }
 
 var autoNames = ['arch', 'bonfire', 'combat', 'cook', 'eat', 'fish', 'loot', 'mine', 'replant', 'sell-gems', 'slayer', 'smith'];
-var pluginNames = ['menus', autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour'];
+var pluginNames = ['menus', ...autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour'];
+
 
 function main() {
     // Only support firefox and chrome
     if(!isChrome && !isFirefox) {
-        alert("SEMI is only officially supported on Firefox and Chrome. To try on another browser, delete lines 39-42 of the main() function in SEMI.js. The addon will not load otherwise.");
+        alert("SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main() function in SEMI.js. The addon will not load otherwise.");
         return;
     }
 
