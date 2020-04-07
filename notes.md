@@ -24,9 +24,7 @@ add custom settings in localstorage?... keeps variables like autoLoot, autoEat, 
     
 idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
 
-custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange?
-
-    this would require saved semi settings
+custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange? this would ideally make use of saved semi settings.
     
 Jarx additions: (could be good inside Katorone menu)
 
@@ -51,8 +49,9 @@ Fishing: select which fish to auto-sell
 
 
 -----
-    
+
 ## FUNKY IDEAS
+
 sound plays when idle is done and no task queued? repeats every minute or so
 
 task queueing
@@ -61,60 +60,60 @@ sounds in combat, alert sound for low health
 
 -----
 
-/* we don't need this after all. maybe useful for something. moving to notes.
-let pages = [{
-    name: 'woodcutting',
-    skillID: 0
-}, {
-    name: 'shop',
-    upyourbutt: 'andstuffit'
-}, {
-    name: 'bank'
-}, {
-    name: 'settings'
-}, {
-    name: 'changelog'
-}, {
-    name: 'milestones'
-}, {
-    name: 'statistics'
-}, {
-    name: 'fishing',
-    skillID: 1
-}, {
-    name: 'firemaking',
-    skillID: 2
-}, {
-    name: 'cooking',
-    skillID: 3
-}, {
-    name: 'mining',
-    skillID: 4
-}, {
-    name: 'smithing',
-    skillID: 5
-}, {
-    name: 'mastery'
-}, {
-    name: 'combat',
-    skillID: [6,7,8,9,12,16,18,17]
-}, {
-    name: 'thieving',
-    skillID: 10
-}, {
-    name: 'farming',
-    skillID: 11
-}, {
-    name: 'fletching',
-    skillID: 13
-}, {
-    name: 'crafting',
-    skillID: 14
-}, {
-    name: 'runecrafting',
-    skillID: 15
-}, {
-    name: 'herblore',
-    skillID: 19
-}];
-*/
+    /* we don't need this after all. maybe useful for something. moving to notes.
+    let pages = [{
+        name: 'woodcutting',
+        skillID: 0
+    }, {
+        name: 'shop',
+        upyourbutt: 'andstuffit'
+    }, {
+        name: 'bank'
+    }, {
+        name: 'settings'
+    }, {
+        name: 'changelog'
+    }, {
+        name: 'milestones'
+    }, {
+        name: 'statistics'
+    }, {
+        name: 'fishing',
+        skillID: 1
+    }, {
+        name: 'firemaking',
+        skillID: 2
+    }, {
+        name: 'cooking',
+        skillID: 3
+    }, {
+        name: 'mining',
+        skillID: 4
+    }, {
+        name: 'smithing',
+        skillID: 5
+    }, {
+        name: 'mastery'
+    }, {
+        name: 'combat',
+        skillID: [6,7,8,9,12,16,18,17]
+    }, {
+        name: 'thieving',
+        skillID: 10
+    }, {
+        name: 'farming',
+        skillID: 11
+    }, {
+        name: 'fletching',
+        skillID: 13
+    }, {
+        name: 'crafting',
+        skillID: 14
+    }, {
+        name: 'runecrafting',
+        skillID: 15
+    }, {
+        name: 'herblore',
+        skillID: 19
+    }];
+    */
