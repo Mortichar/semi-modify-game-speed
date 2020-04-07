@@ -9,22 +9,33 @@ Major script cleanup: moving variables to a SEMI variable container
 mastery time calculators
 
 time until done calculators? more items til done calculators? there already be utils/calcs out there. Link to them in info?
+
     const craftTime = 2; //s
+    
     var numItemsCraftable = math;
+    
     output.text(numItemsCraftable*craftTime+" sec til done");
+    
         UI notes for xp/item calc: sliders. Move a slider to set how many levels you want to move up, then once item is selected, calculate and display XP, gp, whatever.
+        
     craftInterval: game variable for ms that it takes to use crafting to make one item. Halved with skill cape. Could be useful for item/xp time calc. Thief calc does this.
 
 add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
+
     idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
+    
     so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
 
 custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange?
+
     this would require saved semi settings
     
-Jarx additions: 
+Jarx additions: (could be good inside Katorone menu)
+
     automatically upgrade fishing rod (AutoFish)
+    
     pickaxe (AutoMine) 
+    
     woodcutting axe (background script, maybe injected in Percent Accuracy?)
     
 AutoSlayer skip-monster menu/setting
@@ -44,7 +55,9 @@ Fishing: select which fish to auto-sell
     
 ## FUNKY IDEAS
 sound plays when idle is done and no task queued? repeats every minute or so
+
 task queueing
+
 sounds in combat, alert sound for low health
 
 -----
