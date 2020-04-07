@@ -140,13 +140,15 @@ function toggleAutoMine() {
 }
 function autoMine(rocks) {
 	if (!autoMineEnabled) { return; }
-    var swingRatio = Number(document.getElementById('mining-rock-progress-'+currentRock).style.width.split('%')[0]);
-	for(const rock of rocks) {
-		if(!rockData[rock].depleted && miningData[rock].level <= skillLevel[CONSTANTS.skill.Mining]) { //added extra condition to make universal
-			if(currentRock !== rock && (swingRatio<10) ) {
-				mineRock(rock);
-			}
-			return;
-		}
-	}
+    if (isMining) var swingRatio = Number(document.getElementById('mining-rock-progress-'+currentRock).style.width.split('%')[0]);
+    else var swingRatio = 0;
+    for(const rock of rocks) {
+        if (!isMining) mineRock(rock);
+        if(!rockData[rock].depleted && miningData[rock].level <= skillLevel[CONSTANTS.skill.Mining]) { //added extra condition to make universal
+            if(currentRock !== rock && (swingRatio<10) ) {
+                mineRock(rock);
+            }
+            return;
+        }
+    }
 }

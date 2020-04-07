@@ -1,6 +1,17 @@
 /* ~~~~~-----~~~~~-----~~~~~Notes~~~~~-----~~~~~-----~~~~~
 TODO
 
+for chrome users: use manifest.json in chrome subfolder? or just chrome.manifest.json, overwrite or delete
+
+custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange?
+    this would require saved semi settings
+
+better loading detection & script setup & version check, mimic Coolrox
+
+virtual level calculation for XPH: simply remove lv99 limit?...
+mastery time calculators?
+
+
 Major script cleanup: moving variables to a SEMI variable container, combining many of the scripts, etc.
 
 Jarx additions: 
