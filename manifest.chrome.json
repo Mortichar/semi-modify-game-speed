@@ -14,7 +14,7 @@
     }
   ],
   "web_accessible_resources": [
-    "scripts/inject.js",
+    "scripts/*.js",
     "icons/*.png",
     "scripts/plugins/*.js"
   ]
