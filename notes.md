@@ -16,15 +16,13 @@ time until done calculators? more items til done calculators? there already be u
     
     output.text(numItemsCraftable*craftTime+" sec til done");
     
-        UI notes for xp/item calc: sliders. Move a slider to set how many levels you want to move up, then once item is selected, calculate and display XP, gp, whatever.
-        
-    craftInterval: game variable for ms that it takes to use crafting to make one item. Halved with skill cape. Could be useful for item/xp time calc. Thief calc does this.
+craftInterval: game variable for ms that it takes to use crafting to make one item. Halved with skill cape. Could be useful for item/xp time calc. Thief calc does this.
 
-add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc. localStorage.SEMI.setItem('test', test)
-
-    idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option
+add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc.
     
-    so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
+    localStorage.SEMI.setItem('test', test)
+    
+idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
 
 custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange?
 
@@ -45,6 +43,7 @@ AutoLoot AutoSell GUI Based on Completion Log - all ? are looted, all known are 
 AutoReplant: choose highest available seeds for replanting if you run out of seeds
 
 More settings for autocombat
+
     Auto only-loot bones/etc... select which items to omit? or certain monsters don't loot?
     Auto-prayer.
 
