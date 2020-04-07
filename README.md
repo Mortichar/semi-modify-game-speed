@@ -60,7 +60,7 @@ Thanks to everyone who writes scripts for Melvor and provides them to others!
 
 Download the SEMI repository. Extract the downloaded compressed file, which should be named SEMI-master.zip (or .tar*) to an empty folder. Delete manifest.json (used for Firefox) and rename chrome.manifest.json to manifest.json.
 
-In Chrome, open settings > tools > extensions, or go to this url without quotes: "chrome://extensions". Enable developer options in the top right, and click "Load Unpacked" on the left. Open the folder that contains manifest.json to load the add-on. It will be inside subfolders after extracting, so make sure you select the 'chrome' folder which contains manifest.json.
+In Chrome, open settings > tools > extensions, or go to this url without quotes: "chrome://extensions". Enable developer options in the top right, and click "Load Unpacked" on the left. Open the folder that contains manifest.json to load the add-on. 
 
 #### Firefox Temporary Install
 
