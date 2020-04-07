@@ -8,7 +8,7 @@
 var isChrome = navigator.userAgent.match("Chrome");
 var isFirefox = navigator.userAgent.match("Firefox");
 
-var runtime = (isChrome ? chrome : browser).runtime
+var getURL = (name) => (isChrome ? chrome : browser).runtime.getURL(name)
 
 // Check if script already exists, if so delete it
 function removeIfExists(scriptID) {
@@ -19,32 +19,41 @@ function removeIfExists(scriptID) {
 // Inject script
 function addScript(name, scriptID) {
     const script = document.createElement('script');
-    script.src = runtime.getURL(name);
+    script.src = getURL(name);
     script.setAttribute('id', scriptID);
     document.body.appendChild(script);
     return script;
 }
 
+function removeAndAddScript(name, scriptID) {
+    removeIfExists(scriptID);
+    addScript(name, scriptID);
+}
+
+function addPlugin(name) { removeAndAddScript(`scripts/plugins/${name}.js`, `SEMI-${name}`) }
+
 // Create image element
 function createImage(name, imgId, height = 32, width = 32) {
     const img = document.createElement('img');
-    img.src = runtime.getURL(name);
+    img.src = getURL(name);
     img.id = imgId;
     img.height = height;
     img.width = width;
     return img;
 }
 
+var autoNames = ['arch', 'bonfire', 'combat', 'cook', 'eat', 'fish', 'loot', 'mine', 'replant', 'sell-gems', 'slayer', 'smith'];
+var pluginNames = ['menus', autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour'];
+
 function main() {
     // Only support firefox and chrome
-    if(!isChrome && !isFirefox) { 
+    if(!isChrome && !isFirefox) {
         alert("SEMI is only officially supported on Firefox and Chrome. To try on another browser, delete lines 39-42 of the main() function in SEMI.js. The addon will not load otherwise.");
-        return; 
-    } 
-    
-    const scriptID = 'inject-semi';
-    removeIfExists(scriptID);
-    addScript('inject.js', 'inject-semi');
+        return;
+    }
+
+    pluginNames.forEach(addPlugin);
+    removeAndAddScript('scripts/utils.js', 'semi-inject-utils');
 
     // not sure how to get the icon otherwise. need to leave the heading addition here, could probably just copy the rest to a big injection.
     if (document.contains(document.getElementById('modal-semi-set-menu')) ) { return; }
