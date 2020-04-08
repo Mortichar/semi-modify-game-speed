@@ -11,6 +11,8 @@
 * We need to make the herblore calc item to level thing more functional/universal
 
 * Major script cleanup: moving variables to a SEMI variable container
+    
+    * Move scripts & on/off status to this variable, combine setIntervals, etc
 
 * mastery time calculators
 
