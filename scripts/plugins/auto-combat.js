@@ -59,4 +59,12 @@ function toggleautocombat() { //button -> function that enables auto combat
         customNotify('assets/media/skills/combat/combat.svg','AutoCombat is now running.');
     }
 }
+
+//toggle AutoLoot option
+var autoLoot = true;
+
+function toggleAutoLoot() { 
+    autoLoot = !autoLoot;
+    $("#autoLootStatus").text((autoLoot) ? 'Enabled' : 'Disabled');
+}
 //End of Autocombat Auxiliaries

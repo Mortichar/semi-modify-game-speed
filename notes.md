@@ -2,7 +2,7 @@
 
 ## TODO
 
-auto-sell fishing junk (then move to auto-sell junk loot in general)
+ideally convert many scripts into userscripts for those who don't want a full extension
 
 universal button status toggle function for script cleanup...? ideas on how to do this... toggleStatusText("so-and-so"); but... would have to specify where it was coming from. hmmmmmm. this might not be worth changing.
 
