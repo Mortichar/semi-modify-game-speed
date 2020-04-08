@@ -92,7 +92,7 @@ function XPH(running,stat) {
           XPH(1,n);
           $("#xph-rate").text(XPH.rate);
           $("#xph-time").text(((Date.now() - XPH.time) / 1000).toFixed(0));
-          if($("#xph-lvl-in").val()>99) $("#xph-lvl-in").val(99)
+          //if($("#xph-lvl-in").val()>99) $("#xph-lvl-in").val(99) //commenting out, testing virtual levels
           if ((Number($("#xph-lvl-in").val()) > skillLevel[XPH.skillID]) && Number(XPH.rate.split(",").join(""))>0) {
               var timeToLvl = ( exp.level_to_xp(Number($("#xph-lvl-in").val())) - skillXP[XPH.skillID] )/Number(XPH.rate.split(",").join(""));
               var timeToLvl = timeToLvl.toFixed(1);
@@ -142,7 +142,7 @@ function XPH(running,stat) {
           XPHf(1);
           $("#xph-rate-f").text(XPHf.rate);
           $("#xph-time-f").text(((Date.now() - XPHf.time) / 1000).toFixed(0));
-          if($("#xphf-lvl-in").val()>99) $("#xphf-lvl-in").val(99);
+          //if($("#xphf-lvl-in").val()>99) $("#xphf-lvl-in").val(99); //commenting out, testing virtual levels
           if ((Number($("#xphf-lvl-in").val()) > skillLevel[11]) && Number(XPHf.rate.split(",").join(""))>0) {
               var timeToLvl = ( exp.level_to_xp(Number($("#xphf-lvl-in").val())) - skillXP[11] )/Number(XPHf.rate.split(",").join(""));
               var timeToLvl = timeToLvl.toFixed(1);

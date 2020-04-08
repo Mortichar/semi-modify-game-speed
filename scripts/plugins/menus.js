@@ -43,6 +43,14 @@ function setupSEMI() { // streamlining/simplicity
     </li>
     -->
     
+    <li class="nav-main-item" title="AutoSell Junk is a script for fishing which will automatically sell any junk caught every 10 sec.">
+        <a id="auto-sell-junk-button" class="nav-main-link" href="javascript:toggleAutoSellFishJunk();">
+            <img class="nav-img" src="assets/media/bank/rope.svg">
+            <span class="nav-main-link-name">AutoSell Junk</span>
+            <small id="auto-sell-junk-status">Disabled</small>
+        </a>
+    </li>
+    
     <li class="nav-main-item" title="AutoCook by Unicue, updated for alpha v0.13 by AldousWatts, will automatically cycle through your fish and cook them all in order.">
         <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
             <img class="nav-img" src="assets/media/skills/cooking/cooking.svg">
@@ -476,7 +484,7 @@ function toggleSemiMenu() {
     if (semiMenu) { 
         for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
         if (!moreMenus2) {
-            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none"); 
+            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,8).toggleClass("d-none"); 
         }
         /* AF options automated, AF submenu/header removed, now included in skills above
         if (!moreMenus3) {
@@ -513,7 +521,7 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==2) { //auto skills 
         moreMenus2 = !moreMenus2;
-        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,7).toggleClass("d-none");
+        $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,8).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==3) { //auto fishing... DEFUNCT
         moreMenus3 = !moreMenus3;

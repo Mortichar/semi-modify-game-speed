@@ -2,54 +2,54 @@
 
 ## TODO
 
-ideally convert many scripts into userscripts for those who don't want a full extension
+* ideally convert many scripts into userscripts for those who don't want a full extension. halfway there with DanielRX's help!
 
-universal button status toggle function for script cleanup...? ideas on how to do this... toggleStatusText("so-and-so"); but... would have to specify where it was coming from. hmmmmmm. this might not be worth changing.
+* universal button status toggle function for script cleanup...? ideas on how to do this... toggleStatusText("so-and-so"); but... would have to specify where it was coming from. hmmmmmm. this might not be worth changing.
 
-However... the SEMI menu stuff could use changing. especially how the toggles work, adding new buttons can be a pain, etc.
+* However... the SEMI menu stuff could use changing. especially how the toggles work, adding new buttons can be a pain, etc.
 
-Major script cleanup: moving variables to a SEMI variable container
+* We need to make the herblore calc item to level thing more functional/universal
 
-mastery time calculators
+* Major script cleanup: moving variables to a SEMI variable container
 
-time until done calculators? more items til done calculators? there already be utils/calcs out there. Link to them in info?
+* mastery time calculators
+
+* time until done crafting/creating calculators? more items til done calculators? there already be utils/calcs out there. Link to them in info?
 
     const craftTime = 2; //s
-    
     var numItemsCraftable = math;
-    
     output.text(numItemsCraftable*craftTime+" sec til done");
-    
-craftInterval: game variable for ms that it takes to use crafting to make one item. Halved with skill cape. Could be useful for item/xp time calc. Thief calc does this.
 
-add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc.
+
+* add custom settings in localstorage?... keeps variables like autoLoot, autoEat, autoEquipZone, etc.
     
     localStorage.SEMI.setItem('test', test)
     
-idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
+    * idk i like how these scripts kind of reset after reload. so, won't start up with autobon enabled...but that's not really an option so much as it is doing some dumb stuff when loaded. so, maybe the AC/slayer option toggles would be fine.
 
-custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange? this would ideally make use of saved semi settings.
+    * custom configuration of UI: set which scripts to 'load' and which to leave out, select which buttons, rearrange? this would ideally make use of saved semi settings.
     
-Jarx additions: (could be good inside Katorone menu)
+* Jarx additions: (could be good inside Katorone menu)
 
-    automatically upgrade fishing rod (AutoFish)
+    * automatically upgrade fishing rod (AutoFish)
     
-    pickaxe (AutoMine) 
+    * pickaxe (AutoMine) 
     
-    woodcutting axe (background script, maybe injected in Percent Accuracy?)
+    * woodcutting axe (background script)
     
-AutoSlayer skip-monster menu/setting
+* AutoSlayer skip-monster menu/setting
     
-AutoLoot AutoSell GUI Based on Completion Log - all ? are looted, all known are sold by default, select of the remaining which you want to keep.
+* AutoLoot AutoSell GUI Based on Completion Log - all ? are looted, all known are sold by default, select of the remaining which you want to keep.
     
-AutoReplant: choose highest available seeds for replanting if you run out of seeds
+* AutoReplant: choose highest available seeds for replanting if you run out of seeds
 
-More settings for autocombat
+* More settings for autocombat
 
-    Auto only-loot bones/etc... select which items to omit? or certain monsters don't loot?
-    Auto-prayer.
+    * Auto only-loot bones/etc... select which items to omit? or certain monsters don't loot?
+    
+    * Auto-prayer.
 
-Fishing: select which fish to auto-sell
+* Fishing: select which fish to auto-sell
 
 
 -----

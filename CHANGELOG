@@ -4,8 +4,14 @@ v0.3.3
 
 * Melvor Idle has updated to alpha v0.14.1!
     * It seems Percent Accuracy is now in the game, so the percent accuracy script has been removed from SEMI to prevent redundancy.
+    * New script: AutoSell Fish Junk. This script will sell all that junk for you instantly and repeat every 10sec, notifying you when selling.
+    * XPH Time to Selected Level change: level 99 limit removed, should be functional for virtual levels above level 99.
 * Code changes: Gearing up to change how SEMI works under the hood.
     * Huge help from DanielRX: splitting inject.js into individual scripts/plugins, more ideas for code cleanup and functional programming.
+* Repository changes: Yep, stuff moved around again.
+    * No more chrome release subdirectory. Instead there is a chrome.manifest.json file to replace default if desired. See Readme
+    * New subdirectory for all the scripts etc.
+* Update on that bug report mentioned below: Malcs will be fixing it soon, if it isn't already. Woo!
 
 v0.3.2
 

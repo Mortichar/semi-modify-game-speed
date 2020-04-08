@@ -7,6 +7,7 @@ setTimeout( () => { //setup thieving calcs after 10sec, plenty delay for page lo
         trigger: 'hover focus',
     }); 
 }, 10000); //give it a nice long time to load. this one can throw errors.
+//Consider moving this to SEMIsetup.
 
 const addCalcToEl = (el, data = []) => {
     if (!el || !el.appendChild) return;    
