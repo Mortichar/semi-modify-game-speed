@@ -10,8 +10,9 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 
 * Auto Replant by Arcanus
 
-    * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds! Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14!
-<br>
+    * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds! 
+    
+    * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop.
 
 * AutoBonfire by Dream: continuously starts bonfires for you when you have a type of wood selected in Firemaking.
 
