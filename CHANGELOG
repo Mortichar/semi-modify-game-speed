@@ -11,7 +11,7 @@ v0.3.3
 * Repository changes: Yep, stuff moved around again.
     * No more chrome release subdirectory. Instead there is a chrome.manifest.json file to replace default if desired. See Readme
     * New subdirectory for all the scripts etc.
-* Update on that bug report mentioned below: Malcs seems to have fixed it! Woohoo!
+* Update on that cooking bug report mentioned below: Malcs seems to have fixed it! Woohoo!
 
 v0.3.2
 
