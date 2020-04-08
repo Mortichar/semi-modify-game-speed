@@ -4,9 +4,11 @@ function autoSellFishJunk() {
     for(const junk of junkItems) {
         if (getBankId(junk)) {
             sellItem(getBankId(junk),6969696969696969);
-            console.log('AutoSell Fish Junk just sold some fish junk.');
+            console.log('AutoSell Fish Junk just sold '+items[junk].name+'.');
         }
+    }
 }
+//var autoSellJunkLoop = setInterval( () => { autoSellFishJunk() }, 10000); //above and this line = userscript
 
 var autoSellJunkLoop;
 function toggleAutoSellFishJunk() {

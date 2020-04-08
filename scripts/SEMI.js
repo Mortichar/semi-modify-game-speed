@@ -42,7 +42,7 @@ function createImage(name, imgId, height = 32, width = 32) {
     return img;
 }
 
-var autoNames = ['arch', 'bonfire', 'combat', 'cook', 'eat', 'fish', 'loot', 'mine', 'replant', 'sell-gems', 'slayer', 'smith'];
+var autoNames = ['arch', 'bonfire', 'combat', 'cook', 'eat', 'fish', 'loot', 'mine', 'replant', 'sell-gems', 'slayer', 'smith', 'sell-fish-junk'];
 var pluginNames = ['menus', ...autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour'];
 
 
