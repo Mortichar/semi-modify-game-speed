@@ -2,7 +2,9 @@
 
 ## TODO
 
-universal button status toggle function for script cleanup
+auto-sell fishing junk (then move to auto-sell junk loot in general)
+
+universal button status toggle function for script cleanup...? ideas on how to do this... toggleStatusText("so-and-so"); but... would have to specify where it was coming from. hmmmmmm. this might not be worth changing.
 
 Major script cleanup: moving variables to a SEMI variable container
 

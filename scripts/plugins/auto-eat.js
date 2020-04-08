@@ -1,4 +1,4 @@
-//***************************AUTO EAT***********************************
+//AutoEat by AW for SEMI.
 var autoEating = false;
 var autoEatLoop;
 var hp;

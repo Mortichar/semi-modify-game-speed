@@ -1,6 +1,6 @@
 //:: simply rewritten autoBonfire by Dream below
 function autoBonfire() { if ( $.trim($('#skill-fm-bonfire-status').text()) == 'Inactive') lightBonfire(); } //really
-//:: end autoBonfire, adding Auto-Bonfire tog, * button included in setupSEMI() *
+//:: end autoBonfire, adding Auto-Bonfire tog, buttons injected in menus.js
 var autoBonOn = false;
 var bonLoop;
 function toggleAutoBonfire() {

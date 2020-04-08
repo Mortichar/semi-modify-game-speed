@@ -19,9 +19,7 @@ var toggleAutoSellGems = function () {
 }
 
 var autoSellGems = function() {
-	if (!autoSellGemsEnabled) {
-		return;
-	}
+	if (!autoSellGemsEnabled) { return; }
 	for(const gemId of gemIdList) {
 		const curQty = getBankQty(gemId);
 		//console.log('GEM ID '+gemId+' you have '+curQty);

@@ -34,7 +34,7 @@ function getBankQty(id) {
 function getBankQty(id) {
     var t = bank.find(x=> x.id === id);
     if(t > 0){
-        return t;
+        return t; //tried t.qty, no luck.
     }else{
         return 0;
     }

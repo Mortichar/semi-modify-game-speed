@@ -1,9 +1,9 @@
 // Scripting Engine for Melvor Idle v0.3.3 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.14.1
-// Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3) and Latest Ubuntu & Android Firefox.
+// Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3), latest Chromium, and Latest Ubuntu & Android Firefox.
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 
-//Injecting Script... updated to work better with web-ext inspired by CoolRox95
+//Injecting Scripts
 
 var isChrome = navigator.userAgent.match("Chrome");
 var isFirefox = navigator.userAgent.match("Firefox");
@@ -47,7 +47,7 @@ var pluginNames = ['menus', ...autoNames.map((name) => `auto-${name}`), 'barf', 
 
 
 function main() {
-    // Only support firefox and chrome
+    // Only support firefox and chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
     if(!isChrome && !isFirefox) {
         alert("SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main() function in SEMI.js. The addon will not load otherwise.");
         return;
@@ -70,4 +70,3 @@ function main() {
 }
 
 main();
-//And everything else is probably easiest with jquery in inject.js. Whee!

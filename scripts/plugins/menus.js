@@ -1,7 +1,6 @@
 //SEMIv0.3.3 by AW.
 
-//AldousWatts code section 
-//SEMI menu setup function -- big fat template literal append
+//SEMI menu setup function -- big fat template literal append(s)
 function setupSEMI() { // streamlining/simplicity
     if ($("#auto-replant-button").length) return; //probably smarter than the way i inject a lot of elements
     //Settings menu HTML, attached to the heading anchor set up in SEMI.js content script
@@ -283,25 +282,6 @@ function setupSEMI() { // streamlining/simplicity
             </div>
         </div>`));
 
-    
-    //initiate hidden XP/hr blocks in page containers
-    /* adds extra section to fishing container... maybe the dropdown is worth it after all, always there but page-dependent. how does the potion button handle?
-    $("#fishing-container").prepend($(`
-        <div id="xph-div-1" class="col-md-12 d-none">
-            <div class="block block-rounded block-link-pop border-top border-fishing border-4x">
-                <div class="block-header text-center">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-12 col-md-12">
-                                <h3 class="text-muted m-1">You are earning <span class="p-1 bg-info rounded" id="xph-1">8,216</span> XP per hour.</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>`));
-    */
-    
     //XPH GUI
     $("#page-header-potions-dropdown").parent().before($(`
         <div class="dropdown d-inline-block ml-2">
@@ -413,7 +393,67 @@ function setupSEMI() { // streamlining/simplicity
                 <img src="assets/media/shop/pickaxe_dragon.svg" width="32" height="32">
             </button>
             
-        </div><br><br>`))
+        </div><br><br>`));
+    
+    //Modal for SEMI info popup
+    $('#modal-account-change').before($(`
+    <div class="modal" id="modal-semi-info" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
+                        <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.3</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <p id="semi-info-text"></p>
+                        <h2 style="color: white;">SEMI v0.3.3 by Aldous Watts</h2>
+                        Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
+                        <br>
+                        Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
+                        <br><br>
+                        Don't forget these features of SEMI that aren't in the sidebar:
+                        <ul>
+                            <li>Thieving XP calculators and loot popups in the Thieving page</li>
+                            <li>Number of potions until level-up calculator button in the Herblore page</li>
+                            <li>Destroy All Crops button in the Farming page</li>
+                            <li>Barf My Potion button in the Potion selection menu</li>
+                            <li>XPH GUI: XP per hour calculations done through a button next to the Potion selection button</li>
+                        </ul>
+                        Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
+                        or another more general-purpose add-on like Tampermonkey to run userscripts. 
+                        Either way, the end result is extra functionality, like automating a task or adding calculated info to the page.
+                        <br><br>
+                        Many functions of SEMI are based on these scripts by others:
+                        <ul>
+                            <li><a href="https://greasyfork.org/en/scripts/394855-melvor-auto-replant" target="_blank">Melvor Auto Replant by Arcanus</a></li>
+                            <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/669475769671483392" target="_blank">AutoBonfire by Dream</a></li>
+                            <li>Auto Mine & Auto Sell Gems from <a href="https://greasyfork.org/en/scripts/395834-melvor-super-control-panel/code" target="_blank">Melvor Super Control Panel by Strutty & others?</a></li>
+                            <li><a href="https://greasyfork.org/en/scripts/396400-melvor-auto-slayer" target="_blank">Melvor AutoSlayer by Bubbalova</a></li>
+                            <li><a href="https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy" target="_blank">Melvor Percent Accuracy by Arcanus</a></li>
+                            <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit</a></li>
+                            <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
+                            <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
+                            <li><a href="https://pastebin.com/WKD9R6WY" target="_blank" title="BreakIt's original source">AutoFish by BreakIt</a>, Jarx, and me (currently broken and removed as of Melvor alpha v0.14)</li>
+                            <li><a href="https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js" target="_blank" title="">Katorone's automation script</a></li>
+                        </ul>
+                        <br>
+                        Source code for SEMI can be found <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
+                        <br><br>
+                    </div>
+                    <div class="block-content block-content-full text-right border-top">
+                        <button type="button" id="semiInfoModalBtn" class="btn btn-sm btn-primary" data-dismiss="modal" onclick=""><i class="fa fa-check mr-1"></i>Cool!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`));
+
     
     //initiate certain button texts
     updateAutoSellGemsButtonText();    
@@ -492,69 +532,10 @@ function semiSetMenu() { $("#modal-semi-set-menu").modal(open); }
 //show SEMI info modal function called by nav button
 function semiInfo() { $("#modal-semi-info").modal(open); }
 
-//Modal for SEMI info popup
-$('#modal-account-change').before($(`
-<div class="modal" id="modal-semi-info" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="block block-themed block-transparent mb-0">
-                <div class="block-header bg-primary-dark">
-                    <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                    <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.3</h3>
-                    <div class="block-options">
-                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-                            <i class="fa fa-fw fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="block-content font-size-sm">
-                    <p id="semi-info-text"></p>
-                    <h2 style="color: white;">SEMI v0.3.3 by Aldous Watts</h2>
-                    Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
-                    <br>
-                    Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
-                    <br><br>
-                    Don't forget these features of SEMI that aren't in the sidebar:
-                    <ul>
-                        <li>Thieving XP calculators and loot popups in the Thieving page</li>
-                        <li>Number of potions until level-up calculator button in the Herblore page</li>
-                        <li>Destroy All Crops button in the Farming page</li>
-                        <li>Barf My Potion button in the Potion selection menu</li>
-                        <li>XPH GUI: XP per hour calculations done through a button next to the Potion selection button</li>
-                    </ul>
-                    Scripting with Melvor can be done through injected user scripts, either through a browser add-on like this, 
-                    or another more general-purpose add-on like Tampermonkey to run userscripts. 
-                    Either way, the end result is extra functionality, like automating a task or adding calculated info to the page.
-                    <br><br>
-                    Many functions of SEMI are based on these scripts by others:
-                    <ul>
-                        <li><a href="https://greasyfork.org/en/scripts/394855-melvor-auto-replant" target="_blank">Melvor Auto Replant by Arcanus</a></li>
-                        <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/669475769671483392" target="_blank">AutoBonfire by Dream</a></li>
-                        <li>Auto Mine & Auto Sell Gems from <a href="https://greasyfork.org/en/scripts/395834-melvor-super-control-panel/code" target="_blank">Melvor Super Control Panel by Strutty & others?</a></li>
-                        <li><a href="https://greasyfork.org/en/scripts/396400-melvor-auto-slayer" target="_blank">Melvor AutoSlayer by Bubbalova</a></li>
-                        <li><a href="https://greasyfork.org/en/scripts/394856-melvor-percent-accuracy" target="_blank">Melvor Percent Accuracy by Arcanus</a></li>
-                        <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit</a></li>
-                        <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
-                        <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
-                        <li><a href="https://pastebin.com/WKD9R6WY" target="_blank" title="BreakIt's original source">AutoFish by BreakIt</a>, Jarx, and me (currently broken and removed as of Melvor alpha v0.14)</li>
-                        <li><a href="https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js" target="_blank" title="">Katorone's automation script</a></li>
-                    </ul>
-                    <br>
-                    Source code for SEMI can be found <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
-                    <br><br>
-                </div>
-                <div class="block-content block-content-full text-right border-top">
-                    <button type="button" id="semiInfoModalBtn" class="btn btn-sm btn-primary" data-dismiss="modal" onclick=""><i class="fa fa-check mr-1"></i>Cool!</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>`));
-
 //Super Control Panel Builder (now more semi buttons or whatever)
 //setTimeout(function() { setupSEMI(); },10000); //following 10s idea by Katorone to try and get override buts back
 
-// improved loading detection based on CoolRox's excellence. will it work for thieving calcs?
+// improved loading detection based on CoolRox's excellence. seems to work for both AM Priority Override buttons and thieving calculators, so it should be solid.
 const semiLoader = setInterval(() => {
     if (isLoaded) {
         clearInterval(semiLoader);
