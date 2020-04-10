@@ -1,12 +1,14 @@
-# This is Scripting Engine for Melvor Idle v0.3.3.
+# This is Scripting Engine for Melvor Idle v0.3.4.
 
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 
 To install in chrome,  please look further below in the ['Chrome Developer Install' section](https://gitlab.com/aldousWatts/SEMI#chrome-developer-install).
 
-## SEMI is a Firefox and Chrome web extension for Melvor Idle. 
+## SEMI is a Firefox and Chrome web extension for Melvor Idle.
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
+
+* Happy Easter 2020! There's a new script to automate your flaps.
 
 * Auto Replant by Arcanus
 
@@ -52,11 +54,13 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 
 * Combat Scripts
     
-    * AutoSlayer by Bubbalova, tweaked by myself 
+    * AutoSlayer by Bubbalova, tweaked by myself
         
         * Automates Slayer tasks, entering combat and constantly engaging whatever monster you're assigned.
         
         * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done.
+
+        * Optionally skips these monsters: master farmer, moist monster, black knight, mithril knight, and rune knight.
     
     * AutoCombat
         
@@ -66,7 +70,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
             
             * IGNORES EQUIPPING MORE ARROWS WHEN DOING DUNGEONS. However, will still exit combat when you reach 0.
         
-        * Options: Toggle auto eat and loot. 
+        * Options: Toggle auto eat and loot.
         
         * AutoEat script works outside of AutoCombat now and is disabled by default. Useful for thieving.
 
@@ -110,4 +114,4 @@ Open the url "about:debugging" without quotes, enable add-on debugging if you ne
 ## Goal of the Software
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
 
-This was built around Melvor Idle alpha v0.14.1.
+This was built around Melvor Idle alpha v0.14.2.

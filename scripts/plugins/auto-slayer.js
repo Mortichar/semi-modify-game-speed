@@ -59,6 +59,8 @@ var autoSlayer = function() {
         originalShield = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield];
         originalRing = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring];
     }
+
+    if (ASAutoSkipOn) slayerSkip();
     
     //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
     if (forcedEnemy !== slayerTask[0].monsterID || !isInCombat) {
@@ -85,7 +87,7 @@ var autoSlayer = function() {
         //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
         else if( (slayerAreas[1].monsters.includes(slayerTask[0].monsterID) || slayerAreas[2].monsters.includes(slayerTask[0].monsterID)) && !autoEquipZone ) {
             if(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) && equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] != CONSTANTS.item.Mirror_Shield) {
-                newSlayerTask(); 
+                newSlayerTask();
             } else if (slayerAreas[2].monsters.includes(slayerTask[0].monsterID) && equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] != CONSTANTS.item.Magical_Ring) {
                 newSlayerTask();
             }
@@ -152,3 +154,16 @@ var autoSlayer = function() {
 
 var autoSlayerTimer = setInterval(function(){autoSlayer();}, 2000); //idk how i feel about this always being on rn... guess it's ok cuz it will just check if running and return. doesn't seem to be heavy in bg.
 // End of AutoSlayer!
+
+// AS AutoSkip
+var ASAutoSkipOn = false;
+let monsterIDs = [69, 13, 0, 72, 74]; //master farmer, moist monster, black knight, mithril knight, rune knight
+
+function slayerSkip() {
+    if (monsterIDs.includes(slayerTask[0].monsterID)) { newSlayerTask(); }
+}
+
+function toggleASAutoSkip () {
+    ASAutoSkipOn = !ASAutoSkipOn;
+    $("#as-auto-skip-status").text( (ASAutoSkipOn) ? 'Enabled' : 'Disabled');
+}

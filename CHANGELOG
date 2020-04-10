@@ -1,5 +1,12 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.4
+
+* Melvor Idle has updated to alpha v0.14.2!
+    * New AutoSlayer option: skip tasks. Will skip certain monsters (master farmer, moist monster, black knight, mithril knight, rune knight). Future GUI/menu planned.
+    * Added extra paragraph of information to Katorone menu explaining how the GP limit will affect AutoReplant, potentially causing empty plots since no compost bought.
+    * Easter event! Throwing some discord scripts into SEMI to automate your flaps, chaps.
+
 v0.3.3
 
 * Melvor Idle has updated to alpha v0.14.1!
@@ -31,7 +38,7 @@ v0.3.2
 v0.3.1
 
 * AutoSmith Bars: New skill automation that will cycle through your smeltable bars and smelt them all.
-* UI Changes: 
+* UI Changes:
     * Katorone settings menu moved to AutoSkills section
     * AutoSkills rearranged
 * Small fixes
@@ -57,7 +64,7 @@ v0.3
         * Was ignoring equipment requirements for slayer zones. Changed code to fix this.
         * Was throwing a dungeon complete screen every kill if you had just finished a dungeon then used AutoSlayer. Added a line to fix.
         * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
-    
+
 v0.2.3.1:
 * Some Katorone Automation edits that I did caused an issue with reserve gold and selling gems to pay for glove charges. This hotfix takes care of that issue: Katorone will now sell gems to boost the GP pool past the reserve amount in order to buy gem glove charges, thereby fixing the automation. Previously, it would not sell gems if you were at your reserve gold amount, and could not buy gem glove charges as a result.
 * Minor UI updates
@@ -82,7 +89,7 @@ v0.2.1:
 * Quick fixes & mods to the Katorone scripts by rebelEpik & me:
     * Auto buy gem glove charges now respects the bank gp limit
     * AutoReplant respects the bank gp limit when Katorone is enabled and won't buy compost unless it has more than the reserve
-    
+
 v0.2:
 * Huge update: incorporated many functions from Katorone's automation script into SEMI complete with a settings menu.
 * Tweaked AutoMine to only switch if the current mining action is complete (more efficient)

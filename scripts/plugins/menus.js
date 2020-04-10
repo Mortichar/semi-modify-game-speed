@@ -1,4 +1,4 @@
-//SEMIv0.3.3 by AW.
+//SEMIv0.3.4 by AW.
 
 //SEMI menu setup function -- big fat template literal append(s)
 function setupSEMI() { // streamlining/simplicity
@@ -130,8 +130,15 @@ function setupSEMI() { // streamlining/simplicity
         <small id="autoEquipStatus">Disabled</small></a>
     </li>
 
+    <li class="nav-main-item" title="This script will skip a few monsters (master farmer, moist monster, black knight, mithril knight, rune knight) when they come up as your slayer task. Planned addition for future SEMI version: GUI or selection menu for skipping.">
+        <a class="nav-main-link nav-compact" href="javascript:toggleASAutoSkip();" id="slayerSkipNavBut">
+            <img class="nav-img" src="assets/media/monsters/m13.svg" id="slayerSkipImg">
+            <span class="nav-main-link-name">AS Auto Skip</span>
+        <small id="as-auto-skip-status">Disabled</small></a>
+    </li>
+
     <br>
-    
+
     <!-- april fools!
     <li class="nav-main-item" title="AUTOMATICALLY SCRATCH! OMG">
         <a class="nav-main-link nav-compact" href="javascript:toggleAutoArch();" id="autoArchNavBut">
@@ -185,7 +192,7 @@ function setupSEMI() { // streamlining/simplicity
                             <br><br>
                             When changing number settings, use only numbers, no commas or periods or letters, otherwise the setting will not update to prevent breaking things.
                             <br><br>
-                            Katorone's script uses two intervals, one that sells things if there's things to sell every second. 
+                            Katorone's script uses two intervals, one that sells things if there's things to sell every second.
                             It also loops every half-minute for the larger functions: burial, checking for loot to sell, all the rest. So, be patient!
                             <br>
                             <b>SEMI will notify you in-game and in the console when this script completes an action.</b>
@@ -205,10 +212,16 @@ function setupSEMI() { // streamlining/simplicity
                                         <input type="text" class="form-control" id="k-set-1" placeholder="5000000">
                                     </div>
                                     
-                                    <b>Another word of caution:</b> Katorone's script will automatially sell gems to reach the reserve GP amount set above. 
-                                    This is useful to do its automation, such as buying more bank space or gem glove charges. 
-                                    It is meant as a good companion to AutoMine. If you don't want this feature on, set the value to 0.
-                                
+                                    <b>Another word of caution:</b> Katorone's script will automatially sell gems to reach the reserve GP amount set above.
+                                    This is useful to do its automation, such as buying more bank space or gem glove charges.
+                                    It is meant as a good companion to AutoMine. If you don't want this feature on, set the value to 0.<br>
+                                    <b>More information:</b>
+                                    This minimum bank gp amount is respected by AutoReplant.
+                                    Therefore, if you use Katorone with AutoReplant and you don't have more gp than your limit, <u>AutoReplant will NOT buy compost</u>.
+                                    This means it will replant seeds without compost in the plot, giving it a chance for the crop to fail to produce.
+                                    AutoReplant will not replant the failed crops, which will end up leaving a blank plot in your farming area.
+                                    To prevent this, turn off the limit by setting to 0, or set to below your current GP amount to ensure AutoReplant buys compost.
+                                    Currently, Katorone will only sell gems to buy gem glove charges and won't acquire GP to buy compost.
                                     
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="auto-sgb-enabled" name="auto-sgb-enabled" onchange="bot_sellGoldBags = this.checked" ${bot_sellGoldBags ? "checked" : ""}>
@@ -411,7 +424,7 @@ function setupSEMI() { // streamlining/simplicity
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
                         <img class="nav-img" src="`+ $("#iconImg")[0].src +`">
-                        <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.3</h3>
+                        <h3 class="block-title">Scripting Engine for Melvor Idle v0.3.4</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-fw fa-times"></i>
@@ -420,7 +433,7 @@ function setupSEMI() { // streamlining/simplicity
                     </div>
                     <div class="block-content font-size-sm">
                         <p id="semi-info-text"></p>
-                        <h2 style="color: white;">SEMI v0.3.3 by Aldous Watts</h2>
+                        <h2 style="color: white;">SEMI v0.3.4 by Aldous Watts</h2>
                         Various Quality of Life improvements, scripts for automation, and UI tweaks for Melvor.
                         <br>
                         Hover over sidebar buttons or Katorone settings menu items to see tooltips that describe the scripts/options and give hints.
@@ -471,6 +484,16 @@ function setupSEMI() { // streamlining/simplicity
     //adding button to the farming page to destroy crops
     $('#farming-container').append($('<button id="destroyCropsBtn" class="btn btn-success m-2" onclick="destroyCrops();">[SEMI] Destroy All Crops in This Area</button>'));
 
+    //Easter 2020! Adding button under the easter event button.
+    $("#skill-nav-name-easter2020").parent().parent().after($(`
+    <li class="nav-main-item" title="Flap your flappers as you automate Easter! Script courtesy of Zeal Iskander on Melvor discord. Send robots to harvest eggs and decimate the flappy game. Let's call it a tool-assisted speedrun.">
+        <a class="nav-main-link nav-compact" href="javascript:toggleLazy();" id="semiEasterBut">
+            <img class="nav-img" src="`+$("#iconImg")[0].src+`">
+            <span class="nav-main-link-name">AutoEaster!</span>
+            <small id="lazy-status">Disabled</small>
+        </a>
+    </li>`));
+
     //SEMI menu hide-eye
     $("#semiHeading").append($('<a href="javascript:toggleSemiMenu();"><i style="color: gold !important;" class="far fa-eye text-muted ml-1" id="skill-menu-icon2"></i></a>'));
     //if all goes well, yay, it's loaded
@@ -481,17 +504,17 @@ function setupSEMI() { // streamlining/simplicity
 var semiMenu = true;
 function toggleSemiMenu() {
     semiMenu = !semiMenu;
-    if (semiMenu) { 
+    if (semiMenu) {
         for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).removeClass("d-none"); }
         if (!moreMenus2) {
-            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,8).toggleClass("d-none"); 
+            $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,8).toggleClass("d-none");
         }
         /* AF options automated, AF submenu/header removed, now included in skills above
         if (!moreMenus3) {
             for (i=0; i<3; i++) { $(".nav-main-heading:contains('Auto Fishing')").nextAll().slice(0,3).toggleClass("d-none"); }
         }*/
         if (!moreMenus4) {
-            $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none");
+            $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,6).toggleClass("d-none");
         }
     }
         else { for (i=0; i < $("[id^=semi-nav]").length; i++) { $("#semi-nav-" + i).addClass("d-none"); } //automated id application in place, all appended will be tagged for invisibilitization
@@ -519,7 +542,7 @@ function toggleMoreMenus(x) {
         moreMenus1 = !moreMenus1;
         for (i=0; i < $("[id^=socials-nav]").length; i++) { $("#socials-nav-" + i).toggleClass("d-none"); } //automated id application, all appended will be tagged for invisibilitization
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus1) ? '' : '-slash') + " text-muted ml-1");
-    } else if (x==2) { //auto skills 
+    } else if (x==2) { //auto skills
         moreMenus2 = !moreMenus2;
         $(".nav-main-heading:contains('Auto Skills')").nextAll().slice(0,8).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus2) ? '' : '-slash') + " text-muted ml-1");
@@ -529,7 +552,7 @@ function toggleMoreMenus(x) {
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus3) ? '' : '-slash') + " text-muted ml-1");
     } else if (x==4) { //auto combat
         moreMenus4 = !moreMenus4;
-        $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,5).toggleClass("d-none");
+        $(".nav-main-heading:contains('Auto Combat')").nextAll().slice(0,6).toggleClass("d-none");
         $("#moreEye"+x).attr("class", "far fa-eye" + ((moreMenus4) ? '' : '-slash') + " text-muted ml-1");
     }
 }
@@ -549,16 +572,16 @@ const semiLoader = setInterval(() => {
         clearInterval(semiLoader);
         let tryLoad = true;
         let wrongVersion = false;
-        if (gameVersion != "Alpha v0.14.1") {
+        if (gameVersion != "Alpha v0.14.2") {
             wrongVersion = true;
-            tryLoad = window.confirm('SEMI\nThis version of SEMI was made for Melvor Idle Alpha v0.14.1. Loading the extension may cause unexpected behavior or result in errors.\n Try loading it anyways?');
+            tryLoad = window.confirm('SEMI\nThis version of SEMI was made for Melvor Idle Alpha v0.14.2. Loading the extension may cause unexpected behavior or result in errors.\n Try loading it anyways?');
         }
         if (tryLoad) {
             try {
                 setupSEMI();
                 if (wrongVersion) {
                     console.log('SEMI Loaded, but may experience errors.')
-                } else { console.log('SEMI v0.3.3 Loaded!'); }
+                } else { console.log('SEMI v0.3.4 Loaded!'); }
             } catch (error) {
                 console.warn('SEMI was not properly loaded due to the following error:')
                 console.error(error);

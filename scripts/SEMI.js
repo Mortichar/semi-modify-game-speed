@@ -1,4 +1,4 @@
-// Scripting Engine for Melvor Idle v0.3.3 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.14.1
+// Scripting Engine for Melvor Idle v0.3.4 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.14.2
 // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3), latest Chromium, and Latest Ubuntu & Android Firefox.
 // As always, use and modify at your own risk. But hey, contribute and share!
 // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
@@ -42,7 +42,7 @@ function createImage(name, imgId, height = 32, width = 32) {
     return img;
 }
 
-var autoNames = ['arch', 'bonfire', 'combat', 'cook', 'eat', 'fish', 'loot', 'mine', 'replant', 'sell-gems', 'slayer', 'smith', 'sell-fish-junk'];
+var autoNames = ['arch', 'easter', 'bonfire', 'combat', 'cook', 'eat', 'fish', 'mine', 'replant', 'sell-gems', 'slayer', 'smith', 'sell-fish-junk'];
 var pluginNames = ['menus', ...autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour'];
 
 
@@ -62,7 +62,7 @@ function main() {
     const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.13 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
     navbar.appendChild(clnheading);
     clnheading.style = "font-size: 12pt; color: gold;";
-    clnheading.childNodes[0].textContent = " SEMI v0.3.3";
+    clnheading.childNodes[0].textContent = " SEMI v0.3.4";
     clnheading.title = "Scripting Engine for Melvor Idle";
     clnheading.id = "semiHeading";
     const iconImg = createImage("icons/border-48.png", 'iconImg');
