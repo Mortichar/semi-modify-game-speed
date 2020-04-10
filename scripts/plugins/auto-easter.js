@@ -25,6 +25,9 @@ var lazying = false;
 function toggleLazy() {
     lazying = !lazying;
     $("#lazy-status").text( (lazying) ? 'Enabled' : 'Disabled');
-    if (lazying) { lazyInterval = setInterval( () => { lazy() }, 10); }
+    if (lazying) { 
+        lazyInterval = setInterval( () => { lazy() }, 10);
+        changePage(21);
+    }
     else { clearInterval(lazyInterval) }
 }
