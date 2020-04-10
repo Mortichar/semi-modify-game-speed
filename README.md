@@ -8,7 +8,7 @@ To install in chrome,  please look further below in the ['Chrome Developer Insta
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* Happy Easter 2020! There's a new script to automate your flaps.
+* Happy Easter 2020! There's a new script to automate your flaps courtesy of Zeal Iskander on Melvor discord.
 
 * Auto Replant by Arcanus
 

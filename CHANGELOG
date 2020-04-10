@@ -5,7 +5,7 @@ v0.3.4
 * Melvor Idle has updated to alpha v0.14.2!
     * New AutoSlayer option: skip tasks. Will skip certain monsters (master farmer, moist monster, black knight, mithril knight, rune knight). Future GUI/menu planned.
     * Added extra paragraph of information to Katorone menu explaining how the GP limit will affect AutoReplant, potentially causing empty plots since no compost bought.
-    * Easter event! Throwing some discord scripts into SEMI to automate your flaps, chaps.
+    * Easter event! Throwing a script into SEMI to automate your flaps, chaps. Script courtesy of Zeal Iskander on Melvor discord.
 
 v0.3.3
 
