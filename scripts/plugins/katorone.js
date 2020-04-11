@@ -59,18 +59,6 @@ function updateKatSets() {
         ];
 }
 
-//extracting the buy compost sections to make the autoReplant function cleaner
-function bot_getCompost() {
-    if(checkBankForItem(CONSTANTS.item.Compost)) {
-        if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
-            buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
-            buyCompost()
-        }
-    } else {
-        buyQty = 5
-        buyCompost()
-    }
-}
 //:: import this: https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js
 // GENERAL FUNCTIONS
 function bot_getBankCount(id) {

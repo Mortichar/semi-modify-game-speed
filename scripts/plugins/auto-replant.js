@@ -38,6 +38,20 @@ function autoReplant() {
 }
 //var autoReplantLoop = setInterval( () => { autoReplant() }, 5000);
 //:: end of import of Melvor Auto Replant. Beautiful script.
+
+//extracting the buy compost sections to make the autoReplant function cleaner
+function bot_getCompost() {
+    if(checkBankForItem(CONSTANTS.item.Compost)) {
+        if(bank[getBankId(CONSTANTS.item.Compost)].qty < 5) {
+            buyQty = 5 - bank[getBankId(CONSTANTS.item.Compost)].qty
+            buyCompost()
+        }
+    } else {
+        buyQty = 5
+        buyCompost()
+    }
+}
+
 //adding togbtn functions, togbtn is injected in setupSEMI()
 var autoReplanting = false;
 function toggleAutoReplant() {
