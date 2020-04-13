@@ -4,6 +4,18 @@
 
 * We need to make the herblore calc item to level thing more functional/universal
 
+    * Menu/modal for calculation/charts?
+
+    * Inject into each page w/button? Or just inject & automate?
+
+    * Modal w/webview of calculator pages?
+
+    * Rename xp per hour button -> Calcs. XPH & charts
+
+        * Tables w/ skill infos
+
+* Android: make the xph button smaller? portrait mode glitchy
+
 * Major script cleanup: moving variables to a SEMI variable container
 
     * Move scripts & on/off status to this variable, combine setIntervals, etc
