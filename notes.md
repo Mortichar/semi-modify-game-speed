@@ -2,16 +2,6 @@
 
 ## TODO
 
-* AutoReplant
-
-    * causing confusion when katorone is on and the crops die. Good fix: make autoreplant work even on crop failure. For now: information in title tooltip and katorone about autoreplant effects with bot gold limit.
-
-    * choose highest available seeds for replanting if you run out of seeds
-
-    * Suggestion by got ADHD: GUI for herblore for autoreplant, will plant by ratios to get herbs that are needed for potions
-
-* ideally convert many scripts into userscripts for those who don't want a full extension. halfway there with DanielRX's help!
-
 * We need to make the herblore calc item to level thing more functional/universal
 
 * Major script cleanup: moving variables to a SEMI variable container
@@ -19,6 +9,18 @@
     * Move scripts & on/off status to this variable, combine setIntervals, etc
 
     * Part of this: move the hide/show to a 'forEach' type thing, maybe make nav items semi-nav-skill-[0...7] and semi-nav-combat[0...6] and just toggle semi-nav*
+
+* AutoReplant... -> AutoFarming?
+
+    * causing confusion when katorone is on and the crops die. Good fix: make autoreplant work even on crop failure. For now: information in title tooltip and katorone about autoreplant effects with bot gold limit.
+
+    * choose highest available seeds for replanting if you run out of seeds
+
+    * Suggestion by got ADHD: GUI for herblore for autoreplant, will plant by ratios to get herbs that are needed for potions
+
+    * Suggestion by Bisping: toggles for each farming area for gloop, each plot even (auto-detect if gloop used, then gloop that plot next time)
+
+    * A lot of these ideas would probably end up turning autoreplant -> AutoFarming
 
 * mastery time calculators
 
@@ -53,6 +55,8 @@
     * Auto-prayer.
 
 * Fishing: select which fish to auto-sell
+
+* ideally convert many scripts into userscripts for those who don't want a full extension. halfway there with DanielRX's help!
 
 -----
 

@@ -1,5 +1,6 @@
 //:: importing Melvor Auto Replant 1.6 by Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394855-melvor-auto-replant
 // updated with a change from 1.7: gloop!
+// AW changes: added respect for katorone bot gp limit, extracted getCompost into a separate function
 function autoReplant() {
     for (let i = 0; i < newFarmingAreas.length; i++) {
         for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {

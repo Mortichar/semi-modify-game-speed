@@ -8,7 +8,7 @@ function calcHerbItemsToLvl() {
 }
 
 //not used yet, trying to make more generic, maybe somehow...
-function calcToLvl(current=0) { 
+function calcToLvl(current=0) {
     var expToLvl = exp.level_to_xp(skillLevel[current]+1) +1 - skillXP[current];
     $("#"+current+"xpCalc").text(itemsToLvl);
 }

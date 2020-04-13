@@ -317,10 +317,9 @@ function setupSEMI() { // streamlining/simplicity
                 </div>
                 <div class="block-content block-content-full text-center">
                     <span class="text-muted m-1">
-                        The button below starts the XPH script for the skill you are currently idling.<br>
+                        The button below starts the XPH script for the skill you are currently idling. If you click it while it's running for the skill you're currently idling, it will toggle off.<br>
                         SEMI will display your XP per hour in a dialog below the button.<br>
                         If you're in combat, a custom XPH script will run for all combat skills simultaneously and display in the Combat Page's Skill Progress table.<br><br>
-                        Toggle off and on again if switching idle skills.<br><br>
                     </span>
                     <button id="xphBtn" class="btn btn-sm btn-dual" onclick="xphDisplay()">Toggle XPH Display</button>
                     <br><br>
