@@ -52,7 +52,7 @@ function setupSEMI() { // streamlining/simplicity
     </li>
     
     <li class="nav-main-item" title="AutoCook by Unicue, updated for alpha v0.13 by AldousWatts, will automatically cycle through your fish and cook them all in order.">
-        <a id="auto-cook-button" class="nav-main-link" href="javascript:toggleAutoCook();">
+        <a id="auto-cook-button" class="nav-main-link" href="javascript:SEMI.toggle('autoCook');">
             <img class="nav-img" src="assets/media/skills/cooking/cooking.svg">
             <span class="nav-main-link-name">AutoCook</span>
             <small id="auto-cook-status">Disabled</small>

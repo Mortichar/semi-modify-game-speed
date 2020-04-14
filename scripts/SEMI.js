@@ -53,6 +53,7 @@ function main() {
         return;
     }
 
+    removeAndAddScript('scripts/core.js', 'semi-inject-core'); //adding core for refactoring
     pluginNames.forEach(addPlugin);
     removeAndAddScript('scripts/utils.js', 'semi-inject-utils');
 
