@@ -1,5 +1,18 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.5
+
+* AutoMine Changes:
+    * Bug fix: cloud loading was causing mining ore container to reload and remove priority override buttons. Automine now checks for this and will add AM buttons if they are deleted.
+    * Bar Selection now automatically mines by ratio, meaning it will check your bank for amounts of ores and mine with bar-smelting requirements in mind.
+        * For example: when Mithril bar is selected, script will mine until you have 4 times as much coal as mithril in the bank, and continue that pattern so that you are efficiently mining with smelting the particular bar in mind.
+
+* Upcoming:
+    * Level calculator from Herblore now universal & more functional, however not accurate yet:
+        * A small menu is now present on each crafting skill (cooking, smithing, crafting, etc).
+        * These menus calculate (read: estimate) how many of a selected item you'd need to make to get to a level of your choosing, and a time estimate.
+        * Still to-do: make them automatically track gloves, burn percentage/mastery bonuses, etc.
+
 v0.3.4
 
 * Melvor Idle has updated to alpha v0.14.2!
@@ -24,7 +37,7 @@ v0.3.2
 
 * Melvor Idle has updated to alpha v0.14!
     * AutoFish is completely broken with the Fishing overhaul. AutoFish removed for now, may not be necessary any longer. If it comes back it'll need major reworks.
-    * I submitted a bug report to the developer about the Cooking page, how it doesn't update the number of current fish if you burned fish. So, if you burn your last fish using AutoCook, the script will not continue. 
+    * I submitted a bug report to the developer about the Cooking page, how it doesn't update the number of current fish if you burned fish. So, if you burn your last fish using AutoCook, the script will not continue.
         * Use cooking gloves with this script to ensure it doesn't break
         * If the bug isn't fixed soon I'll get to work rewriting the script to not rely on this buggy UI element
 * SEMI Fixes:
@@ -60,7 +73,7 @@ v0.3
     * Barf my potion button: Removes your currently equipped potion on the current page. Handy for chasing down fishing chests when you just drank a fisherman's potion!
     * AutoCombat will now attempt to re-equip 1000 of your currently equipped arrows from your bank if your quiver has less than 500, and will still exit combat if you run out completely.
 * Fixes:
-    * AutoSlayer was a little broken after combat was updated in Melvor v0.13, but now seems to run fine. 
+    * AutoSlayer was a little broken after combat was updated in Melvor v0.13, but now seems to run fine.
         * Was ignoring equipment requirements for slayer zones. Changed code to fix this.
         * Was throwing a dungeon complete screen every kill if you had just finished a dungeon then used AutoSlayer. Added a line to fix.
         * Was not re-equipping items after leaving slayer zones where they were required. Fixed.
