@@ -2,27 +2,12 @@
 
 ## bug squashing
 
-testing
+Set slayer task to 2 griffins (magic ring):
+`slayerTask = [{monsterID: 22, count: 2}]; updateSlayerTask(0);`
+And 2 lots of eyes (mirror shield):
+`slayerTask = [{monsterID: 20, count: 2}]; updateSlayerTask(0);`
 
 ## TODO
-
-* Make test save. Should have:
-    * A collection of logs (autoBonfire)
-    * Fish (autoCook)
-    * All gems (for now)
-    * All seeds
-    * Some compost & weird gloop (autoReplant)
-    * All kinds of
-        * ores (autoSmelt)
-        * bones (autoBury)
-        * openables (autoOpen)
-        * potions (barf)
-        * Arrows n runes (autoRun&ammo)
-        * foods
-        * slayer gears
-    * Gem gloves with <6000 charges, >5M GP (katorone)
-    * Mostly full bank to test katorone
-    * Console commands to add slayer task of a monster in either of the equip-zones, or skippies. Had em somewhere.
 
 * "Better" checks for things like putting on capes and gloves etc when needed
 * Reset-to-default button for the UI drags.
@@ -48,13 +33,12 @@ testing
     * woodcutting axe (background script)
 * ideally convert many scripts into userscripts for those who don't want a full extension. halfway there with DanielRX's help!
     and/or modularized scripts within semi: choose which to load, add custom, etc.
+    this is sort of included now that you can hide individual script buttons.
 
 -----
 
 ## FUNKY IDEAS
 
-sound plays when idle is done and no task queued? repeats every minute or so
-
-task queueing
-
-sounds in combat, alert sound for low health
+* sound plays when idle is done and no task queued? repeats every minute or so
+* task queueing
+* sounds in combat, alert sound for low health

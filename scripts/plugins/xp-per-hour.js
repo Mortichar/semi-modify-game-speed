@@ -212,7 +212,7 @@ var injectXPHGUI = (() => {
     const injectXPHGUI = () => {
         const XPHGUI = `
             <div class="dropdown d-inline-block ml-2">
-                <button type="button" class="btn btn-sm bg-info SEMI-gold" id="page-header-xph-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">XP Per Hr</button>
+                <button type="button" class="btn btn-sm bg-info SEMI-gold" id="page-header-xph-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">XP/hr</button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 border-0 font-size-sm" id="header-equipment-dropdown" aria-labelledby="page-header-xph-dropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-262px, 33px, 0px);">
                     <div class="p-2 bg-primary text-center"><h5 class="dropdown-header"><a class="text-white">Use the XPH Script to calculate Experience Points Per Hour</a></h5></div>
                     ${y}

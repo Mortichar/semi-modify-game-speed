@@ -19,8 +19,8 @@ var injectEyes = (() => {
     const storeMenuState = () => { SEMI.setItem('fold-menu-config', moreMenus); };
 
     const injectEyes = () => {
-        const socials = $('.nav-main-heading:contains(\'Other\')').nextUntil('.nav-main-heading');
-        const other = $('.nav-main-heading:contains(\'Socials\')').nextUntil('.nav-main-heading');
+        const socials = $('.nav-main-heading:contains(\'Socials\')').nextUntil('.nav-main-heading');
+        const other = $('.nav-main-heading:contains(\'Other\')').nextUntil('.nav-main-heading');
         for (let i = 0; i < socials.length; i++) { socials[i].id = `${SEMI.ROOT_ID}-socials-${i}`; }
         for (let i = 0; i < other.length; i++) { other[i].id = `${SEMI.ROOT_ID}-other-${i}`; }
 
