@@ -1,27 +1,20 @@
-//AutoEat by AW for SEMI.
-var autoEating = false;
-var autoEatLoop;
-var hp;
-var hpmax;
-var hpfoox;
+(() => {
+    const id = 'auto-eat';
+    const title = 'AutoEat';
+    const desc = 'AutoEat script will eat quickly if you are missing any HP at all, and automatically cycles to next equipped food if you run out.';
+    const imgSrc = 'assets/media/shop/autoeat.svg';
 
-function autoEat() {
-    hp = combatData.player.hitpoints; //this number is already multiplied
-    hpfood = numberMultiplier * items[equippedFood[currentCombatFood].itemID].healsFor; //numberMultiplier = 10, adjusts hp math
-    hpmax = skillLevel[CONSTANTS.skill.Hitpoints] * numberMultiplier; //same here
-    if (hp < (hpmax-hpfood) || hp<50) eatFood(); 
-    if(equippedFood[currentCombatFood].qty < 1 ){ //cycle through food, added by rebelEpik
-        for(i = 0; i < equippedFood.length; i++){
-            if(equippedFood[i].qty > 0){
-                selectEquippedFood(i);
-                return;
-            }
+    const autoEat = () => {
+        const hp = combatData.player.hitpoints; // this number is already multiplied
+        const currentFood = equippedFood[currentCombatFood];
+        const hpfood = numberMultiplier * items[currentFood.itemID].healsFor; // numberMultiplier = 10, adjusts hp math
+        const hpmax = SEMI.currentLevel('Hitpoints') * numberMultiplier; // same here
+        if(hp < hpmax) { eatFood(); }
+        if(currentFood.qty >= 1) { return; }
+        for(let i = 0; i < equippedFood.length; i++) { //cycle through food, added by rebelEpik
+            if(equippedFood[i].qty > 0){ return selectEquippedFood(i); }
         }
-    }
-}
+    };
 
-function toggleAutoEat() { 
-    autoEating = !autoEating;
-    $("#autoEatStatus").text((autoEating) ? 'Enabled' : 'Disabled');
-    (autoEating) ? autoEatLoop = setInterval( () => { autoEat(); }, 500) : clearInterval(autoEatLoop);
-}
+    SEMI.add(id, {ms: 50, onLoop: autoEat, isCombat: true, title, imgSrc, desc});
+})();

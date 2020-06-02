@@ -1,37 +1,32 @@
-//Auto Smelt
-var barTypeCount = 0;
-var barType = [0, 11, 24, 26, 35, 41, 54, 61, 74];
+(() => {
+    const id = 'auto-smith-bars';
+    const title = 'AutoSmith Bars';
+    const desc = 'AutoSmith Bars will cycle through your smithing bars and smelt those you have materials for.';
+    const imgSrc = 'assets/media/bank/dragonite_bar.svg';
+    const skill = 'Smithing';
 
-function autoSmithBars(){
-    if (document.getElementById("smith-item-have").innerHTML == "-" ) {
-        selectSmith(0);
-        return;
-    }
-    if (document.getElementById("smithing-item-have-2") == null) {
-        if (document.getElementById("smithing-item-have-1") == null) {
-            if (Number(document.getElementById("smithing-item-have-0").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[0]) ){ //< requires
-                barTypeCount = (barTypeCount + 1) % barType.length;
-                selectSmith(barType[barTypeCount]);
-            } else if (!isSmithing) startSmithing(true);
-        } else if (Number(document.getElementById("smithing-item-have-0").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[0]) || Number(document.getElementById("smithing-item-have-1").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[1]) ){
-            barTypeCount = (barTypeCount + 1) % barType.length;
-            selectSmith(barType[barTypeCount]);
-        } else if (!isSmithing) startSmithing(true);
-    } else if (Number(document.getElementById("smithing-item-have-0").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[0]) || Number(document.getElementById("smithing-item-have-1").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[1]) || Number(document.getElementById("smithing-item-have-2").textContent.split(',').join('')) < Number(document.getElementById("smith-item-reqs").textContent.split(' ')[2]) ){
-        barTypeCount = (barTypeCount + 1) % barType.length;
-        selectSmith(barType[barTypeCount]);
-    } else if (!isSmithing) startSmithing(true);
-}
-var smithBarsInterval;
-var autoSmithingBars = false;
-function toggleAutoSmithBars() {
-    autoSmithingBars = !autoSmithingBars;
-    $("#auto-sb-status").text( (autoSmithingBars) ? 'Enabled' : 'Disabled');
-    if (autoSmithingBars) {
-        smithBarsInterval = setInterval(autoSmithBars, 1000);
-        changePage(11);
-    } else { 
-        clearInterval(smithBarsInterval);
-        if (isSmithing) startSmithing(true);
-    }
-}
+    const bars = items.filter((x) => (x.category === skill && x.type === 'Bar'));
+
+    //Auto Smelt
+    let barTypeCount = 0;
+    const findBarIndex = (bar) => smithingItems.findIndex((y) => y.smithingID === bar.smithingID);
+    const getBarTypes = () => { barTypes = bars.map(findBarIndex).sort(); };
+
+    let barTypes = [];
+    const getItemId = () => smithingItems[barTypes[barTypeCount]].itemID;
+
+    const moveToNext = () => {
+        barTypeCount = (barTypeCount + 1) % barTypes.length;
+        selectSmith(barTypes[barTypeCount]);
+    };
+
+    const autoSmithBars = () => {
+        if (document.getElementById('smith-item-have').innerHTML == '-' ) { selectSmith(0); }
+        for(const _ in barTypes) { if(!checkSmithingReq(getItemId())) { moveToNext(); } }
+        if (!SEMI.isCurrentSkill(skill)) { startSmithing(true); }
+    };
+
+    const onDisable = () => { SEMI.stopSkill(skill); };
+
+    SEMI.add(id, {onLoop: autoSmithBars, onEnable: getBarTypes, onDisable, title, desc, imgSrc, skill});
+})();

@@ -1,169 +1,156 @@
 // Importing Auto Slayer by Bubbalova. Using a modified version of script v1.2.1.
+(() => {
+    const id = 'auto-slayer-equip';
+    const title = 'AutoSlayerEquip';
+    const desc = 'The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on.';
+    const imgSrc = 'assets/media/bank/mirror_shield.svg';
+    SEMI.add(id, {ms: 0, isCombat: true, title, desc, imgSrc});
+})();
 
-var autoEquipZone = false;
-function toggleAutoEquip() {
-    autoEquipZone = !autoEquipZone;
-    $("#autoEquipStatus").text( (autoEquipZone) ? 'Enabled' : 'Disabled');
-}
+(() => {
+    const id = 'auto-slayer';
+    const title = 'AutoSlayer';
+    const desc = 'AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default, unless you are properly equipped or you turn on AS Auto Equip and have the correct items in the bank.';
+    const imgSrc = SEMI.skillImg('slayer');
 
+    let autoSlayerCheck = 0;
 
-var autoSlayerEnabled = false;
-var autoSlayerCheck = 0;
+    //Holds values for unequipped equipment
+    let originalRing;
+    let originalShield;
+    let originalCape;
 
-//Holds values for unequipped equipment
-    var originalRing;
-    var originalShield;
-    var originalCape;
+    const updateAutoSlayerButtonText = () => {
+        $(`#${id}-status`).css('color', (SEMI.isEnabled(id)) ? 'gold' : '');
+    };
 
-var updateAutoSlayerButtonText = function () { 
-    $('#auto-slayer-button-status').text((autoSlayerEnabled) ? 'Enabled' : 'Disabled'); 
-    $('#auto-slayer-button-status').css('color', (autoSlayerEnabled) ? 'gold' : '');
-} 
-
-var toggleAutoSlayer = function () {
-    autoSlayerEnabled = !autoSlayerEnabled; //interesting way to toggle. i like it better than my bs way. seems like the 'right' way. maybe it's just the jqueryui way. nope, all bool way.
-    updateAutoSlayerButtonText();
-    setTimeout(function() {
-        if (!autoSlayerEnabled) {
-            stopCombat(false, true, true); 
-            customNotify('assets/media/skills/slayer/slayer.svg', 'AutoSlayer is now disabled.');
-            if (autocombat) terminateAutoCombat('robo-slayer juice. AutoSlayer was disabled, so AutoCombat will follow suit.');
-        } else { 
-            changePage(13) 
-            customNotify('assets/media/skills/slayer/slayer.svg', 'AutoSlayer is now running.');
-        }
-    }, 100);
-}
-
-//Main function
-var autoSlayer = function() {
-    if (!autoSlayerEnabled) {
-        autoSlayerCheck = 0;
-        return;
-    }
-    //Slayer areas that require items
-    //aw: defunct in melvor v0.13
-    var strangeCave = 10;
-    var highLands = 11;
-    //slayerAreas[1] = strangeCave
-    //slayerAreas[2] = highLands
-    //probably best to change if conditions to "if slayer monster is in these areas, do this"
-    
-    isDungeon = false; //if you just completed a dungeon, this will be true and throw errors on enemy killed.
-
-    if (!slayerTask.length) getSlayerTask(); //If there is no slayer task, get one
-    
-    if(autoSlayerCheck == 0){
-        autoSlayerCheck = 1;
-        originalCape = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Cape];
-        originalShield = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield];
-        originalRing = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring];
-    }
-
-    if (ASAutoSkipOn) slayerSkip();
-    
-    //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
-    if (forcedEnemy !== slayerTask[0].monsterID || !isInCombat) {
-        if (isInCombat) stopCombat(false, true, true);
-        for(let i=0; i<combatAreas.length; i++){
-            if (combatAreas[i].areaName == findEnemyArea(slayerTask[0].monsterID)) {
-                selectedCombatArea = i;
-                break;
+    /** @param {number?} item */
+    const equipFromBank = (item) => {
+        if(typeof item === 'undefined') {return false; }
+        for (let i = 0; i < bank.length; i++) {
+            if(items[bank[i].id].name == items[item].name) {
+                equipItem(i, item, 1, selectedEquipmentSet);
+                return true;
             }
         }
-        //Equips Slayer Skillcape if owned
-        if(skillLevel[CONSTANTS.skill.Slayer] >= 99 && checkBankForItem(CONSTANTS.item.Slayer_Skillcape) || equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Cape] == CONSTANTS.item.Slayer_Skillcape){
-            if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Cape] != CONSTANTS.item.Slayer_Skillcape){
-                originalCape = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Cape]
-                for (let i = 0; i < bank.length; i++) {
-                    if(items[bank[i].id].name == "Slayer Skillcape") {
-                        equipItem(i, CONSTANTS.item.Slayer_Skillcape, 1, selectedEquipmentSet)
-                        found = true
-                        break;
-                    }
+        return false;
+    };
+
+    //Main function
+    const autoSlayer = () => {
+        if (!SEMI.isEnabled(id)) {
+            autoSlayerCheck = 0;
+            return;
+        }
+        //Slayer areas that require items
+        //aw: defunct in melvor v0.13
+        let strangeCave = 10;
+        let highLands = 11;
+        //slayerAreas[1] = strangeCave
+        //slayerAreas[2] = highLands
+        //probably best to change if conditions to "if slayer monster is in these areas, do this"
+
+        isDungeon = false; //if you just completed a dungeon, this will be true and throw errors on enemy killed.
+
+        if (!slayerTask.length) { getSlayerTask(); } //If there is no slayer task, get one
+
+        const currentCape      = () => SEMI.currentEquipmentInSlot('Cape');
+        const currentRing      = () => SEMI.currentEquipmentInSlot('Ring');
+        const currentShield    = () => SEMI.currentEquipmentInSlot('Shield');
+
+        if(autoSlayerCheck == 0){
+            autoSlayerCheck = 1;
+            originalCape = currentCape();
+            originalShield = currentShield();
+            originalRing = currentRing();
+        }
+
+        if (SEMI.isEnabled('auto-skip')) slayerSkip();
+
+        const needsShield = slayerAreas[1].monsters.includes(slayerTask[0].monsterID);
+        const needsRing = slayerAreas[2].monsters.includes(slayerTask[0].monsterID);
+
+        const hasShield = currentShield() == CONSTANTS.item.Mirror_Shield;
+        const hasRing = currentRing() == CONSTANTS.item.Magical_Ring;
+        const hasCape = currentCape() == CONSTANTS.item.Slayer_Skillcape;
+
+        const skillCape = CONSTANTS.item.Slayer_Skillcape;
+
+        //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
+        if (forcedEnemy !== slayerTask[0].monsterID || !SEMI.isCurrentSkill('Hitpoints')) {
+            if (SEMI.isCurrentSkill('Hitpoints')) { SEMI.stopSkill('Hitpoints'); }
+            for(let i = 0; i < combatAreas.length; i++){
+                if (combatAreas[i].areaName == findEnemyArea(slayerTask[0].monsterID)) {
+                    selectedCombatArea = i;
+                    break;
                 }
             }
-        }
-        //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
-        else if( (slayerAreas[1].monsters.includes(slayerTask[0].monsterID) || slayerAreas[2].monsters.includes(slayerTask[0].monsterID)) && !autoEquipZone ) {
-            if(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) && equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] != CONSTANTS.item.Mirror_Shield) {
-                newSlayerTask();
-            } else if (slayerAreas[2].monsters.includes(slayerTask[0].monsterID) && equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] != CONSTANTS.item.Magical_Ring) {
-                newSlayerTask();
+            //Equips Slayer Skillcape if owned
+            if(SEMI.currentLevel('Slayer') >= 99 && SEMI.checkBankForItem(skillCape) || hasCape){
+                if(!hasCape) {
+                    originalCape = currentCape();
+                    found = equipFromBank(skillCape);
+                }
             }
-        }
-        //Equips Mirror Shield for area
-        else if(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) && autoEquipZone) {
-            if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] != CONSTANTS.item.Mirror_Shield) {
-                originalShield = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield];
-                if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] == 0) {
+
+            //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
+            else if((needsShield || needsRing) && !SEMI.isEnabled('auto-slayer-equip')) {
+                if(needsShield && !hasShield) {
                     newSlayerTask();
-                    notifyPlayer(CONSTANTS.skill.Slayer, "Skipping task due to 2-handed weapon!");
-                } else {
-                    for (let i = 0; i < bank.length; i++) {
-                        if(items[bank[i].id].name == "Mirror Shield") {
-                            equipItem(i, CONSTANTS.item.Mirror_Shield, 1, selectedEquipmentSet)
-                            found = true
-                            break;
+                } else if (needsRing && !hasRing) {
+                    newSlayerTask();
+                }
+            } else if(SEMI.isEnabled('auto-slayer-equip')) {
+                //Equips Mirror Shield for area
+                if(needsShield) {
+                    if(!hasShield) {
+                        originalShield = currentShield();
+                        if(currentShield() == 0) {
+                            newSlayerTask();
+                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to 2-handed weapon!');
+                        } else {
+                            found = equipFromBank(CONSTANTS.item.Mirror_Shield);
                         }
                     }
                 }
-            }
-        }
-        //Equips Magical Ring for area
-        else if(slayerAreas[2].monsters.includes(slayerTask[0].monsterID) && autoEquipZone) {
-            if(equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] != CONSTANTS.item.Magical_Ring) {
-                originalRing = equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring];
-                for (let i = 0; i < bank.length; i++) {
-                    if(items[bank[i].id].name == "Magical Ring") { //aw: removed typeof() because broken.
-                        equipItem(i, CONSTANTS.item.Magical_Ring, 1, selectedEquipmentSet)
-                        found = true
-                        break;
+                //Equips Magical Ring for area
+                else if(needsRing) {
+                    if(!hasRing) {
+                        originalRing = currentRing();
+                        found = equipFromBank(CONSTANTS.item.Magical_Ring);
                     }
                 }
-            }
-        }
-        else if( !(slayerAreas[1].monsters.includes(slayerTask[0].monsterID) || slayerAreas[2].monsters.includes(slayerTask[0].monsterID)) && autoEquipZone){
-            
-            slayerLockedItem = null; //not sure what this does, added in Auto Slayer 1.2.1
-            
-            //Equips original shield when not in Area
-            if ( (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Shield] == CONSTANTS.item.Mirror_Shield && originalShield != CONSTANTS.item.Mirror_Shield && originalShield != undefined) && autoEquipZone){
-                for (let i = 0; i < bank.length; i++) {
-                    if(items[bank[i].id].name == items[originalShield].name) {
-                        equipItem(i, originalShield, 1, selectedEquipmentSet)
-                        found = true
-                        break
-                    }
-                }
-            }
-            //Equips original ring when not in Area
-            if ( (equipmentSets[selectedEquipmentSet].equipment[CONSTANTS.equipmentSlot.Ring] == CONSTANTS.item.Magical_Ring && originalRing != CONSTANTS.item.Magical_Ring && originalRing != undefined) && autoEquipZone){
-                for (let i = 0; i < bank.length; i++) {
-                    if(items[bank[i].id].name == items[originalRing].name) {
-                        equipItem(i, originalRing, 1, selectedEquipmentSet)
-                        found = true
-                        break
-                    }
-                }
-            }
-        }
-        selectMonster(slayerTask[0].monsterID);
-    }
-}
+                else if(!(needsShield || needsRing)) {
 
-var autoSlayerTimer = setInterval(function(){autoSlayer();}, 2000); //idk how i feel about this always being on rn... guess it's ok cuz it will just check if running and return. doesn't seem to be heavy in bg.
-// End of AutoSlayer!
+                    slayerLockedItem = null; //not sure what this does, added in Auto Slayer 1.2.1
+
+                    //Equips original shield when not in Area
+                    if ((hasShield && originalShield != CONSTANTS.item.Mirror_Shield)){ found = equipFromBank(originalShield); }
+                    //Equips original ring when not in Area
+                    if ((hasRing && originalRing != CONSTANTS.item.Magical_Ring)){ found = equipFromBank(originalRing); }
+                }
+            }
+
+            selectMonster(slayerTask[0].monsterID);
+        }
+    };
+    // End of AutoSlayer!
+
+    SEMI.add(id, {ms: 2000, isCombat: true, title, desc, imgSrc, onToggle: updateAutoSlayerButtonText, onDisable: updateAutoSlayerButtonText, onDisable: updateAutoSlayerButtonText, onLoop: autoSlayer, skill: 'Combat'});
+})();
+
 
 // AS AutoSkip
-var ASAutoSkipOn = false;
 let monsterIDs = [69, 13, 0, 72, 74]; //master farmer, moist monster, black knight, mithril knight, rune knight
 
-function slayerSkip() {
+const slayerSkip = () => {
     if (monsterIDs.includes(slayerTask[0].monsterID)) { newSlayerTask(); }
-}
+};
 
-function toggleASAutoSkip () {
-    ASAutoSkipOn = !ASAutoSkipOn;
-    $("#as-auto-skip-status").text( (ASAutoSkipOn) ? 'Enabled' : 'Disabled');
-}
+(() => {
+    const id = 'auto-skip';
+    const title = 'AS AutoSkip';
+    const desc = 'This script option for AutoSlayer will skip a few monsters (master farmer, moist monster, black knight, mithril knight, rune knight) when they come up as your slayer task with AS enabled. Planned addition for future SEMI version: GUI or selection menu for skipping.';
+    const imgSrc = 'assets/media/monsters/m13.svg';
+    SEMI.add(id, {ms: 0, desc, imgSrc, title, isCombat: true});
+})();

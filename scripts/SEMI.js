@@ -1,72 +1,101 @@
-// Scripting Engine for Melvor Idle v0.3.5 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.14.2
-// Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3), latest Chromium, and Latest Ubuntu & Android Firefox.
-// As always, use and modify at your own risk. But hey, contribute and share!
-// This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
+(() => {
+    // Scripting Engine for Melvor Idle v0.3.6 by aldousWatts on GitLab | Built for Melvor Idle alpha v0.14.2
+    // Currently developing on Waterfox 2020.02 KDE Plasma Edition (56.3), latest Chromium, and Latest Ubuntu & Android Firefox.
+    // As always, use and modify at your own risk. But hey, contribute and share!
+    // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 
-//Injecting Scripts
+    //Injecting Scripts
+    const isChrome = navigator.userAgent.match('Chrome');
+    const isFirefox = navigator.userAgent.match('Firefox');
 
-var isChrome = navigator.userAgent.match("Chrome");
-var isFirefox = navigator.userAgent.match("Firefox");
+    /** @param {string} name */
+    const getURL = (name) => (isChrome ? chrome : browser).runtime.getURL(name);
 
-var getURL = (name) => (isChrome ? chrome : browser).runtime.getURL(name)
+    /** @param {string} id */
+    const exists = (id) => document.contains(document.getElementById(id))
 
-// Check if script already exists, if so delete it
-function removeIfExists(scriptID) {
-    const el = document.getElementById(scriptID);
-    if (document.contains(el)) { el.remove(); }
-};
+    /**
+     * @param {string} name
+     * @param {string} scriptID
+     */
+    const addScript = (name, scriptID) => {
+        const script = document.createElement('script');
+        script.src = getURL(name);
+        script.setAttribute('id', scriptID);
+        document.body.appendChild(script);
+    };
 
-// Inject script
-function addScript(name, scriptID) {
-    const script = document.createElement('script');
-    script.src = getURL(name);
-    script.setAttribute('id', scriptID);
-    document.body.appendChild(script);
-    return script;
-}
+    /**
+     * @param {string} name
+     * @param {string} linkID
+     */
+    const addStyle = (name, linkID) => {
+        const link = document.createElement('link');
+        link.rel = "stylesheet";
+        link.href = getURL(name);
+        link.setAttribute('id', linkID);
+        document.body.appendChild(link);
+    };
 
-function removeAndAddScript(name, scriptID) {
-    removeIfExists(scriptID);
-    addScript(name, scriptID);
-}
+    /**
+     * @param {string} name
+     * @param {string} scriptID
+     */
+    const replaceScript = (name, scriptID) => {
+        const el = document.getElementById(scriptID);
+        if (exists(scriptID)) { el.remove(); }
+        addScript(name, scriptID);
+    };
 
-function addPlugin(name) { removeAndAddScript(`scripts/plugins/${name}.js`, `SEMI-${name}`) }
+    /** @param {string} name */
+    const addPlugin = (name) => { replaceScript(`scripts/plugins/${name}.js`, `SEMI-${name}`); };
 
-// Create image element
-function createImage(name, imgId, height = 32, width = 32) {
-    const img = document.createElement('img');
-    img.src = getURL(name);
-    img.id = imgId;
-    img.height = height;
-    img.width = width;
-    return img;
-}
+    /**
+     * Create image element
+     * @param {string} name
+     * @param {string} imgId
+     * @param {number} height
+     * @param {number} width
+     */
+    const createImage = (name, imgId) => {
+        const img = document.createElement('img');
+        img.src = getURL(name);
+        img.id = imgId;
+        img.height = 32;
+        img.width = 32;
+        return img;
+    };
 
-var autoNames = ['arch', 'easter', 'bonfire', 'combat', 'cook', 'eat', 'fish', 'mine', 'replant', 'sell-gems', 'slayer', 'smith', 'sell-fish-junk'];
-var pluginNames = ['menus', ...autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour'];
+    const autoNames = ['replant', 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot'];
+    const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour', 'fold-menus', 'drag-menus', 'menus'];
 
-function main() {
     // Only support firefox and chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
     if(!isChrome && !isFirefox) {
-        alert("SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main() function in SEMI.js. The addon will not load otherwise.");
+        alert('SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main() function in SEMI.js. The addon will not load otherwise.');
         return;
     }
 
-    removeAndAddScript('scripts/core.js', 'semi-inject-core'); //adding core for refactoring
-    pluginNames.forEach(addPlugin);
-    removeAndAddScript('scripts/utils.js', 'semi-inject-utils');
-
     // not sure how to get the icon otherwise. need to leave the heading addition here, could probably just copy the rest to a big injection.
-    if (document.contains(document.getElementById('modal-semi-set-menu')) ) { return; }
-    const navbar = document.getElementsByClassName("nav-main")[0];
-    const clnheading = document.getElementsByClassName("nav-main-heading")[1].cloneNode(true); // //in MIv0.13 pulls up the main nav version header. used to use two lines, used to be heading then clnheading
-    navbar.appendChild(clnheading);
-    clnheading.style = "font-size: 12pt; color: gold;";
-    clnheading.childNodes[0].textContent = " SEMI v0.3.5";
-    clnheading.title = "Scripting Engine for Melvor Idle";
-    clnheading.id = "semiHeading";
-    const iconImg = createImage("icons/border-48.png", 'iconImg');
-    clnheading.insertBefore(iconImg, clnheading.childNodes[0]);
-}
+    if (exists('modal-semi-set-menu')) { return; }
+    const navbar = document.getElementsByClassName('nav-main')[0];
+    const semiHeading = document.createElement('li');
+    semiHeading.className = "nav-main-heading";
+    navbar.appendChild(semiHeading);
+    semiHeading.style = 'font-size: 12pt; color: white;';
+    semiHeading.textContent = ' SEMI v0.3.6';
+    semiHeading.title = 'Scripting Engine for Melvor Idle';
+    semiHeading.id = 'SEMI-heading';
+    semiHeading.insertBefore(createImage('icons/border-48.png', 'SEMI-menu-icon'), semiHeading.childNodes[0]);
 
-main();
+    replaceScript('scripts/core.js', 'semi-inject-core');
+    replaceScript('scripts/utils.js', 'semi-inject-utils');
+    addStyle('styles/semi.css', 'semi-css');
+
+    const loadPlugins = () => {
+        if(!exists('SEMI-canary')) { return; }
+        clearInterval(pluginLoader);
+        pluginNames.forEach(addPlugin);
+    };
+    const pluginLoader = setInterval(loadPlugins, 50);
+
+})();

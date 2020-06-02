@@ -1,5 +1,44 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.6
+Holy Moly! Where to begin?
+Massive code changes, big additions, lots of changes.
+Huge thanks to DanielRX for the refactoring and additions! A huge part of the update is his fine work!
+
+* Code & Utilities
+    * SEMI can now save and load configurations from localstorage
+    * Many added utility functions and core changes, almost every script has been updated and improved
+    * Custom SEMI stylesheet, mainly used for the drag & lock menus for now
+* UI updates
+    * Drag-able menus!
+        * Locks next to nav-bar section headings allow dragging.
+        * Re-order and hide individual elements on the sidebar!
+        * The order (and hidden states) are saved across refreshes!
+* New scripts
+    * Based on functions of Katorone:
+        * AutoSell! Select items you want a robot to sell automatically from a nice GUI based on your item log!
+        * AutoOpen! A GUI for choosing which containers to automatically open!
+        * AutoBury! GUI to select which bones/items you'd like to automatically bury!
+    * AutoCombat has been broken up into components:
+        * AutoRun: prevent dying when out of food, or wasting food when out of runes/ammo.
+        * AutoEquip Ammo: attempts to equip 1000 of the same arrow from your bank when you run below 500 arrows.
+* Script updates
+    * AutoEat
+        * Needs more work, but its primary function is now more like maintaining max HP at all times.
+        * Eats much faster and will eat until max HP is reached.
+    * AutoCook & AutoSmith Bars
+        * More efficient: no longer cycle through fish or bars you don't have materials to cook/smelt.
+    * Katorone Automation
+        * Somewhat split out into components (see above), but some remain:
+            * GP Reserve
+            * Auto Buy Bank Space (and sell gems to cover costs)
+                * Now respects GP reserve amount.
+            * Auto Buy Gem Glove Charges (and sell gems to cover costs)
+        * Settings now persist after refreshing! For now, still need to enable it after refresh like any other script.
+* Many other subtle code changes that improve SEMI!
+
+Thanks for your patience!
+
 v0.3.5
 
 * AutoMine Changes:
