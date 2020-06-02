@@ -23,6 +23,7 @@
     * Mostly full bank to test katorone
     * Console commands to add slayer task of a monster in either of the equip-zones, or skippies. Had em somewhere.
 
+* "Better" checks for things like putting on capes and gloves etc when needed
 * Reset-to-default button for the UI drags.
 * Set mine array by dragables
 * Add better auto-eat for major update content... for now, it's just very fast and no longer efficient.

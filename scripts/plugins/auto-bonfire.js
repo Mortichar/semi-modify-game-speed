@@ -7,7 +7,8 @@
 
     //:: simply rewritten autoBonfire by Dream below
     const autoBonfire = () => { if (bonfireBonus === 0) lightBonfire(); }; //really
-    //:: end autoBonfire, adding Auto-Bonfire tog, buttons injected in menus.js
+    //:: end
+    
     const onToggle = () => { $(`#${id}-status`).css('color', (SEMI.isEnabled(id)) ? 'red' : ''); };
 
     const onEnable = () => { SEMI.customNotify(imgSrc, 'Select your Logs to begin.', 5000); };

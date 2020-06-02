@@ -34,8 +34,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done.
         * Optionally skips these monsters: master farmer, moist monster, black knight, mithril knight, and rune knight.
     * AutoRun extracted from AutoCombat by DanielRX: Exit combat if you're out of food/ammo/runes.
-    * AutoEquip Ammo extracted from AutoCombat by DanielRX: Attempts to equip more of the same type of arrow if using ranged before exiting combat.
-        * IGNORES EQUIPPING MORE ARROWS WHEN DOING DUNGEONS. However, will still exit combat when you reach 0.
+    * AutoEquip Ammo extracted from AutoCombat by DanielRX: Attempts to equip more of the same type of arrow if using ranged before exiting combat. Now works in dungeons if you have dungeon equipment swap purchased.
     * AutoEat: eats to maintain maximum HP quickly. Usable for thieving as well as combat.
     * AutoLoot: picks up dropped loot items for you.
 * Extra functions & buttons
