@@ -1,153 +1,154 @@
-//:: importing scraps from Melvor Super Control Panel user script by Strutty on Greasefork: https://greasyfork.org/en/scripts/395834-melvor-super-control-panel
-//Important Settings
-//AutoMine
-const copper = 0;
-const tin = 1;
-const iron = 2;
-const coal = 3;
-const silver = 4;
-const gold = 5;
-const mithril = 6;
-const addy = 7;
-const runite = 8;
-const dragonite = 9;
-const runeEssence = 10;
-const oreIDs = [45, 46, 47, 48, 49, 50, 51, 52, 53, 54];
-const barRatios = [
-    {'0': 1, '1': 1},
-    {'2': 1},
-    {'2': 1, '3': 2},
-    {'4': 1},
-    {'5': 1},
-    {'6': 1, '3': 4},
-    {'7': 1, '3': 6},
-    {'8': 1, '3': 8},
-    {'9': 1, '8': 2, '3': 12}];
-var resourceRatios = [];
-var mineArray = ([dragonite, runite, addy, mithril, gold, silver, coal, iron, tin, copper, runeEssence]);
+(() => {
+    const id = 'auto-mine';
+    const title = 'AutoMine';
+    const desc = 'AutoMine will mine highest XP ore first automatically. SEMI\'s version will not switch ores until mining action is complete. SEMI has added AutoMine Priority Override buttons for each mining ore. Select one ore to prioritize above XP, and AM will still switch automatically.';
+    const imgSrc = 'assets/media/shop/pickaxe_dragon.svg';
+    const skill = 'Mining';
 
-//General Functions (this is now included in utils.js as well... might as well leave it *shrug*)
-function getBankQty(id) {
-    for (let i = 0; i < bank.length; i++) {
-        if (bank[i].id === id) {
-            return bank[i].qty;
+
+    const addOverrideButtons = () => {
+        if ($('#autoMine1').length) return;
+        for (let i = 0; i < rockData.length; i++) {
+            const overrideBtn = $(`<button id="autoMine${i}" class="btn btn-outline-primary" style="width: 100%" type="button">AM Priority Override</button>`);
+            overrideBtn.on('click', () => autoMineSet(i));
+            $(`#mining-ore-${i}`).prepend(overrideBtn);
         }
-    }
-    return 0;
-}
+    };
 
-//autoMine Override: buttons injected in setupSEMI
-var autoMineOverride = false;
-var overrideRock;
-var overrideMineArray = [];
-function autoMineSet(x) {
-    if (x == overrideRock && autoMineOverride) {
-        mineArray.shift();
-        autoMineOverride = false;
-        overrideRock = null;
-        $("#autoMine"+x).attr("class", "btn btn-outline-primary"); //de-highlight current selection & turn off
-    } else {
-        if (overrideRock !== null && autoMineOverride) {
+    const injectAutoMineGUI = () => {
+        addOverrideButtons();
+
+        const bars = ['bronze', 'iron', 'steel', 'silver', 'gold', 'mithril', 'adamantite', 'runite', 'dragonite'];
+        const btn = (i) => `<button id="AMbtn${i}" class="AMbtn btn btn-outline-primary" type="button">
+        <img src="assets/media/bank/${bars[i]}_bar.svg" width="32" height="32">
+        </button>`;
+
+        const btns = Array(10).fill(0).map((_, i) => btn(i)).join('\n        \n');
+        const selector = `
+        <div class="col-6 col-lg-12" id="AMselector">
+            <div class="block-header text-center mb-1 SEMI-gold" style="color: gold; background: #2c343f !important; border-radius: 5px;">
+                SEMI AutoMine Bar Selection GUI: Set the robot to mine ores for specific bars.
+            </div>
+        </div>`
+        //AutoMine Bar Select GUI
+        $('#mining-container .row:first').after($(`${selector}<div class="col-6 col-lg-12">${btns}</div><br><br>`));
+        for(let i = 0; i < bars.length + 1; i++) { $(`#AMbtn${i}`).on('click', () => AMselect(i)); }
+        $(`#AMbtn${9}`).attr('title', "Default AM mineArray setting: prioritize XP.");
+        $(`#AMbtn${9}`).find('img').attr('src', "assets/media/shop/pickaxe_dragon.svg")
+        highlightBarBtn(9);
+    };
+
+    //:: importing scraps from Melvor Super Control Panel user script by Strutty on Greasefork: https://greasyfork.org/en/scripts/395834-melvor-super-control-panel
+    //Important Settings
+    //AutoMine
+    const ORES = {Copper: 0, Tin: 1, Iron: 2, Coal: 3, Silver: 4, Gold: 5, Mithril: 6, Adamantite: 7, Runite: 8, Dragonite: 9, RuneEssence: 10};
+
+    const oreIDs = [45, 46, 47, 48, 49, 50, 51, 52, 53, 54];
+
+    const mineArrays = [
+        [ORES.Copper, ORES.Tin], // bronze
+        [ORES.Iron], // iron
+        [ORES.Iron, ORES.Coal], // steel
+        [ORES.Silver], // silver
+        [ORES.Gold], // gold
+        [ORES.Mithril, ORES.Coal], // mith bar
+        [ORES.Adamantite, ORES.Coal], // addy bar
+        [ORES.Runite, ORES.Coal], // rune bar
+        [ORES.Dragonite, ORES.Runite, ORES.Coal], // dragon bar (snack legendarily ®)
+        [ORES.Dragonite, ORES.Runite, ORES.Adamantite, ORES.Mithril, ORES.Gold, ORES.Silver, ORES.Coal, ORES.Iron, ORES.Tin, ORES.Copper, ORES.RuneEssence], //xp priority
+        [ORES.RuneEssence]
+    ];
+
+    let AMselection = 9;
+
+
+    const barRatios = [
+        {[ORES.Copper]: 1, [ORES.Tin]: 1},
+        {[ORES.Iron]: 1},
+        {[ORES.Iron]: 1, [ORES.Coal]: 2},
+        {[ORES.Silver]: 1},
+        {[ORES.Gold]: 1},
+        {[ORES.Mithril]: 1, [ORES.Coal]: 4},
+        {[ORES.Adamantite]: 1, [ORES.Coal]: 6},
+        {[ORES.Runite]: 1, [ORES.Coal]: 8},
+        {[ORES.Dragonite]: 1, [ORES.Runite]: 2, [ORES.Coal]: 12}
+    ];
+    let resourceRatios = [];
+    let mineArray = mineArrays[9];
+
+    //autoMine Override: buttons injected in setupSEMI
+    let autoMineOverride = false;
+    let overrideRock;
+
+    /** @param {number} x */
+    const autoMineSet = (x) => {
+        if (x == overrideRock && autoMineOverride) {
             mineArray.shift();
-            $("#autoMine"+overrideRock).attr("class", "btn btn-outline-primary"); //de-highlight previous
-        }
-        mineArray.unshift(x);
-        $("#autoMine"+x).attr("class", "btn btn-primary"); //highlight
-        overrideRock = x;
-        autoMineOverride = true;
-    }
-}
-
-function highlightBarBtn(n) {
-    $(".AMbtn").attr("class", "btn btn-outline-primary AMbtn"); //de-highlight all
-    $("#AMbtn"+n).attr("class", "btn btn-primary AMbtn"); //highlight n
-}
-
-var AMselection = 9;
-//autoMine Selector: GUI for choosing bars to mine for.
-function AMselect(n) {
-    highlightBarBtn(n);
-    AMselection = n;
-    if (n == 0) {
-        mineArray = [0,1]; //tin & copper = bronze
-    }
-    if (n == 1) {
-        mineArray = [2]; //iron
-    }
-    if (n == 2) {
-        mineArray = [2,3]; //iron & coal = steel
-    }
-    if (n == 3) {
-        mineArray = [4]; //silver
-    }
-    if (n == 4) {
-        mineArray = [5]; //gold
-    }
-    if (n == 5) {
-        mineArray = [6,3]; //mithril + coal = mith bar
-    }
-    if (n == 6) {
-        mineArray = [7,3]; //adamantite + coal = addy bar
-    }
-    if (n == 7) {
-        mineArray = [8,3]; //runite + coal = rune bar
-    }
-    if (n == 8) {
-        mineArray = [9,8,3]; //dragonite + runite + coal = dragon bar (snack legendarily ®)
-    }
-    if (n == 9) {
-        mineArray = ([dragonite, runite, addy, mithril, gold, silver, coal, iron, tin, copper, runeEssence]); //xp priority
-    }
-    if (n == 10) mineArray = ([runeEssence]);
-    //soon obsolete
-    if (autoMineOverride) {
-        autoMineOverride = false;
-        $("#autoMine"+overrideRock).attr("class", "btn btn-outline-primary"); //de-highlight current selection & turn off
-        overrideRock = null;
-    }
-}
-
-//AutoMine: Will mine based on your or priorities set in mineArray //aw: this still works awesomely!
-var autoMineEnabled = false;
-var updateAutoMineButtonText = function () { $('#auto-mine-button-status').text((autoMineEnabled) ? 'Enabled' : 'Disabled'); }
-var autoMineLoop;
-autoMineLoop = setInterval(function(){autoMine(mineArray);}, 100);
-function toggleAutoMine() {
-    autoMineEnabled = !autoMineEnabled;
-    updateAutoMineButtonText();
-    if (!autoMineEnabled) {
-        mineRock(currentRock, true);
-        console.log("Auto Mine Disabled!");
-        //clearInterval(autoMineLoop);
-    }else{
-        changePage(10);
-        if (!isMining) mineRock(0);
-        /* if(!glovesTracker[CONSTANTS.shop.gloves.Mining].isActive){
-            //equipItem(34, 399);
-        }
-        */
-    }
-}
-function autoMine(rocks) {
-    if ($("#autoMine1").length == 0) { addOverrideButtons(); }
-    if (!autoMineEnabled) { return; }
-    if (isMining) var swingRatio = Number(document.getElementById('mining-rock-progress-'+currentRock).style.width.split('%')[0]);
-    else var swingRatio = 0;
-    if ( AMselection !== 9 && !autoMineOverride ) {
-        for (const rock of rocks) {
-            resourceRatios[rock] = getBankQty(oreIDs[rock])/(barRatios[AMselection][rock]);
-        }
-        mineArray.sort(function(a, b) {
-            return resourceRatios[a] - resourceRatios[b];
-        });
-    }
-    for(const rock of rocks) {
-        if (!isMining) mineRock(rock);
-        if(!rockData[rock].depleted && miningData[rock].level <= skillLevel[CONSTANTS.skill.Mining]) { //added extra condition to make universal
-            if(currentRock !== rock && (swingRatio<10) ) {
-                mineRock(rock);
+            autoMineOverride = false;
+            overrideRock = null;
+            $(`#autoMine${x}`).removeClass('btn-primary'); //de-highlight current selection & turn off
+        } else {
+            if (overrideRock !== null && autoMineOverride) {
+                mineArray.shift();
+                $(`#autoMine${overrideRock}`).removeClass('btn-primary'); //de-highlight previous
             }
-            return; //necessary to stop it looping all the way to last rock. i see now.
+            mineArray.unshift(x);
+            $(`#autoMine${x}`).addClass('btn-primary'); //highlight
+            overrideRock = x;
+            autoMineOverride = true;
         }
-    }
-}
+    };
+
+    /** @param {number} n */
+    const highlightBarBtn = (n) => {
+        $('.AMbtn').removeClass('btn-primary'); //de-highlight all
+        $(`#AMbtn${n}`).addClass('btn-primary'); //highlight n
+    };
+
+
+    /**
+     * autoMine Selector: GUI for choosing bars to mine for.
+     * @param {number} n
+     */
+    const AMselect = (n) => {
+        highlightBarBtn(n);
+        AMselection = n;
+        mineArray = mineArrays[n];
+        //soon obsolete
+        if (autoMineOverride) {
+            autoMineOverride = false;
+            $(`#autoMine${overrideRock}`).removeClass('btn-primary'); //de-highlight current selection & turn off
+            overrideRock = null;
+        }
+    };
+
+    //AutoMine: Will mine based on your or priorities set in mineArray //aw: this still works awesomely!
+    const onEnable = () => {
+        if (!SEMI.isCurrentSkill(skill)) { mineRock(0); }
+    };
+
+    const onDisable = () => { SEMI.stopSkill(skill); };
+
+    /** @param {number[]} rocks */
+    const autoMine = (rocks = mineArray) => {
+        addOverrideButtons();
+        let swingRatio = 0;
+        if (SEMI.isCurrentSkill(skill)) { swingRatio = Number(document.getElementById(`mining-rock-progress-${currentRock}`).style.width.split('%')[0]); }
+        if (AMselection !== 9 && !autoMineOverride) {
+            for (const rock of rocks) {
+                resourceRatios[rock] = SEMI.getBankQty(oreIDs[rock])/(barRatios[AMselection][rock]);
+            }
+            mineArray.sort((a, b) => resourceRatios[a] - resourceRatios[b]);
+        }
+        for(const rock of rocks) {
+            if (!SEMI.isCurrentSkill(skill)) mineRock(rock);
+            if(!rockData[rock].depleted && miningData[rock].level <= SEMI.currentLevel(skill)) { //added extra condition to make universal
+                if(currentRock !== rock && (swingRatio<10) ) { mineRock(rock); }
+                return; //necessary to stop it looping all the way to last rock. i see now.
+            }
+        }
+    };
+
+    SEMI.add(id, {ms: 100, onLoop: autoMine, onEnable, onDisable, desc, title, imgSrc, injectGUI: injectAutoMineGUI, skill});
+})();
+

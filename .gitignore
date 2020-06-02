@@ -1,2 +1,4 @@
 .directory
 cloud.md
+node_modules
+.vscode/launch.json

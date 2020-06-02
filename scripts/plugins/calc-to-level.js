@@ -1,103 +1,106 @@
 //calculating items needed to reach selected level
-function calcToLvl(skill) {
+
+const Skill = CONSTANTS.skill;
+
+/** @param {number} skill */
+const getData = (skill) => {
+    const hasCraftCape = SEMI.currentEquipmentInSlot('Cape') === CONSTANTS.item.Crafting_Skillcape;
+    const craftInterval = hasCraftCape ? 1500 : 3000;
+    const data = {
+        [Skill.Woodcutting]:  {interval: 2000,          key: 'xp',             itemData: logsData,          selectedItem: selectedLog},
+        [Skill.Cooking]:      {interval: 3000,          key: 'cookingXP',      itemData: items,             selectedItem: selectedFood},
+        [Skill.Smithing]:     {interval: 2000,          key: 'smithingXP',     itemData: smithingItems,     selectedItem: selectedSmith},
+        [Skill.Fletching]:    {interval: 2000,          key: 'fletchingXP',    itemData: fletchingItems,    selectedItem: selectedFletch},
+        [Skill.Crafting]:     {interval: craftInterval, key: 'craftingXP',     itemData: craftingItems,     selectedItem: selectedCraft},
+        [Skill.Runecrafting]: {interval: 2000,          key: 'runecraftingXP', itemData: runecraftingItems, selectedItem: selectedRunecraft},
+        [Skill.Herblore]:     {interval: 2000,          key: 'herbloreXP',     itemData: herbloreItemData,  selectedItem: selectedHerblore}
+    };
+    return data[skill];
+};
+
+/** @param {number} skill */
+const calcToLvl = (skill) => {
     const validSkills = [2, 3, 5, 13, 14, 15, 19]; //firemaking, cooking, smithing, fletching, crafting, runecrafting, herblore
     if (!validSkills.includes(skill)) return;
     const alternateCalcSkills = [5, 13, 14, 15]; //deeper nested...sigh
-    const selectedItems = {
-        '2': selectedLog,
-        '3': selectedFood,
-        '5': selectedSmith,
-        '13': selectedFletch,
-        '14': selectedCraft,
-        '15': selectedRunecraft,
-        '19': selectedHerblore };
-    const selectedItem = selectedItems[skill];
+
+    const name = skillName[skill];
+    const data = getData(skill);
+    const selectedItem = data.selectedItem;
     if (selectedItem == null) return;
-    const itemDataMap = {'2': logsData, '3': items, '5': smithingItems, '13': fletchingItems, '14': craftingItems, '15': runecraftingItems, '19': herbloreItemData};
-    const xpKeyMap = {'2': 'xp', '3': 'cookingXP', '5': 'smithingXP', '13': 'fletchingXP', '14': 'craftingXP', '15': 'runecraftingXP', '19': 'herbloreXP'};
-    const xpKey = xpKeyMap[skill];
-    let expToLvl = exp.level_to_xp(Number($("#"+skillName[skill]+"-lvl-in").val())) +1 - skillXP[skill];
+
+    let expToLvl = exp.level_to_xp(Number($(`#${name}-lvl-in`).val())) +1 - skillXP[skill];
     let itemsToLvl;
     //need to account for mastery here. preserves ores, increases XP in runecrafting.
     //omg need to account for fire type in cooking...AND burn chance without gloves... smithing gloves in smithing...jeeeeeez
     //also should probably try to make runecrafting more precise based on mastery level & xp gained per rune etc, if will reach higher mastery tier then etc
-    if (alternateCalcSkills.includes(skill)) { itemsToLvl = Math.round((expToLvl) / items[itemDataMap[skill][selectedItem].itemID][xpKey]) + 1; }
-    else { itemsToLvl = Math.round((expToLvl) / itemDataMap[skill][selectedItem][xpKey]) + 1; }
-    $("#"+skillName[skill]+"-needed").text(numberWithCommas(itemsToLvl));
-    let craftIntervals = {
-        '2': 2000,
-        '3': 3000,
-        '5': 2000,
-        '13': 2000,
-        '14': 3000,
-        '15': 2000,
-        '19': 2000
-    }
-    if (equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Crafting_Skillcape) {
-        craftIntervals[14] = 1500;
-    }
-    const craftTimeMin = (craftIntervals[skill]/1000)/60;
-    let timeToLvl = itemsToLvl*craftTimeMin;
-    $("#"+skillName[skill]+"-calc-time").text(formatTimeFromMinutes(timeToLvl));
-}
+    const item = data.itemData[selectedItem];
+    if (alternateCalcSkills.includes(skill)) { itemsToLvl = Math.round((expToLvl) / items[item.itemID][data.key]) + 1; }
+    else { itemsToLvl = Math.round((expToLvl) / item[data.key]) + 1; }
+    $(`#${name}-needed`).text(numberWithCommas(itemsToLvl));
 
-function formatTimeFromMinutes(min) {
-    let hrs = min/60;
-    let days = hrs/24;
-    if (min < 60) { return min.toFixed(1) + " min"; }
-    else if (min < 1440) { return hrs.toFixed(1) + " hrs"; }
-    else if (min >= 1440) { return days.toFixed(2) + " days"; }
-}
+
+    const craftTimeMin = (data.interval / 1000) / 60;
+    let timeToLvl = itemsToLvl * craftTimeMin;
+    $(`#${name}-calc-time`).text(SEMI.formatTimeFromMinutes(timeToLvl));
+};
 
 //universal calc injector
 //changeup. a small gold-border calculator image button, similar to the loot chest button in MICE.
 //opens up a panel beneath crafting panel displaying table with infos like mastery/level calcs, estimated time, etc. Unless estimated time should be up above.
-function calcItemsInjectBtn(skill=2) {
-    const validSkills = [2, 3, 5, 13, 14, 15, 19]; //firemaking, cooking, smithing, fletching, crafting, runecrafting, herblore
+const calcItemsInjectBtn = (skill = Skill.Firemaking) => {
+    const validSkills = [Skill.Firemaking, Skill.Cooking, Skill.Smithing, Skill.Fletching, Skill.Crafting, Skill.Runecrafting, Skill.Herblore];
     if (!validSkills.includes(skill)) { return; }
+    const name = skillName[skill];
     return $(`
         <hr style="border-top: 1px solid gold !important;">
         <div class="col-12">
-            How many of my selected item do I need to reach level <input type="number" id="`+ skillName[skill] +`-lvl-in" name="`+ skillName[skill] +`-lvl-in" min="2" max="99" style="width: 60px;">?
+            How many of my selected item do I need to reach level <input type="number" id="${name}-lvl-in" name="${name}-lvl-in" min="2" max="99" style="width: 60px;">?
             <br>
             <div class="font-size-sm font-w600 text-uppercase text-center text-muted">
                 <small class="mr-2">
-                    <button type="button" class="btn btn-success m-3" onclick="calcToLvl(`+ skill +`);" title="You'll need to click this after selecting your craftable item, and click it each time you want to re-calculate.">Calculate</button>
+                    <button type="button" class="btn btn-success m-3" onclick="calcToLvl(${skill});" title="You'll need to click this after selecting your craftable item, and click it each time you want to re-calculate.">Calculate</button>
                 </small>
             </div>
             <hr>
-            <span id="`+ skillName[skill] +`-needed">#</span> needed to reach selected level.
+            <span id="${name}-needed">#</span> needed to reach selected level.
             <hr>
-            Creating this many will take this much time: <span id="`+ skillName[skill] +`-calc-time">...</span>
+            Creating this many will take this much time: <span id="${name}-calc-time">...</span>
         </div>`);
-}
+};
 
 //move to semisetup
-function injectItemsCalculators() {
+const injectItemsCalculators = () => {
     //firemaking injection
-    $("#firemaking").children().children().first().append(calcItemsInjectBtn(2));
+    $('#firemaking').children().children().first().append(calcItemsInjectBtn(Skill.Firemaking));
     //cooking injection
-    $("#cooking").children().children().first().append(calcItemsInjectBtn(3));
+    $('#cooking').children().children().first().append(calcItemsInjectBtn(Skill.Cooking));
     //smithing
-    $("#smithing-category-container").children().children().children().first().append(calcItemsInjectBtn(5));
+    $('#smithing-category-container').children().children().children().first().append(calcItemsInjectBtn(Skill.Smithing));
     //fletching
-    $("#fletching-container .block-content.block-content-full").first().after(calcItemsInjectBtn(13));
+    $('#fletching-container .block-content.block-content-full').first().after(calcItemsInjectBtn(Skill.Fletching));
     //crafting
-    $("#crafting-container .block-content.block-content-full").first().after(calcItemsInjectBtn(14));
+    $('#crafting-container .block-content.block-content-full').first().after(calcItemsInjectBtn(Skill.Crafting));
     //runecrafting
-    $("#runecrafting-container .block-content.block-content-full").first().after(calcItemsInjectBtn(15));
+    $('#runecrafting-container .block-content.block-content-full').first().after(calcItemsInjectBtn(Skill.Runecrafting));
     //herblore
-    $('#herblore-progress').parent().parent().append(calcItemsInjectBtn(19));
-}
-function initializeCalcLvl() {
-    $("#Firemaking-lvl-in").val(skillLevel[2]+1);
-    $("#Cooking-lvl-in").val(skillLevel[3]+1);
-    $("#Smithing-lvl-in").val(skillLevel[5]+1);
-    $("#Fletching-lvl-in").val(skillLevel[13]+1);
-    $("#Crafting-lvl-in").val(skillLevel[14]+1);
-    $("#Runecrafting-lvl-in").val(skillLevel[15]+1);
-    $("#Herblore-lvl-in").val(skillLevel[19]+1);
-}
+    $('#herblore-progress').parent().parent().append(calcItemsInjectBtn(Skill.Herblore));
+};
+
+/** @param {string} skillName */
+const _initializeCalcLvl = (skillName) => {
+    $(`#${skillName}-lvl-in`).val(SEMI.currentLevel(skillName) + 1);
+};
+
+const initializeCalcLvl = () => {
+    _initializeCalcLvl('Firemaking');
+    _initializeCalcLvl('Cooking');
+    _initializeCalcLvl('Smithing');
+    _initializeCalcLvl('Fletching');
+    _initializeCalcLvl('Crafting');
+    _initializeCalcLvl('Runecrafting');
+    _initializeCalcLvl('Herblore');
+};
 //injectItemsCalculators(); //not ready yet but we need to push automine bugfix
 //setTimeout(() => { initializeCalcLvl() }, 5000);
 

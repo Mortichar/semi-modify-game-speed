@@ -1,0 +1,17 @@
+.SEMI-gold {
+    border: 2px solid gold !important;
+}
+
+.SEMI-modal-btn {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block;
+}
+
+.lock-d-none {
+    display: none !important;
+}
+
+.fold-d-none {
+    display: none !important;
+}
