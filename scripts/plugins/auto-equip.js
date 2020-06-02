@@ -22,6 +22,7 @@
         const currentWeapon = items[SEMI.currentEquipmentInSlot('Weapon')];
         const usingRanged = (currentWeapon.isRanged || (currentWeapon.type === 'Ranged Weapon'));
         if (usingRanged && ammo < 500 && !isDungeon) { equipMoreAmmo(); }
+        if (usingRanged && ammo < 500 && isDungeon && equipmentSwapPurchased) { equipMoreAmmo(); }
     };
 
     //***************************END AUTO COMBAT*******************************
