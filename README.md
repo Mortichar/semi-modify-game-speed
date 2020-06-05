@@ -1,5 +1,7 @@
 # This is Scripting Engine for Melvor Idle v0.3.7.
 
+v0.3.7 has a script for the Case of Fortune event and a few other improvements.
+
 Thanks for waiting, everyone! v0.3.6 is a fairly massive update to the code itself, but comes with some great new features!
 
 Huge thanks to DanielRX for contributing a ton of work to the extension! You can find his fork of this project [here.](https://gitlab.com/DanielRX/SEMI)
@@ -14,6 +16,7 @@ Chrome Release Version: [![Google Chrome](https://img.shields.io/chrome-web-stor
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
+* While it lasts: AutoFortune for the event! Constantly claims and spins again, begging for M-bucks when you're low.
 * Auto Replant by Arcanus
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop.
