@@ -40,9 +40,13 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * Automates Slayer tasks, entering combat and constantly engaging whatever monster you're assigned.
         * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done.
         * Optionally skips these monsters: master farmer, moist monster, black knight, mithril knight, and rune knight.
-    * AutoRun extracted from AutoCombat by DanielRX: Exit combat if you're out of food/ammo/runes.
+    * AutoRun extracted from AutoCombat by DanielRX: Exit combat if you're out of food/ammo/runes or if enemy can one-hit-kill you.
     * AutoEquip Ammo extracted from AutoCombat by DanielRX: Attempts to equip more of the same type of arrow if using ranged before exiting combat. Now works in dungeons if you have dungeon equipment swap purchased.
-    * AutoEat: eats to maintain maximum HP quickly. Usable for thieving as well as combat.
+    * AutoEat
+        * Eats when HP is less than what food heals, or when HP is less than max hit of your enemy.
+        * Usable for thieving as well as combat.
+        * Automatically cycles to next equipped food if you run out.
+        * Takes damage reduction into consideration for max hit calculations.
     * AutoLoot: picks up dropped loot items for you.
 * Extra functions & buttons
     * Toggle "OTHER" & "SOCIALS" Sidebar Button section visibility like you can do for "COMBAT" & "SKILLS"

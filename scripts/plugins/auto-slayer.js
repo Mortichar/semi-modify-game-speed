@@ -136,7 +136,7 @@
     };
     // End of AutoSlayer!
 
-    SEMI.add(id, {ms: 2000, isCombat: true, title, desc, imgSrc, onToggle: updateAutoSlayerButtonText, onDisable: updateAutoSlayerButtonText, onDisable: updateAutoSlayerButtonText, onLoop: autoSlayer, skill: 'Combat'});
+    SEMI.add(id, {ms: 2000, isCombat: true, title, desc, imgSrc, onToggle: updateAutoSlayerButtonText, onLoop: autoSlayer, skill: 'Combat'});
 })();
 
 

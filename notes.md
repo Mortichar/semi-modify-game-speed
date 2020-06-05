@@ -7,10 +7,11 @@ Set slayer task to 2 griffins (magic ring):
 And 2 lots of eyes (mirror shield):
 `slayerTask = [{monsterID: 20, count: 2}]; updateSlayerTask(0);`
 
-* Refresh auto sell log
 
 ## TODO
 
+* js tooltips with settings inside per script? too finicky? settings icon bottom-right of links?
+* Refresh auto sell log
 * "Better" checks for things like putting on capes and gloves etc when needed
 * Reset-to-default button for the UI drags.
 * Set mine array by dragables

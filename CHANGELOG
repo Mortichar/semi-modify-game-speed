@@ -5,10 +5,14 @@ Fixes & Event Things
 
 * Code & Utilities
     * New utility to close confirmation modals for selling/buying things. SEMI will close all modals by default when running automated tasks.
+    * Small fix to Android version: removed drag-menus so that you can navigate the sidebar without a problem.
 * UI updates
     * All SEMI notifications should now appear over every other element in the page, including auto-sell GUI. This lets you see SEMI auto-sell notifications immediately after enabling.
 * New scripts
     * AutoFortune: open them chests, baby!
+* Script updates
+    * AutoEat: back to more efficient, unless fighting a big boss. Now relies on max hit for eating calculations.
+    * AutoRun: you're now properly scared of monsters that can kill you in one hit and you'll run away if that's the case.
 
 v0.3.6
 Holy Moly! Where to begin?

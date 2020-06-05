@@ -150,12 +150,25 @@
                 if (document.getElementsByClassName('swal2-confirm').length == 0) return;
                 setTimeout(() => { document.getElementsByClassName('swal2-confirm')[0].click();}, 50);
             }, 50);
+        };
+
+        const maxHitOfCurrentEnemy = () => {
+            if (enemyInCombat == null) return 0;
+            return combatData.enemy.maximumStrengthRoll;
+        }
+
+        const adjustedMaxHit = () => {
+            const maxHit = SEMI.maxHitOfCurrentEnemy();
+            const damageReductionMultiplier = (100-damageReduction)/100;
+            const adjustedMaxHit = maxHit * damageReductionMultiplier;
+            return Math.ceil(adjustedMaxHit);
         }
 
         const utilsReady = true;
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
-            currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape, confirmAndCloseModal,
+            currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
+            confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit,
             createElement, customNotify, getElements, getElement, getItem, setItem, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });

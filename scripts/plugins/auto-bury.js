@@ -109,6 +109,9 @@
         }, 1000);
     };
 
+    // const removeGUI = () => {
+    //     $(`#modal-auto-${pluginKind}`).remove();
+    // }
 
     SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc});
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
