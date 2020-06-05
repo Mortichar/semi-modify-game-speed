@@ -1,5 +1,15 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.7
+Fixes & Event Things
+
+* Code & Utilities
+    * New utility to close confirmation modals for selling/buying things. SEMI will close all modals by default when running automated tasks.
+* UI updates
+    * All SEMI notifications should now appear over every other element in the page, including auto-sell GUI. This lets you see SEMI auto-sell notifications immediately after enabling.
+* New scripts
+    * AutoFortune: open them chests, baby!
+
 v0.3.6
 Holy Moly! Where to begin?
 Massive code changes, big additions, lots of changes.

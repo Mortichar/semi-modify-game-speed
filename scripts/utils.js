@@ -26,7 +26,7 @@
         * @param {number} n
         */
         const customNotify = (imgsrc = '', msg = 'Custom Notifications!', n = 3000) => { //outputs a custom notification with optional first image, SEMI icon, and message.
-            const template = '<div data-notify="container" class="col-12 text-center notify-event" role="alert"><span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>';
+            const template = '<div data-notify="container" class="SEMI-notif col-12 text-center notify-event" role="alert"><span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>';
             const defaults = {type: 'light', placement: {from: 'bottom',  align: 'center'},  newest_on_top: true, animate: {enter: 'animated fadeInUp',  exit: 'animated fadeOut'}, template};
             const message = `<img class="notification-img" src="${imgsrc}"><img src="${iconSrc}" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success">${msg}</span>`;
 
@@ -145,10 +145,17 @@
 
         const filterItems = (f) => items.map((item, i) => ({...item, i})).filter(f).map(({i}) => i)
 
+        const confirmAndCloseModal = () => {
+            setTimeout(() => {
+                if (document.getElementsByClassName('swal2-confirm').length == 0) return;
+                setTimeout(() => { document.getElementsByClassName('swal2-confirm')[0].click();}, 50);
+            }, 50);
+        }
+
         const utilsReady = true;
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
-            currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
+            currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape, confirmAndCloseModal,
             createElement, customNotify, getElements, getElement, getItem, setItem, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });

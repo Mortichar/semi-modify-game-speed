@@ -102,7 +102,7 @@ const setLoadedKatValues = () => {
         // Buy one if we can afford it
         if ((gp - price) >= katBot.reserveGold) { //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
             buyGloves(CONSTANTS.shop.gloves.Gems);
-            setTimeout(() => { document.getElementsByClassName('swal2-confirm')[0].click();}, 100);
+            SEMI.confirmAndCloseModal();
             //aw: adding notifications
             const notification = 'Katorone Automation just bought Gem Glove charges.';
             notifyPlayer(4, notification);
@@ -132,6 +132,7 @@ const setLoadedKatValues = () => {
             let sell = katBot.sellList.shift();
             if (sell) {
                 sellItem(getBankId(sell[0]), sell[1]);
+                SEMI.confirmAndCloseModal();
                 const notification = `Katorone Automation just auto-sold ${sell[1]} ${items[sell[0]].name}.`;
                 notifyPlayer(10, notification);
                 console.log(notification);
@@ -145,7 +146,7 @@ const setLoadedKatValues = () => {
             // Buy if we have enough gold above reserve.
             if (gp >= (cost + katBot.reserveGold)) {
                 upgradeBank();
-                setTimeout(() => { document.getElementsByClassName('swal2-confirm')[0].click();}, 100);
+                SEMI.confirmAndCloseModal();
                 const notification = 'Katorone Automation just bought a new bank slot.';
                 notifyPlayer(4, notification);
                 console.log(notification);

@@ -7,6 +7,8 @@ Set slayer task to 2 griffins (magic ring):
 And 2 lots of eyes (mirror shield):
 `slayerTask = [{monsterID: 20, count: 2}]; updateSlayerTask(0);`
 
+* Refresh auto sell log
+
 ## TODO
 
 * "Better" checks for things like putting on capes and gloves etc when needed

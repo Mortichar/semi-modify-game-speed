@@ -8,6 +8,10 @@
     display: block;
 }
 
+.SEMI-notif {
+    z-index: 2222 !important;
+}
+
 .lock-d-none {
     display: none !important;
 }

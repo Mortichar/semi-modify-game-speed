@@ -40,6 +40,7 @@ var autoSellShow = (() => {
         const itemToTest = bank[i].id;
         const qty = SEMI.getBankQty(itemToTest);
         sellItem(i, qty);
+        SEMI.confirmAndCloseModal();
         SEMI.customNotify(items[itemToTest].media, `Selling ${qty} of '${items[itemToTest].name}'`);
         return true;
     }
@@ -88,6 +89,8 @@ var autoSellShow = (() => {
 
     const injectGUI = () => {
         const x = $('#modal-item-log').clone().first();
+        // const guiCheckState = document.contains(document.getElementById(`modal-auto-${pluginKind}`));
+        // if (guiCheckState) { $(`#modal-auto-${pluginKind}`).remove(); }
         x.attr('id', `modal-auto-${pluginKind}`);
         $('#modal-item-log').parent().append(x);
         const y = $(`#modal-auto-${pluginKind}`).children().children().children().children('.font-size-sm');
@@ -95,6 +98,8 @@ var autoSellShow = (() => {
 
         const enableAutoButton = $(`<button class="btn btn-md btn-danger m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
         enableAutoButton.on('click', () => SEMI.toggle(`auto-${pluginKind}`));
+        // const refreshLog = $(`<button class="btn btn-md btn-success m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
+        // refreshLog.on('click', () => SEMI.refreshSellLog());
         y.before(enableAutoButton);
         $(`#modal-auto-${pluginKind}`).on('hidden.bs.modal', () => {
             SEMI.setItem(`auto-${pluginKind}-config`, autoEnabled);
