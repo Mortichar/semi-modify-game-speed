@@ -1,4 +1,6 @@
 var injectDragMenus = () => {
+    const is_android = navigator.userAgent.indexOf("Android") > -1;
+    if (is_android) { return; }
     const prefix = SEMI.ROOT_ID;
     const getEl = (id) => SEMI.getElement(id);
 
