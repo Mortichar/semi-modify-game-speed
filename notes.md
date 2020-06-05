@@ -36,6 +36,7 @@ And 2 lots of eyes (mirror shield):
 * ideally convert many scripts into userscripts for those who don't want a full extension. halfway there with DanielRX's help!
     and/or modularized scripts within semi: choose which to load, add custom, etc.
     this is sort of included now that you can hide individual script buttons.
+* any script that auto wields farming cape/signet/rake before harvesting? - pikkkaa
 
 -----
 
