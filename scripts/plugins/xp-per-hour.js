@@ -231,7 +231,7 @@ var injectXPHGUI = (() => {
         const is_android = navigator.userAgent.indexOf("Android") > -1;
         if (!is_android) { return; }
         $("#header-theme").children().eq(1).children().removeClass('ml-2');
-        $("#page-header-xph-dropdown").addClass('SEMI-android-xph-btn');
+        $("#page-header-xph-dropdown").parent().parent().children().addClass('SEMI-android-narrow-btn');
     }
     return injectXPHGUI;
 })();
