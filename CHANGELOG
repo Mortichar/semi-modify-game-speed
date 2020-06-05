@@ -1,14 +1,14 @@
 Scripting Engine for Melvor Idle Changelog
 
 v0.3.7
-Fixes & Event Things
+Fixes, Android UI improvements, & Event Things
 
 * Code & Utilities
     * New utility to close confirmation modals for selling/buying things. SEMI will now close all modals by default when running automated tasks.
     * Small fix to Android version: stop drag-menus from loading so that you can navigate the sidebar without a problem.
 * UI updates
     * All SEMI in-game notifications should now appear over every other element in the page, including auto-sell GUI. This lets you see SEMI auto-sell notifications immediately after enabling.
-    * Android game header buttons (including XPH GUI dropdown button) have had margins reduced to prevent UI bugging on portrait mode.
+    * Android game header buttons (including XPH GUI dropdown button & menu) have had margins reduced to prevent UI bugging on portrait mode.
 * New scripts
     * AutoFortune: open them chests, baby!
 * Script updates
