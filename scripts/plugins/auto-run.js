@@ -10,7 +10,7 @@
         const usingRanged = (currentWeapon.isRanged || (currentWeapon.type === 'Ranged Weapon'));
         const hpmax = SEMI.currentLevel('Hitpoints') * numberMultiplier;
         const deadlyEnemyMaxHit = SEMI.adjustedMaxHit() > hpmax;
-        if (deadlyEnemyMaxHit) { return runFromCombat('courage: the adjusted max hit of the current enemy is greater than your max hp!')}
+        if (deadlyEnemyMaxHit) { return runFromCombat(`courage: the adjusted max hit of the current enemy (${SEMI.maxHitOfCurrentEnemy()} raw DMG, ${SEMI.adjustedMaxHit()} %reduced DMG) is greater than your max hp! (${hpmax} HP)`)}
         if (equippedFood[currentCombatFood].qty < 1) { return runFromCombat('food.'); }
         if (usingRanged && ammo < 1) { return runFromCombat('ammo.'); }
         if (currentWeapon.isMagic && !checkRuneCount(selectedSpell) ) { return runFromCombat('runes.'); }
