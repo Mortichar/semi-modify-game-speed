@@ -1,5 +1,15 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.9
+AutoMine changes & more
+* Script updates
+    * AutoMine
+        * No longer mines by ratios.
+        * SEMI GUI no longer injected into the Mining page without starting the script.
+        * The way you set your mining priorities has changed. Now you can directly change the mineArray by dragging elements on the page.
+        * No more priority override buttons, since you can exactly set your priority.
+    * AutoSellGems now closes the sale confirmation modal for you if you have it enabled.
+
 v0.3.8.2
 Yet more fixes to auto-eat. Incorporated even more combat mechanics; hopefully all the bases are covered:
     * Burning damage (Fire god dungeon)

@@ -9,11 +9,7 @@ And 2 lots of eyes (mirror shield):
 
 ## TODO
 
-* Set mine array by dragables
-    array.indexOf(element) -> set mineArray somehow, probably a map function
-    Sortable.create(element, {options: whatever, option2: true})
-    lock & unlock
-    make 'btns' into 'divs' and make them into rocks not bars
+* Set mine array by dragables lock & unlock
 * Refresh auto sell log
 * "Better" checks for things like putting on capes and gloves etc when needed
 * Reset-to-default button for the UI drags.

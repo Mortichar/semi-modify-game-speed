@@ -1,7 +1,7 @@
 (() => {
     const id = 'auto-mine';
     const title = 'AutoMine';
-    const desc = 'AutoMine will mine highest XP ore first automatically. SEMI\'s version will not switch ores until mining action is complete. SEMI has added AutoMine Priority Override buttons for each mining ore. Select one ore to prioritize above XP, and AM will still switch automatically.';
+    const desc = 'AutoMine will mine highest XP ore first automatically. SEMI\'s version will not switch ores until mining action is complete. You can set your mining priorities by dragging and dropping in the Mining page while the script is running.';
     const imgSrc = 'assets/media/shop/pickaxe_dragon.svg';
     const skill = 'Mining';
 
