@@ -1,4 +1,4 @@
-# This is Scripting Engine for Melvor Idle v0.3.8.
+# This is Scripting Engine for Melvor Idle v0.3.8.1.
 
 Huge thanks to DanielRX for contributing a ton of work to the extension! You can find his fork of this project [here.](https://gitlab.com/DanielRX/SEMI)
 

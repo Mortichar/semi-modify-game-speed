@@ -154,7 +154,12 @@
 
         const maxHitOfCurrentEnemy = () => {
             if (enemyInCombat == null) return 0;
-            return combatData.enemy.maximumStrengthRoll;
+            if (combatData.enemy.specialAttackID == null) return combatData.enemy.maximumStrengthRoll;
+            var specialAtkArray = [combatData.enemy.maximumStrengthRoll];
+            for (const specialAttack of combatData.enemy.specialAttackID) {
+                specialAtkArray.push(enemySpecialAttacks[specialAttack].setDamage * numberMultiplier);
+            }
+            return Math.max(...specialAtkArray);
         }
 
         const playerIsStunned = () => { return combatData.player.stunned; }

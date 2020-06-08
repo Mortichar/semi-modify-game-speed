@@ -1,5 +1,8 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.8.1
+Hotfix for the hotfix: now properly calculates enemy special attack damage.
+
 v0.3.8
 Auto-eat & auto-run hotfix: now calculates stun damage multipliers.
 Removed Auto-Fortune, event over!
