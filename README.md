@@ -16,9 +16,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * AutoBonfire by Dream: continuously starts bonfires for you when you have a type of wood selected in Firemaking.
 * AutoCook by Unicue & improved by DanielRX: cycles through fish and cooks them all
 * Auto Mine & Auto Sell Gems by Strutty & others
-    * AutoMine now has a GUI for selecting which bar you'd like to mine. **Since v0.3.5:** AutoMine mines by ratio of required materials to smelt bars based on amount of ores you have in bank. (Ex: when Mithril bar is selected, mines 1 Mithril ore and then prioritizes coal until it reaches 4 coal ore.)
-    * Priority override buttons give even more control over how you want to mine. **Since v0.3.5:** Cloud save no longer deletes those precious priority override buttons.
-    * **Note:** Using priority override will stop the robot from mining by ratios.
+    * AutoMine now has a GUI for setting the mineArray priorities by dragging elements on the page.
     * AutoSellGems will sell 100 gems once they've reached a stack of 100.
 * AutoSmith Bars: cycle through smithing bars and smelt them if you have the materials to do so
 * Katorone Automation & GUI
