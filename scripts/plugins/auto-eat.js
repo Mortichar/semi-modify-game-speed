@@ -1,7 +1,7 @@
 (() => {
     const id = 'auto-eat';
     const title = 'AutoEat';
-    const desc = "AutoEat script eats when HP is less than what food heals when outside combat, or when HP is less than max hit of your enemy in combat. Usable for thieving as well as combat. Don't be scared! SEMI calculates your damage reduction when calculating max hit.";
+    const desc = "AutoEat script eats when HP is less than what food heals when outside combat, or when HP is less than max hit of your enemy in combat. Usable for thieving as well as combat. Don't be scared! SEMI calculates your damage reduction AND maximum enemy stun damage multipliers when calculating max hit. WARNING: Currently this script runs at a 25ms interval, meaning you can only eat 40 times per second under ideal circumstances.";
     const imgSrc = 'assets/media/shop/autoeat.svg';
 
     const autoEat = () => {
