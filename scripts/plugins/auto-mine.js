@@ -19,6 +19,7 @@
         addOverrideButtons();
 
         const bars = ['bronze', 'iron', 'steel', 'silver', 'gold', 'mithril', 'adamantite', 'runite', 'dragonite'];
+        const ores = ['rune_essence', 'copper', 'tin', 'iron', 'coal', 'silver', 'gold', 'mithril', 'adamantite', 'runite', 'dragonite'];
         const btn = (i) => `<button id="AMbtn${i}" class="AMbtn btn btn-outline-primary" type="button">
         <img src="assets/media/bank/${bars[i]}_bar.svg" width="32" height="32">
         </button>`;

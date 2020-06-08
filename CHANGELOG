@@ -1,5 +1,9 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.8
+Auto-eat & auto-run hotfix: now calculates stun damage multipliers.
+Removed Auto-Fortune, event over!
+
 v0.3.7
 Fixes, Android UI improvements, & Event Things
 

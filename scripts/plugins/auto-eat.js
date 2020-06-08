@@ -13,7 +13,8 @@
         const adjustedMaxHit = SEMI.adjustedMaxHit();
         const maxHitEatingCase = hp <= adjustedMaxHit && adjustedMaxHit !== 0;
         const generalEatingCase = hpdeficit > hpfood;
-        if((maxHitEatingCase && isInCombat) || (generalEatingCase && !isInCombat)) { eatFood(); }
+        const eatingCase = (maxHitEatingCase && isInCombat) || (generalEatingCase && !isInCombat);
+        if(eatingCase) { eatFood(); }
         if(currentFood.qty >= 1) { return; }
         for(let i = 0; i < equippedFood.length; i++) { //cycle through food, added by rebelEpik
             if(equippedFood[i].qty > 0){ return selectEquippedFood(i); }

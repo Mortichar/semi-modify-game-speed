@@ -1,14 +1,8 @@
-# This is Scripting Engine for Melvor Idle v0.3.7.
-
-v0.3.7 has a script for the Case of Fortune event and a few other improvements.
-
-Thanks for waiting, everyone! v0.3.6 is a fairly massive update to the code itself, but comes with some great new features!
+# This is Scripting Engine for Melvor Idle v0.3.8.
 
 Huge thanks to DanielRX for contributing a ton of work to the extension! You can find his fork of this project [here.](https://gitlab.com/DanielRX/SEMI)
 
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
-
-Now available on the Chrome web store!
 
 Chrome Release Version: [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Chrome%20Add-on&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
@@ -16,7 +10,6 @@ Chrome Release Version: [![Google Chrome](https://img.shields.io/chrome-web-stor
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* While it lasts: AutoFortune for the event! Constantly claims and spins again, begging for M-bucks when you're low.
 * Auto Replant by Arcanus
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop.
@@ -47,6 +40,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * Usable for thieving as well as combat.
         * Automatically cycles to next equipped food if you run out.
         * Takes damage reduction into consideration for max hit calculations.
+        * Now takes stun damage increases into account.
     * AutoLoot: picks up dropped loot items for you.
 * Extra functions & buttons
     * Toggle "OTHER" & "SOCIALS" Sidebar Button section visibility like you can do for "COMBAT" & "SKILLS"
@@ -85,4 +79,4 @@ Open the url "about:debugging" without quotes, enable add-on debugging if you ne
 ## Goal of the Software
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
 
-This was built around Melvor Idle alpha v0.15.2.
+This was built around Melvor Idle alpha v0.15.2.1.

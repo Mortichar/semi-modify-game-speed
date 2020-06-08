@@ -157,18 +157,36 @@
             return combatData.enemy.maximumStrengthRoll;
         }
 
+        const playerIsStunned = () => { return combatData.player.stunned; }
+
+        const enemyMaxStunDamageMultiplier = () => {
+            if (combatData.enemy.specialAttackID == null) return 1;
+            var multiplierArray = [];
+            for (const specialAttack of combatData.enemy.specialAttackID) {
+                multiplierArray.push(enemySpecialAttacks[specialAttack].stunDamageMultiplier);
+            }
+            return Math.max(...multiplierArray);
+        }
+
         const adjustedMaxHit = () => {
-            const maxHit = SEMI.maxHitOfCurrentEnemy();
+            var maxHit = SEMI.maxHitOfCurrentEnemy();
+            //enemy damage multipliers (stun etc) are calculated before player damage reduction
+            const playerIsStunned = SEMI.playerIsStunned();
+            if (playerIsStunned) {
+                const enemyMaxStunDamageMultiplier = SEMI.enemyMaxStunDamageMultiplier();
+                maxHit = maxHit * enemyMaxStunDamageMultiplier;
+            }
             const damageReductionMultiplier = (100-damageReduction)/100;
             const adjustedMaxHit = maxHit * damageReductionMultiplier;
             return Math.ceil(adjustedMaxHit);
         }
 
+
         const utilsReady = true;
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
-            confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit,
+            confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
             createElement, customNotify, getElements, getElement, getItem, setItem, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });

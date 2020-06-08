@@ -1,6 +1,6 @@
 var {semiSetMenu} = (() => {
-    const SEMI_VERSION = '0.3.7';
-    const GAME_VERSION = 'Alpha v0.15.2';
+    const SEMI_VERSION = '0.3.8';
+    const GAME_VERSION = 'Alpha v0.15.2.1';
 
     const header = $('#SEMI-heading');
 

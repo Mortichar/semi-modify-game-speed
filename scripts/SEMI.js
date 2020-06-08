@@ -1,7 +1,7 @@
 (() => {
-    // Scripting Engine for Melvor Idle v0.3.7 by aldousWatts on GitLab
+    // Scripting Engine for Melvor Idle v0.3.8 by aldousWatts on GitLab
     // Major code & script contributions by DanielRX
-    // Built for Melvor Idle alpha v0.15.2
+    // Built for Melvor Idle alpha v0.15.2.1
     // As always, use and modify at your own risk. But hey, contribute and share!
     // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 
@@ -67,7 +67,7 @@
         return img;
     };
 
-    const autoNames = ['fortune', 'replant', 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot'];
+    const autoNames = ['replant', 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot'];
     const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour', 'fold-menus', 'drag-menus', 'menus'];
 
     // Only support firefox and chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
@@ -83,7 +83,7 @@
     semiHeading.className = "nav-main-heading";
     navbar.appendChild(semiHeading);
     semiHeading.style = 'font-size: 12pt; color: white;';
-    semiHeading.textContent = ' SEMI v0.3.7';
+    semiHeading.textContent = ' SEMI v0.3.8';
     semiHeading.title = 'Scripting Engine for Melvor Idle';
     semiHeading.id = 'SEMI-heading';
     semiHeading.insertBefore(createImage('icons/border-48.png', 'SEMI-menu-icon'), semiHeading.childNodes[0]);
