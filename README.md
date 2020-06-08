@@ -1,6 +1,6 @@
-# This is Scripting Engine for Melvor Idle v0.3.8.2.
+# This is Scripting Engine for Melvor Idle v0.3.8-3.
 
-Huge thanks to DanielRX for contributing a ton of work to the extension! You can find his fork of this project [here.](https://gitlab.com/DanielRX/SEMI)
+Huge thanks to DanielRX for contributing a ton of work to the extension!
 
 Firefox Release Version: [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 

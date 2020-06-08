@@ -17,6 +17,11 @@
     z-index: 2222 !important;
 }
 
+.SEMI-AM-drag {
+    padding: 0 !important;
+    margin: 0 2px !important;
+}
+
 .lock-d-none {
     display: none !important;
 }

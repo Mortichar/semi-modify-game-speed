@@ -1,7 +1,7 @@
 (() => {
     const id = 'auto-run';
     const title = 'AutoRun';
-    const desc = 'AutoRun will automatically run from combat if you are out of food, runes, or ammo.'
+    const desc = 'AutoRun will automatically run from combat if you are out of food, runes, or ammo, or if you can be one-hit-killed by the enemy.'
     const imgSrc = "assets/media/skills/combat/run.svg";
 
     const autoRun = () => {

@@ -3,7 +3,7 @@
 
     const id = `auto-${pluginKind}`;
     const title = 'AutoOpen';
-    const desc = 'AutoOpen is a script for opening items you no longer want.';
+    const desc = 'AutoOpen is a script for opening containers like chests.';
     const imgSrc = 'assets/media/main/bank_header.svg';
 
     let autoEnabled = [];
