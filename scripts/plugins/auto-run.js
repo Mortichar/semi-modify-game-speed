@@ -8,7 +8,7 @@
         if(!SEMI.isCurrentSkill('Hitpoints')) { return; }
         const currentWeapon = items[SEMI.currentEquipmentInSlot('Weapon')];
         const usingRanged = (currentWeapon.isRanged || (currentWeapon.type === 'Ranged Weapon'));
-        const hpmax = SEMI.currentLevel('Hitpoints') * numberMultiplier;
+        const hpmax = SEMI.maxHP();
         const deadlyEnemyMaxHit = SEMI.adjustedMaxHit() > hpmax;
         if (deadlyEnemyMaxHit) { return runFromCombat(`courage: the adjusted max hit of the current enemy (${SEMI.maxHitOfCurrentEnemy()} raw DMG, ${SEMI.adjustedMaxHit()} %reduced DMG) is greater than your max hp! (${hpmax} HP)`)}
         if (equippedFood[currentCombatFood].qty < 1) { return runFromCombat('food.'); }
@@ -25,7 +25,7 @@
         SEMI.stopSkill('Hitpoints');
         SEMI.customNotify(imgSrc, `SEMI: Exited Auto Combat @ ${dateTime} because ${username} is out of ${reason}`, 15000);//upgrade to jqueryui modal dialog
         console.log(`SEMI: Exited Auto Combat @ ${dateTime} because ${username} is out of ${reason}`);
-        if(SEMI.isEnabled(id)) { SEMI.disable(id); }
+        // if(SEMI.isEnabled(id)) { SEMI.disable(id); }
         if(SEMI.isEnabled('auto-slayer')) { SEMI.disable('auto-slayer'); }
     };
 

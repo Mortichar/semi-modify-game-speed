@@ -152,17 +152,35 @@
             }, 50);
         };
 
-        const maxHitOfCurrentEnemy = () => {
-            if (enemyInCombat == null) return 0;
-            if (combatData.enemy.specialAttackID == null) return combatData.enemy.maximumStrengthRoll;
-            var specialAtkArray = [combatData.enemy.maximumStrengthRoll];
-            for (const specialAttack of combatData.enemy.specialAttackID) {
-                specialAtkArray.push(enemySpecialAttacks[specialAttack].setDamage * numberMultiplier);
-            }
-            return Math.max(...specialAtkArray);
-        }
+        const incomingAttackData = () => {
+            //from user Lamb on discord: https://pastebin.com/Fw4R7zv5
+            let htmlAttack = document.getElementById("combat-enemy-attack-speed-desc").textContent.slice(6, -1);
 
-        const playerIsStunned = () => { return combatData.player.stunned; }
+            if (htmlAttack === " Speed") {
+                incomingAttack = "Attack";
+                incomingDamage = combatData.enemy.maximumStrengthRoll;
+            } else {
+                incomingAttack = enemySpecialAttacks.find(o => o.name === htmlAttack);
+                incomingDamage = (incomingAttack.setDamage) ? incomingAttack.setDamage * numberMultiplier : combatData.enemy.maximumStrengthRoll;
+            }
+            return {incomingAttack, incomingDamage};
+        };
+
+        const maxHP = () => { return SEMI.currentLevel('Hitpoints') * numberMultiplier; };
+        const currentHP = () => { return combatData.player.hitpoints; };
+
+        const maxHitOfCurrentEnemy = () => {
+            // if (enemyInCombat == null) return 0;
+            // if (combatData.enemy.specialAttackID == null) return combatData.enemy.maximumStrengthRoll;
+            // var specialAtkArray = [combatData.enemy.maximumStrengthRoll];
+            // for (const specialAttack of combatData.enemy.specialAttackID) {
+            //     specialAtkArray.push(enemySpecialAttacks[specialAttack].setDamage * numberMultiplier);
+            // }
+            // return Math.max(...specialAtkArray);
+            return SEMI.incomingAttackData().incomingDamage;
+        };
+
+        const playerIsStunned = () => { return combatData.player.stunned; };
 
         const enemyMaxStunDamageMultiplier = () => {
             if (combatData.enemy.specialAttackID == null) return 1;
@@ -171,26 +189,32 @@
                 multiplierArray.push(enemySpecialAttacks[specialAttack].stunDamageMultiplier);
             }
             return Math.max(...multiplierArray);
-        }
+        };
 
         const adjustedMaxHit = () => {
             var maxHit = SEMI.maxHitOfCurrentEnemy();
             //enemy damage multipliers (stun etc) are calculated before player damage reduction
             const playerIsStunned = SEMI.playerIsStunned();
-            if (playerIsStunned) {
-                const enemyMaxStunDamageMultiplier = SEMI.enemyMaxStunDamageMultiplier();
-                maxHit = maxHit * enemyMaxStunDamageMultiplier;
-            }
+            const stunnedCase = playerIsStunned && !isNaN(SEMI.incomingAttackData().incomingAttack.stunDamageMultiplier);
+            if (stunnedCase) { maxHit *= SEMI.incomingAttackData().incomingAttack.stunDamageMultiplier; }
+
             const damageReductionMultiplier = (100-damageReduction)/100;
-            const adjustedMaxHit = maxHit * damageReductionMultiplier;
+            var adjustedMaxHit = Math.ceil(maxHit * damageReductionMultiplier);
+            //account for other contingencies: burning damage, air god reflect damage, etc. From user Lamb again
+            adjustedMaxHit += ((combatData.player.isBurning) ? Math.floor(SEMI.maxHP() * 0.02) : 0)
+                + ((combatData.enemy.reflectMelee && attackStyle <= 2) ? combatData.enemy.reflectMelee * numberMultiplier : 0)
+                + ((combatData.enemy.reflectMagic && attackStyle >= 6) ? combatData.enemy.reflectMagic * numberMultiplier : 0)
+                + ((combatData.enemy.reflectRanged && (attackStyle >= 3 && attackStyle <= 5)) ? combatData.enemy.reflectRanged * numberMultiplier : 0);
+
             return Math.ceil(adjustedMaxHit);
-        }
+        };
 
 
         const utilsReady = true;
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
+            incomingAttackData, maxHP, currentHP,
             confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
             createElement, customNotify, getElements, getElement, getItem, setItem, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };

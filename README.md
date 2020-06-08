@@ -1,4 +1,4 @@
-# This is Scripting Engine for Melvor Idle v0.3.8.1.
+# This is Scripting Engine for Melvor Idle v0.3.8.2.
 
 Huge thanks to DanielRX for contributing a ton of work to the extension! You can find his fork of this project [here.](https://gitlab.com/DanielRX/SEMI)
 
@@ -40,7 +40,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * Usable for thieving as well as combat.
         * Automatically cycles to next equipped food if you run out.
         * Takes damage reduction into consideration for max hit calculations.
-        * Now takes stun damage increases into account.
+        * Now takes stun damage increases, burning damage, and damage reflection into account. Should be worthy of god dungeons.
     * AutoLoot: picks up dropped loot items for you.
 * Extra functions & buttons
     * Toggle "OTHER" & "SOCIALS" Sidebar Button section visibility like you can do for "COMBAT" & "SKILLS"
