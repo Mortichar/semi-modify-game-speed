@@ -62,7 +62,6 @@
 
     let AMselection = 9;
 
-
     const barRatios = [
         {[ORES.Copper]: 1, [ORES.Tin]: 1},
         {[ORES.Iron]: 1},
@@ -126,9 +125,14 @@
     //AutoMine: Will mine based on your or priorities set in mineArray //aw: this still works awesomely!
     const onEnable = () => {
         if (!SEMI.isCurrentSkill(skill)) { mineRock(0); }
+        injectAutoMineGUI();
     };
 
-    const onDisable = () => { SEMI.stopSkill(skill); };
+    const onDisable = () => {
+        SEMI.stopSkill(skill);
+        removeAMGUI();
+        // SEMI.removeAMGUI();
+    };
 
     /** @param {number[]} rocks */
     const autoMine = (rocks = mineArray) => {
@@ -150,6 +154,16 @@
         }
     };
 
-    SEMI.add(id, {ms: 100, onLoop: autoMine, onEnable, onDisable, desc, title, imgSrc, injectGUI: injectAutoMineGUI, skill});
-})();
+    const removeAMGUI = () => {
+        // $("#AMbtn0").parent().remove();
+        $("#AMselector").nextUntil('#mining-ores-container').remove();
+        $("#AMselector").remove();
+        $("[id^='autoMine']").remove();
+    };
 
+    // const mergeObj = {removeAMGUI};
+    //injectGUI: injectAutoMineGUI,
+    SEMI.add(id, {ms: 100, onLoop: autoMine, onEnable, onDisable, desc, title, imgSrc, skill});
+
+    SEMI.mergeOnto(SEMI, {removeAMGUI});
+})();

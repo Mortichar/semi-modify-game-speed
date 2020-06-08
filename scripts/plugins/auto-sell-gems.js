@@ -11,12 +11,17 @@
 
     //AutoSellGems: Will sell gems when they reach the stack amount specified
     const autoSellGems = () => {
+        var count = 0;
         for(const gemId of gemIdList) {
             const curQty = SEMI.getBankQty(gemId);
             //console.log('GEM ID '+gemId+' you have '+curQty);
             if(curQty > targetStack) {
-                sellItem(getBankId(gemId), targetStack);
-                SEMI.customNotify('assets/media/main/coins.svg', `Auto Sell Gems just sold ${targetStack} ${items[gemId].name}.`, 5000);
+                count++;
+                setTimeout(() => {
+                    sellItem(getBankId(gemId), targetStack);
+                    SEMI.confirmAndCloseModal();
+                    SEMI.customNotify('assets/media/main/coins.svg', `Auto Sell Gems just sold ${targetStack} ${items[gemId].name}.`, 5000);
+                }, count*150);
             }
         }
     };

@@ -148,8 +148,8 @@
         const confirmAndCloseModal = () => {
             setTimeout(() => {
                 if (document.getElementsByClassName('swal2-confirm').length == 0) return;
-                setTimeout(() => { document.getElementsByClassName('swal2-confirm')[0].click();}, 50);
-            }, 50);
+                document.getElementsByClassName('swal2-confirm')[0].click();
+            }, 100);
         };
 
         const incomingAttackData = () => {
