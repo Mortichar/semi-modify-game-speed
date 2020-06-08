@@ -11,12 +11,13 @@
         const currentFood = equippedFood[currentCombatFood];
         const hpfood = numberMultiplier * items[currentFood.itemID].healsFor; // numberMultiplier = 10, adjusts hp math
         const adjustedMaxHit = SEMI.adjustedMaxHit();
-        const maxHitEatingCase = hp <= adjustedMaxHit;
-        const generalEatingCase = hpdeficit > hpfood;
-        const eatingCase = (maxHitEatingCase && isInCombat) || (generalEatingCase && !isInCombat);
+        const maxHitEatingCase = (hp <= adjustedMaxHit) && isInCombat;
+        const generalEatingCase = (hpdeficit > hpfood) && !isInCombat;
+        const eatingCase = maxHitEatingCase || generalEatingCase;
         if(eatingCase) {
             eatFood();
-            while (isInCombat && (SEMI.currentHP() <= adjustedMaxHit) && (hpmax > adjustedMaxHit)) { eatFood(); }
+            if (!isInCombat) return;
+            while ((SEMI.currentHP() <= adjustedMaxHit) && (hpmax > adjustedMaxHit) && (currentFood.qty >= 1)) { eatFood(); }
         }
         if(currentFood.qty >= 1) { return; }
         for(let i = 0; i < equippedFood.length; i++) { //cycle through food, added by rebelEpik
@@ -26,10 +27,8 @@
 
     const onEnable = () => {
         const hpmax = SEMI.currentLevel('Hitpoints') * numberMultiplier; // same here
-        const maxHit = SEMI.maxHitOfCurrentEnemy();
-        const damageReductionMultiplier = (100-damageReduction)/100; //whole-numbers representing percentages: converting to decimal for ez multiplication.
-        const adjustedMaxHit = maxHit * damageReductionMultiplier;
-        if(hpmax <= adjustedMaxHit) { SEMI.customNotify('assets/media/monsters/ghost.svg', 'WARNING: You are engaged with an enemy that can one-hit-kill you. \n Its damage-reduction-adjusted max hit is at or above your max HP.', 10000); }
+        const adjustedMaxHit = SEMI.adjustedMaxHit();
+        if(hpmax <= adjustedMaxHit) { SEMI.customNotify('assets/media/monsters/ghost.svg', 'WARNING: You are engaged with an enemy that can one-hit-kill you. \n Its damage-reduction-adjusted max hit is at or above your max HP. \n This script can\'t save you now.', 10000); }
     }
 
     SEMI.add(id, {ms: 100, onLoop: autoEat, onEnable, isCombat: true, title, imgSrc, desc});

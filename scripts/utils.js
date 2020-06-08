@@ -200,7 +200,7 @@
 
             const damageReductionMultiplier = (100-damageReduction)/100;
             var adjustedMaxHit = Math.ceil(maxHit * damageReductionMultiplier);
-            //account for other contingencies: burning damage, air god reflect damage, etc. From user Lamb again
+            //Lamb's calculations account for other contingencies: burning damage, air god reflect damage, etc
             adjustedMaxHit += ((combatData.player.isBurning) ? Math.floor(SEMI.maxHP() * 0.02) : 0)
                 + ((combatData.enemy.reflectMelee && attackStyle <= 2) ? combatData.enemy.reflectMelee * numberMultiplier : 0)
                 + ((combatData.enemy.reflectMagic && attackStyle >= 6) ? combatData.enemy.reflectMagic * numberMultiplier : 0)
