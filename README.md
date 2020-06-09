@@ -10,35 +10,36 @@ Chrome Release Version: [![Google Chrome](https://img.shields.io/chrome-web-stor
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* Auto Replant by Arcanus
+* AutoReplant
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
-    * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop.
-* AutoBonfire by Dream: continuously starts bonfires for you when you have a type of wood selected in Firemaking.
-* AutoCook by Unicue & improved by DanielRX: cycles through fish and cooks them all
-* Auto Mine & Auto Sell Gems by Strutty & others
-    * AutoMine now has a GUI for setting the mineArray priorities by dragging elements on the page.
-    * AutoSellGems will sell 100 gems once they've reached a stack of 100.
+    * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop
+    * If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
+* AutoBonfire: continuously starts bonfires for you when you have a type of wood selected in Firemaking
+* AutoCook: cycles through fish and cooks them all
+* AutoMine: now has a GUI for setting the mineArray priorities by dragging elements on the page
+* AutoSellGems: sells 100 gems once they've reached a stack of 100
 * AutoSmith Bars: cycle through smithing bars and smelt them if you have the materials to do so
 * Katorone Automation & GUI
-    * In-game menu for toggling & using Katorone's automation script functions, which can do these things:
+    * In-game menu for toggling & using certain Katorone automation script functions, which still does these things:
+        * Set a GP amount to keep in reserve
         * Automatically buys more bank space when full
-        * Automatically buys Gem Glove Charges, selling gems to acquire money for more charges
+        * Automatically buys Gem Glove Charges, selling gems to acquire money for more charges or bank space
         * Now saves your custom configuration settings, persisting across refreshes
-* AutoSell, AutoBury, and AutoOpen by DanielRX inspired by Katorone:
+* AutoSell, AutoBury, and AutoOpen
     * GUI menus for selecting items you want to sell, bury, or open automatically. Selections saved in SEMI localstorage config.
 * Combat Scripts
-    * AutoSlayer by Bubbalova, tweaked by myself
+    * AutoSlayer
         * Automates Slayer tasks, entering combat and constantly engaging whatever monster you're assigned.
         * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done.
         * Optionally skips these monsters: master farmer, moist monster, black knight, mithril knight, and rune knight.
-    * AutoRun extracted from AutoCombat by DanielRX: Exit combat if you're out of food/ammo/runes or if enemy can one-hit-kill you.
-    * AutoEquip Ammo extracted from AutoCombat by DanielRX: Attempts to equip more of the same type of arrow if using ranged before exiting combat. Now works in dungeons if you have dungeon equipment swap purchased.
+    * AutoRun: Exit combat if you're out of food/ammo/runes or if enemy can one-hit-kill you.
+    * AutoEquip Ammo: Attempts to equip more of the same type of arrow if using ranged before exiting combat. Now works in dungeons if you have dungeon equipment swap purchased.
     * AutoEat
         * Eats when HP is less than what food heals, or when HP is less than max hit of your enemy.
         * Usable for thieving as well as combat.
         * Automatically cycles to next equipped food if you run out.
-        * Takes damage reduction into consideration for max hit calculations.
-        * Now takes stun damage increases, burning damage, and damage reflection into account. Should be worthy of god dungeons.
+        * Takes damage reduction, stun damage increases, burning damage, and damage reflection into consideration for max hit calculations.
+        * Tested for god dungeons.
     * AutoLoot: picks up dropped loot items for you.
 * Extra functions & buttons
     * Toggle "OTHER" & "SOCIALS" Sidebar Button section visibility like you can do for "COMBAT" & "SKILLS"
@@ -53,7 +54,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 
 ***
 
-Thanks to everyone who writes scripts for Melvor and provides them to others!
+Thanks to everyone who writes scripts for Melvor and provides them to others! Many coders contributed to ideas here.
 
 ### Alternative Installation
 

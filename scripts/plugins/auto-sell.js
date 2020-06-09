@@ -112,6 +112,13 @@ var autoSellShow = (() => {
         }, 1000);
     };
 
+    const refreshLog = () => {
+        $(".modal.show").find(".fa.fa-fw.fa-times").click();
+        $("#modal-auto-sell").remove();
+        $("#auto-sell-menu-button").remove();
+        SEMI.injectGUI('auto-sell-menu');
+        $(`#modal-auto-sell`).modal('show');
+    };
 
     SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc});
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});

@@ -61,12 +61,12 @@
             return 0;
         };
 
-        /** @param {number?} item */
-        const equipFromBank = (item) => {
-            if(typeof item === 'undefined') {return false; }
+        /** @param {number?} itemID */
+        const equipFromBank = (itemID) => {
+            if(typeof itemID === 'undefined' || itemID === 0) {return false; }
             for (let i = 0; i < bank.length; i++) {
-                if(items[bank[i].id].name == items[item].name) {
-                    equipItem(i, item, 1, selectedEquipmentSet);
+                if(items[bank[i].id].name == items[itemID].name) {
+                    equipItem(i, itemID, 1, selectedEquipmentSet);
                     return true;
                 }
             }
@@ -77,6 +77,71 @@
 
         /** @param {string} slotName */
         const currentEquipmentInSlot = (slotName) => currentEquipment()[CONSTANTS.equipmentSlot[slotName]];
+
+        const equipSwapConfig = {
+            "Helmet": {
+                slotID: 0,
+                swapped: false
+            },
+            "Platebody": {
+                slotID: 1,
+                swapped: false
+            },
+            "Platelegs": {
+                slotID: 2,
+                swapped: false
+            },
+            "Boots": {
+                slotID: 3,
+                swapped: false
+            },
+            "Weapon": {
+                slotID: 4,
+                swapped: false
+            },
+            "Shield": {
+                slotID: 5,
+                swapped: false
+            },
+            "Amulet": {
+                slotID: 6,
+                swapped: false
+            },
+            "Ring": {
+                slotID: 7,
+                swapped: false
+            },
+            "Gloves": {
+                slotID: 8,
+                swapped: false
+            },
+            "Quiver": {
+                slotID: 9,
+                swapped: false
+            },
+            "Cape": {
+                slotID: 10,
+                swapped: false
+            }
+          };
+        /**
+         * Equips an item, remembers original item in slot, and can be called again to re-equip original item.
+         * @param {number} idSwap
+         * @param {string} slotName
+         */
+        const equipSwap = (idSwap, slotName) => {
+            const currentlyEquippedItemID = currentEquipmentInSlot(slotName);
+            if (!equipSwapConfig[slotName].swapped) {
+                equipSwapConfig[slotName].originalID = currentlyEquippedItemID;
+                if (slotName == 'Weapon') {
+                    const currentlyEquippedShield = currentEquipmentInSlot('Shield');
+                    equipSwapConfig['Shield'].originalID = currentlyEquippedShield;
+                }
+            }
+            equipFromBank((equipSwapConfig[slotName].swapped) ? equipSwapConfig[slotName].originalID : idSwap);
+            if (slotName == 'Weapon') { (equipSwapConfig[slotName].swapped) ? equipFromBank(equipSwapConfig['Shield'].originalID) : ''; }
+            equipSwapConfig[slotName].swapped = !equipSwapConfig[slotName].swapped;
+        };
 
         /** @param {SkillName} skillName */
         const currentLevel = (skillName) => skillLevel[CONSTANTS.skill[skillName]];
@@ -214,7 +279,7 @@
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
-            incomingAttackData, maxHP, currentHP,
+            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig,
             confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
             createElement, customNotify, getElements, getElement, getItem, setItem, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };

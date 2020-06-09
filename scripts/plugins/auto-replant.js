@@ -5,9 +5,6 @@
     const imgSrc = SEMI.skillImg('farming');
 
     //:: importing Melvor Auto Replant 1.6 by Arcanus on Greasyfork: https://greasyfork.org/en/scripts/394855-melvor-auto-replant
-    // updated with a change from 1.7: gloop!
-    // AW changes: added respect for katorone bot gp limit, extracted getCompost into a separate function
-
     const canBuyCompost = (n = 5) => {
         if(equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Farming_Skillcape) { return false; } // No need to buy with a cape
         if(!katoroneOn) {return true; }
@@ -38,9 +35,36 @@
     };
 
     const autoReplant = () => {
+        var patchCheck;
+        for (let i in newFarmingAreas) {
+            for (let j in newFarmingAreas[i].patches) {
+                const patch = newFarmingAreas[i].patches[j];
+                if(patch.hasGrown) { patchCheck = true; }
+            }
+        }
+        if(patchCheck && !isInCombat) {
+            swapFarmingEquipment(true);
+            SEMI.equipSwapConfig.script = id;
+        }
         for (let i in newFarmingAreas) { for (let j in newFarmingAreas[i].patches) { handlePatch(i, j); } }
+        if(SEMI.equipSwapConfig.script == id) {
+            swapFarmingEquipment(false);
+            SEMI.equipSwapConfig.script = '';
+        }
     };
-    //:: end of import of Melvor Auto Replant. Beautiful script.
+
+    /** @param {boolean} x */
+    const swapFarmingEquipment = (x = true) => {
+        if (x) {
+            if(checkBankForItem(CONSTANTS.item.Bobs_Rake)) {SEMI.equipSwap(CONSTANTS.item.Bobs_Rake, 'Weapon')}
+            if(checkBankForItem(CONSTANTS.item.Farming_Skillcape)) {SEMI.equipSwap(CONSTANTS.item.Farming_Skillcape, 'Cape')}
+            if(checkBankForItem(CONSTANTS.item.Aorpheats_Signet_Ring)) {SEMI.equipSwap(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring')}
+        } else {
+            if(SEMI.currentEquipmentInSlot('Weapon') == CONSTANTS.item.Bobs_Rake && SEMI.equipSwapConfig['Weapon'].swapped) {SEMI.equipSwap(CONSTANTS.item.Bobs_Rake, 'Weapon')}
+            if(SEMI.currentEquipmentInSlot('Cape') == CONSTANTS.item.Farming_Skillcape && SEMI.equipSwapConfig['Cape'].swapped) {SEMI.equipSwap(CONSTANTS.item.Farming_Skillcape, 'Cape')}
+            if(SEMI.currentEquipmentInSlot('Ring') == CONSTANTS.item.Aorpheats_Signet_Ring && SEMI.equipSwapConfig['Ring'].swapped) {SEMI.equipSwap(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring')}
+        }
+    };
 
     //extracting the buy compost sections to make the autoReplant function cleaner
     const bot_getCompost = () => {
