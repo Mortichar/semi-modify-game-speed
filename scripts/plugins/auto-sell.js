@@ -98,9 +98,12 @@ var autoSellShow = (() => {
 
         const enableAutoButton = $(`<button class="btn btn-md btn-danger m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
         enableAutoButton.on('click', () => SEMI.toggle(`auto-${pluginKind}`));
-        // const refreshLog = $(`<button class="btn btn-md btn-success m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
-        // refreshLog.on('click', () => SEMI.refreshSellLog());
+        const refreshLogBtn = $(`<button id="refreshLogBtn" type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+            <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current item log."></i>
+            </button>`);
+        refreshLogBtn.on('click', () => SEMI.refreshLog());
         y.before(enableAutoButton);
+        $(`#auto-sell-status`).parent().find('.fa.fa-fw.fa-times').before(refreshLogBtn);
         $(`#modal-auto-${pluginKind}`).on('hidden.bs.modal', () => {
             SEMI.setItem(`auto-${pluginKind}-config`, autoEnabled);
         });
@@ -115,11 +118,16 @@ var autoSellShow = (() => {
     const refreshLog = () => {
         $(".modal.show").find(".fa.fa-fw.fa-times").click();
         $("#modal-auto-sell").remove();
-        $("#auto-sell-menu-button").remove();
-        SEMI.injectGUI('auto-sell-menu');
+        injectGUI();
         $(`#modal-auto-sell`).modal('show');
+        if (SEMI.isEnabled('auto-sell')) {
+            $(`#${id}-status`).addClass('btn-success');
+            $(`#${id}-status`).removeClass('btn-danger');
+            $(`#${id}-status`).text('Enabled');
+        }
     };
 
     SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc});
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
+    SEMI.mergeOnto(SEMI,{refreshLog});
 })();
