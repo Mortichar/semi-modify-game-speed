@@ -37,18 +37,20 @@
     };
 
     const doOne = (i) => {
+        const bankFull = SEMI.isBankFull();
+        if (bankFull) {return;}
         const itemToTest = bank[i].id;
         const qty = SEMI.getBankQty(itemToTest);
         openBankItem(i, itemToTest, true);
-        setTimeout(() => { document.getElementsByClassName('swal2-confirm')[0].click();}, 100);
-        SEMI.customNotify(items[itemToTest].media, `Opening ${qty} of '${items[itemToTest].name}'`);
+        SEMI.confirmAndCloseModal(1500);
+        SEMI.customNotify(items[itemToTest].media, `Opening ${qty} of ${items[itemToTest].name}`);
         return true;
-    }
+    };
 
     const doFirstFound = () => {
         for(let i = 0; i < bank.length; i++) {
             const itemToTest = bank[i].id;
-            if(autoEnabled[bank[i].id]) {
+            if(autoEnabled[itemToTest]) {
                 const found = doOne(i);
                 if(found) { return true; }
             }
@@ -58,7 +60,8 @@
 
     const doAll = () => {
         let found = doFirstFound();
-        if(found) { setTimeout(doAll, 500); }
+        let bankFull = SEMI.isBankFull();
+        if(found && !bankFull) { setTimeout(doAll, 2000); }
     };
 
     const setupContainer = () => {
@@ -111,6 +114,6 @@
     };
 
 
-    SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc});
+    SEMI.add(id, {ms: 2000, onLoop: doFirstFound, onEnable, onDisable, title, desc});
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
 })();

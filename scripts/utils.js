@@ -78,6 +78,8 @@
         /** @param {string} slotName */
         const currentEquipmentInSlot = (slotName) => currentEquipment()[CONSTANTS.equipmentSlot[slotName]];
 
+        const isBankFull = () => { return bank.length >= baseBankMax + bankMax; };
+
         const equipSwapConfig = {
             "Helmet": {
                 slotID: 0,
@@ -210,11 +212,12 @@
 
         const filterItems = (f) => items.map((item, i) => ({...item, i})).filter(f).map(({i}) => i)
 
-        const confirmAndCloseModal = () => {
+        /** @param {number} n */
+        const confirmAndCloseModal = (n = 100) => {
             setTimeout(() => {
                 if (document.getElementsByClassName('swal2-confirm').length == 0) return;
                 document.getElementsByClassName('swal2-confirm')[0].click();
-            }, 100);
+            }, n);
         };
 
         const incomingAttackData = () => {
@@ -279,7 +282,7 @@
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
-            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig,
+            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull,
             confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
             createElement, customNotify, getElements, getElement, getItem, setItem, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };
