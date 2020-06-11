@@ -5,6 +5,8 @@ AutoMine changes & more fixes
 * Code & Utilities
     * Equipment Swap: equip an item and remember what was in its slot(s). Call it again to equip original item.
     * Is Bank Full: returns whether or not the bank is full.
+* UI updates
+    * Quick fix: XP/h for combat now shows Prayer and Slayer in their correct positions in the table.
 * New Script
     * Melvor TimeRemaining graciously provided by Breindahl now included: https://greasyfork.org/en/scripts/400936-melvor-timeremaining
 * Script updates
