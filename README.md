@@ -10,7 +10,7 @@ Chrome Release Version: [![Google Chrome](https://img.shields.io/chrome-web-stor
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* New: Melvor TimeRemaining script by Breindahl & co.
+* New: Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu.
 * AutoReplant
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
@@ -60,6 +60,12 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 ***
 
 Thanks to everyone who writes scripts for Melvor and provides them to others! Many coders contributed to ideas here.
+
+### Bugs & Requests
+
+Notice a bug? Have an idea for something SEMI can do?
+
+You can post [here on the issues page of the SEMI repository](https://gitlab.com/aldousWatts/SEMI/-/issues), chat about it in the Melvor discord in the #scripting-and-extensions channel, and/or talk to AldousWatts or DanielRX.
 
 ### Alternative Installation
 
