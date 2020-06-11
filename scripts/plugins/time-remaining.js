@@ -504,4 +504,11 @@ window.burnLog = function(...args) {
     taskComplete();
 };
 
+//fix scrunch ugliness
+$("#firemaking").find(".col-8.offset-2").attr('id','firemaking-log-display');
+$("#firemaking-log-display").removeClass();
+
+$("#cooking").find(".col-8.offset-2").attr('id','cooking-item-display');
+$("#cooking-item-display").removeClass();
+
 });

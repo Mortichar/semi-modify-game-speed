@@ -8,8 +8,8 @@ var injectXPHGUI = (() => {
         'xphc-3': 'Hitpoints',
         'xphc-4': 'Ranged',
         'xphc-5': 'Magic',
-        'xphc-6': 'Slayer',
-        'xphc-7': 'Prayer',
+        'xphc-6': 'Prayer',
+        'xphc-7': 'Slayer',
         'xphf': 'Farming',
         'xph': '',
         'xphc': ''

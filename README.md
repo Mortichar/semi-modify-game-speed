@@ -10,13 +10,18 @@ Chrome Release Version: [![Google Chrome](https://img.shields.io/chrome-web-stor
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
+* New: Melvor TimeRemaining script by Breindahl & co.
+    * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu.
 * AutoReplant
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop
     * If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
 * AutoBonfire: continuously starts bonfires for you when you have a type of wood selected in Firemaking
 * AutoCook: cycles through fish and cooks them all
-* AutoMine: now has a GUI for setting the mineArray priorities by dragging elements on the page
+* AutoMine
+    * Now has a GUI for setting the mineArray priorities by dragging elements on the page
+    * Mine-by-ratios by selecting a bar to mine for
+    * Detects if you have smithing cape if mining by ratios and adjusts your coal ratio properly
 * AutoSellGems: sells 100 gems once they've reached a stack of 100
 * AutoSmith Bars: cycle through smithing bars and smelt them if you have the materials to do so
 * Katorone Automation & GUI
