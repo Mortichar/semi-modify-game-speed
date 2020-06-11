@@ -118,7 +118,8 @@
         $('#SEMI-Auto-Mine-drag-div').after($(`${barSelector}<div class="col-6 col-lg-12">${btns}</div>`));
         for(let i = 0; i < bars.length + 1; i++) { $(`#AMbtn${i}`).on('click', () => AMselect(i)); }
         $(`#AMbtn${9}`).attr('title', "Default AM mineArray setting: prioritize XP.");
-        $(`#AMbtn${9}`).find('img').attr('src', "assets/media/shop/pickaxe_dragon.svg")
+        $(`#AMbtn${9}`).find('img').attr('src', "assets/media/shop/pickaxe_dragon.svg");
+        if (AMselection !== -1) { highlightBarBtn(AMselection); }
 
     };
 
