@@ -51,13 +51,21 @@ function createImg(itemID) {
 // Create timeLeft containers
 let TempContainer = ['<small id ="','" class="js-tooltip-enabled" style="display:block;clear:both" data-toggle="tooltip" data-placement="top" data-html="true" title="" data-original-title=""><small>']
 
-document.getElementById("smith-item-have").outerHTML += TempContainer[0] + "timeLeftSmithing" + TempContainer[1];
-document.getElementById("fletch-item-have").outerHTML += TempContainer[0] + "timeLeftFletching" + TempContainer[1];
-document.getElementById("runecraft-item-have").outerHTML += TempContainer[0] + "timeLeftRunecrafting" + TempContainer[1];
-document.getElementById("craft-item-have").outerHTML += TempContainer[0] + "timeLeftCrafting" + TempContainer[1];
-document.getElementById("herblore-item-have").outerHTML += TempContainer[0] + "timeLeftHerblore" + TempContainer[1];
-document.getElementById("skill-cooking-food-selected-qty").outerHTML += TempContainer[0] + "timeLeftCooking" + TempContainer[1];
-document.getElementById("skill-fm-logs-selected-qty").outerHTML += TempContainer[0] + "timeLeftFiremaking" + TempContainer[1];
+$("#smith-item-have").after(TempContainer[0] + "timeLeftSmithing" + TempContainer[1]);
+$("#fletch-item-have").after(TempContainer[0] + "timeLeftFletching" + TempContainer[1]);
+$("#runecraft-item-have").after(TempContainer[0] + "timeLeftRunecrafting" + TempContainer[1]);
+$("#craft-item-have").after(TempContainer[0] + "timeLeftCrafting" + TempContainer[1]);
+$("#herblore-item-have").after(TempContainer[0] + "timeLeftHerblore" + TempContainer[1]);
+$("#skill-cooking-food-selected-qty").after(TempContainer[0] + "timeLeftCooking" + TempContainer[1]);
+$("#skill-fm-logs-selected-qty").after(TempContainer[0] + "timeLeftFiremaking" + TempContainer[1]);
+
+// document.getElementById("smith-item-have").outerHTML += TempContainer[0] + "timeLeftSmithing" + TempContainer[1];
+// document.getElementById("fletch-item-have").outerHTML += TempContainer[0] + "timeLeftFletching" + TempContainer[1];
+// document.getElementById("runecraft-item-have").outerHTML += TempContainer[0] + "timeLeftRunecrafting" + TempContainer[1];
+// document.getElementById("craft-item-have").outerHTML += TempContainer[0] + "timeLeftCrafting" + TempContainer[1];
+// document.getElementById("herblore-item-have").outerHTML += TempContainer[0] + "timeLeftHerblore" + TempContainer[1];
+// document.getElementById("skill-cooking-food-selected-qty").outerHTML += TempContainer[0] + "timeLeftCooking" + TempContainer[1];
+// document.getElementById("skill-fm-logs-selected-qty").outerHTML += TempContainer[0] + "timeLeftFiremaking" + TempContainer[1];
 
 // Create itemProduce containers
 // document.getElementById("smith-item-produce").outerHTML += TempContainer[0] + "itemProduceSmithing" + TempContainer[1];
@@ -362,7 +370,7 @@ function timeRemaining(item,currentSkill){
 		if (timeLeft !== 0) {
 			let finishedTime = AddSecondsToDate(now,timeLeft);
 			let finishedTimeOffline = AddSecondsToDate(now,timeLeftOffline);
-				timeLeftElement.innerHTML = "Will take: " + secondsToHms(timeLeft) + "<br>Expected finished: " + DateFormat(finishedTime,timeLeft);
+				$("#"+timeLeftID).text("Will take: " + secondsToHms(timeLeft) + "\nExpected finished: " + DateFormat(finishedTime,timeLeft));
 				// Tooltip with time left if offline
 				$('#'+timeLeftID).attr('data-original-title', 'Offline: '+secondsToHms(timeLeftOffline) + '<br>Expected Finished: ' + DateFormat(finishedTimeOffline,timeLeftOffline));
 				// Refreshes tooltip if hovering
