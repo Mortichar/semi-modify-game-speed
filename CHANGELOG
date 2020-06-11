@@ -1,17 +1,20 @@
 Scripting Engine for Melvor Idle Changelog
 
 v0.3.9
-AutoMine changes & more
+AutoMine changes & more fixes
 * Code & Utilities
     * Equipment Swap: equip an item and remember what was in its slot(s). Call it again to equip original item.
+    * Is Bank Full: returns whether or not the bank is full.
 * Script updates
     * AutoMine
-        * No longer mines by ratios.
+        * No longer mines by ratios. Both bar selector and drag priority are included and work together.
         * SEMI GUI no longer injected into the Mining page without starting the script.
         * The way you set your mining priorities has changed. Now you can directly change the mineArray by dragging elements on the page.
         * No more priority override buttons, since you can exactly set your priority.
     * AutoSellGems now closes the sale confirmation modal for you if you have it enabled.
     * AutoReplant now equips special farming equipment before harvesting and replanting to maximize output.
+    * AutoOpen no longer causes issues when trying to open containers with a full bank.
+    * AutoSell has a refresh button for when you get new items that weren't yet in your item log when you loaded the game.
 
 v0.3.8.2
 Yet more fixes to auto-eat. Incorporated even more combat mechanics; hopefully all the bases are covered:
