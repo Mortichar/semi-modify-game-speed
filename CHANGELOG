@@ -3,7 +3,8 @@ Scripting Engine for Melvor Idle Changelog
 v0.3.10
 Melvor update v0.15.3, fixes
 * Script updates
-    * Working on Auto-sell finickyness...
+    * Auto Sell bugfix: no longer creates infinite loop when 'All But One' sale mode selected in bank; will override this choice and sell all items in the stack for Auto Sell items, re-enabling the option after selling.
+* Minor UI changes
 
 v0.3.9
 AutoMine changes & more fixes
