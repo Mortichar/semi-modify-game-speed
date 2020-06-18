@@ -1,4 +1,4 @@
-# This is Scripting Engine for Melvor Idle v0.3.9.
+# This is Scripting Engine for Melvor Idle v0.3.10.
 
 Huge thanks to DanielRX for contributing a ton of work to the extension!
 
@@ -89,4 +89,4 @@ Open the url "about:debugging" without quotes, enable add-on debugging if you ne
 ## Goal of the Software
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
 
-This was built around Melvor Idle alpha v0.15.2.1.
+This was built around Melvor Idle alpha v0.15.3.

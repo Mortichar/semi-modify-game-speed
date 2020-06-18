@@ -39,7 +39,13 @@ var autoSellShow = (() => {
     const doOne = (i) => {
         const itemToTest = bank[i].id;
         const qty = SEMI.getBankQty(itemToTest);
+        let allButOneEnabled = false;
+        if (allButOne) {
+            allButOne = false;
+            allButOneEnabled = true;
+        }
         sellItem(i, qty);
+        if (allButOneEnabled) { allButOne = true; }
         SEMI.confirmAndCloseModal();
         SEMI.customNotify(items[itemToTest].media, `Selling ${qty} of '${items[itemToTest].name}'`);
         return true;
