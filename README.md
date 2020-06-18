@@ -1,18 +1,16 @@
 # This is Scripting Engine for Melvor Idle v0.3.10.
 
-Huge thanks to DanielRX for contributing a ton of work to the extension!
+Huge thanks to DanielRX for contributing a ton of work to the project!
 
-### Official releases:
-[![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Firefox%20Add-on&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
-
-[![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Scripting%20Engine%20for%20Melvor%20Idle%3A%20Chrome%20Add-on&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
+[![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=Mozilla%20Firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
+[![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
 ## SEMI is a Firefox and Chrome web extension for Melvor Idle.
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
 * New: Melvor TimeRemaining script graciously provided by Breindahl & co.
-    * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu.
+    * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
 * AutoReplant
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop
@@ -32,26 +30,26 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * Automatically buys Gem Glove Charges, selling gems to acquire money for more charges or bank space
         * Now saves your custom configuration settings, persisting across refreshes
 * AutoSell, AutoBury, and AutoOpen
-    * GUI menus for selecting items you want to sell, bury, or open automatically. Selections saved in SEMI localstorage config.
+    * GUI menus for selecting items you want to sell, bury, or open automatically. Selections saved in SEMI localstorage config
 * Combat Scripts
     * AutoSlayer
-        * Automates Slayer tasks, entering combat and constantly engaging whatever monster you're assigned.
-        * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done.
-        * Optionally skips these monsters: master farmer, moist monster, black knight, mithril knight, and rune knight.
-    * AutoRun: Exit combat if you're out of food/ammo/runes or if enemy can one-hit-kill you.
-    * AutoEquip Ammo: Attempts to equip more of the same type of arrow if using ranged before exiting combat. Now works in dungeons if you have dungeon equipment swap purchased.
+        * Automates Slayer tasks, entering combat and constantly engaging whatever monster you're assigned
+        * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done
+        * Optionally skips these monsters: master farmer, moist monster, black knight, mithril knight, and rune knight
+    * AutoRun: Exit combat if you're out of food/ammo/runes or if enemy can one-hit-kill you
+    * AutoEquip Ammo: Attempts to equip more of the same type of arrow if using ranged before exiting combat. Now works in dungeons if you have dungeon equipment swap purchased
     * AutoEat
-        * Eats when HP is less than what food heals, or when HP is less than max hit of your enemy.
-        * Usable for thieving as well as combat.
-        * Automatically cycles to next equipped food if you run out.
-        * Takes damage reduction, stun damage increases, burning damage, and damage reflection into consideration for max hit calculations.
-        * Tested for god dungeons.
-    * AutoLoot: picks up dropped loot items for you.
+        * Eats when HP is less than what food heals, or when HP is less than max hit of your enemy
+        * Usable for thieving as well as combat
+        * Automatically cycles to next equipped food if you run out
+        * Takes damage reduction, stun damage increases, burning damage, and damage reflection into consideration for max hit calculations
+        * Tested for god dungeons
+    * AutoLoot: picks up dropped loot items for you
 * Extra functions & buttons
     * Toggle "OTHER" & "SOCIALS" Sidebar Button section visibility like you can do for "COMBAT" & "SKILLS"
     * Drag-able sidebar menu items by DanielRX!
         * Optional hidden section. Items dragged under the semi-icon divider will be hidden when the order is locked!
-        * Order saved in SEMI localstorage.
+        * Order saved in SEMI localstorage
     * Destroy All Crops button in the Farming page
     * Barf My Potion button in the Potion selection menu
     * Thieving calculators and tooltips by RedSparr0w (scavenged from Melvor Idle Helper)
