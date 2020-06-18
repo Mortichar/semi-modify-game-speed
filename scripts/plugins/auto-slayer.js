@@ -86,7 +86,7 @@
                 }
             }
             //Equips Slayer Skillcape if owned
-            if(SEMI.currentLevel('Slayer') >= 99 && SEMI.checkBankForItem(skillCape) || hasCape){
+            if(SEMI.currentLevel('Slayer') >= 99 && checkBankForItem(skillCape) || hasCape){
                 if(!hasCape) {
                     originalCape = currentCape();
                     found = equipFromBank(skillCape);
