@@ -140,17 +140,9 @@
 })();
 
 
-// AS AutoSkip
-let monsterIDs = [69, 13, 0, 72, 74]; //master farmer, moist monster, black knight, mithril knight, rune knight
+// // AS AutoSkip
+// let monsterIDs = [69, 13, 0, 72, 74]; //master farmer, moist monster, black knight, mithril knight, rune knight
 
 const slayerSkip = () => {
     if (monsterIDs.includes(slayerTask[0].monsterID)) { newSlayerTask(); }
 };
-
-(() => {
-    const id = 'auto-skip';
-    const title = 'AS AutoSkip';
-    const desc = 'This script option for AutoSlayer will skip a few monsters (master farmer, moist monster, black knight, mithril knight, rune knight) when they come up as your slayer task with AS enabled. Planned addition for future SEMI version: GUI or selection menu for skipping.';
-    const imgSrc = 'assets/media/monsters/m13.svg';
-    SEMI.add(id, {ms: 0, desc, imgSrc, title, isCombat: true});
-})();
