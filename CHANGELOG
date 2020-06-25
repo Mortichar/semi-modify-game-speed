@@ -1,5 +1,10 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.11
+AutoSlayer Fixes & New Menu
+* AutoSlayer no longer breaks at level 99 by trying to call a function that doesn't work.
+* AutoSlayer Skip now has a menu for selecting which monsters you wanna skip!
+
 v0.3.10
 Melvor update v0.15.3, fixes
 * Script updates
