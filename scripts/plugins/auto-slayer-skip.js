@@ -79,7 +79,7 @@ var autoSellShow = (() => {
         const enableAutoButton = $(`<button class="btn btn-md btn-danger m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
         enableAutoButton.on('click', () => SEMI.toggle(id));
         const refreshLogBtn = $(`<button id="refreshLogBtn" type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-            <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current item log."></i>
+            <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current monster log."></i>
             </button>`);
         refreshLogBtn.on('click', () => SEMI.refreshMonsterLog());
         y.before(enableAutoButton);
