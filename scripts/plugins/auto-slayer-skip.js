@@ -3,7 +3,7 @@ var autoSellShow = (() => {
 
     const id = `auto-${pluginKind}`;
     const title = 'AS AutoSkip';
-    const desc = 'This script option for AutoSlayer will skip all monsters except for those you select within this menu.';
+    const desc = 'This script option for AutoSlayer will skip all monsters selected in this menu.';
     const imgSrc = 'assets/media/monsters/m13.svg';
 
     let autoEnabled = [];
