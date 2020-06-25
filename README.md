@@ -35,7 +35,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * AutoSlayer
         * Automates Slayer tasks, entering combat and constantly engaging whatever monster you're assigned
         * Optionally automatically equips mirror shield or magic ring, replacing original equipment when done
-        * Optionally skips these monsters: master farmer, moist monster, black knight, mithril knight, and rune knight
+        * Optionally skips monsters based on a GUI selection menu similar to AutoSell
     * AutoRun: Exit combat if you're out of food/ammo/runes or if enemy can one-hit-kill you
     * AutoEquip Ammo: Attempts to equip more of the same type of arrow if using ranged before exiting combat. Now works in dungeons if you have dungeon equipment swap purchased
     * AutoEat
