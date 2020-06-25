@@ -81,7 +81,7 @@ var autoSellShow = (() => {
         const refreshLogBtn = $(`<button id="refreshLogBtn" type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
             <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current item log."></i>
             </button>`);
-        refreshLogBtn.on('click', () => SEMI.refreshLog());
+        refreshLogBtn.on('click', () => SEMI.refreshMonsterLog());
         y.before(enableAutoButton);
         $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').before(refreshLogBtn);
         $(`#modal-${id}`).on('hidden.bs.modal', () => {
@@ -99,7 +99,7 @@ var autoSellShow = (() => {
     };
 
     // TODO: Move this into onLoop, so it auto refreshes.
-    const refreshLog = () => {
+    const refreshMonsterLog = () => {
         $(".modal.show").find(".fa.fa-fw.fa-times").click();
         $(`#modal-${id}`).remove();
         injectGUI();
@@ -113,5 +113,5 @@ var autoSellShow = (() => {
 
     SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc, isCombat: true});
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI, isCombat: true});
-    SEMI.mergeOnto(SEMI,{refreshLog});
+    SEMI.mergeOnto(SEMI,{refreshMonsterLog});
 })();

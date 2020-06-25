@@ -65,8 +65,9 @@
             originalRing = currentRing();
         }
 
-        if (SEMI.isEnabled('auto-skip')) slayerSkip();
+        if (SEMI.isEnabled('auto-slayer-skip')) slayerSkip();
 
+        if (slayerTask[0] == null) return;
         const needsShield = slayerAreas[1].monsters.includes(slayerTask[0].monsterID);
         const needsRing = slayerAreas[2].monsters.includes(slayerTask[0].monsterID);
 
