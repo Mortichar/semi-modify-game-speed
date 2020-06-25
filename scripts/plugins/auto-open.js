@@ -10,7 +10,7 @@
 
     const fadeAll = () => {
         for (let i = 0; i < itemStats.length; i++) {
-            const x = $(`#auto-${pluginKind}-img-${i}`);
+            const x = $(`#${id}-img-${i}`);
             if(x.length === 0) { continue; }
             const shouldBeFaded = !autoEnabled[i];
             const currentState = typeof x.css('opacity') === 'undefined' ? '1' : x.css('opacity');
@@ -31,7 +31,7 @@
     const el = (i) => {
         const empty = itemStats[i].timesFound === 0;
         const {media, name} = empty ? emptyObj : items[i];
-        const e = $(`<img id="auto-${pluginKind}-img-${i}" class="skill-icon-md js-tooltip-enable" src="${media}" data-toggle="tooltip" data-html="true" data-placement="bottom" title="" data-original-title="${name}">`);
+        const e = $(`<img id="${id}-img-${i}" class="skill-icon-md js-tooltip-enable" src="${media}" data-toggle="tooltip" data-html="true" data-placement="bottom" title="" data-original-title="${name}">`);
         if(!empty) { e.on('click', () => toggleAutoEnabled(i)); }
         return e;
     };
@@ -65,14 +65,14 @@
     };
 
     const setupContainer = () => {
-        $(`#auto-${pluginKind}-container`).html('');
+        $(`#${id}-container`).html('');
         autoEnabled = Array(itemStats.length).fill(false);
         for (let i = 0; i < itemStats.length; i++) {
             if(!('dropQty' in items[i])) { continue; }
-            $(`#auto-${pluginKind}-container`).append(el(i));
+            $(`#${id}-container`).append(el(i));
         }
 
-        const loadedAutoEnabled = SEMI.getItem(`auto-${pluginKind}-config`);
+        const loadedAutoEnabled = SEMI.getItem(`${id}-config`);
         if(loadedAutoEnabled !== null) {
             autoEnabled = [...loadedAutoEnabled];
         }
@@ -90,20 +90,20 @@
         $(`#${id}-status`).removeClass('btn-danger');
     };
 
-    const autoShow = () => {  $(`#modal-auto-${pluginKind}`).modal('show'); };
+    const autoShow = () => {  $(`#modal-${id}`).modal('show'); };
 
     const injectGUI = () => {
         const x = $('#modal-item-log').clone().first();
-        x.attr('id', `modal-auto-${pluginKind}`);
+        x.attr('id', `modal-${id}`);
         $('#modal-item-log').parent().append(x);
-        const y = $(`#modal-auto-${pluginKind}`).children().children().children().children('.font-size-sm');
-        y.children().children().attr('id', `auto-${pluginKind}-container`);
+        const y = $(`#modal-${id}`).children().children().children().children('.font-size-sm');
+        y.children().children().attr('id', `${id}-container`);
 
         const enableAutoButton = $(`<button class="btn btn-md btn-danger m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
-        enableAutoButton.on('click', () => SEMI.toggle(`auto-${pluginKind}`));
+        enableAutoButton.on('click', () => SEMI.toggle(`${id}`));
         y.before(enableAutoButton);
-        $(`#modal-auto-${pluginKind}`).on('hidden.bs.modal', () => {
-            SEMI.setItem(`auto-${pluginKind}-config`, autoEnabled);
+        $(`#modal-${id}`).on('hidden.bs.modal', () => {
+            SEMI.setItem(`${id}-config`, autoEnabled);
         });
         setupContainer();
         setTimeout(() => {
