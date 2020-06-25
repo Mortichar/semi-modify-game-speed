@@ -3,7 +3,7 @@ var autoSellShow = (() => {
 
     const id = `auto-${pluginKind}`;
     const title = 'AS AutoSkip';
-    const desc = 'This script option for AutoSlayer will skip a few monsters (master farmer, moist monster, black knight, mithril knight, rune knight) when they come up as your slayer task with AS enabled. Planned addition for future SEMI version: GUI or selection menu for skipping.';
+    const desc = 'This script option for AutoSlayer will skip all monsters except for those you select within this menu.';
     const imgSrc = 'assets/media/monsters/m13.svg';
 
     let autoEnabled = [];
