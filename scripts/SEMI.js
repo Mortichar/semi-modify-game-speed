@@ -1,7 +1,7 @@
 (() => {
     // Scripting Engine for Melvor Idle v0.3.11 by aldousWatts on GitLab
     // Major code & script contributions by DanielRX
-    // Built for Melvor Idle alpha v0.15.3
+    // Built for Melvor Idle alpha v0.15.4
     // As always, use and modify at your own risk. But hey, contribute and share!
     // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 
