@@ -28,18 +28,6 @@
 
     /**
      * @param {string} name
-     * @param {string} linkID
-     */
-    const addStyle = (name, linkID) => {
-        const link = document.createElement('link');
-        link.rel = "stylesheet";
-        link.href = getURL(name);
-        link.setAttribute('id', linkID);
-        document.body.appendChild(link);
-    };
-
-    /**
-     * @param {string} name
      * @param {string} scriptID
      */
     const replaceScript = (name, scriptID) => {
@@ -90,7 +78,6 @@
 
     replaceScript('scripts/core.js', 'semi-inject-core');
     replaceScript('scripts/utils.js', 'semi-inject-utils');
-    addStyle('styles/semi.css', 'semi-css');
 
     const loadPlugins = () => {
         if(!exists('SEMI-canary')) { return; }
