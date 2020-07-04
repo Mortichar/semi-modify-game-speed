@@ -1,5 +1,8 @@
 Scripting Engine for Melvor Idle Changelog
 
+Current patch
+* Removed some code from semi.js to prevent unnecessary injection of semi.css which threw an error.
+
 v0.3.11
 AutoSlayer Fixes & New Menu
 * AutoSlayer no longer breaks at level 99 by trying to call a function that doesn't work.
