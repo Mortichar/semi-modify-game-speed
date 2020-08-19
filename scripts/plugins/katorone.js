@@ -131,7 +131,7 @@ const setLoadedKatValues = () => {
             // Does anything need selling?
             let sell = katBot.sellList.shift();
             if (sell) {
-                sellItem(getBankId(sell[0]), sell[1]);
+                sellItem(sell[0], sell[1]);
                 SEMI.confirmAndCloseModal();
                 const notification = `Katorone Automation just auto-sold ${sell[1]} ${items[sell[0]].name}.`;
                 notifyPlayer(10, notification);
