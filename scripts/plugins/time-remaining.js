@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor TimeRemaining
 // @namespace    http://tampermonkey.net/
-// @version      0.3.2
+// @version      0.3.10
 // @description  Shows time remaining for completing a task with your current resources. Takes into account Mastery Levels and other bonuses.
 // @author       Breindahl#2660
 // @match        https://*.melvoridle.com/*
@@ -15,7 +15,7 @@
     document.body.appendChild(script).parentNode.removeChild(script);
 })(() => {
 
-// Note that this script is made for MelvorIdle version 0.15.1
+// Note that this script is made for MelvorIdle version 0.16.2
 // Later versions might break parts of this script
 // Big thanks to Xhaf#6478 for helping with parts of the code and troubleshooting
 
@@ -45,11 +45,11 @@ function taskComplete() {
 
 // Make images
 function createImg(itemID) {
-	return '<img class="skill-icon-xs mr-2" src="' + items[itemID].media + '" />'
+	return '<img class="skill-icon-xs mr-2" src="' + items[itemID].media + '" />';
 }
 
 // Create timeLeft containers
-let TempContainer = ['<small id ="','" class="js-tooltip-enabled" style="display:block;clear:both" data-toggle="tooltip" data-placement="top" data-html="true" title="" data-original-title=""><small>']
+let TempContainer = ['<small id ="','" class="js-tooltip-enabled" style="display:block;clear:both" data-toggle="tooltip" data-placement="top" data-html="true" title="" data-original-title=""><small>'];
 
 $("#smith-item-have").after(TempContainer[0] + "timeLeftSmithing" + TempContainer[1]);
 $("#fletch-item-have").after(TempContainer[0] + "timeLeftFletching" + TempContainer[1]);
@@ -58,14 +58,8 @@ $("#craft-item-have").after(TempContainer[0] + "timeLeftCrafting" + TempContaine
 $("#herblore-item-have").after(TempContainer[0] + "timeLeftHerblore" + TempContainer[1]);
 $("#skill-cooking-food-selected-qty").after(TempContainer[0] + "timeLeftCooking" + TempContainer[1]);
 $("#skill-fm-logs-selected-qty").after(TempContainer[0] + "timeLeftFiremaking" + TempContainer[1]);
+$("#magic-item-have").after(TempContainer[0] + "timeLeftMagic" + TempContainer[1]);
 
-// document.getElementById("smith-item-have").outerHTML += TempContainer[0] + "timeLeftSmithing" + TempContainer[1];
-// document.getElementById("fletch-item-have").outerHTML += TempContainer[0] + "timeLeftFletching" + TempContainer[1];
-// document.getElementById("runecraft-item-have").outerHTML += TempContainer[0] + "timeLeftRunecrafting" + TempContainer[1];
-// document.getElementById("craft-item-have").outerHTML += TempContainer[0] + "timeLeftCrafting" + TempContainer[1];
-// document.getElementById("herblore-item-have").outerHTML += TempContainer[0] + "timeLeftHerblore" + TempContainer[1];
-// document.getElementById("skill-cooking-food-selected-qty").outerHTML += TempContainer[0] + "timeLeftCooking" + TempContainer[1];
-// document.getElementById("skill-fm-logs-selected-qty").outerHTML += TempContainer[0] + "timeLeftFiremaking" + TempContainer[1];
 
 // Create itemProduce containers
 // document.getElementById("smith-item-produce").outerHTML += TempContainer[0] + "itemProduceSmithing" + TempContainer[1];
@@ -108,7 +102,7 @@ function AddSecondsToDate(date, seconds) {
 
 // Format date
 function DateFormat(date,time){
-  let days = Math.floor(time / 86400)
+  let days = Math.floor(time / 86400);
   days = days > 0 ? ' + ' + days + ' days': '';
   //let days = date.getDate();
   //let year = date.getFullYear();
@@ -126,7 +120,7 @@ function xpToLvlRef(level) {
 	let xp = 0;
 	if (level === 1) {return xp;}
 	for (var i = 1; i < level; i++) {
-		xp += Math.floor(i +300*Math.pow(2,i/7) )/48
+		xp += Math.floor(i +300*Math.pow(2,i/7) )/48;
 	}
 	return Math.floor(xp);
 }
@@ -143,17 +137,18 @@ function timeRemaining(item,currentSkill){
 	var itemProduceID = "itemProduce".concat(currentSkill); // Field for generating itemProduce HTML
     var skillReq = []; // Needed items for craft and their quantities
 	var	masteryLimLevel = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,Infinity]; // This array contain the thresholds at which a new chanceToKeep comes into effect
-	var	chanceToKeep = [0.0000,0.0025,0.0050,0.0075,0.0100,0.0125,0.0150,0.0175,0.0200,0.0225,0.0250,0.0275,0.0300,0.0325,0.0350,0.0375,0.0400,0.0425,0.0450,0.0475,0.0500,0.0525,0.0550,0.0575,0.0600,0.0625,0.0650,0.0675,0.0700,0.0725,0.0750,0.0775,0.0800,0.0825,0.0850,0.0875,0.0900,0.0925,0.0950,0.0975,0.1000,0.1025,0.1050,0.1075,0.1100,0.1125,0.1150,0.1175,0.1200,0.1225,0.1250,0.1275,0.1300,0.1325,0.1350,0.1375,0.1400,0.1425,0.1450,0.1475,0.1500,0.1525,0.1550,0.1575,0.1600,0.1625,0.1650,0.1675,0.1700,0.1725,0.1750,0.1775,0.1800,0.1825,0.1850,0.1875,0.1900,0.1925,0.1950,0.1975,0.2000,0.2025,0.2050,0.2075,0.2100,0.2125,0.2150,0.2175,0.2200,0.2225,0.2250,0.2275,0.2300,0.2325,0.2350,0.2375,0.2400,0.2425,0.2450]; //Percentage chance of keeping item
+	var	chanceToKeep = [0.000, 0.002, 0.004, 0.006, 0.008, 0.010, 0.012, 0.014, 0.016, 0.018, 0.020, 0.022, 0.024, 0.026, 0.028, 0.030, 0.032, 0.034, 0.036, 0.038, 0.040, 0.042, 0.044, 0.046, 0.048, 0.050, 0.052, 0.054, 0.056, 0.058, 0.060, 0.062, 0.064, 0.066, 0.068, 0.070, 0.072, 0.074, 0.076, 0.078, 0.080, 0.082, 0.084, 0.086, 0.088, 0.090, 0.092, 0.094, 0.096, 0.098, 0.100, 0.102, 0.104, 0.106, 0.108, 0.110, 0.112, 0.114, 0.116, 0.118, 0.120, 0.122, 0.124, 0.126, 0.128, 0.130, 0.132, 0.134, 0.136, 0.138, 0.140, 0.142, 0.144, 0.146, 0.148, 0.150, 0.152, 0.154, 0.156, 0.158, 0.160, 0.162, 0.164, 0.166, 0.168, 0.170, 0.172, 0.174, 0.176, 0.178, 0.180, 0.182, 0.184, 0.186, 0.188, 0.190, 0.192, 0.194, 0.196]; //Percentage chance of keeping item
 	var itemCraft = []; // Amount of items craftable for each resource requirement
     var recordCraft = Infinity; // Amount of craftable items for limiting resource
 	var now = new Date(); // Current time and day
-	var tokenChance = 0;
 	var skillBonusesID = null;
 	var masteryLim = [];
-	var chanceToBonus = [];
-	for (let i = 0; i < masteryLimLevel.length; i++) {
-		chanceToBonus[i] = 0;
-	}
+	var rhaelyxCharge = 0;
+	// var tokenChance = 0;
+	// var chanceToBonus = [];
+	// for (let i = 0; i < masteryLimLevel.length; i++) {
+		// chanceToBonus[i] = 0;
+	// }
 
 	// Set current skill and pull match variables from game with script
 	if (currentSkill == "Smithing") {
@@ -164,15 +159,16 @@ function timeRemaining(item,currentSkill){
 		for (let i of items[item].smithReq) {
 			skillReq.push(i);
 		}
-		masteryLimLevel = [10,20,30,40,50,60,70,80,90,Infinity] // Smithing Mastery Limits
-		chanceToKeep = [0,0,0.1,0.1,0.2,0.2,0.3,0.3,0.4,0.4]; //Smithing Mastery bonus percentages
-		chanceToBonus = [0,0.1,0.1,0.2,0.2,0.3,0.3,0.4,0.4,0.5]; //Smithing Mastery bonus percentages
-		tokenChance = 300;
-		skillBonusesID = 11;
+		masteryLimLevel = [10,20,30,40,50,60,70,80,90,Infinity]; // Smithing Mastery Limits
+		chanceToKeep = [0,0,0.05,0.05,0.10,0.10,0.15,0.15,0.20,0.20]; //Smithing Mastery bonus percentages
+		// chanceToBonus = [0,0.1,0.1,0.2,0.2,0.3,0.3,0.4,0.4,0.5]; //Smithing Mastery bonus percentages
+		// tokenChance = 300;
+		// skillBonusesID = 11;
 	}
 	if (currentSkill == "Fletching") {
 		skillInterval = 2000;
 		if (godUpgrade[0]) skillInterval *= 0.8;
+		if (petUnlocked[8]) fletchInterval -= 200;
 		skillID = fletchingItems[selectedFletch].fletchingID;
 		skillMastery = fletchingMastery[skillID].masteryXP;
 		for (let i of items[item].fletchReq) {
@@ -183,7 +179,7 @@ function timeRemaining(item,currentSkill){
 			if (selectedFletchLog === undefined) {selectedFletchLog = 0;}
 			skillReq = [skillReq[selectedFletchLog]];
 		}
-		tokenChance = 550;
+		// tokenChance = 550;
 	}
 	if (currentSkill == "Runecrafting") {
 		skillInterval = 2000;
@@ -193,22 +189,28 @@ function timeRemaining(item,currentSkill){
 		for (let i of items[item].runecraftReq) {
 			skillReq.push(i);
 		}
-		masteryLimLevel = [10,20,30,40,50,60,70,80,90,Infinity] // Runecrafting Mastery Limits
+		//masteryLimLevel = [10,20,30,40,50,60,70,80,90,Infinity]; // Runecrafting Mastery Limits
+		masteryLimLevel = [Infinity]; // Runecrafting Mastery Limits
+		chanceToKeep = [];
 		for (let i = 0; i < masteryLimLevel.length; i++) {
 			chanceToKeep[i] = 0;
+			if (equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Runecrafting_Skillcape || equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Max_Skillcape) chanceToKeep[i] += 0.35;
+            if (petUnlocked[10]) chanceToKeep[i] += PETS[10].chance/100;
 		}
-		chanceToBonus = [0,1,2,3,4,5,6,7,8,9];
-		tokenChance = 1000;
+		// chanceToBonus = [0,1,2,3,4,5,6,7,8,9];
+		// tokenChance = 1000;
 	}
 	if (currentSkill == "Crafting") {
 		skillInterval = 3000;
 		if (godUpgrade[0]) skillInterval *= 0.8;
-        skillID = craftingItems[selectedCraft].craftingID;
+        if (equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Crafting_Skillcape || equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Max_Skillcape) skillInterval = skillInterval / 2;
+		if (petUnlocked[9]) craftInterval -= 300;
+		skillID = craftingItems[selectedCraft].craftingID;
 		skillMastery = craftingMastery[skillID].masteryXP;
 		for (let i of items[item].craftReq) {
 			skillReq.push(i);
 		}
-		tokenChance = 400;
+		// tokenChance = 400;
     }
 	if (currentSkill == "Herblore") {
 		skillInterval = 2000;
@@ -218,11 +220,7 @@ function timeRemaining(item,currentSkill){
 		for (let i of items[item].herbloreReq) {
 			skillReq.push(i);
 		}
-		// Add 0.05% chance to Keep because Herblore is wierd
-		for (let i = 0; i < chanceToKeep.length; i++) {
-			chanceToKeep[i] = parseFloat((chanceToKeep[i]+0.0005).toFixed(4));
-		}
-		tokenChance = 400;
+		// tokenChance = 400;
     }
 	if (currentSkill == "Cooking") {
 		skillInterval = 3000;
@@ -232,18 +230,14 @@ function timeRemaining(item,currentSkill){
 		skillReq = [{id: item, qty: 1}];
 		masteryLimLevel = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,Infinity]; // This array contain the thresholds at which a new chanceToKeep comes into effect
 		for (let i = 0; i < masteryLimLevel.length; i++) {
-			let chanceToBonusTemp = (-((0.3-((i+1)*0.006))*0.99));
-			if (chanceToBonusTemp > -0.01) { chanceToBonusTemp = -0.01; }
-			chanceToBonus[i] = parseFloat(chanceToBonusTemp.toFixed(4));
-		}
-		for (let i = 0; i < masteryLimLevel.length; i++) {
 			chanceToKeep[i] = 0;
 		}
-		// console.log("chanceToBonus");
-		// console.log(chanceToBonus);
-		// console.log("chanceToKeep");
-		// console.log(chanceToKeep);
-		tokenChance = 1000;
+		// for (let i = 0; i < masteryLimLevel.length; i++) {
+			// let chanceToBonusTemp = (-((0.3-((i+1)*0.006))*0.99));
+			// if (chanceToBonusTemp > -0.01) { chanceToBonusTemp = -0.01; }
+			// chanceToBonus[i] = parseFloat(chanceToBonusTemp.toFixed(4));
+		// }
+		// tokenChance = 1000;
 	}
 	if (currentSkill == "Firemaking") {
 		skillInterval = logsData[item].interval;
@@ -253,30 +247,38 @@ function timeRemaining(item,currentSkill){
 		skillReq = [{id: item, qty: 1}];
 		masteryLimLevel = [Infinity]; //Cooking has no Mastery bonus for time
 		chanceToKeep = [0]; //Thus gives no extra items
-		chanceToBonus = [0];
-		tokenChance = 1000;
+		// chanceToBonus = [0];
+		// tokenChance = 1000;
 	}
+	// if (currentSkill == "AltMagic") {
+		// skillInterval = 2000;
+        // skillID = XXX;
+		// masteryLimLevel = [Infinity]; //AltMagic has no Mastery bonus
+		// chanceToKeep = [0]; //Thus gives no extra items
+	// }
 
 	// Populate masteryLim from masteryLimLevel
 	for (let i = 0; i < masteryLimLevel.length; i++) {
 		if (masteryLimLevel[i] == Infinity) {
-			masteryLim[i] = Infinity
+			masteryLim[i] = Infinity;
 		} else {
 		masteryLim[i] = xpToLvlRef(masteryLimLevel[i]);
 		}
 	}
 
-    // Get Item Requirements and Current Requirements
-	for (let i = 0; i < skillReq.length; i++) {
-		var itemReq;
-		//Special Case: Check for Smithing Cape
-		if (equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Smithing_Skillcape && skillReq[i].id == 48) {
-			itemReq = Math.floor(skillReq[i].qty / 2);
-		} else  {
-			itemReq = skillReq[i].qty;
+	// Check for Crown of Rhaelyx
+	if (equippedItems.includes(CONSTANTS.item.Crown_of_Rhaelyx) && currentSkill != "AltMagic") {
+		for (let i = 0; i < masteryLimLevel.length; i++) {
+			chanceToKeep[i] += .10;
 		}
+		rhaelyxCharge = getQtyUnformat(CONSTANTS.item.Charge_Stone_of_Rhaelyx);
+	}
+
+	// Get Item Requirements and Current Requirements
+	for (let i = 0; i < skillReq.length; i++) {
+		let	itemReq = skillReq[i].qty;
 		//Check how many of required resourse in Bank
-		var itemQty = getQtyUnformat(skillReq[i].id);
+		let itemQty = getQtyUnformat(skillReq[i].id);
 		// Calculate max items you can craft for each itemReq
 		itemCraft[i] = Math.floor(itemQty/itemReq);
 		// Calculate limiting factor and set new record
@@ -288,8 +290,6 @@ function timeRemaining(item,currentSkill){
     //Return the chanceToKeep for any mastery EXP
     function masteryChance(masteryEXP, chanceToRefTable){
         let chanceTo = chanceToRefTable;
-		// console.log("chanceTo");
-		// console.log(chanceTo);
 		if (masteryEXP >= masteryLim[0]) {
 			for (let i = 0; i < masteryLim.length; i++) {
 				if (masteryLim[i] <= masteryEXP && masteryEXP < masteryLim[i+1]) {
@@ -301,29 +301,40 @@ function timeRemaining(item,currentSkill){
 	// console.log("recordCraft" + recordCraft);
 
 	// Calculates expected time, taking into account Mastery Level advancements during the craft
-    function expectedActionsFunc(resources){
+	function expectedActionsFunc(resources){
+		let chargeUses = rhaelyxCharge/0.001;
 		let xpFinalResult = 0;
-		let resFinalResult = 0;
+		let RhaelyxChance = 0.15;
+		// let resFinalResult = 0;
 		let currentMastery = skillMastery;
 		while (resources > 0) {
 			let currentMasteryLim = masteryLim.find(element => element > currentMastery);
-			let masteryChanceKeep = 1-masteryChance(currentMastery,chanceToKeep);
-			let masteryChanceBonus = 1+masteryChance(currentMastery,chanceToBonus);
-			let expectedXP = Math.round(resources/masteryChanceKeep);
-			let expectedRes = Math.round(expectedXP*masteryChanceBonus);
-			let xpToLimit = currentMasteryLim - currentMastery
+			let totalChanceToKeep = 1-masteryChance(currentMastery,chanceToKeep);
+			// let masteryChanceBonus = 1+masteryChance(currentMastery,chanceToBonus);
+			let xpToLimit = currentMasteryLim - currentMastery;
+			let expectedXP;
+			if (chargeUses >= xpToLimit || chargeUses >= resources/(totalChanceToKeep-RhaelyxChance)){
+				totalChanceToKeep -= RhaelyxChance; //if we have excess uses, then we simply use better chance to keep and move on as usual
+			} else {
+				totalChanceToKeep = resources / (chargeUses/(totalChanceToKeep-RhaelyxChance) + (resources-chargeUses)/totalChanceToKeep); //the denominator is the "real" expectedXP with Rhaelyx, so the "real" chanceToKeep is essentially found through resources/(resources/chanceToKeep)
+			}
+			expectedXP = Math.round(resources/totalChanceToKeep);
+			// let expectedRes = Math.round(expectedXP*masteryChanceBonus);
+
 			if (xpToLimit > expectedXP) {
 				xpFinalResult += expectedXP;
-				resFinalResult += expectedRes;
+				// resFinalResult += expectedRes;
 				resources -= resources;
 			} else {
 				xpFinalResult += xpToLimit;
-				resFinalResult += Math.round(xpToLimit*masteryChanceBonus);
-				resources -= Math.round(xpToLimit*masteryChanceKeep);
+				// resFinalResult += Math.round(xpToLimit*masteryChanceBonus);
+				resources -= Math.round(xpToLimit*totalChanceToKeep);
+				chargeUses -= xpToLimit;
 			}
 			currentMastery = currentMasteryLim;
 		}
-        return {"xpFinalResult" : xpFinalResult, "resFinalResult" : resFinalResult};
+		return {"xpFinalResult" : xpFinalResult};
+		// return {"xpFinalResult" : xpFinalResult, "resFinalResult" : resFinalResult};
 	}
 	var expectedActionsRef = expectedActionsFunc(recordCraft);
 	var expectedActions = expectedActionsRef.xpFinalResult;
@@ -370,7 +381,7 @@ function timeRemaining(item,currentSkill){
 		if (timeLeft !== 0) {
 			let finishedTime = AddSecondsToDate(now,timeLeft);
 			let finishedTimeOffline = AddSecondsToDate(now,timeLeftOffline);
-				$("#"+timeLeftID).text("Will take: " + secondsToHms(timeLeft) + "\nExpected finished: " + DateFormat(finishedTime,timeLeft));
+				timeLeftElement.innerHTML = "Will take: " + secondsToHms(timeLeft) + "<br>Expected finished: " + DateFormat(finishedTime,timeLeft);
 				// Tooltip with time left if offline
 				$('#'+timeLeftID).attr('data-original-title', 'Offline: '+secondsToHms(timeLeftOffline) + '<br>Expected Finished: ' + DateFormat(finishedTimeOffline,timeLeftOffline));
 				// Refreshes tooltip if hovering
@@ -511,12 +522,4 @@ window.burnLog = function(...args) {
     timeRemaining(selectedLog,"Firemaking");
     taskComplete();
 };
-
-//fix scrunch ugliness
-$("#firemaking").find(".col-8.offset-2").attr('id','firemaking-log-display');
-$("#firemaking-log-display").removeClass();
-
-$("#cooking").find(".col-8.offset-2").attr('id','cooking-item-display');
-$("#cooking-item-display").removeClass();
-
 });
