@@ -44,7 +44,7 @@ var autoSellShow = (() => {
             allButOne = false;
             allButOneEnabled = true;
         }
-        sellItem(i, qty);
+        sellItem(itemToTest, qty);
         if (allButOneEnabled) { allButOne = true; }
         SEMI.confirmAndCloseModal();
         SEMI.customNotify(items[itemToTest].media, `Selling ${qty} of '${items[itemToTest].name}'`);
