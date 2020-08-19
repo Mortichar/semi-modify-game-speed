@@ -18,7 +18,7 @@
             if(curQty > targetStack) {
                 count++;
                 setTimeout(() => {
-                    sellItem(getBankId(gemId), targetStack);
+                    sellItem(gemId, targetStack);
                     SEMI.confirmAndCloseModal();
                     SEMI.customNotify('assets/media/main/coins.svg', `Auto Sell Gems just sold ${targetStack} ${items[gemId].name}.`, 5000);
                 }, count*150);
