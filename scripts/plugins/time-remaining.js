@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor TimeRemaining
 // @namespace    http://tampermonkey.net/
-// @version      0.3.10
+// @version      0.3.12
 // @description  Shows time remaining for completing a task with your current resources. Takes into account Mastery Levels and other bonuses.
 // @author       Breindahl#2660
 // @match        https://*.melvoridle.com/*
@@ -144,6 +144,8 @@ function timeRemaining(item,currentSkill){
 	var skillBonusesID = null;
 	var masteryLim = [];
 	var rhaelyxCharge = 0;
+	var chargeUses = 0;
+	var chargeUsesOffline = 0;
 	// var tokenChance = 0;
 	// var chanceToBonus = [];
 	// for (let i = 0; i < masteryLimLevel.length; i++) {
@@ -257,6 +259,9 @@ function timeRemaining(item,currentSkill){
 		// chanceToKeep = [0]; //Thus gives no extra items
 	// }
 
+	// Copy chanceToKeep into chanceToKeepOffline
+	var chanceToKeepOffline = [...chanceToKeep];
+
 	// Populate masteryLim from masteryLimLevel
 	for (let i = 0; i < masteryLimLevel.length; i++) {
 		if (masteryLimLevel[i] == Infinity) {
@@ -270,9 +275,17 @@ function timeRemaining(item,currentSkill){
 	if (equippedItems.includes(CONSTANTS.item.Crown_of_Rhaelyx) && currentSkill != "AltMagic") {
 		for (let i = 0; i < masteryLimLevel.length; i++) {
 			chanceToKeep[i] += .10;
+			if (currentSkill == "Runecrafting") { // Crown only works with RC for Offline Currently
+				chanceToKeepOffline[i] += .10;
+			}
 		}
 		rhaelyxCharge = getQtyUnformat(CONSTANTS.item.Charge_Stone_of_Rhaelyx);
+		chargeUses = rhaelyxCharge/0.001;
+		if (currentSkill == "Runecrafting") { // Crown only works with RC for Offline Currently
+			chargeUsesOffline = chargeUses;
+		}
 	}
+    var RhaelyxChance = 0.15;
 
 	// Get Item Requirements and Current Requirements
 	for (let i = 0; i < skillReq.length; i++) {
@@ -302,23 +315,21 @@ function timeRemaining(item,currentSkill){
 
 	// Calculates expected time, taking into account Mastery Level advancements during the craft
 	function expectedActionsFunc(resources){
-		let chargeUses = rhaelyxCharge/0.001;
 		let xpFinalResult = 0;
-		let RhaelyxChance = 0.15;
 		// let resFinalResult = 0;
 		let currentMastery = skillMastery;
 		while (resources > 0) {
 			let currentMasteryLim = masteryLim.find(element => element > currentMastery);
-			let totalChanceToKeep = 1-masteryChance(currentMastery,chanceToKeep);
+			let totalChanceToUse = 1-masteryChance(currentMastery,chanceToKeep);
 			// let masteryChanceBonus = 1+masteryChance(currentMastery,chanceToBonus);
 			let xpToLimit = currentMasteryLim - currentMastery;
 			let expectedXP;
-			if (chargeUses >= xpToLimit || chargeUses >= resources/(totalChanceToKeep-RhaelyxChance)){
-				totalChanceToKeep -= RhaelyxChance; //if we have excess uses, then we simply use better chance to keep and move on as usual
+			if (chargeUses >= xpToLimit || chargeUses >= resources/(totalChanceToUse-RhaelyxChance)){
+				totalChanceToUse -= RhaelyxChance; //if we have excess uses, then we simply use better chance to keep and move on as usual
 			} else {
-				totalChanceToKeep = resources / (chargeUses/(totalChanceToKeep-RhaelyxChance) + (resources-chargeUses)/totalChanceToKeep); //the denominator is the "real" expectedXP with Rhaelyx, so the "real" chanceToKeep is essentially found through resources/(resources/chanceToKeep)
+				totalChanceToUse = resources / (chargeUses/(totalChanceToUse-RhaelyxChance) + (resources-chargeUses)/totalChanceToUse); //the denominator is the "real" expectedXP with Rhaelyx, so the "real" chanceToKeep is essentially found through resources/(resources/chanceToKeep)
 			}
-			expectedXP = Math.round(resources/totalChanceToKeep);
+			expectedXP = Math.round(resources/totalChanceToUse);
 			// let expectedRes = Math.round(expectedXP*masteryChanceBonus);
 
 			if (xpToLimit > expectedXP) {
@@ -328,8 +339,9 @@ function timeRemaining(item,currentSkill){
 			} else {
 				xpFinalResult += xpToLimit;
 				// resFinalResult += Math.round(xpToLimit*masteryChanceBonus);
-				resources -= Math.round(xpToLimit*totalChanceToKeep);
+				resources -= Math.round(xpToLimit*totalChanceToUse);
 				chargeUses -= xpToLimit;
+				if (chargeUses < 0) chargeUses = 0;
 			}
 			currentMastery = currentMasteryLim;
 		}
@@ -339,7 +351,16 @@ function timeRemaining(item,currentSkill){
 	var expectedActionsRef = expectedActionsFunc(recordCraft);
 	var expectedActions = expectedActionsRef.xpFinalResult;
 	//var expectedResources = expectedActionsRef.resFinalResult;
-	var expectedActionsOffline = Math.floor(recordCraft/(1-masteryChance(skillMastery,chanceToKeep)));
+
+	// A bunch of shenanigans just so that we can calculate the offline actions accounting for Crown Actions
+	let totalChanceToUseOffline = 1-masteryChance(skillMastery,chanceToKeepOffline);
+	if (chargeUsesOffline >= recordCraft || chargeUsesOffline >= recordCraft/(totalChanceToUseOffline-RhaelyxChance)){
+		totalChanceToUseOffline -= RhaelyxChance;
+	} else {
+		totalChanceToUseOffline = recordCraft / (chargeUsesOffline/(totalChanceToUseOffline-RhaelyxChance) + (recordCraft-chargeUsesOffline)/totalChanceToUseOffline);
+	}
+	var expectedActionsOffline = Math.floor(recordCraft / totalChanceToUseOffline);
+
 	//var expectedResourcesOffline = Math.floor(expectedActionsOffline*(1+masteryChance(skillMastery,chanceToBonus)));
 
 	// WORK IN PROGRESS
