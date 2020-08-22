@@ -62,15 +62,10 @@
         };
 
         /** @param {number?} itemID */
-        const equipFromBank = (itemID) => {
+        const equipFromBank = (itemID, qty = 1) => {
             if(typeof itemID === 'undefined' || itemID === 0) {return false; }
-            for (let i = 0; i < bank.length; i++) {
-                if(items[bank[i].id].name == items[itemID].name) {
-                    equipItem(i, itemID, 1, selectedEquipmentSet);
-                    return true;
-                }
-            }
-            return false;
+            equipItem(0, itemID, qty, selectedEquipmentSet);
+            return true;
         };
 
         const currentEquipment = () => equipmentSets[selectedEquipmentSet].equipment;
@@ -135,13 +130,26 @@
             const currentlyEquippedItemID = currentEquipmentInSlot(slotName);
             if (!equipSwapConfig[slotName].swapped) {
                 equipSwapConfig[slotName].originalID = currentlyEquippedItemID;
-                if (slotName == 'Weapon') {
+                if (slotName === 'Weapon') {
                     const currentlyEquippedShield = currentEquipmentInSlot('Shield');
                     equipSwapConfig['Shield'].originalID = currentlyEquippedShield;
+
+                    // Store ammo count for javelins and throwing knives
+                    if (items[currentlyEquippedItemID].ammoType === 2 || items[currentlyEquippedItemID].ammoType === 3) {
+                        equipSwapConfig[slotName].ammo = equipmentSets[selectedEquipmentSet].ammo;
+                    } else {
+                        equipSwapConfig[slotName].ammo = 0;
+                    }
                 }
             }
-            equipFromBank((equipSwapConfig[slotName].swapped) ? equipSwapConfig[slotName].originalID : idSwap);
-            if (slotName == 'Weapon') { (equipSwapConfig[slotName].swapped) ? equipFromBank(equipSwapConfig['Shield'].originalID) : ''; }
+            if (equipSwapConfig[slotName].swapped) {
+                equipFromBank(equipSwapConfig[slotName].originalID, equipSwapConfig[slotName].ammo || 1);
+                if (slotName === 'Weapon') {
+                    equipFromBank(equipSwapConfig['Shield'].originalID);
+                }
+            } else {
+                equipFromBank(idSwap);
+            }
             equipSwapConfig[slotName].swapped = !equipSwapConfig[slotName].swapped;
         };
 
