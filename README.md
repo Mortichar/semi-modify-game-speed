@@ -1,4 +1,4 @@
-# This is Scripting Engine for Melvor Idle v0.3.11.
+# This is Scripting Engine for Melvor Idle v0.3.12.
 
 Huge thanks to DanielRX for contributing a ton of work to the project!
 
