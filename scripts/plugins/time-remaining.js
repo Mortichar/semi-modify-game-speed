@@ -15,7 +15,7 @@
     document.body.appendChild(script).parentNode.removeChild(script);
 })(() => {
 
-// Note that this script is made for MelvorIdle version 0.16.2
+// Note that this script is made for MelvorIdle version 0.16.2.1
 // Later versions might break parts of this script
 // Big thanks to Xhaf#6478 for helping with parts of the code and troubleshooting
 
