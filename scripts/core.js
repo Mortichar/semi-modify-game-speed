@@ -1,9 +1,25 @@
 var SEMI =  (() => {
     /**
-     * @typedef {{enable: () => void, disable: () => void, onDisable: () => void, onEnable: () => void, onLoop: () => void, updateStatus: () => void, onToggle: () => void}} PluginFunctions
-     * @typedef {{imgSrc: string, desc: string, title: string, skill: string, isCombat: boolean}} PluginMeta
-     * @typedef {PluginFunctions & PluginMeta & {f: string, enabled: boolean, interval: number | null, ms: number}} Plugin
-     */
+    * @typedef {{enable: () => void, disable: () => void, onDisable: () => void, onEnable: () => void, onLoop: () => void, updateStatus: () => void, onToggle: () => void}} PluginFunctions
+    * @typedef {{imgSrc: string, desc: string, title: string, skill: string, isCombat: boolean}} PluginMeta
+    * @typedef {PluginFunctions & PluginMeta & {f: string, enabled: boolean, interval: number | null, ms: number}} Plugin
+    */
+
+    /**
+    * @param {string} x
+    * @param {*} y
+    */
+    const setItem = (x, y) => {
+        console.log("setItem -> x, y", x, y)
+        localStorage.setItem(`SEMI-${x}`, JSON.stringify(y));
+    }
+
+    /** @param {string} x */
+    const getItem = (x) => {
+        const y = JSON.parse(localStorage.getItem(`SEMI-${x}`));
+        console.log("getItem -> x, y", x, y);
+        return y;
+    }
 
     const mergeOnto = (x, y) => {
         Object.keys(y).forEach((key) => { x[key] = y[key]; });
@@ -41,12 +57,12 @@ var SEMI =  (() => {
     };
 
     /**
-     * @type {{[pluginName: string]: Plugin}}
-     */
+    * @type {{[pluginName: string]: Plugin}}
+    */
     const plugins = {};
     /**
-     * @type {string[]}
-     */
+    * @type {string[]}
+    */
     const pluginNames = [];
 
     let skillCount = 0;
@@ -98,19 +114,27 @@ var SEMI =  (() => {
             plugin.enabled = !plugin.enabled;
             plugin.onToggle();
             plugin.updateStatus();
-
             if (plugin.enabled) { return plugin.enable(); }
             return plugin.disable();
         };
 
-        const updateStatus = () => { if($(`#${name}-status`) !== null) { $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled'); } };
+        const updateStatus = () => { 
+            setItem(`${name}-status`, plugins[name].enabled);
+            if($(`#${name}-status`) !== null) { $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled'); }
+        };
 
         const injectGUI = () => {
             addToMenu();
             opts.injectGUI();
         };
 
-        const plugin = {...opts, toggle, interval: null, enable, disable, updateStatus, injectGUI, enabled: false};
+        const useSaved = Boolean(getItem('remember-state'));
+        const wasEnabled = Boolean(getItem(`${name}-status`));
+        const enabled = wasEnabled && useSaved;
+        if(enabled) {
+            setTimeout(enable, 1000);
+        }
+        const plugin = {...opts, toggle, interval: null, enable, disable, updateStatus, injectGUI, enabled};
         plugins[name] = plugin;
     };
 
@@ -136,5 +160,5 @@ var SEMI =  (() => {
     */
     const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
 
-    return {add, toggle, enable, disable, isEnabled, injectGUI, pluginNames, createElement, utilsReady: false};
+    return {add, toggle, enable, disable, isEnabled, injectGUI, pluginNames, createElement, setItem, getItem, utilsReady: false};
 })();

@@ -3,15 +3,6 @@
     const ROOT_ID = 'SEMI-menu';
     const injectUtils = () => {
         console.log('Starting inject utils!');
-        /**
-        * @param {string} x
-        * @param {*} y
-        */
-        const setItem = (x, y) => localStorage.setItem(`SEMI-${x}`, JSON.stringify(y));
-
-        /** @param {string} x */
-        const getItem = (x) => JSON.parse(localStorage.getItem(`SEMI-${x}`));
-
         /** @param {string} id */
         const getElement = (id) => { return $(`#${ROOT_ID}-${id}`).first(); };
 
@@ -156,6 +147,9 @@
 
         /** @param {SkillName} skillName */
         const ownsCape = (skillName) => isMaxLevel(skillName) && checkBankForItem(CONSTANTS.item[`${skillName}_Skillcape`]);
+        /** @param {SkillName} skillName */
+        const hasCapeOn = (skillName) => equippedItems.includes(CONSTANTS.item[`${skillName}_Skillcape`]) || equippedItems.includes(CONSTANTS.item.Max_Skillcape);
+
 
         const formatTimeFromMinutes = (min = 0) => {
             if(min == 0 || min == Infinity) { return '...'; }
@@ -260,14 +254,14 @@
         };
 
         const adjustedMaxHit = () => {
-            var maxHit = SEMI.maxHitOfCurrentEnemy();
+            let maxHit = SEMI.maxHitOfCurrentEnemy();
             //enemy damage multipliers (stun etc) are calculated before player damage reduction
             const playerIsStunned = SEMI.playerIsStunned();
             const stunnedCase = playerIsStunned && !isNaN(SEMI.incomingAttackData().incomingAttack.stunDamageMultiplier);
             if (stunnedCase) { maxHit *= SEMI.incomingAttackData().incomingAttack.stunDamageMultiplier; }
 
             const damageReductionMultiplier = (100-damageReduction)/100;
-            var adjustedMaxHit = Math.ceil(maxHit * damageReductionMultiplier);
+            let adjustedMaxHit = Math.ceil(maxHit * damageReductionMultiplier);
             //Lamb's calculations account for other contingencies: burning damage, air god reflect damage, etc
             adjustedMaxHit += ((combatData.player.isBurning) ? Math.floor(SEMI.maxHP() * 0.02) : 0)
                 + ((combatData.enemy.reflectMelee && attackStyle <= 2) ? combatData.enemy.reflectMelee * numberMultiplier : 0)
@@ -282,9 +276,9 @@
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
-            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull,
+            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull, hasCapeOn,
             confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
-            createElement, customNotify, getElements, getElement, getItem, setItem, getBankQty, iconSrc, mergeOnto, ROOT_ID
+            createElement, customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });
         console.log('Utils injected!');
