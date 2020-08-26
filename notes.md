@@ -1,7 +1,5 @@
 # SEMI General notes
 
-Test add- push mee
-
 ## TODO
 
 * "Better" checks for things like putting on capes and gloves etc when needed
