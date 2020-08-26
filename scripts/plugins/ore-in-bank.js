@@ -57,6 +57,7 @@ function injectOreAmount() {
 	}
 	// Update Ore amount once
 	updateOreAmount();
+	toggleOreAmount();
 }
 
 /**
