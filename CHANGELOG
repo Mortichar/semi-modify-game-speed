@@ -1,7 +1,10 @@
 Scripting Engine for Melvor Idle Changelog
 
-Current patch
+v0.3.12
+Melvor updated a bunch! Now v0.16.2.1
 * Removed some code from semi.js to prevent unnecessary injection of semi.css which threw an error.
+* Merged a script to show the current amount of ore in bank on the mining skill page rocks.
+* Silenced 1s loop katorone script saving settings in the console.
 
 v0.3.11
 AutoSlayer Fixes & New Menu
