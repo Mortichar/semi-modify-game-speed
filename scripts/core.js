@@ -9,8 +9,8 @@ var SEMI =  (() => {
     * @param {string} x
     * @param {*} y
     */
-    const setItem = (x, y) => {
-        console.log("setItem -> x, y", x, y)
+    const setItem = (x, y, silent=false) => {
+        if (!silent) console.log("setItem -> x, y", x, y);
         localStorage.setItem(`SEMI-${x}`, JSON.stringify(y));
     }
 
