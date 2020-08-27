@@ -170,7 +170,7 @@ function timeRemaining(item,currentSkill){
 	if (currentSkill == "Fletching") {
 		skillInterval = 2000;
 		if (godUpgrade[0]) skillInterval *= 0.8;
-		if (petUnlocked[8]) fletchInterval -= 200;
+		if (petUnlocked[8]) skillInterval -= 200;
 		skillID = fletchingItems[selectedFletch].fletchingID;
 		skillMastery = fletchingMastery[skillID].masteryXP;
 		for (let i of items[item].fletchReq) {
@@ -206,7 +206,7 @@ function timeRemaining(item,currentSkill){
 		skillInterval = 3000;
 		if (godUpgrade[0]) skillInterval *= 0.8;
         if (equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Crafting_Skillcape || equippedItems[CONSTANTS.equipmentSlot.Cape] === CONSTANTS.item.Max_Skillcape) skillInterval = skillInterval / 2;
-		if (petUnlocked[9]) craftInterval -= 300;
+		if (petUnlocked[9]) skillInterval -= 300;
 		skillID = craftingItems[selectedCraft].craftingID;
 		skillMastery = craftingMastery[skillID].masteryXP;
 		for (let i of items[item].craftReq) {
