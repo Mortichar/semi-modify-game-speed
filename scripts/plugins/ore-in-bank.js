@@ -52,7 +52,7 @@ function injectOreAmount() {
 			image = `<img src="${item.media}" data-toggle="tooltip" data-placement="top" data-original-title="${item.name}" class="skill-icon-xs mr-2 js-tooltip-enabled"></img>`
 		}
 		if(document.getElementById(`${GUI.idName}${i}`) === null) {
-			document.getElementById("mining-rates-"+i).outerHTML += `<span class="${GUI.className}"><br><small id="${GUI.idName}${i}">${GUI.prefix}</small>${image}</span>`;
+			$("#mining-rates-"+i).after(`<span class="${GUI.className}"><br><small id="${GUI.idName}${i}">${GUI.prefix}</small>${image}</span>`);
 		}
 	}
 	// Update Ore amount once
@@ -70,7 +70,7 @@ function updateOreAmount() {
 		let elementToChange = document.getElementById(`${GUI.idName}${i}`);
 		if(elementToChange !== null) {
 			// Changing inner html
-			elementToChange.innerHTML = `${GUI.prefix}${formatNumber(SEMI.getBankQty(miningData[i].ore))}`;
+			$(`#${GUI.idName}${i}`).text(`${GUI.prefix}${formatNumber(SEMI.getBankQty(miningData[i].ore))}`);
 		}
 	}
 }
