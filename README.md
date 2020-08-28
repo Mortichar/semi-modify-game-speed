@@ -9,7 +9,8 @@ Huge thanks to DanielRX for contributing a ton of work to the project!
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* New: Melvor TimeRemaining script graciously provided by Breindahl & co.
+* New: Show Ore in Bank -- adds ore counts to mining page rocks.
+* Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
 * AutoReplant
     * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
