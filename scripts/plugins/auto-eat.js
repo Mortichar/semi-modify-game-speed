@@ -12,7 +12,7 @@
         const hpfood = numberMultiplier * items[currentFood.itemID].healsFor; // numberMultiplier = 10, adjusts hp math
         const adjustedMaxHit = SEMI.adjustedMaxHit();
         const maxHitEatingCase = (hp <= adjustedMaxHit) && isInCombat;
-        const generalEatingCase = (hpdeficit > hpfood) && !isInCombat;
+        const generalEatingCase = ((hpdeficit > hpfood) || hp <= 50) && !isInCombat;
         const eatingCase = maxHitEatingCase || generalEatingCase;
         if(eatingCase) {
             eatFood();
