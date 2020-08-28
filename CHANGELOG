@@ -1,10 +1,17 @@
 Scripting Engine for Melvor Idle Changelog
 
 v0.3.12
-Melvor updated a bunch! Now v0.16.2.1
+Melvor updated a bunch! Now at v0.16.2.1
 * Removed some code from semi.js to prevent unnecessary injection of semi.css which threw an error.
-* Merged a script to show the current amount of ore in bank on the mining skill page rocks.
-* Silenced 1s loop katorone script saving settings in the console.
+* Silenced 1s loop katorone script saving settings in the console, now SEMI.setItem has a silent mode.
+* Added failsafe for AutoEat outside combat if your HP healed by your food exceeds your max HP.
+Community code updates
+* AutoMine priority button tooltips now fresh and dapper.
+* Updated TimeRemaining script to newest version.
+* New plugin: ore-in-bank shows the current amount of ore in bank on the mining skill page rocks.
+Visua Merges
+* Hopefully fixed random order of drag-menus and prevent new scripts or skills from being auto-hidden.
+* SEMI.equipSwap now remembers quantity of arrows or javelins when re-equipping.
 
 v0.3.11
 AutoSlayer Fixes & New Menu
