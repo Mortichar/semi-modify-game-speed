@@ -11,18 +11,12 @@ var injectDragMenus = () => {
         menuConfig[section] = {locked: true, order: []};
     });
 
-    const indexOrInf = (arr) => (el) => {
-        let i = arr.indexOf(el);
-        return i === -1 ? Infinity : i;
-    };
-
     const orderMenu = (section) => {
         const order = menuConfig[section].order;
         if(order.length === 0) {return;}
         const menu = getEl(`section-${section}-inner`);
         const menuItems = [...menu.children()];
-        const indexOf = indexOrInf(order);
-        const sortedMenu = menuItems.sort((menuA, menuB) => indexOf(menuA.id) - indexOf(menuB.id));
+        const sortedMenu = menuItems.sort((menuA, menuB) => order.indexOf(menuA.id) - order.indexOf(menuB.id));
         menu.append(sortedMenu);
     };
 
