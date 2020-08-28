@@ -43,16 +43,15 @@ var SEMI =  (() => {
     * @param {string} fName
     * @param {string} title
     * @param {string} name
-    * @param {number} index
     * @param {boolean} isCombat
     */
-    const makeMenuItem = (desc, imgSrc, fName, title, name, index, isCombat) => {
+    const makeMenuItem = (desc, imgSrc, fName, title, name, isCombat) => {
         const imgEl =  createElement('img', {src: imgSrc, id: `${name}-img`, class: 'nav-img'});
         const textEl = createElement('span', {innerHTML: title, class: 'nav-main-link-name'});
         const statusEl = createElement('small', {id: `${name}-status`, innerHTML: 'Disabled'});
         const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact'}, [imgEl, textEl, statusEl]);
         const rootId = 'SEMI-menu-' + (isCombat ? 'combat' : 'skills');
-        const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + index, class: 'nav-main-item SEMI-menu-button'}, [buttonEl]);
+        const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: 'nav-main-item SEMI-menu-button'}, [buttonEl]);
         return mainEl;
     };
 
@@ -64,9 +63,6 @@ var SEMI =  (() => {
     * @type {string[]}
     */
     const pluginNames = [];
-
-    let skillCount = 0;
-    let combatSkillCount = 0;
 
     /**
     * @param {string} name
@@ -80,10 +76,9 @@ var SEMI =  (() => {
         const addToMenu = () => {
             const plugin = plugins[name];
             if(plugin.imgSrc === '') { return; }
-            const newCount = plugin.isCombat ? combatSkillCount++ : skillCount++;
             let el = $('#SEMI-menu-skills-section-unsorted');
             if(plugin.isCombat) { el = $('#SEMI-menu-combat-section-unsorted'); }
-            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, newCount, plugin.isCombat);
+            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, plugin.isCombat);
             el.append(pluginEl);
         };
 
@@ -118,7 +113,7 @@ var SEMI =  (() => {
             return plugin.disable();
         };
 
-        const updateStatus = () => { 
+        const updateStatus = () => {
             setItem(`${name}-status`, plugins[name].enabled);
             if($(`#${name}-status`) !== null) { $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled'); }
         };
