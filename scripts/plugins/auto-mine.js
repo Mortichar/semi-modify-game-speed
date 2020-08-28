@@ -5,40 +5,6 @@
     const imgSrc = 'assets/media/shop/pickaxe_dragon.svg';
     const skill = 'Mining';
 
-
-    // const addOverrideButtons = () => {
-    //     if ($('#autoMine1').length) return;
-    //     for (let i = 0; i < rockData.length; i++) {
-    //         const overrideBtn = $(`<button id="autoMine${i}" class="btn btn-outline-primary" style="width: 100%" type="button">AM Priority Override</button>`);
-    //         overrideBtn.on('click', () => autoMineSet(i));
-    //         $(`#mining-ore-${i}`).prepend(overrideBtn);
-    //     }
-    // };
-
-    // const injectAutoMineGUI = () => {
-    //     addOverrideButtons();
-
-    //     const bars = ['bronze', 'iron', 'steel', 'silver', 'gold', 'mithril', 'adamantite', 'runite', 'dragonite'];
-    //     const ores = ['rune_essence', 'copper', 'tin', 'iron', 'coal', 'silver', 'gold', 'mithril', 'adamantite', 'runite', 'dragonite'];
-    //     const btn = (i) => `<button id="AMbtn${i}" class="AMbtn btn btn-outline-primary" type="button">
-    //     <img src="assets/media/bank/${bars[i]}_bar.svg" width="32" height="32">
-    //     </button>`;
-
-    //     const btns = Array(10).fill(0).map((_, i) => btn(i)).join('\n        \n');
-    //     const selector = `
-    //     <div class="col-6 col-lg-12" id="AMselector">
-    //         <div class="block-header text-center mb-1 SEMI-gold" style="color: gold; background: #2c343f !important; border-radius: 5px;">
-    //             SEMI AutoMine Bar Selection GUI: Set the robot to mine ores for specific bars.
-    //         </div>
-    //     </div>`
-    //     //AutoMine Bar Select GUI
-    //     $('#mining-container .row:first').after($(`${selector}<div class="col-6 col-lg-12">${btns}</div><br><br>`));
-    //     for(let i = 0; i < bars.length + 1; i++) { $(`#AMbtn${i}`).on('click', () => AMselect(i)); }
-    //     $(`#AMbtn${9}`).attr('title', "Default AM mineArray setting: prioritize XP.");
-    //     $(`#AMbtn${9}`).find('img').attr('src', "assets/media/shop/pickaxe_dragon.svg")
-    //     highlightBarBtn(9);
-    // };
-
     const menuConfig = {};
     const storeAutoMineOrder = () => {
         const menu = $("#SEMI-Auto-Mine-drag-div");
@@ -69,7 +35,7 @@
                 <img src="assets/media/bank/${ores[i]}.svg" width="36" height="36">
                 </div>`;
             } else {
-                return `<div id="AutoMineDrag${i}" class="AMbtn btn btn-outline-primary SEMI-AM-els" title="${ores[i]}">
+                return `<div id="AutoMineDrag${i}" class="AMbtn btn btn-outline-primary SEMI-AM-els" title="${ores[i].charAt(0).toUpperCase() + ores[i].slice(1)} Ore">
                 <img src="assets/media/skills/mining/rock_${ores[i]}.svg" width="36" height="36">
                 </div>`;
             }
@@ -117,6 +83,8 @@
         //AutoMine Bar Select GUI
         $('#SEMI-Auto-Mine-drag-div').after($(`${barSelector}<div class="col-6 col-lg-12">${btns}</div>`));
         for(let i = 0; i < bars.length + 1; i++) { $(`#AMbtn${i}`).on('click', () => AMselect(i)); }
+        //tool-tip for bars with capital letters [by Remko de Bruin]
+        for (let i = 0; i < bars.length; i++){ $(`#AMbtn${i}`).attr('title', `${bars[i].charAt(0).toUpperCase() + bars[i].slice(1)} Bar`); }
         $(`#AMbtn${9}`).attr('title', "Default AM mineArray setting: prioritize XP.");
         $(`#AMbtn${9}`).find('img').attr('src', "assets/media/shop/pickaxe_dragon.svg");
         if (AMselection !== -1) { highlightBarBtn(AMselection); }
@@ -155,31 +123,7 @@
         {[ORES.Dragonite]: 1, [ORES.Runite]: 2, [ORES.Coal]: 12}
     ];
     let resourceRatios = [];
-    // let mineArray = mineArrays[9];
-
-    //autoMine Override: buttons injected in setupSEMI
-    // let autoMineOverride = false;
-    // let overrideRock;
-
-    // /** @param {number} x */
-    // const autoMineSet = (x) => {
-    //     if (x == overrideRock && autoMineOverride) {
-    //         mineArray.shift();
-    //         autoMineOverride = false;
-    //         overrideRock = null;
-    //         $(`#autoMine${x}`).removeClass('btn-primary'); //de-highlight current selection & turn off
-    //     } else {
-    //         if (overrideRock !== null && autoMineOverride) {
-    //             mineArray.shift();
-    //             $(`#autoMine${overrideRock}`).removeClass('btn-primary'); //de-highlight previous
-    //         }
-    //         mineArray.unshift(x);
-    //         $(`#autoMine${x}`).addClass('btn-primary'); //highlight
-    //         overrideRock = x;
-    //         autoMineOverride = true;
-    //     }
-    // };
-
+    
     /** @param {number} n */
     const highlightBarBtn = (n) => {
         $('.AMbtn').removeClass('btn-primary'); //de-highlight all
