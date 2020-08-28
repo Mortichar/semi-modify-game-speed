@@ -31,7 +31,7 @@
 
         const div = (i) => {
             if (i==10) {
-                return `<div id="AutoMineDrag${i}" class="AMbtn btn btn-outline-primary SEMI-AM-els">
+                return `<div id="AutoMineDrag${i}" class="AMbtn btn btn-outline-primary SEMI-AM-els" title="Rune Essence">
                 <img src="assets/media/bank/${ores[i]}.svg" width="36" height="36">
                 </div>`;
             } else {
