@@ -45,7 +45,7 @@ def main():
     if not os.path.exists(rootDir+"/.build/outputs"):
         os.makedirs(rootDir+"/.build/outputs")
 
-    print("Moving SEMI-Firefox.zip and SEMI-Chrome.zip to ./build/outputs/...")
+    print("Moving SEMI-Firefox.zip and SEMI-Chrome.zip to ./.build/outputs/...")
     os.rename(rootDir+"/SEMI-Firefox.zip", rootDir+"/.build/outputs/SEMI-Firefox.zip")
     os.rename(rootDir+"/SEMI-Chrome.zip", rootDir+"/.build/outputs/SEMI-Chrome.zip")
 
