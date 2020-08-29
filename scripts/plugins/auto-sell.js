@@ -4,7 +4,7 @@ var autoSellShow = (() => {
     const id = `auto-${pluginKind}`;
     const title = 'AutoSell';
     const desc = 'AutoSell is a script for selling items you no longer want.';
-    const imgSrc = 'assets/media/main/bank_header.svg';
+    const imgSrc = 'assets/media/main/gp.svg';
 
     let autoEnabled = [];
 

@@ -4,7 +4,7 @@
     const id = `auto-${pluginKind}`;
     const title = 'AutoOpen';
     const desc = 'AutoOpen is a script for opening containers like chests.';
-    const imgSrc = 'assets/media/main/bank_header.svg';
+    const imgSrc = 'assets/media/bank/elite_chest.svg';
 
     let autoEnabled = [];
 
