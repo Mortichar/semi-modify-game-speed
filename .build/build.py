@@ -7,7 +7,7 @@ def zipdir(path, ziph, folderName):
     # ziph is zipfile handle
     for root, dirs, files in os.walk(path):
         for file in files:
-            ziph.write(os.path.join(root, file), folderName+"\\"+file)
+            ziph.write(os.path.join(root, file), folderName+"/"+file)
 
 def main():
     # move to SEMI parent directory
@@ -15,9 +15,9 @@ def main():
     
     # define the three directories we need to add to archive
     rootDir = os.getcwd()
-    folder1 = "\\icons"
-    folder2 = "\\scripts"
-    folder3 = "\\styles"
+    folder1 = "/icons"
+    folder2 = "/scripts"
+    folder3 = "/styles"
     dir1 = rootDir+folder1
     dir2 = rootDir+folder2
     dir3 = rootDir+folder3
@@ -42,12 +42,12 @@ def main():
 
     # Move the two files to ./.build/outputs/
     print("Checking for ./.build/outputs directory and creating if it doesn't exist...")
-    if not os.path.exists(rootDir+"\\.build\\outputs"):
-        os.makedirs(rootDir+"\\.build\\outputs")
+    if not os.path.exists(rootDir+"/.build/outputs"):
+        os.makedirs(rootDir+"/.build/outputs")
 
     print("Moving SEMI-Firefox.zip and SEMI-Chrome.zip to ./build/outputs/...")
-    os.rename(rootDir+"\\SEMI-Firefox.zip", rootDir+"\\.build\\outputs\\SEMI-Firefox.zip")
-    os.rename(rootDir+"\\SEMI-Chrome.zip", rootDir+"\\.build\\outputs\\SEMI-Chrome.zip")
+    os.rename(rootDir+"/SEMI-Firefox.zip", rootDir+"/.build/outputs/SEMI-Firefox.zip")
+    os.rename(rootDir+"/SEMI-Chrome.zip", rootDir+"/.build/outputs/SEMI-Chrome.zip")
 
     print("SEMI build script completed!")
     
