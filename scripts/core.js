@@ -21,6 +21,20 @@ var SEMI =  (() => {
         return y;
     }
 
+    const backupSEMI = () => {
+        //getItem(all)
+            //for each var of allSEMIVars
+            //getItem()
+        //json.stringify
+        //print to modal text box or something
+    }
+
+    const restoreSEMI = () => {
+        //text input
+        //json.parse
+        //setItem(all)
+    }
+
     const mergeOnto = (x, y) => {
         Object.keys(y).forEach((key) => { x[key] = y[key]; });
     };
@@ -155,5 +169,5 @@ var SEMI =  (() => {
     */
     const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
 
-    return {add, toggle, enable, disable, isEnabled, injectGUI, pluginNames, createElement, setItem, getItem, utilsReady: false};
+    return {add, toggle, enable, disable, isEnabled, injectGUI, pluginNames, createElement, setItem, getItem, backupSEMI, restoreSEMI, utilsReady: false};
 })();

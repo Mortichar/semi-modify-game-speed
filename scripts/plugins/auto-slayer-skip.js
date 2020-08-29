@@ -78,12 +78,14 @@ var autoSellShow = (() => {
 
         const enableAutoButton = $(`<button class="btn btn-md btn-danger m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
         enableAutoButton.on('click', () => SEMI.toggle(id));
-        const refreshLogBtn = $(`<button id="refreshLogBtn" type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+        y.before(enableAutoButton);
+
+        const refreshLogBtn = $(`<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
             <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current monster log."></i>
             </button>`);
         refreshLogBtn.on('click', () => SEMI.refreshMonsterLog());
-        y.before(enableAutoButton);
         $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').before(refreshLogBtn);
+
         $(`#modal-${id}`).on('hidden.bs.modal', () => {
             SEMI.setItem(`${id}-config`, autoEnabled);
         });
@@ -98,7 +100,6 @@ var autoSellShow = (() => {
 
     };
 
-    // TODO: Move this into onLoop, so it auto refreshes.
     const refreshMonsterLog = () => {
         $(".modal.show").find(".fa.fa-fw.fa-times").click();
         $(`#modal-${id}`).remove();

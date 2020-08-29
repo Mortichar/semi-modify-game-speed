@@ -4,7 +4,7 @@
 
 * SEMI config backup import/export
 * ~~Merge Visua fixes~~
-* Refresh auto-bury & auto-open
+* ~~Refresh auto-bury & auto-open~~
 
 ## TODO overflow
 
