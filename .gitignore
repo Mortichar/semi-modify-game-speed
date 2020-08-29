@@ -3,3 +3,4 @@ cloud.md
 node_modules
 .vscode/launch.json
 jsconfig.json
+.build/outputs
