@@ -104,10 +104,12 @@
         y.before(enableAutoButton);
 
         const refreshLogBtn = $(`<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-            <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current monster log."></i>
+            <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current container log."></i>
             </button>`);
         refreshLogBtn.on('click', () => SEMI.refreshContainerLog());
         $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').before(refreshLogBtn);
+
+        $(`#modal-${id} .block-title`).text(`${title} Menu`);
 
         $(`#modal-${id}`).on('hidden.bs.modal', () => {
             SEMI.setItem(`${id}-config`, autoEnabled);

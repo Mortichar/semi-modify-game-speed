@@ -86,6 +86,8 @@ var autoSellShow = (() => {
         refreshLogBtn.on('click', () => SEMI.refreshMonsterLog());
         $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').before(refreshLogBtn);
 
+        $(`#modal-${id} .block-title`).text(`${title} Menu`);
+
         $(`#modal-${id}`).on('hidden.bs.modal', () => {
             SEMI.setItem(`${id}-config`, autoEnabled);
         });
