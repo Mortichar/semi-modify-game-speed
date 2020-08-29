@@ -12,7 +12,7 @@ def zipdir(path, ziph, folderName):
 def main():
     # move to SEMI parent directory
     os.chdir(os.pardir)
-    
+
     # define the three directories we need to add to archive
     rootDir = os.getcwd()
     folder1 = "/icons"
@@ -50,6 +50,6 @@ def main():
     os.rename(rootDir+"/SEMI-Chrome.zip", rootDir+"/.build/outputs/SEMI-Chrome.zip")
 
     print("SEMI build script completed!")
-    
+
 if __name__ == '__main__':
-   main()
+    main()
