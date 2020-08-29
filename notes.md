@@ -3,7 +3,7 @@
 ## TODO v0.3.13
 
 * SEMI config backup import/export
-* Merge Visua fixes
+* ~~Merge Visua fixes~~
 * Refresh auto-bury & auto-open
 
 ## TODO overflow
