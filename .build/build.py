@@ -40,10 +40,16 @@ def main():
         zipdir(dir2, cBuild, folder2)
         zipdir(dir3, cBuild, folder3)
 
-    # Move the two files to ./.build/output/
+    # Move the two files to ./.build/outputs/
+    print("Checking for ./.build/outputs directory and creating if it doesn't exist...")
+    if not os.path.exists(rootDir+"\\.build\\outputs"):
+        os.makedirs(rootDir+"\\.build\\outputs")
+
     print("Moving SEMI-Firefox.zip and SEMI-Chrome.zip to ./build/outputs/...")
     os.rename(rootDir+"\\SEMI-Firefox.zip", rootDir+"\\.build\\outputs\\SEMI-Firefox.zip")
     os.rename(rootDir+"\\SEMI-Chrome.zip", rootDir+"\\.build\\outputs\\SEMI-Chrome.zip")
 
+    print("SEMI build script completed!")
+    
 if __name__ == '__main__':
    main()
