@@ -27,8 +27,8 @@
 // Variables
 const name = "ore-in-bank";
 const title = "Show Ore in Bank";
-const desc = "Shows the amount of ore you have over the ore icon in the Mining tab";
-const imgSrc = "assets/media/skills/mining/mining.svg";
+const desc = "Shows the amount of ore you have in the bank on the Mining page on each of the ore/rock buttons.";
+const imgSrc = "assets/media/bank/ore_dragonite.svg";
 const skill = "Mining";
 
 const GUI = {
