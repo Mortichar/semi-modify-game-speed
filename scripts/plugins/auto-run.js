@@ -13,7 +13,7 @@
         if (deadlyEnemyMaxHit) { return runFromCombat(`courage: the adjusted max hit of the current enemy (${SEMI.maxHitOfCurrentEnemy()} raw DMG, ${SEMI.adjustedMaxHit()} %reduced DMG) is greater than your max hp! (${hpmax} HP)`)}
         if (equippedFood[currentCombatFood].qty < 1) { return runFromCombat('food.'); }
         if (usingRanged && ammo < 1) { return runFromCombat('ammo.'); }
-        if (currentWeapon.isMagic && ((!isSpellAncient && !checkRuneCount(0, selectedSpell)) || (isSpellAncient && !checkRuneCount(3, selectedAncient)))) { return runFromCombat('runes.'); }
+        if (currentWeapon.isMagic && ((!isSpellAncient && !checkRuneCount(0, selectedSpell, false)) || (isSpellAncient && !checkRuneCount(3, selectedAncient, false)))) { return runFromCombat('runes.'); }
     };
 
     /** @param {string} reason */
