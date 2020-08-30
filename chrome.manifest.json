@@ -2,7 +2,6 @@
 
   "manifest_version": 2,
   "name": "Scripting Engine for Melvor Idle",
-  "short-name": "SEMI",
   "version": "0.3.13",
   "description": "QOL Scripting for Melvor Idle, the fun idle browser game!",
   "icons": {
