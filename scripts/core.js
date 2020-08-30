@@ -26,11 +26,11 @@ var SEMI =  (() => {
             //for each var of allSEMIVars
             //getItem()
         //json.stringify
-        //print to modal text box or something
+        //$("#exportSEMISettings").text("whateveritis")
     }
 
     const restoreSEMI = () => {
-        //text input
+        //$("#importSEMISettings")[0].value
         //json.parse
         //setItem(all)
     }

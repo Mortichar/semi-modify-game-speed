@@ -64,6 +64,8 @@ var {semiSetMenu} = (() => {
                         Source code for SEMI, along with issues page for suggestions/bugs, can be found at the GitLab repository <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
                         <br>
                         <br>
+
+                        <!--
                         You can now save and export your SEMI configuration settings like your AutoSell choices and other saved settings.
                         <div class="block-content">
                             <textarea class="form-control" id="exportSEMISettings" style="width: 75%; float: left; margin-right: 5px;" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
@@ -78,6 +80,8 @@ var {semiSetMenu} = (() => {
                                 Import
                             </button>
                         </div>
+                        -->
+
                     </div>
                     <br>
                     <div class="block-content block-content-full text-right">
