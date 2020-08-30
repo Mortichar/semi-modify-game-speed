@@ -1,10 +1,9 @@
 # SEMI General notes
 
-## TODO v0.3.13
+## TODO v0.3.14
 
 * SEMI config backup import/export
-* ~~Merge Visua fixes~~
-* ~~Refresh auto-bury & auto-open~~
+* More
 
 ## TODO overflow
 
