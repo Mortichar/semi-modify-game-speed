@@ -2,9 +2,10 @@ Scripting Engine for Melvor Idle Changelog
 
 v0.3.13
 * A few cosmetic changes
-* Merged Visua fixes to prevent scrambling of plugins by drag-menus
-* Added refresh buttons to the auto-bury and auto-open Logs
-* Bugfix: auto-run was consuming runes every 500ms upon checking for runes, this has been fixed
+* Merged Visua fixes to prevent scrambling of plugins by drag-menus.
+* Added refresh buttons to the auto-bury and auto-open Logs.
+* Bugfix: auto-run was consuming runes every 500ms upon checking for runes, this has been fixed.
+* Repository changes: added .build/build.py as a build script for easily packaging releases.
 
 v0.3.12
 Melvor updated a bunch! Now at v0.16.2.1
