@@ -1,5 +1,11 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.13
+* A few cosmetic changes
+* Merged Visua fixes to prevent scrambling of plugins by drag-menus
+* Added refresh buttons to the auto-bury and auto-open Logs
+* Bugfix: auto-run was consuming runes every 500ms upon checking for runes, this has been fixed
+
 v0.3.12
 Melvor updated a bunch! Now at v0.16.2.1
 * Removed some code from semi.js to prevent unnecessary injection of semi.css which threw an error.
