@@ -13,7 +13,7 @@ var {semiSetMenu} = (() => {
         header.after(skillMenuHeader, skillMenuSection, autoCombatheader, autoCombatSection);
 
         const semiNavImg = `<img class="nav-img" src="${SEMI.iconSrc}">`;
-        const semiNavInner = `<a class="nav-main-link nav-compact" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Info, Backup & Restore</span></a>`;
+        const semiNavInner = `<a class="nav-main-link nav-compact" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Info<!--, Backup & Restore--></span></a>`;
         const semiNavEl = $(`<li class="nav-main-item" id="${SEMI.ROOT_ID}-info-header">${semiNavInner}</li>`);
         $('#sidebar').find('.nav-main').append(semiNavEl);
         $(`#${SEMI.ROOT_ID}-info-button`).on('click', () => semiInfo());
