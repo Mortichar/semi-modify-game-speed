@@ -13,7 +13,7 @@ var {semiSetMenu} = (() => {
         header.after(skillMenuHeader, skillMenuSection, autoCombatheader, autoCombatSection);
 
         const semiNavImg = `<img class="nav-img" src="${SEMI.iconSrc}">`;
-        const semiNavInner = `<a class="nav-main-link nav-compact" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Info<!--, Backup & Restore--></span></a>`;
+        const semiNavInner = `<a class="nav-main-link nav-compact" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
         const semiNavEl = $(`<li class="nav-main-item" id="${SEMI.ROOT_ID}-info-header">${semiNavInner}</li>`);
         $('#sidebar').find('.nav-main').append(semiNavEl);
         $(`#${SEMI.ROOT_ID}-info-button`).on('click', () => semiInfo());
@@ -38,7 +38,7 @@ var {semiSetMenu} = (() => {
                 <div class="modal-content"><div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
                         <img class="nav-img" src="${SEMI.iconSrc}">
-                        <h3 class="block-title">Scripting Engine for Melvor Idle v${SEMI_VERSION}</h3>
+                        <h3 class="block-title">Scripting Engine for Melvor Idle v${SEMI_VERSION} Menu</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-fw fa-times"></i>
@@ -46,26 +46,14 @@ var {semiSetMenu} = (() => {
                         </div>
                     </div>
                     <div class="block-content font-size-sm">
-                        <h3 style="color: white;">SEMI v${SEMI_VERSION} by Aldous Watts & DanielRX</h3>
-                        Hover over sidebar buttons or some other SEMI elements to see tooltips that describe the scripts/options and give hints.
-                        <br>
-                        If you unlock the sidebar sections, you can drag and rearrange the items in the section. Dragging an item below the SEMI icon only visible when unlocked will hide the item when the section is locked.
-                        <br>
-                        <br>
-                        <u>Don't forget these features of SEMI that aren't in the sidebar:</u>
+                        <u>Toggle SEMI features that aren't in the sidebar:</u>
                         <ul>
                             <li>Thieving XP calculators and loot popups in the Thieving page</li>
                             <li>Destroy All Crops button in the Farming page</li>
                             <li>Barf My Potion button in the Potion selection menu</li>
                             <li>XPH GUI: XP per hour calculations done through a button next to the Potion selection button</li>
                         </ul>
-                        Many functions of SEMI are based on these scripts by others:
-                        ${otherScriptsText}
-                        Source code for SEMI, along with issues page for suggestions/bugs, can be found at the GitLab repository <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
                         <br>
-                        <br>
-
-                        <!--
                         You can now save and export your SEMI configuration settings like your AutoSell choices and other saved settings.
                         <div class="block-content">
                             <textarea class="form-control" id="exportSEMISettings" style="width: 75%; float: left; margin-right: 5px;" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
@@ -80,8 +68,19 @@ var {semiSetMenu} = (() => {
                                 Import
                             </button>
                         </div>
-                        -->
-
+                        <br>
+                        <br>
+                        <button id="hide-SEMI-info-button" class="btn btn-outline-primary" type="button">Show SEMI Info</button>
+                        <div id="SEMI-menu-info-box" class="d-none SEMI-fixed-textbox">
+                            <h3 style="color: white;">SEMI v${SEMI_VERSION} by Aldous Watts & DanielRX</h3>
+                            Hover over sidebar buttons or some other SEMI elements to see tooltips that describe the scripts/options and give hints.
+                            <br>
+                            If you unlock the sidebar sections, you can drag and rearrange the items in the section. Dragging an item below the SEMI icon only visible when unlocked will hide the item when the section is locked.
+                            <br>
+                            Many functions of SEMI are based on these scripts by others:
+                            ${otherScriptsText}
+                            Source code for SEMI, along with issues page for suggestions/bugs, can be found at the GitLab repository <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
+                        </div>
                     </div>
                     <br>
                     <div class="block-content block-content-full text-right">
@@ -93,6 +92,7 @@ var {semiSetMenu} = (() => {
             </div>
         </div>`);
         $('#modal-account-change').before(semiInfoPopup);
+        $(`#hide-SEMI-info-button`).on('click', () => toggleSEMIMenuInfo());
     };
 
 
@@ -121,6 +121,12 @@ var {semiSetMenu} = (() => {
 
     //show SEMI info modal function called by nav button
     const semiInfo = () => { SEMI.getElement('semi-modal').modal(open); };
+
+    const toggleSEMIMenuInfo = () => {
+        $("#SEMI-menu-info-box").toggleClass("d-none");
+        if ($("#hide-SEMI-info-button").text() == "Show SEMI Info") $("#hide-SEMI-info-button").text("Hide SEMI Info");
+        else $("#hide-SEMI-info-button").text("Show SEMI Info");
+    };
 
     const hideSemi = (reason) => {
         console.warn(`SEMI was not correctly loaded due to ${reason}`);
