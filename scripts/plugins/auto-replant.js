@@ -72,13 +72,11 @@
             const qty = SEMI.getBankQty(CONSTANTS.item.Compost);
             if(qty < 5) {
                 buyQty = 5 - qty;
-                buyCompost();
-                SEMI.confirmAndCloseModal();
+                buyCompost(true);
             }
         } else {
             buyQty = 5;
-            buyCompost();
-            SEMI.confirmAndCloseModal();
+            buyCompost(true);
         }
     };
 
