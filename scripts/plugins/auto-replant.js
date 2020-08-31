@@ -73,10 +73,12 @@
             if(qty < 5) {
                 buyQty = 5 - qty;
                 buyCompost();
+                SEMI.confirmAndCloseModal();
             }
         } else {
             buyQty = 5;
             buyCompost();
+            SEMI.confirmAndCloseModal();
         }
     };
 
