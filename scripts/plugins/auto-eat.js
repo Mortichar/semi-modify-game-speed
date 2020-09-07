@@ -1,7 +1,7 @@
 (() => {
     const id = 'auto-eat';
     const title = 'AutoEat';
-    const desc = "AutoEat script eats when HP is less than what food heals or below 50HP when outside combat, or if in combat it will eat when your HP is less than max hit of your enemy. Don't be scared! SEMI calculates your damage reduction AND enemy stun damage multipliers AND burning AND damage reflection when calculating max hit. AutoEat is god dungeon ready.";
+    const desc = "AutoEat script eats when HP is less than what food heals or below 50HP when outside combat, or if in combat it will eat when your HP is less than max hit of your enemy. Don't be scared! SEMI calculates your damage reduction AND enemy stun damage multipliers AND burning AND damage reflection when calculating max hit. AutoEat is god dungeon ready, however since Melvor v0.16 eating will reset your attack swing, so AutoEat likely needs a rework to be viable.";
     const imgSrc = 'assets/media/shop/autoeat.svg';
 
     const autoEat = () => {
