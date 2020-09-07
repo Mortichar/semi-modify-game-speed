@@ -17,18 +17,6 @@
     z-index: 2222 !important;
 }
 
-.SEMI-AM-els {
-    padding: 0 !important;
-    margin: 0 2px !important;
-}
-
-.SEMI-AM-info {
-    color: gold;
-    background: #2c343f !important;
-    border-radius: 5px;
-    width: max-content;
-}
-
 .lock-d-none {
     display: none !important;
 }
