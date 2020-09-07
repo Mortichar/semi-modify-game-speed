@@ -30,10 +30,9 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * AutoBonfire: continuously starts bonfires for you when you have a type of wood selected in Firemaking
 * AutoCook: cycles through fish and cooks them all
 * AutoMine
-    * v0.3.14: New and improved GUI for setting the mineArray priorities by dragging elements on the page
+    * v0.4: New and improved GUI for setting the mineArray priorities by dragging elements on the page
     * Mine-by-ratios by selecting a bar to mine for
-    * v0.3.14: New option to ignore coal when mining for bars
-    * Detects if you have smithing cape if mining by ratios and adjusts your coal ratio properly
+    * v0.4: New option to directly modify coal ratios when mining for bars
 * AutoSellGems: sells 100 gems once they've reached a stack of 100
 * AutoSmith Bars: cycle through smithing bars and smelt them if you have the materials to do so
 * Katorone Automation & GUI
