@@ -23,8 +23,8 @@ def main():
     dir3 = rootDir+folder3
 
     # Create firefox output zip
-    print('Building SEMI-Firefox.zip...')
-    with ZipFile('SEMI-Firefox.zip', 'w') as fBuild:
+    print('Building SEMI.zip...')
+    with ZipFile('SEMI.zip', 'w') as fBuild:
         fBuild.write('manifest.json')
         os.chdir('scripts')
         fBuild.write('SEMI.js', '/scripts/SEMI.js')
@@ -35,40 +35,19 @@ def main():
         zipdir(dir2, fBuild, folder2)
         zipdir(dir3, fBuild, folder3)
 
-    # Return to SEMI root directory for chrome
-    os.chdir(os.pardir)
-
-    # Create chrome output zip
-    print('Building SEMI-Chrome.zip...')
-    with ZipFile('SEMI-Chrome.zip', 'w') as cBuild:
-        cBuild.write('chrome.manifest.json', 'manifest.json')
-        os.chdir('scripts')
-        cBuild.write('SEMI.js', '/scripts/SEMI.js')
-        cBuild.write('core.js', '/scripts/core.js')
-        cBuild.write('utils.js', '/scripts/utils.js')
-        # add the 3 SEMI subdirectories: icons, scripts, and styles
-        zipdir(dir1, cBuild, folder1)
-        zipdir(dir2, cBuild, folder2)
-        zipdir(dir3, cBuild, folder3)
-
     # Check for outputs directory, make it if doesn't exist
     print("Checking for ./.build/outputs directory and creating if it doesn't exist...")
     if not os.path.exists(rootDir+"/.build/outputs"):
         os.makedirs(rootDir+"/.build/outputs")
 
     # Remove previous outputs
-    if os.path.exists(rootDir+"/.build/outputs/SEMI-Firefox.zip"):
-        print("Removing previous SEMI-Firefox.zip...")
-        os.remove(rootDir+"/.build/outputs/SEMI-Firefox.zip")
+    if os.path.exists(rootDir+"/.build/outputs/SEMI-Master-Build.zip"):
+        print("Removing previous SEMI-Master-Build.zip...")
+        os.remove(rootDir+"/.build/outputs/SEMI-Master-Build.zip")
 
-    if os.path.exists(rootDir+"/.build/outputs/SEMI-chrome.zip"):
-        print("Removing previous SEMI-chrome.zip...")
-        os.remove(rootDir+"/.build/outputs/SEMI-chrome.zip")
-
-    # Move the two files to ./.build/outputs/
-    print("Moving SEMI-Firefox.zip and SEMI-Chrome.zip to ./.build/outputs/...")
-    os.rename(rootDir+"/SEMI-Firefox.zip", rootDir+"/.build/outputs/SEMI-Firefox.zip")
-    os.rename(rootDir+"/SEMI-Chrome.zip", rootDir+"/.build/outputs/SEMI-Chrome.zip")
+    # Move the master build to ./.build/outputs/
+    print("Moving SEMI.zip to ./.build/outputs/SEMI-Master-Build.zip")
+    os.rename(rootDir+"/SEMI.zip", rootDir+"/.build/outputs/SEMI-Master-Build.zip")
 
     print("SEMI build script completed!")
 

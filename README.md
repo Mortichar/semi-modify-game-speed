@@ -78,19 +78,23 @@ You can post [here on the issues page of the SEMI repository](https://gitlab.com
 
 ## Alternative Installation
 
+Download or clone the SEMI repository. If downloaded, extract the downloaded compressed file, which should be named SEMI-master.zip (or .tar*) to an empty folder.
+
 ### Chrome Developer Install
 
-**Note:** There is a harmless error that is thrown on loading the extension from source into Chrome from the main source since version 0.3 because Chrome does not recognize the part of manifest.json necessary for the extension to run on Firefox for Android. Deleting the "browser_specific_settings" section of manifest.json fixes the error, but an alternative chrome version of the manifest.json file is now in the repository, named chrome.manifest.json.
+In Chrome, open settings > tools > extensions, or go to this url without quotes: "chrome://extensions".
 
-Download the SEMI repository. Extract the downloaded compressed file, which should be named SEMI-master.zip (or .tar*) to an empty folder. Delete manifest.json (used for Firefox) and rename chrome.manifest.json to manifest.json.
+Enable developer options in the top right, then click "Load Unpacked" on the left.
 
-In Chrome, open settings > tools > extensions, or go to this url without quotes: "chrome://extensions". Enable developer options in the top right, and click "Load Unpacked" on the left. Open the folder that contains manifest.json to load the add-on.
+Open the folder that contains manifest.json to load the add-on.
 
 ### Firefox Temporary Install
 
-Download the SEMI repository. Extract the downloaded compressed file, which should be named SEMI-master.zip (or .tar*) to an empty folder.
+Open the url "about:debugging" without quotes, enable add-on debugging if you need to.
 
-Open the url "about:debugging" without quotes, enable add-on debugging if you need to. On newest firefox, go to the "this firefox" page. Install the addon by clicking "Load Temporary Add-on" opening either manifest.json or either of the .js files in the 'scripts' subfolder.
+On newest firefox, go to the "this firefox" page.
+
+Install the addon by clicking "Load Temporary Add-on" and opening either manifest.json or either of the .js files in the 'scripts' subfolder.
 
 ## Goal of the Software
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
