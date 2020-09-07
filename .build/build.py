@@ -22,7 +22,7 @@ def main():
     dir2 = rootDir+folder2
     dir3 = rootDir+folder3
 
-    # Create firefox output zip
+    # Create output zip
     print('Building SEMI.zip...')
     with ZipFile('SEMI.zip', 'w') as fBuild:
         fBuild.write('manifest.json')
