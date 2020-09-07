@@ -1,15 +1,20 @@
 # This is Scripting Engine for Melvor Idle v0.3.14.
 
-Huge thanks to DanielRX for contributing a ton of work to the project!
+The version number above is this master repository version of SEMI. This master version is more of a developer build. The official releases are available here:
 
 [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
+
+Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms.
+
+Huge thanks to DanielRX for contributing a ton of work to the project!
 
 ## SEMI is a Firefox and Chrome web extension for Melvor Idle.
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* New: Show Ore in Bank -- adds ore counts to mining page rocks.
+* New Core Feature: Backup, Restore, and Reset SEMI Configuration
+* Show Ore in Bank -- adds ore counts to mining page rocks.
 * Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
 * AutoReplant
