@@ -1,5 +1,14 @@
 Scripting Engine for Melvor Idle Changelog
 
+v0.3.14 so far
+New SEMI Core feature & menu change
+* Backup, Restore, and Nuke your SEMI settings and configuration!
+* All these features are present where the SEMI Info Page used to be, replaced by SEMI Menu.
+Minor fixes
+* AutoReplant will no longer open a modal when buying compost.
+Repository changes
+* build.py should now actually work and produces the correctly built web extension zips.
+
 v0.3.13
 * A few cosmetic changes
 * Merged Visua fixes to prevent scrambling of plugins by drag-menus.
