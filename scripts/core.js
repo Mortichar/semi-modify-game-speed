@@ -47,7 +47,7 @@ var SEMI =  (() => {
                 localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
             }
         }
-        katBot = SEMI.getItem('katorone-config');
+        loadKatSets();
         SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs restored from your import! Refresh to complete the import process.', 10000);
     }
 
