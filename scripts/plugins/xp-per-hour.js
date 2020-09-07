@@ -168,7 +168,7 @@ var injectXPHGUI = (() => {
         $('#combat-skill-progress-menu tr:not(:first)').append($('<td class="font-w600 xphc d-none"><small>...</small></td>'));
         for (let i = 0; i < COMBAT_LEVELS; i++) { $('.xphc:not(:first)')[i].id = 'xphc-'+i+'-rate'; }
         $('#combat-skill-progress-menu tr:first').append($('<th id="xphc-th2" class="xphc xphcl d-none" style="width: 175px;">Time to Level</th>'));
-        $('#combat-skill-progress-menu tr:not(:first)').append($(`<td class="font-w600 xphc xphcl d-none"><span>... hrs</span> to L<input type="number" id="xphc-lvl-in" name="xphc-lvl" min="2" max="99" style="width: 50px; float: right;"></td>`)); //add level selector
+        $('#combat-skill-progress-menu tr:not(:first)').append($(`<td class="font-w600 xphc xphcl d-none"><span>... hrs</span> to L<input type="number" id="xphc-lvl-in" name="xphc-lvl" min="2" style="width: 50px; float: right;"></td>`)); //add level selector
         for (let i = 0; i < COMBAT_LEVELS; i++) {
             $('.xphcl:not(:first) span')[i].id = `xphc-${i}-lvl`;
             $('.xphcl:not(:first) input')[i].id = `xphc-${i}-lvl-in`;
@@ -180,7 +180,7 @@ var injectXPHGUI = (() => {
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-rate">...</span> <span id="xph-skill"></span> XP per hour.</h3>
         <br>
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-time">0</span> seconds spent running XPH.</h3>
-        <h4 class="text-muted m-1"><span id="xph-lvl">... hrs</span> to L<input type="number" id="xph-lvl-in" name="xph-lvl-in" min="2" max="99" style="width: 60px;">
+        <h4 class="text-muted m-1"><span id="xph-lvl">... hrs</span> to L<input type="number" id="xph-lvl-in" name="xph-lvl-in" min="2" style="width: 60px;">
         <br>
     </div>`;
 
@@ -189,7 +189,7 @@ var injectXPHGUI = (() => {
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xphf-rate">...</span> Farming XP per hour.</h3>
         <br>
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xphf-time">0</span> seconds spent running XPHf.</h3>
-        <h4 class="text-muted m-1"><span id="xphf-lvl">... hrs</span> to L<input type="number" id="xphf-lvl-in" name="xph-lvl-in" min="2" max="99" style="width: 60px;">
+        <h4 class="text-muted m-1"><span id="xphf-lvl">... hrs</span> to L<input type="number" id="xphf-lvl-in" name="xph-lvl-in" min="2" style="width: 60px;">
         <br>
     </div>`;
 
