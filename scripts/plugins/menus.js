@@ -80,14 +80,14 @@ var {semiSetMenu} = (() => {
                         SEMI Config Backup, Restore, and Reset:
                         </div>
                         <div class="block-content">
-                            <textarea class="form-control SEMI-static-text-box" id="exportSEMISettings" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
+                            <textarea class="form-control SEMI-static-textarea" id="exportSEMISettings" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
                             <button type="button" id="${SEMI.ROOT_ID}-semi-modal-export-button" class="btn btn-sm btn-primary" onclick="SEMI.backupSEMI()">
                                 Export
                             </button>
                         </div>
                         <br>
                         <div class="block-content">
-                            <textarea class="form-control SEMI-static-text-box" id="importSEMISettings" name="importSEMISettings" rows="1" placeholder="Paste SEMI config here."></textarea>
+                            <textarea class="form-control SEMI-static-textarea" id="importSEMISettings" name="importSEMISettings" rows="1" placeholder="Paste SEMI config here."></textarea>
                             <button type="button" id="${SEMI.ROOT_ID}-semi-modal-import-button" class="btn btn-sm btn-primary" onclick="SEMI.restoreSEMI()">
                                 Import
                             </button>
