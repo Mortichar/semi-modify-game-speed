@@ -92,9 +92,9 @@ Open the folder that contains manifest.json to load the add-on.
 
 Open the url "about:debugging" without quotes, enable add-on debugging if you need to.
 
-On newest firefox, go to the "this firefox" page.
+On newest firefox, go to the "This Firefox" page using the link on the top left side.
 
-Install the addon by clicking "Load Temporary Add-on" and opening either manifest.json or either of the .js files in the 'scripts' subfolder.
+Install the addon by clicking the "Load Temporary Add-on" button on the right, then opening manifest.json.
 
 ## Goal of the Software
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
