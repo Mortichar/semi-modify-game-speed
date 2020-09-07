@@ -38,7 +38,7 @@ var {semiSetMenu} = (() => {
                 <div class="modal-content"><div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
                         <img class="nav-img" src="${SEMI.iconSrc}">
-                        <h3 class="block-title">Scripting Engine for Melvor Idle v${SEMI_VERSION} Menu</h3>
+                        <h3 class="block-title">Scripting Engine for Melvor Idle Menu</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-fw fa-times"></i>
@@ -46,7 +46,7 @@ var {semiSetMenu} = (() => {
                         </div>
                     </div>
                     <div class="block-content font-size-sm">
-                        <u>Toggle SEMI features that aren't in the sidebar:</u>
+                        Toggle SEMI features that aren't in the sidebar:
                         <ul>
                             <li>Thieving XP calculators and loot popups in the Thieving page</li>
                             <li>Destroy All Crops button in the Farming page</li>
@@ -56,26 +56,31 @@ var {semiSetMenu} = (() => {
                         <br>
                         You can now save and export your SEMI configuration settings like your AutoSell choices and other saved settings.
                         <div class="block-content">
-                            <textarea class="form-control" id="exportSEMISettings" style="width: 75%; float: left; margin-right: 5px;" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
-                            <button type="button" id="${SEMI.ROOT_ID}-semi-modal-export-button" class="btn btn-sm btn-primary" onclick="console.log('export button pushed')">
+                            <textarea class="form-control SEMI-static-text-box" id="exportSEMISettings" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
+                            <button type="button" id="${SEMI.ROOT_ID}-semi-modal-export-button" class="btn btn-sm btn-primary" onclick="SEMI.backupSEMI()">
                                 Export
                             </button>
                         </div>
                         <br>
                         <div class="block-content">
-                            <textarea class="form-control" id="importSEMISettings" style="width:75%; float: left; margin-right: 5px;" name="importSEMISettings" rows="1" placeholder="Paste SEMI config here."></textarea>
-                            <button type="button" id="${SEMI.ROOT_ID}-semi-modal-import-button" class="btn btn-sm btn-primary" onclick="console.log('import button pushed')">
+                            <textarea class="form-control SEMI-static-text-box" id="importSEMISettings" name="importSEMISettings" rows="1" placeholder="Paste SEMI config here."></textarea>
+                            <button type="button" id="${SEMI.ROOT_ID}-semi-modal-import-button" class="btn btn-sm btn-primary" onclick="SEMI.restoreSEMI()">
                                 Import
                             </button>
                         </div>
                         <br>
                         <br>
                         <button id="hide-SEMI-info-button" class="btn btn-outline-primary" type="button">Show SEMI Info</button>
+                        <button id="SEMI-RESET-button" class="btn btn-danger" style="margin-left: 20px;" type="button">
+                            <i class="fa fa-fw fa-times mr-1"></i>
+                            Reset SEMI
+                        </button>
                         <div id="SEMI-menu-info-box" class="d-none SEMI-fixed-textbox">
                             <h3 style="color: white;">SEMI v${SEMI_VERSION} by Aldous Watts & DanielRX</h3>
                             Hover over sidebar buttons or some other SEMI elements to see tooltips that describe the scripts/options and give hints.
                             <br>
                             If you unlock the sidebar sections, you can drag and rearrange the items in the section. Dragging an item below the SEMI icon only visible when unlocked will hide the item when the section is locked.
+                            <br>
                             <br>
                             Many functions of SEMI are based on these scripts by others:
                             ${otherScriptsText}
@@ -93,6 +98,7 @@ var {semiSetMenu} = (() => {
         </div>`);
         $('#modal-account-change').before(semiInfoPopup);
         $(`#hide-SEMI-info-button`).on('click', () => toggleSEMIMenuInfo());
+        $(`#SEMI-RESET-button`).on('click', () => resetSEMIPrompt());
     };
 
 
@@ -126,6 +132,12 @@ var {semiSetMenu} = (() => {
         $("#SEMI-menu-info-box").toggleClass("d-none");
         if ($("#hide-SEMI-info-button").text() == "Show SEMI Info") $("#hide-SEMI-info-button").text("Hide SEMI Info");
         else $("#hide-SEMI-info-button").text("Show SEMI Info");
+    };
+
+    const resetSEMIPrompt = () => {
+        const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start. If you are sure you want to do this, please type 'semi' into the prompt.`, 'This Resets Semi!');
+        if (resetResponse !== "semi") return;
+        SEMI.resetSEMI();
     };
 
     const hideSemi = (reason) => {

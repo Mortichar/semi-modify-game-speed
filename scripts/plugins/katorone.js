@@ -10,7 +10,7 @@ var katBot = {
 };
 
 const saveKatSets = () => {
-    SEMI.setItem('katorone-config', katBot, true);
+    SEMI.setItem('katorone-config', katBot);
 };
 
 const loadKatSets = () => {

@@ -45,3 +45,10 @@
     overflow: auto !important;
     border-radius: 0.25rem !important;
 }
+
+.SEMI-static-text-box {
+    width: 75%;
+    float: left;
+    margin-right: 5px;
+    resize: none;
+}

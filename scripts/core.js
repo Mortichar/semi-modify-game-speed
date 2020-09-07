@@ -9,30 +9,64 @@ var SEMI =  (() => {
     * @param {string} x
     * @param {*} y
     */
-    const setItem = (x, y, silent=false) => {
-        if (!silent) console.log("setItem -> x, y", x, y);
+    const setItem = (x, y) => {
+        //console.log("setItem -> x, y", x, y);
         localStorage.setItem(`SEMI-${x}`, JSON.stringify(y));
     }
 
     /** @param {string} x */
     const getItem = (x) => {
         const y = JSON.parse(localStorage.getItem(`SEMI-${x}`));
-        console.log("getItem -> x, y", x, y);
+        // console.log("getItem -> x, y", x, y);
         return y;
     }
 
     const backupSEMI = () => {
-        //getItem(all)
-            //for each var of allSEMIVars
-            //getItem()
-        //json.stringify
-        //$("#exportSEMISettings").text("whateveritis")
+        const backupKeyData = {};
+        for (key in localStorage) {
+            if (key.substring(0,5) == 'SEMI-') {
+                backupKeyData[key] = JSON.parse(localStorage.getItem(key));
+                // console.log(backupKeyData);
+            }
+        }
+        $("#exportSEMISettings").text(JSON.stringify(backupKeyData));
+        const copyText = document.getElementById("exportSEMISettings");
+        copyText.select();
+        copyText.setSelectionRange(0, 999969); /*For mobile devices*/
+        document.execCommand("copy");
+        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs exported to textarea and copied to clipboard!', 10000);
     }
 
     const restoreSEMI = () => {
-        //$("#importSEMISettings")[0].value
-        //json.parse
-        //setItem(all)
+        if ($("#importSEMISettings")[0].value == "") return;
+        const restoredConfig = JSON.parse($("#importSEMISettings")[0].value);
+        if (restoredConfig == null || typeof restoredConfig !== "object") return;
+        for (key in restoredConfig) {
+            // const keyname = key.slice(5);
+            if (key.substring(0,5) == 'SEMI-' && key !== restoredConfig[key]) {
+                localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
+            }
+        }
+        katBot = SEMI.getItem('katorone-config');
+        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs restored from your import! Refresh to complete the import process.', 10000);
+    }
+
+    const resetSEMI = () => {
+        for (key in localStorage) {
+            if (key.substring(0,5) == 'SEMI-') {
+                localStorage.removeItem(key);
+            }
+        }
+        //restoring katBot variable otherwise problems happen - katBot is constantly written to localstorage
+        katBot = {
+            buyBankSlots: true,
+            buyGemGlove_enabled: true,
+            reserveGold: 5000000,
+            gemGloveUses: 6000,
+            gemList: [],
+            sellList: []
+        };
+        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs erased from localstorage! Refresh to complete the reset process.', 10000);
     }
 
     const mergeOnto = (x, y) => {
@@ -169,5 +203,5 @@ var SEMI =  (() => {
     */
     const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
 
-    return {add, toggle, enable, disable, isEnabled, injectGUI, pluginNames, createElement, setItem, getItem, backupSEMI, restoreSEMI, utilsReady: false};
+    return {add, toggle, enable, disable, isEnabled, injectGUI, pluginNames, createElement, setItem, getItem, backupSEMI, restoreSEMI, resetSEMI, utilsReady: false};
 })();
