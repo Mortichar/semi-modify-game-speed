@@ -1,9 +1,13 @@
 Scripting Engine for Melvor Idle Changelog
 
 v0.3.14 so far
-New SEMI Core feature & menu change
+New SEMI Core feature & menu changes
 * Backup, Restore, and Nuke your SEMI settings and configuration!
 * All these features are present where the SEMI Info Page used to be, replaced by SEMI Menu.
+AutoMine Changes by Visua
+* GUI improvements: Fresh menus that look much nicer.
+* Mining by ratios for bar smelting now has an 'ignore coal' option.
+* He mentioned other small fixes in his merge request.
 Minor fixes
 * AutoReplant will no longer open a modal when buying compost.
 Repository changes
