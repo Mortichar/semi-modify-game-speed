@@ -76,11 +76,11 @@ AutoMine changes & more fixes
 
 v0.3.8.2
 Yet more fixes to auto-eat. Incorporated even more combat mechanics; hopefully all the bases are covered:
-    * Burning damage (Fire god dungeon)
-    * Reflected damage (Air god dungeon)
-    * Stun damage increase (Water & Earth god dungeons)
-    * Detects what attack is incoming and eats accordingly
-    * Thanks to Lamb on the discord for letting me use some of their auto-eat script: https://pastebin.com/Fw4R7zv5
+* Burning damage (Fire god dungeon)
+* Reflected damage (Air god dungeon)
+* Stun damage increase (Water & Earth god dungeons)
+* Detects what attack is incoming and eats accordingly
+* Thanks to Lamb on the discord for letting me use some of their auto-eat script: https://pastebin.com/Fw4R7zv5
 
 v0.3.8.1
 Hotfix for the hotfix: now properly calculates enemy special attack damage.
