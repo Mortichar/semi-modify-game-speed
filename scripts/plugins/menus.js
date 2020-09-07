@@ -54,19 +54,19 @@ var {semiSetMenu} = (() => {
                     </div>
                     <div class="block-content font-size-sm">
                         <div style="font-size: 14pt;">Toggle SEMI features that aren't in the sidebar:</div>
-                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                        <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${SEMIetcGUI.thievingXP ? 'checked' : ''}>
                             <label class="custom-control-label" for="SEMI-thieving-xp-enabled">Thieving XP calculators and loot popups in the Thieving page</label>
                         </div>
-                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                        <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-destroy-crops-enabled" name="SEMI-destroy-crops-enabled" onchange="SEMIetcGUI.destroyCrops = this.checked" ${SEMIetcGUI.destroyCrops ? 'checked' : ''}>
                             <label class="custom-control-label" for="SEMI-destroy-crops-enabled">Destroy All Crops button in the Farming page</label>
                         </div>
-                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                        <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-barf-enabled" name="SEMI-barf-enabled" onchange="SEMIetcGUI.barf = this.checked" ${SEMIetcGUI.barf ? 'checked' : ''}>
                             <label class="custom-control-label" for="SEMI-barf-enabled">Barf My Potion button in the Potion selection menu</label>
                         </div>
-                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                        <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-xph-button-enabled" name="SEMI-xph-button-enabled" onchange="SEMIetcGUI.xph = this.checked" ${SEMIetcGUI.xph ? 'checked' : ''}>
                             <label class="custom-control-label" for="SEMI-xph-button-enabled">XPH button: XP per hour calculations done through a button next to the Potion selection button</label>
                         </div>
@@ -76,7 +76,9 @@ var {semiSetMenu} = (() => {
                             </button>
                         </div>
                         <br>
-                        You can now save and export your SEMI configuration settings like your AutoSell choices and other saved settings.
+                        <div style="font-size: 14pt;">
+                        SEMI Config Backup, Restore, and Reset:
+                        </div>
                         <div class="block-content">
                             <textarea class="form-control SEMI-static-text-box" id="exportSEMISettings" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
                             <button type="button" id="${SEMI.ROOT_ID}-semi-modal-export-button" class="btn btn-sm btn-primary" onclick="SEMI.backupSEMI()">
@@ -160,14 +162,16 @@ var {semiSetMenu} = (() => {
     };
 
     const resetSEMIPrompt = () => {
-        const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start. If you are sure you want to do this, please type 'semi' into the prompt.`, 'This Resets SEMI!');
+        const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start.
+
+        If you are sure you want to do this, please type 'semi' into the prompt.`, 'I changed my mind!');
         if (resetResponse !== "semi") return;
         SEMI.resetSEMI();
     };
 
     const saveEtcToggles = () => {
         SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
-        SEMI.customNotify('assets/media/main/settings_header.svg','Miscellaneous SEMI GUI settings saved! Please refresh to enable changes.',10000);
+        SEMI.customNotify('assets/media/main/settings_header.svg','Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',10000);
     };
 
     const hideSemi = (reason) => {
