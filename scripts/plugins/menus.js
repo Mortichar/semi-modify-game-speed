@@ -1,3 +1,10 @@
+var SEMIetcGUI = {
+    thievingXP: true,
+    destroyCrops: true,
+    barf: true,
+    xph: true
+};
+
 var {semiSetMenu} = (() => {
     const SEMI_VERSION = '0.3.14';
     const GAME_VERSION = 'Alpha v0.16.2.1';
@@ -46,13 +53,28 @@ var {semiSetMenu} = (() => {
                         </div>
                     </div>
                     <div class="block-content font-size-sm">
-                        Toggle SEMI features that aren't in the sidebar:
-                        <ul>
-                            <li>Thieving XP calculators and loot popups in the Thieving page</li>
-                            <li>Destroy All Crops button in the Farming page</li>
-                            <li>Barf My Potion button in the Potion selection menu</li>
-                            <li>XPH GUI: XP per hour calculations done through a button next to the Potion selection button</li>
-                        </ul>
+                        <div style="font-size: 14pt;">Toggle SEMI features that aren't in the sidebar:</div>
+                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                            <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${SEMIetcGUI.thievingXP ? 'checked' : ''}>
+                            <label class="custom-control-label" for="SEMI-thieving-xp-enabled">Thieving XP calculators and loot popups in the Thieving page</label>
+                        </div>
+                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                            <input type="checkbox" class="custom-control-input" id="SEMI-destroy-crops-enabled" name="SEMI-destroy-crops-enabled" onchange="SEMIetcGUI.destroyCrops = this.checked" ${SEMIetcGUI.destroyCrops ? 'checked' : ''}>
+                            <label class="custom-control-label" for="SEMI-destroy-crops-enabled">Destroy All Crops button in the Farming page</label>
+                        </div>
+                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                            <input type="checkbox" class="custom-control-input" id="SEMI-barf-enabled" name="SEMI-barf-enabled" onchange="SEMIetcGUI.barf = this.checked" ${SEMIetcGUI.barf ? 'checked' : ''}>
+                            <label class="custom-control-label" for="SEMI-barf-enabled">Barf My Potion button in the Potion selection menu</label>
+                        </div>
+                        <div class="custom-control custom-switch mb-1" title="Tooltip!">
+                            <input type="checkbox" class="custom-control-input" id="SEMI-xph-button-enabled" name="SEMI-xph-button-enabled" onchange="SEMIetcGUI.xph = this.checked" ${SEMIetcGUI.xph ? 'checked' : ''}>
+                            <label class="custom-control-label" for="SEMI-xph-button-enabled">XPH button: XP per hour calculations done through a button next to the Potion selection button</label>
+                        </div>
+                        <div class="block-content block-content-full text-right">
+                            <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">
+                                <i class="fa fa-check mr-1"></i>Save Toggles
+                            </button>
+                        </div>
                         <br>
                         You can now save and export your SEMI configuration settings like your AutoSell choices and other saved settings.
                         <div class="block-content">
@@ -86,12 +108,8 @@ var {semiSetMenu} = (() => {
                             ${otherScriptsText}
                             Source code for SEMI, along with issues page for suggestions/bugs, can be found at the GitLab repository <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
                         </div>
-                    </div>
-                    <br>
-                    <div class="block-content block-content-full text-right">
-                        <button type="button" id="${SEMI.ROOT_ID}-semi-modal-button" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="">
-                            <i class="fa fa-check mr-1"></i>Cool!
-                        </button>
+                        <br>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -99,28 +117,35 @@ var {semiSetMenu} = (() => {
         $('#modal-account-change').before(semiInfoPopup);
         $(`#hide-SEMI-info-button`).on('click', () => toggleSEMIMenuInfo());
         $(`#SEMI-RESET-button`).on('click', () => resetSEMIPrompt());
+        $(`#SEMI-menu-etc-toggles-apply-save`).on('click', () => saveEtcToggles());
     };
 
+    if (SEMI.getItem('etc-GUI-toggles') !== null) {
+        SEMIetcGUI = SEMI.getItem('etc-GUI-toggles');
+    };
 
-    //SEMI menu setup function -- big fat template literal append(s)
-    const setupSEMI = () => { // streamlining/simplicity
-        if ($('#auto-replant-button').length) return; //probably smarter than the way i inject a lot of elements
+    //SEMI menu setup function
+    const setupSEMI = () => {
+        if ($('#auto-replant-button').length) return;
         injectX();
         SEMI.getElement('info-header').before($('<br>'));
+        SEMI.setItem('etc-GUI-toggles', SEMIetcGUI); //to prevent errors first-run with thieving-calc
         SEMI.pluginNames.forEach((name) => SEMI.injectGUI(name));
-        injectXPHGUI();
-        injectBarfGUI();
+
+        if (SEMIetcGUI.destroyCrops) injectDestroyCropsGUI();
+        if (SEMIetcGUI.barf) injectBarfGUI();
+        if (SEMIetcGUI.xph) injectXPHGUI();
         //Modal for SEMI info popup
         injectSEMIInfoPopup();
+
         injectEyes();
         injectDragMenus();
 
-        //adding button to the farming page to destroy crops
-        injectDestroyCropsGUI();
+
 
         //if all goes well, yay, it's loaded
         SEMI.customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',10000);
-    }; //End of SEMI menu injection
+    };
 
     //show SEMI katorone automation settings modal called by nav button
     const semiSetMenu = () => { SEMI.getElement('kat-modal').modal(open); };
@@ -135,9 +160,14 @@ var {semiSetMenu} = (() => {
     };
 
     const resetSEMIPrompt = () => {
-        const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start. If you are sure you want to do this, please type 'semi' into the prompt.`, 'This Resets Semi!');
+        const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start. If you are sure you want to do this, please type 'semi' into the prompt.`, 'This Resets SEMI!');
         if (resetResponse !== "semi") return;
         SEMI.resetSEMI();
+    };
+
+    const saveEtcToggles = () => {
+        SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
+        SEMI.customNotify('assets/media/main/settings_header.svg','Miscellaneous SEMI GUI settings saved! Please refresh to enable changes.',10000);
     };
 
     const hideSemi = (reason) => {
