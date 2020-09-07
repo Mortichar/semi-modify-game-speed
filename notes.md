@@ -1,10 +1,5 @@
 # SEMI General notes
 
-## TODO v0.3.14
-
-* ~~SEMI config backup import/export~~
-* ~~Toggles in semi info/bkup menu for all non-sidebar SEMI elements~~
-
 ## TODO overflow
 
 * "Better" checks for things like putting on capes and gloves etc when needed

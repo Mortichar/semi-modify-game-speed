@@ -1,19 +1,27 @@
-# This is Scripting Engine for Melvor Idle v0.3.14.
+# Scripting Engine for Melvor Idle
 
-The version number above is this master repository version of SEMI. This master version is more of a developer build. The official releases are available here:
+
 
 [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
-Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms.
+Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source, but be aware it may contain more bugs or be less stable than release versions above.
 
 Huge thanks to DanielRX for contributing a ton of work to the project!
 
 ## SEMI is a Firefox and Chrome web extension for Melvor Idle.
 
+**As with any scripts or game mods, please back up your data before making any changes!**
+
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* New Core Feature: Backup, Restore, and Reset SEMI Configuration
+* New Core Features:
+    * Backup, Restore, and Reset SEMI Configuration in the repurposed SEMI Menu
+    * Toggle non-sidebar SEMI GUI elements:
+        * Thieving tooltips
+        * Destroy All Crops button
+        * Barf Potion button
+        * XP/h button
 * Show Ore in Bank -- adds ore counts to mining page rocks.
 * Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
@@ -24,8 +32,9 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * AutoBonfire: continuously starts bonfires for you when you have a type of wood selected in Firemaking
 * AutoCook: cycles through fish and cooks them all
 * AutoMine
-    * Now has a GUI for setting the mineArray priorities by dragging elements on the page
+    * v0.3.14: New and improved GUI for setting the mineArray priorities by dragging elements on the page
     * Mine-by-ratios by selecting a bar to mine for
+    * v0.3.14: New option to ignore coal when mining for bars
     * Detects if you have smithing cape if mining by ratios and adjusts your coal ratio properly
 * AutoSellGems: sells 100 gems once they've reached a stack of 100
 * AutoSmith Bars: cycle through smithing bars and smelt them if you have the materials to do so
