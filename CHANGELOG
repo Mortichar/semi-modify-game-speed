@@ -1,5 +1,9 @@
 Scripting Engine for Melvor Idle Changelog
 
+Current patch...
+Repository changes
+* Unified manifests since Firefox for Android isn't allowing SEMI anyway, Android SEMI user count was hovering around zero, pretty much killed by the newest version of the mobile browser. Cleaned up readme & build script
+
 v0.4
 New SEMI Core features & menu changes
 * Backup, Restore, and Nuke your SEMI settings and configuration!
