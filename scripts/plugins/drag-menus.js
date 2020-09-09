@@ -4,8 +4,9 @@ var injectDragMenus = () => {
     const prefix = SEMI.ROOT_ID;
     const getEl = (id) => SEMI.getElement(id);
 
-    const menuConfig = {};
     const sections = ['combat', 'skills', 'auto-combat', 'auto-skills', 'other', 'socials'];
+    const configVersion = 1;
+    let menuConfig = { version: configVersion };
 
     sections.forEach((section) => {
         menuConfig[section] = {locked: true, order: []};
@@ -67,10 +68,23 @@ var injectDragMenus = () => {
         storeMenuState();
     };
 
-
     const loadMenuState = () => {
         const storedMenuConfig = SEMI.getItem('drag-menu-config');
-        if(storedMenuConfig !== null) { Object.keys(storedMenuConfig).map((k) => menuConfig[k] = storedMenuConfig[k]); }
+        if (storedMenuConfig !== null) {
+            menuConfig = { ...menuConfig, ...storedMenuConfig };
+
+            if (!storedMenuConfig.version) {
+                const altMagicMenu = 'nav-skill-tooltip-16';
+                const altMagicIndex = menuConfig.skills.order.indexOf(altMagicMenu);
+                const dividerIndex = menuConfig.skills.order.indexOf('SEMI-menu-section-skills-divider');
+                if (altMagicIndex !== -1 && dividerIndex !== -1 && altMagicIndex > dividerIndex) {
+                    menuConfig.skills.order.splice(altMagicIndex, 1);
+                    menuConfig.skills.order.splice(dividerIndex, 0, altMagicMenu);
+                }
+            }
+
+            menuConfig.version = configVersion;
+        }
     };
 
     const storeMenuState = () => { SEMI.setItem('drag-menu-config', menuConfig); };
