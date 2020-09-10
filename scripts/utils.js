@@ -25,17 +25,6 @@
         };
 
         /**
-        * @param {string} name
-        * @param {*} options
-        */
-        const createElement = (name, options) => {
-            const x = document.createElement(name);
-            mergeOnto(x, options);
-            return x;
-        };
-
-
-        /**
         * @param {HTMLElement} x
         * @param {object} y
         */
@@ -111,7 +100,7 @@
                 slotID: 10,
                 swapped: false
             }
-          };
+        };
         /**
          * Equips an item, remembers original item in slot, and can be called again to re-equip original item.
          * @param {number} idSwap
@@ -286,7 +275,7 @@
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
             incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull, hasCapeOn,
             confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
-            createElement, customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto, ROOT_ID
+            customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto, ROOT_ID
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });
         console.log('Utils injected!');
