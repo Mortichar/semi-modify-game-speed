@@ -53,6 +53,8 @@ var {semiSetMenu} = (() => {
                         </div>
                     </div>
                     <div class="block-content font-size-sm">
+                        <span style="font-size: 14pt;">AutoEnable Scripts after Refresh:</span>
+                        <button id="SEMI-auto-enable-status" class="btn btn-md ${SEMI.getItem('remember-state') ? 'btn-success' : 'btn-danger'} m-1 SEMI-modal-btn" style="display: revert !important;">${SEMI.getItem('remember-state') ? 'Enabled' : 'Disabled'}</button>
                         <div style="font-size: 14pt;">Toggle SEMI features that aren't in the sidebar:</div>
                         <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${SEMIetcGUI.thievingXP ? 'checked' : ''}>
@@ -75,7 +77,6 @@ var {semiSetMenu} = (() => {
                                 <i class="fa fa-check mr-1"></i>Save Toggles
                             </button>
                         </div>
-                        <br>
                         <div style="font-size: 14pt;">
                         SEMI Config Backup, Restore, and Reset:
                         </div>
@@ -120,6 +121,7 @@ var {semiSetMenu} = (() => {
         $(`#hide-SEMI-info-button`).on('click', () => toggleSEMIMenuInfo());
         $(`#SEMI-RESET-button`).on('click', () => resetSEMIPrompt());
         $(`#SEMI-menu-etc-toggles-apply-save`).on('click', () => saveEtcToggles());
+        $(`#SEMI-auto-enable-status`).on('click', () => toggleAutoEnableScripts());
     };
 
     if (SEMI.getItem('etc-GUI-toggles') !== null) {
@@ -143,8 +145,6 @@ var {semiSetMenu} = (() => {
         injectEyes();
         injectDragMenus();
 
-
-
         //if all goes well, yay, it's loaded
         SEMI.customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',10000);
     };
@@ -156,16 +156,16 @@ var {semiSetMenu} = (() => {
     const semiInfo = () => { SEMI.getElement('semi-modal').modal(open); };
 
     const toggleSEMIMenuInfo = () => {
-        $("#SEMI-menu-info-box").toggleClass("d-none");
-        if ($("#hide-SEMI-info-button").text() == "Show SEMI Info") $("#hide-SEMI-info-button").text("Hide SEMI Info");
-        else $("#hide-SEMI-info-button").text("Show SEMI Info");
+        $('#SEMI-menu-info-box').toggleClass('d-none');
+        if ($('#hide-SEMI-info-button').text() == 'Show SEMI Info') $('#hide-SEMI-info-button').text('Hide SEMI Info');
+        else $('#hide-SEMI-info-button').text('Show SEMI Info');
     };
 
     const resetSEMIPrompt = () => {
         const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start.
 
         If you are sure you want to do this, please type 'semi' into the prompt.`, 'I changed my mind!');
-        if (resetResponse !== "semi") return;
+        if (resetResponse !== 'semi') return;
         SEMI.resetSEMI();
     };
 
@@ -173,6 +173,13 @@ var {semiSetMenu} = (() => {
         SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
         SEMI.customNotify('assets/media/main/settings_header.svg','Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',10000);
     };
+
+    const toggleAutoEnableScripts = () => {
+        SEMI.getItem('remember-state') ? SEMI.setItem('remember-state', false) : SEMI.setItem('remember-state', true);
+        $(`#SEMI-auto-enable-status`).text( SEMI.getItem('remember-state') ? 'Enabled' : 'Disabled' );
+        $(`#SEMI-auto-enable-status`).addClass( SEMI.getItem('remember-state') ? 'btn-success' : 'btn-danger' );
+        $(`#SEMI-auto-enable-status`).removeClass( SEMI.getItem('remember-state') ? 'btn-danger' : 'btn-success' );
+    }
 
     const hideSemi = (reason) => {
         console.warn(`SEMI was not correctly loaded due to ${reason}`);

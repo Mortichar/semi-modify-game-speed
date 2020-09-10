@@ -1,6 +1,9 @@
 # SEMI Changelog
 
 ## Current patch...
+### More SEMI Core features & menu changes
+* AutoEnable Scripts on Refresh, coded by Visua, now has a GUI in the SEMI menu.
+* New `removeGUI()` plugin option
 ### Repository changes
 * Unified manifests since Firefox for Android isn't allowing SEMI anyway, Android SEMI user count was hovering around zero, pretty much killed by the newest version of the mobile browser. Cleaned up readme & build script
 * Change fugly changelog to purdy markdown.

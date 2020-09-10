@@ -1,5 +1,11 @@
 # SEMI General notes
 
+## v0.4.1?
+
+* saveAndApplyEtcToggles()?
+* AutoFarm by Visua
+* 1 or 2 more things
+
 ## TODO overflow
 
 * "Better" checks for things like putting on capes and gloves etc when needed
