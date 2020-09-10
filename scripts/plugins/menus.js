@@ -130,7 +130,7 @@ var {semiSetMenu} = (() => {
     };
 
     if (SEMI.getItem('etc-GUI-toggles') !== null) {
-        SEMIetcGUI = SEMI.getItem('etc-GUI-toggles');
+        SEMI.mergeOnto(SEMIetcGUI, SEMI.getItem('etc-GUI-toggles'));
     };
 
     //SEMI menu setup function

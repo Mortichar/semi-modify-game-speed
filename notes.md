@@ -3,9 +3,8 @@
 ## v0.4.1
 
 * ~~AutoFarm by Visua!~~
-* Toggle equip swap for AutoReplant if AutoFarm isn't coming out yet
-    * Much like AS AutoEquip, img of farm skillcape, AR AutoEquip
-* Fix warnings that may be present in time-remaining.js from exposed inner/outer HTML assigns
+* Toggle equip swap for AutoFarm?
+* ~~Fix warnings that may be present in time-remaining.js from exposed inner/outer HTML assigns~~
 
 ## TODO overflow
 
