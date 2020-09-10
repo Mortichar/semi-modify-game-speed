@@ -1,9 +1,10 @@
 # SEMI General notes
 
-## v0.4.1?
+## v0.4.1
 
-* AutoFarm by Visua
-* 1 more thing
+* AutoFarm by Visua?
+* Toggle equip swap for AutoReplant if AutoFarm isn't coming out yet
+* ~~Toggle for expected time to finish!~~
 
 ## TODO overflow
 
