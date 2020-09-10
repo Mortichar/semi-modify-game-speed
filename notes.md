@@ -2,20 +2,21 @@
 
 ## v0.4.1
 
-* AutoFarm by Visua?
+* ~~AutoFarm by Visua!~~
 * Toggle equip swap for AutoReplant if AutoFarm isn't coming out yet
-* ~~Toggle for expected time to finish!~~
+    * Much like AS AutoEquip, img of farm skillcape, AR AutoEquip
+* Fix warnings that may be present in time-remaining.js from exposed inner/outer HTML assigns
 
 ## TODO overflow
 
-* "Better" checks for things like putting on capes and gloves etc when needed
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
-* ~~mastery time calculators~~ wait for 0.17
-* ~~refine calc-to-level to include mastery/other bonuses for xp...~~ wait for 0.17 or use it at all! lol.
+* "Better" checks for things like putting on capes and gloves etc when needed
 * Jarx additions:
     * automatically upgrade fishing rod (AutoFish)
     * pickaxe (AutoMine)
     * woodcutting axe (background script)
+* ~~mastery time calculators~~ wait for 0.17
+* ~~refine calc-to-level to include mastery/other bonuses for xp...~~ wait for 0.17 or use it at all! lol.
 * ~~Potential auto-claim token script, maybe in auto-open?~~
 
 ## bug squashing & code snips

@@ -2,16 +2,19 @@
 
 ## Current patch...
 ### More SEMI Core features & menu changes
-* AutoEnable Scripts on Refresh, coded by Visua, now has a GUI toggle in the SEMI menu.
+* AutoEnable Scripts on Refresh now has a GUI toggle in the SEMI menu. (Previously a hidden option only)
     * Small code change to `ore-in-bank.js` to properly work when auto-enabled
     * Added a few bits to Katorone to make it auto-enable as well
 * Another non-sidebar toggle: TimeRemaning script.
 * New `removeGUI()` plugin option
 * Fixed core bug by removing redundancy. See [issue #40](https://gitlab.com/aldousWatts/SEMI/-/issues/40) for details
-### Script fixes
+### New Scripts
+* AutoFarm by Visua! Very customizable farming robot that replaces AutoReplant.
+### Script fixes & updates
 * AutoCook: throws an error and you can't close the offline progress modal when it's on when offline progress is calculating.
-    * Constantly disables the experimental option that can cause the uncloseable modal
-    * Added delay for auto-enabling to prevent uncloseable modal upon refresh
+    * Fix: AutoCook now constantly disables the experimental option that can cause the uncloseable modal
+    * Added extra delay for auto-enabling to prevent uncloseable modal upon refresh
+* TimeRemaining updated to v0.4.0: includes Alt Magic!
 ### Repository changes
 * Unified manifests since Firefox for Android isn't allowing SEMI anyway, Android SEMI user count was hovering around zero, pretty much killed by the newest version of the mobile browser.
     * Cleaned up readme & build script to reflect this change
