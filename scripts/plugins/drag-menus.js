@@ -1,12 +1,13 @@
 var injectDragMenus = () => {
-    const is_android = navigator.userAgent.indexOf("Android") > -1;
-    if (is_android) { return; }
+    // const is_android = navigator.userAgent.indexOf("Android") > -1;
+    // if (is_android) { return; }
     const prefix = SEMI.ROOT_ID;
     const getEl = (id) => SEMI.getElement(id);
 
     const sections = ['combat', 'skills', 'auto-combat', 'auto-skills', 'other', 'socials'];
     const configVersion = 1;
-    let menuConfig = { version: configVersion };
+
+    const menuConfig = { version: configVersion };
 
     sections.forEach((section) => {
         menuConfig[section] = {locked: true, order: []};
@@ -71,8 +72,10 @@ var injectDragMenus = () => {
     const loadMenuState = () => {
         const storedMenuConfig = SEMI.getItem('drag-menu-config');
         if (storedMenuConfig !== null) {
-            menuConfig = { ...menuConfig, ...storedMenuConfig };
+            Object.keys(storedMenuConfig).map((k) => menuConfig[k] = storedMenuConfig[k]);
+            // menuConfig = { ...menuConfig, ...storedMenuConfig };
 
+            //fixing config to unhide alt-magic by default from previous version bad configs
             if (!storedMenuConfig.version) {
                 const altMagicMenu = 'nav-skill-tooltip-16';
                 const altMagicIndex = menuConfig.skills.order.indexOf(altMagicMenu);
@@ -132,4 +135,5 @@ var injectDragMenus = () => {
     orderMenus();
     makeItemsGhost();
     $(".nav-main-heading:contains('Other'):last").remove();
+    // console.log(menuConfig);
 };
