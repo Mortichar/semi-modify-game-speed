@@ -55,7 +55,7 @@
         return img;
     };
 
-    const autoNames = ['replant', 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot', 'slayer-skip', 'farm'];
+    const autoNames = [ 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot', 'slayer-skip', 'farm'];
     const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'time-remaining', 'ore-in-bank', 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour', 'fold-menus', 'drag-menus', 'menus'];
 
     // Only support firefox and chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
