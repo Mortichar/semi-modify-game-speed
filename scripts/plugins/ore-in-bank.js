@@ -57,7 +57,7 @@ function injectOreAmount() {
 	}
 	// Update Ore amount once
 	updateOreAmount();
-	toggleOreAmount();
+	if (!SEMI.getItem('ore-in-bank-status')) toggleOreAmount();
 }
 
 /**
