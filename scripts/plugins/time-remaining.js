@@ -455,7 +455,8 @@
 				if (timeLeft !== 0) {
 					let finishedTime = AddSecondsToDate(now,timeLeft);
 					let finishedTimeOffline = AddSecondsToDate(now,timeLeftOffline);
-						timeLeftElement.innerHTML = "Will take: " + secondsToHms(timeLeft) + "<br>Expected finished: " + DateFormat(finishedTime,timeLeft);
+						// timeLeftElement.innerHTML = "Will take: " + secondsToHms(timeLeft) + "<br>Expected finished: " + DateFormat(finishedTime,timeLeft);
+						$("#"+timeLeftID).text("Will take: " + secondsToHms(timeLeft) + "\nExpected finished: " + DateFormat(finishedTime,timeLeft));
 						// Tooltip with time left if offline
 						$('#'+timeLeftID).attr('data-original-title', 'Offline: '+secondsToHms(timeLeftOffline) + '<br>Expected Finished: ' + DateFormat(finishedTimeOffline,timeLeftOffline));
 						// Refreshes tooltip if hovering
