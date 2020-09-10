@@ -20,6 +20,10 @@ var SEMI =  (() => {
         // console.log("getItem -> x, y", x, y);
         return y;
     }
+    /** @param {string} x */
+    const removeItem = (x) => {
+        localStorage.removeItem(`SEMI-${x}`);
+    }
 
     const backupSEMI = () => {
         const backupKeyData = {};
@@ -29,18 +33,18 @@ var SEMI =  (() => {
                 // console.log(backupKeyData);
             }
         }
-        $("#exportSEMISettings").text(JSON.stringify(backupKeyData));
-        const copyText = document.getElementById("exportSEMISettings");
+        $('#exportSEMISettings').text(JSON.stringify(backupKeyData));
+        const copyText = document.getElementById('exportSEMISettings');
         copyText.select();
         copyText.setSelectionRange(0, 999969); /*For mobile devices*/
-        document.execCommand("copy");
+        document.execCommand('copy');
         SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs exported to textarea and copied to clipboard!', 10000);
     }
 
     const restoreSEMI = () => {
-        if ($("#importSEMISettings")[0].value == "") return;
-        const restoredConfig = JSON.parse($("#importSEMISettings")[0].value);
-        if (restoredConfig == null || typeof restoredConfig !== "object") return;
+        if ($('#importSEMISettings')[0].value == '') return;
+        const restoredConfig = JSON.parse($('#importSEMISettings')[0].value);
+        if (restoredConfig == null || typeof restoredConfig !== 'object') return;
         for (key in restoredConfig) {
             // const keyname = key.slice(5);
             if (key.substring(0,5) == 'SEMI-' && key !== restoredConfig[key]) {
@@ -130,6 +134,15 @@ var SEMI =  (() => {
             el.append(pluginEl);
         };
 
+        const removeFromMenu = () => {
+            // const plugin = plugins[name];
+            // if(plugin.imgSrc === '') { return; }
+            // let el = $('#SEMI-menu-skills-section-unsorted');
+            // if(plugin.isCombat) { el = $('#SEMI-menu-combat-section-unsorted'); }
+            // const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, plugin.isCombat);
+            // el.append(pluginEl);
+        };
+
         const disable = () => {
             const plugin = plugins[name];
             plugin.enabled = false;
@@ -138,6 +151,7 @@ var SEMI =  (() => {
             if(plugin.imgSrc !== '') { SEMI.customNotify(plugin.imgSrc, `${plugin.title} Disabled!`, 1000); }
             if(plugin.ms !== 0 && plugin.interval) {  clearInterval(plugin.interval); }
             plugin.updateStatus();
+            plugin.removeGUI();
         };
 
         const enable = () => {
@@ -171,13 +185,18 @@ var SEMI =  (() => {
             opts.injectGUI();
         };
 
+        const removeGUI = () => {
+            removeFromMenu();
+            opts.removeGUI();
+        };
+
         const useSaved = Boolean(getItem('remember-state'));
         const wasEnabled = Boolean(getItem(`${name}-status`));
         const enabled = wasEnabled && useSaved;
         if(enabled) {
             setTimeout(enable, 1000);
         }
-        const plugin = {...opts, toggle, interval: null, enable, disable, updateStatus, injectGUI, enabled};
+        const plugin = {...opts, toggle, interval: null, enable, disable, updateStatus, injectGUI, removeGUI, enabled};
         plugins[name] = plugin;
     };
 
@@ -185,6 +204,10 @@ var SEMI =  (() => {
     * @param {string} name
     */
     const injectGUI = (name) => { plugins[name].injectGUI(); };
+    /**
+    * @param {string} name
+    */
+    const removeGUI = (name) => { plugins[name].removeGUI(); };
 
     /**
     * @param {string} name
@@ -203,5 +226,5 @@ var SEMI =  (() => {
     */
     const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
 
-    return {add, toggle, enable, disable, isEnabled, injectGUI, pluginNames, createElement, setItem, getItem, backupSEMI, restoreSEMI, resetSEMI, utilsReady: false};
+    return {add, toggle, enable, disable, isEnabled, injectGUI, removeGUI, pluginNames, createElement, setItem, getItem, removeItem, backupSEMI, restoreSEMI, resetSEMI, utilsReady: false};
 })();
