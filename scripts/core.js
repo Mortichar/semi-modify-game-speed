@@ -193,8 +193,9 @@ var SEMI =  (() => {
         const useSaved = Boolean(getItem('remember-state'));
         const wasEnabled = Boolean(getItem(`${name}-status`));
         const enabled = wasEnabled && useSaved;
-        if(enabled) {
-            setTimeout(enable, 1000);
+        if(enabled && name !== 'katorone') {
+            if (name == 'auto-cook') { setTimeout(enable, 5000); }
+            else { setTimeout(enable, 1000); }
         }
         const plugin = {...opts, toggle, interval: null, enable, disable, updateStatus, injectGUI, removeGUI, enabled};
         plugins[name] = plugin;

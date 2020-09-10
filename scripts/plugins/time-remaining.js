@@ -10,6 +10,9 @@
 /* jshint esversion: 6 */
 
 (main => {
+	// SEMI override killswitch
+	if (!SEMI.getItem('etc-GUI-toggles').timeRemaining) return;
+
     var script = document.createElement('script');
     script.textContent = `try {(${main})();} catch (e) {console.log(e);}`;
     document.body.appendChild(script).parentNode.removeChild(script);

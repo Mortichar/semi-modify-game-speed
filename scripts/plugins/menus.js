@@ -2,7 +2,8 @@ var SEMIetcGUI = {
     thievingXP: true,
     destroyCrops: true,
     barf: true,
-    xph: true
+    xph: true,
+    timeRemaining: true
 };
 
 var {semiSetMenu} = (() => {
@@ -71,6 +72,10 @@ var {semiSetMenu} = (() => {
                         <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-xph-button-enabled" name="SEMI-xph-button-enabled" onchange="SEMIetcGUI.xph = this.checked" ${SEMIetcGUI.xph ? 'checked' : ''}>
                             <label class="custom-control-label" for="SEMI-xph-button-enabled">XPH button: XP per hour calculations done through a button next to the Potion selection button</label>
+                        </div>
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="SEMI-time-remaining-button-enabled" name="SEMI-time-remaining-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.timeRemaining ? 'checked' : ''}>
+                            <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining: time estimates for production skills next to the item. Includes a task timer with a ding noise when a task completes</label>
                         </div>
                         <div class="block-content block-content-full text-right">
                             <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">

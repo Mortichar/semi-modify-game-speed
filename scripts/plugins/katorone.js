@@ -11,6 +11,7 @@ var katBot = {
 
 const saveKatSets = () => {
     SEMI.setItem('katorone-config', katBot);
+    SEMI.setItem('katorone-status', katoroneOn);
 };
 
 const loadKatSets = () => {
@@ -19,13 +20,19 @@ const loadKatSets = () => {
     katBot = SEMI.getItem('katorone-config');
     const state = katBotDefaults !== katBot;
     if (state) setLoadedKatValues();
+    const autoEnabled = SEMI.getItem('remember-state') && SEMI.getItem('katorone-status');
+    if (autoEnabled) {
+        katoroneOn = true;
+        setLoadedKatValues();
+    }
 };
 
 const setLoadedKatValues = () => {
     if (katBot.reserveGold !== 5000000) $(`#k-set-1`).val(katBot.reserveGold);
     if (katBot.gemGloveUses !== 6000) $(`#k-set-2`).val(katBot.gemGloveUses);
-    if (!katBot.buyBankSlots) $("#auto-bbs-enabled")[0].checked = false;
-    if (!katBot.buyGemGlove_enabled) $("#auto-bgg-enabled")[0].checked = false;
+    if (!katBot.buyBankSlots) $(`#auto-bbs-enabled`)[0].checked = false;
+    if (!katBot.buyGemGlove_enabled) $(`#auto-bgg-enabled`)[0].checked = false;
+    if (SEMI.getItem('katorone-status') && SEMI.getItem('remember-state')) $(`#kat-enabled`)[0].checked = true;
 };
 
 (() => {
