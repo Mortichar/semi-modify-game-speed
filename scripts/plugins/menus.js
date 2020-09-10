@@ -52,7 +52,7 @@ var {semiSetMenu} = (() => {
                             </button>
                         </div>
                     </div>
-                    <div class="block-content font-size-sm">
+                    <div class="block-content font-size-sm" style="padding-top: 0 !important;">
                         <span style="font-size: 14pt;">AutoEnable Scripts after Refresh:</span>
                         <button id="SEMI-auto-enable-status" class="btn btn-md ${SEMI.getItem('remember-state') ? 'btn-success' : 'btn-danger'} m-1 SEMI-modal-btn" style="display: revert !important;">${SEMI.getItem('remember-state') ? 'Enabled' : 'Disabled'}</button>
                         <div style="font-size: 14pt;">Toggle SEMI features that aren't in the sidebar:</div>
