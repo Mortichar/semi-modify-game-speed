@@ -120,7 +120,7 @@ var SEMI =  (() => {
     * @param {string} name
     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, isCombat: false};
+        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, isCombat: false};
         const opts = {...defaults, ...options};
         opts.imgSrc = (opts.imgSrc === '' && opts.skill !== '') ? SEMI.skillImg(opts.skill) : opts.imgSrc;
         pluginNames.push(name);
