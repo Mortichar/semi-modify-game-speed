@@ -1,7 +1,7 @@
 (() => {
     const id = 'auto-cook';
     const title = 'AutoCook';
-    const desc = 'AutoCook is a script for cooking all the fish you have caught.';
+    const desc = 'AutoCook is a script for cooking all the fish you have caught. Incompatible with the experimental setting in Melvor, so it will constantly disable that option. Has an extra delay before auto-enabling because of issues with offline progress.';
     const skill = 'Cooking';
 
     let fishTypeCount = 0;
@@ -18,6 +18,7 @@
     }
 
     const autoCookAll = () => {
+        changeSetting(22, false); //bugfix... if you want autocook, it needs to have that one experimental option OFF or it will SERIOUSLY BREAK THINGS. especially with the new autoenable...
         for(const _ in fishType) { if(foodQty() === 0) { moveToNext(); } }
         if((foodQty() !== 0) && !SEMI.isCurrentSkill(skill)){ startCooking(0, false); }
     };
