@@ -2,10 +2,13 @@
 
 ## Current patch...
 ### More SEMI Core features & menu changes
-* AutoEnable Scripts on Refresh, coded by Visua, now has a GUI in the SEMI menu.
+* AutoEnable Scripts on Refresh, coded by Visua, now has a GUI toggle in the SEMI menu.
+    * Small code change to `ore-in-bank.js` to properly work when auto-enabled
 * New `removeGUI()` plugin option
+* Fixed core bug by removing redundancy. See [issue #40](https://gitlab.com/aldousWatts/SEMI/-/issues/40) for details
 ### Repository changes
-* Unified manifests since Firefox for Android isn't allowing SEMI anyway, Android SEMI user count was hovering around zero, pretty much killed by the newest version of the mobile browser. Cleaned up readme & build script
+* Unified manifests since Firefox for Android isn't allowing SEMI anyway, Android SEMI user count was hovering around zero, pretty much killed by the newest version of the mobile browser.
+    * Cleaned up readme & build script to reflect this change
 * Change fugly changelog to purdy markdown.
 
 ## v0.4
