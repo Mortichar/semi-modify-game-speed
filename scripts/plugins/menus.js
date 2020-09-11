@@ -106,7 +106,7 @@ var {semiSetMenu} = (() => {
                             Reset SEMI
                         </button>
                         <div id="SEMI-menu-info-box" class="d-none SEMI-fixed-textbox">
-                            <h3 style="color: white;">SEMI v${SEMI_VERSION} by Aldous Watts & DanielRX</h3>
+                            <div style="font-size: 14pt"><b>SEMI v${SEMI_VERSION} by Aldous Watts & DanielRX</b></div>
                             Hover over sidebar buttons or some other SEMI elements to see tooltips that describe the scripts/options and give hints.
                             <br>
                             If you unlock the sidebar sections, you can drag and rearrange the items in the section. Dragging an item below the SEMI icon only visible when unlocked will hide the item when the section is locked.
