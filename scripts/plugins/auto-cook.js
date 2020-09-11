@@ -18,7 +18,7 @@
     }
 
     const autoCookAll = () => {
-        changeSetting(22, false); //bugfix... if you want autocook, it needs to have that one experimental option OFF or it will SERIOUSLY BREAK THINGS. especially with the new autoenable...
+        if (pauseOfflineActions) changeSetting(22, false); //bugfix... if you want autocook, it needs to have that one experimental option OFF or it will SERIOUSLY BREAK THINGS. especially with the new autoenable...
         for(const _ in fishType) { if(foodQty() === 0) { moveToNext(); } }
         if((foodQty() !== 0) && !SEMI.isCurrentSkill(skill)){ startCooking(0, false); }
     };

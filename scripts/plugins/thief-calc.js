@@ -4,7 +4,7 @@
     //override killswitch
     if (SEMI.getItem('etc-GUI-toggles') !== null) {
         const toggle = SEMI.getItem('etc-GUI-toggles').thievingXP;
-        if (toggle !== null && !toggle) return;
+        if (toggle !== undefined && !toggle) return;
     }
 
     /** @typedef {{xp: number, lootTable: number[][], maxCoins: number}} NPC */

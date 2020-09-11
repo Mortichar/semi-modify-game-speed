@@ -7,7 +7,7 @@ var SEMIetcGUI = {
 };
 
 var {semiSetMenu} = (() => {
-    const SEMI_VERSION = '0.4.3';
+    const SEMI_VERSION = '0.4.4';
     const GAME_VERSION = 'Alpha v0.16.2.1';
 
     const header = $('#SEMI-heading');
@@ -170,8 +170,7 @@ var {semiSetMenu} = (() => {
         const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start.
 
         If you are sure you want to do this, please type 'semi' into the prompt.`, 'I changed my mind!');
-        if (resetResponse !== 'semi') return;
-        SEMI.resetSEMI();
+        if (resetResponse === 'semi') SEMI.resetSEMI();
     };
 
     const saveEtcToggles = () => {

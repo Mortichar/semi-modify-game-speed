@@ -1,5 +1,9 @@
 # SEMI General notes
 
+## Next large patch
+* removeGUI uses
+    * apply&save toggles
+
 ## TODO overflow
 
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?

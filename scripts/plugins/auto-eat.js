@@ -17,7 +17,8 @@
         if(eatingCase) {
             eatFood();
             if (!isInCombat) return;
-            while ((SEMI.currentHP() <= adjustedMaxHit) && (hpmax > adjustedMaxHit) && (currentFood.qty >= 1)) { eatFood(); }
+            // while ((SEMI.currentHP() <= adjustedMaxHit) && (hpmax > adjustedMaxHit) && (currentFood.qty >= 1)) { eatFood(); }
+            while ((SEMI.currentHP() <= (hpmax - hpfood)) && (hpmax > adjustedMaxHit) && (currentFood.qty >= 1)) { eatFood(); }
         }
         if(currentFood.qty >= 1) { return; }
         for(let i = 0; i < equippedFood.length; i++) { //cycle through food, added by rebelEpik
