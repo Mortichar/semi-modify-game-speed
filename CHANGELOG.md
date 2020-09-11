@@ -1,6 +1,6 @@
 # SEMI Changelog
 
-## Current patch...
+## v0.4.1
 ### More SEMI Core features & menu changes
 * AutoEnable Scripts on Refresh now has a GUI toggle in the SEMI menu. (Previously a hidden option only)
     * Small code change to `ore-in-bank.js` to properly work when auto-enabled
@@ -10,6 +10,7 @@
 * Fixed core bug by removing redundancy. See [issue #40](https://gitlab.com/aldousWatts/SEMI/-/issues/40) for details
 ### New Scripts
 * AutoFarm by Visua! Very customizable farming robot that replaces AutoReplant.
+    * New toggle for AutoFarm: AutoEquip. Allows you to toggle the equipment swap if you want.
 ### Script fixes & updates
 * AutoCook: throws an error and you can't close the offline progress modal when it's on when offline progress is calculating.
     * Fix: AutoCook now constantly disables the experimental option that can cause the uncloseable modal

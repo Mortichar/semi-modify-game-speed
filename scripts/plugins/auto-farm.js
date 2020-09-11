@@ -2,7 +2,7 @@
 (() => {
     const id = 'auto-farm-equip';
     const title = 'AutoFarmEquip';
-    const desc = `If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting.`;
+    const desc = `If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
     const imgSrc = 'assets/media/bank/skillcape_farming.svg';
     SEMI.add(id, {ms: 0, title, desc, imgSrc});
 })();
@@ -476,4 +476,5 @@
     }
 
     SEMI.add(id, { ms: 5000, onLoop: autoFarm, onEnable: injectGUI, onDisable: removeGUI, desc, title, imgSrc });
+    if (SEMI.getItem('auto-replant-status') !== null) SEMI.removeItem('auto-replant-status');
 })();
