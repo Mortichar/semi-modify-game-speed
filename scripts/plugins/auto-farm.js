@@ -4,7 +4,7 @@
     const title = 'AutoFarmEquip';
     const desc = `If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
     const imgSrc = 'assets/media/bank/skillcape_farming.svg';
-    SEMI.add(id, {ms: 0, title, desc, imgSrc});
+    SEMI.add(id, { ms: 0, title, desc, imgSrc });
 })();
 
 (() => {
@@ -12,7 +12,7 @@
     const title = 'AutoFarm';
     const desc = 'AutoFarm will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to.';
     const imgSrc = SEMI.skillImg('farming');
-    const configVersion = 1;
+    const version = 2;
     const patchTypes = ['allotments', 'herbs', 'trees'];
     const toPatchType = { Allotment: patchTypes[0], Herb: patchTypes[1], Tree: patchTypes[2] };
     const priorityTypes = {
@@ -27,14 +27,14 @@
     };
     let observer;
     let config = {
-        version: configVersion,
+        version: version,
         disabledSeeds: {},
     };
     patchTypes.forEach(patchType => {
         config[patchType] = {
             enabled: false,
             priorityType: priorityTypes.custom.id,
-            priority: allSeeds.herbs,
+            priority: allSeeds[patchType],
             lockedPatches: {},
         };
     });
@@ -58,10 +58,6 @@
             return true;
         }
         return false;
-    }
-
-    function isReadyToHarvest(patch) {
-        return patch.unlocked && patch.hasGrown;
     }
 
     function findNextSeed(patch, patchId) {
@@ -96,7 +92,7 @@
     function handlePatch(areaId, patchId) {
         const patch = newFarmingAreas[areaId].patches[patchId];
 
-        if (!config[toPatchType[patch.type]].enabled || !(isReadyToHarvest(patch) || !patch.seedID)) { // AutoFarm disabled for patch type or patch not unlocked or still growing
+        if (!config[toPatchType[patch.type]].enabled || !patch.unlocked || !(patch.hasGrown || !patch.seedID)) { // AutoFarm disabled for patch type or patch not unlocked or still growing
             return;
         }
 
@@ -137,7 +133,7 @@
         for (let i = 0; i < newFarmingAreas.length; i++) {
             for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {
                 const patch = newFarmingAreas[i].patches[j];
-                if (config[toPatchType[patch.type]].enabled && (isReadyToHarvest(patch) || (!patch.seedID && findNextSeed(patch, j) !== -1))) {
+                if (config[toPatchType[patch.type]].enabled && patch.unlocked && (patch.hasGrown || (!patch.seedID && findNextSeed(patch, j) !== -1))) {
                     anyPatchReady = true;
                     break;
                 }
@@ -218,11 +214,46 @@
 
         const disabledOpacity = 0.25;
 
-        config = { ...config, ...SEMI.getItem(`${id}-config-${currentCharacter}`) };
-
         function storeConfig() {
             SEMI.setItem(`${id}-config-${currentCharacter}`, config);
         }
+
+        function loadConfig() {
+            const storedConfig = SEMI.getItem(`${id}-config-${currentCharacter}`);
+            if (!storedConfig) {
+                return;
+            }
+
+            config = { ...config, ...storedConfig };
+
+            if (config.version === 1) {
+                // Fix wrong seeds in custom priority
+                patchTypes.forEach(patchType => {
+                    if (config[patchType].priority[0] === allSeeds.herbs[0]) {
+                        config[patchType].priority = allSeeds[patchType];
+                    }
+                });
+
+                // Remove seeds planted in locked patches
+                for (let i = 0; i < newFarmingAreas.length; i++) {
+                    for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {
+                        const patch = newFarmingAreas[i].patches[j];
+                        if (!patch.unlocked && patch.seedID) {
+                            patch.seedID = 0;
+                            patch.compost = 0;
+                            patch.timePlanted = 0;
+                            patch.timeout = null;
+                            patch.hasGrown = false;
+                            patch.gloop = false;
+                        }
+                    }
+                }
+            }
+
+            config.version = version;
+            storeConfig();
+        }
+        loadConfig();
 
         function createPatchTypeDiv(patchType) {
             function createSeedDiv(seedId) {
