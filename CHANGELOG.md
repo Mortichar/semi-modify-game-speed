@@ -1,5 +1,9 @@
 # SEMI Changelog
 
+## v0.4.2
+### Small hotfix patch
+* AutoFarm fixes: Fix default AutoFarm config and don't plant seeds in locked patches
+
 ## v0.4.1
 ### More SEMI Core features & menu changes
 * AutoEnable Scripts on Refresh now has a GUI toggle in the SEMI menu. (Previously a hidden option only)

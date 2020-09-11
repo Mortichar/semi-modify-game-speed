@@ -72,7 +72,7 @@
     semiHeading.className = "nav-main-heading";
     navbar.appendChild(semiHeading);
     semiHeading.style = 'font-size: 12pt; color: white;';
-    semiHeading.textContent = ' SEMI v0.4.1';
+    semiHeading.textContent = ' SEMI v0.4.2';
     semiHeading.title = 'Scripting Engine for Melvor Idle';
     semiHeading.id = 'SEMI-heading';
     semiHeading.insertBefore(createImage('icons/border-48.png', 'SEMI-menu-icon'), semiHeading.childNodes[0]);
