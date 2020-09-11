@@ -61,15 +61,7 @@ var SEMI =  (() => {
                 localStorage.removeItem(key);
             }
         }
-        //restoring katBot variable otherwise problems happen - katBot is constantly written to localstorage
-        katBot = {
-            buyBankSlots: true,
-            buyGemGlove_enabled: true,
-            reserveGold: 5000000,
-            gemGloveUses: 6000,
-            gemList: [],
-            sellList: []
-        };
+        katoroneOn = false;
         SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs erased from localstorage! Refresh to complete the reset process.', 10000);
     }
 

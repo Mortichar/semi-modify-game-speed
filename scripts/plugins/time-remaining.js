@@ -17,7 +17,10 @@
 (function () {
 	function injectScript(main) {
 		// SEMI override killswitch
-		if (!SEMI.getItem('etc-GUI-toggles').timeRemaining) return;
+		if (SEMI.getItem('etc-GUI-toggles') !== null) {
+			const toggle = SEMI.getItem('etc-GUI-toggles').timeRemaining;
+			if (toggle !== null && !toggle) return;
+		}
 
 		var script = document.createElement('script');
 		script.textContent = `try {(${main})();} catch (e) {console.log(e);}`;

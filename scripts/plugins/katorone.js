@@ -275,7 +275,7 @@ const injectKatGUI = () => {
 };
 
 //katorone settings update
-const updateKatSets = (save = true) => {
+const updateKatSets = () => {
     let ks = [];
     const settings = [1, 2].map((i) => document.getElementById(`k-set-${i}`));
     const values = settings.map((x) => x.value);
@@ -287,7 +287,7 @@ const updateKatSets = (save = true) => {
     //if they're not NaN (letters or symbols in the field) and they're positive numbers, change values.
     if (!isNaN(ks[0]) && ks[0] >= 0) { katBot.reserveGold        = ks[0]; }
     if (!isNaN(ks[1]) && ks[1] >= 0) { katBot.gemGloveUses       = ks[1]; }
-    if (save) saveKatSets();
+    saveKatSets();
 };
 
 SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI});

@@ -2,7 +2,10 @@
     //:: Scavenging the Thieving calculator from Melvor Idle Helper by RedSparr0w on GitLab: https://github.com/RedSparr0w/Melvor-Idle-Helper
 
     //override killswitch
-    if (!SEMI.getItem('etc-GUI-toggles').thievingXP) return;
+    if (SEMI.getItem('etc-GUI-toggles') !== null) {
+        const toggle = SEMI.getItem('etc-GUI-toggles').thievingXP;
+        if (toggle !== null && !toggle) return;
+    }
 
     /** @typedef {{xp: number, lootTable: number[][], maxCoins: number}} NPC */
 
