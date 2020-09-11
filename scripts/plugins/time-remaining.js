@@ -19,7 +19,7 @@
 		// SEMI override killswitch
 		if (SEMI.getItem('etc-GUI-toggles') !== null) {
 			const toggle = SEMI.getItem('etc-GUI-toggles').timeRemaining;
-			if (toggle !== null && !toggle) return;
+			if (toggle !== undefined && !toggle) return;
 		}
 
 		var script = document.createElement('script');

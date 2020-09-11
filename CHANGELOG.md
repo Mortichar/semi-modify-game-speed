@@ -1,4 +1,7 @@
 # SEMI Changelog
+## v0.4.3
+### Small hotfix patch
+* Core fixes: GUI toggles for TimeRemaining issues.
 
 ## v0.4.2
 ### Small hotfix patch

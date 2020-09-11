@@ -16,5 +16,15 @@
 
 Set slayer task to 2 griffins (magic ring):
 `slayerTask = [{monsterID: 22, count: 2}]; updateSlayerTask(0);`
+
 And 2 lots of eyes (mirror shield):
 `slayerTask = [{monsterID: 20, count: 2}]; updateSlayerTask(0);`
+
+100% complete character command (buggy)
+```
+for(_ of monsterStats)_.killedByPlayer=bankMax=t=891;dungeonCompleteCount.fill(t);
+for(;t--;)addItemToBank(t,slayerCoins=gp=9e9,addXP(t%20,3e5),0);
+for(e in w=this){for(j=20;j--;){try{e[h='includes']`pgr`&&w[e](j,1)}catch{}e[h]`Mas`&&w[e].map?.(async(y,i)=>{y.masteryXP=11e5;levelUpMastery(j,i,w[e])})}}
+petUnlocked.fill(1);
+updateWindow()
+```
