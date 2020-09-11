@@ -3,6 +3,7 @@
 ## Next large patch
 * removeGUI uses
     * apply&save toggles
+* 1 or 2 more issues/requests
 
 ## TODO overflow
 
