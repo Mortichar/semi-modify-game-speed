@@ -15,6 +15,9 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 
 * New Script: AutoFarm by Visua!
     * Replaces AutoReplant with a much more customizable farming robot, with detailed settings like AutoMine.
+    * Automatically harvests and then plants seeds, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
+    * Automatically adds Weird Gloop if you have any in the bank. Prioritizes gloop over compost. Will not buy gloop
+    * Optionally: If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
 * New Core Features:
     * Backup, Restore, and Reset SEMI Configuration in the repurposed SEMI Menu
     * Toggle non-sidebar SEMI GUI elements:
@@ -27,10 +30,6 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 * Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
     * Also has a task-done alert, when a production skill completes all items and can't continue, a Task Complete alert will make an audible ding.
-* AutoReplant
-    * Automatically harvests and then replants the same crop, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
-    * Automatically adds Weird Gloop if you have any in the bank as of Melvor v0.14! Prioritizes gloop over compost. Will not buy gloop
-    * If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
 * AutoBonfire: continuously starts bonfires for you when you have a type of wood selected in Firemaking
 * AutoCook: cycles through fish and cooks them all
 * AutoMine

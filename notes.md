@@ -3,7 +3,7 @@
 ## v0.4.1
 
 * ~~AutoFarm by Visua!~~
-* Toggle equip swap for AutoFarm?
+* ~~Toggle equip swap for AutoFarm?~~
 * ~~Fix warnings that may be present in time-remaining.js from exposed inner/outer HTML assigns~~
 
 ## TODO overflow

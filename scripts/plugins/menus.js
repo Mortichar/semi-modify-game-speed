@@ -151,7 +151,7 @@ var {semiSetMenu} = (() => {
         injectDragMenus();
 
         //if all goes well, yay, it's loaded
-        SEMI.customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',10000);
+        SEMI.customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',5000);
     };
 
     //show SEMI katorone automation settings modal called by nav button

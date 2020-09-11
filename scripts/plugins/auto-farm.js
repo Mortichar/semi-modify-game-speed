@@ -1,3 +1,12 @@
+//AF AutoEquip toggle
+(() => {
+    const id = 'auto-farm-equip';
+    const title = 'AutoFarmEquip';
+    const desc = `If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting.`;
+    const imgSrc = 'assets/media/bank/skillcape_farming.svg';
+    SEMI.add(id, {ms: 0, title, desc, imgSrc});
+})();
+
 (() => {
     const id = 'auto-farm';
     const title = 'AutoFarm';
@@ -169,6 +178,7 @@
     }
 
     function swapFarmingEquipment(x = true) {
+        if (!SEMI.isEnabled('auto-farm-equip')) return;
         if (x) {
             equipIfNotEquiped(CONSTANTS.item.Bobs_Rake, 'Weapon');
             equipIfNotEquiped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
