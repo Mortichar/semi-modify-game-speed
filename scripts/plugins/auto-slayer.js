@@ -132,7 +132,7 @@
                 }
             }
 
-            selectMonster(slayerTask[0].monsterID);
+            if (slayerTask[0] !== undefined) selectMonster(slayerTask[0].monsterID);
         }
     };
     // End of AutoSlayer!
