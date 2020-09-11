@@ -5,7 +5,7 @@
 * AutoEnable Scripts on Refresh now has a GUI toggle in the SEMI menu. (Previously a hidden option only)
     * Small code change to `ore-in-bank.js` to properly work when auto-enabled
     * Added a few bits to Katorone to make it auto-enable as well
-* Another non-sidebar toggle: TimeRemaning script.
+* Another non-sidebar toggle: TimeRemaning script. Updated non-sidebar toggle killswitches.
 * New `removeGUI()` plugin option
 * Fixed core bug by removing redundancy. See [issue #40](https://gitlab.com/aldousWatts/SEMI/-/issues/40) for details
 ### New Scripts

@@ -20,6 +20,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * Optionally: If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
 * New Core Features:
     * Backup, Restore, and Reset SEMI Configuration in the repurposed SEMI Menu
+    * AutoEnable Scripts on Refresh now available in the SEMI Menu
     * Toggle non-sidebar SEMI GUI elements:
         * Thieving tooltips
         * Destroy All Crops button
