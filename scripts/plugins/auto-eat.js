@@ -1,7 +1,7 @@
 (() => {
     const id = 'auto-eat';
     const title = 'AutoEat';
-    const desc = "AutoEat script eats when HP is less than what food heals or below 50HP when outside combat, or if in combat it will eat when your HP is less than max hit of your enemy. Don't be scared! SEMI calculates your damage reduction AND enemy stun damage multipliers AND burning AND damage reflection when calculating max hit. AutoEat is god dungeon ready, however since Melvor v0.16 eating will reset your attack swing, so AutoEat likely needs a rework to be viable.";
+    const desc = "AutoEat in combat will still only eat when your HP is below calculated max hit, but now it will eat to nearly full health instead of just to the max hit value. It eats with efficiency in mind, so it won't eat food if your food healing would cause overhealing. However, it will still eat if you are at risk of dying from max hit near full health, ignoring this efficiency rule. This makes it a little more viable for the v0.16+ combat eating changes. Suggestion: large quantities of low-healing food for maximum efficiency of this bot.";
     const imgSrc = 'assets/media/shop/autoeat.svg';
 
     const autoEat = () => {
