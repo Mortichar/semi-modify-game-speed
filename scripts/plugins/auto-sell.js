@@ -102,7 +102,7 @@ var autoSellShow = (() => {
         const y = $(`#modal-${id}`).children().children().children().children('.font-size-sm');
         y.children().children().attr('id', `${id}-container`);
 
-        const enableAutoButton = $(`<button class="btn btn-md btn-danger m-1 SEMI-modal-btn" id="${id}-status">Disabled</button>`);
+        const enableAutoButton = $(`<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>`);
         enableAutoButton.on('click', () => SEMI.toggle(`${id}`));
         y.before(enableAutoButton);
 

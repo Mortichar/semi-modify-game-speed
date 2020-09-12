@@ -10,7 +10,7 @@
 .SEMI-modal-btn {
     margin-left: auto !important;
     margin-right: auto !important;
-    display: block;
+    display: block !important;
 }
 
 .SEMI-notif {

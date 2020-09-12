@@ -7,6 +7,7 @@
 
 ## TODO overflow
 
+* Detect if injecting over older version of SEMI and alert that a refresh is needed?
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
 * "Better" checks for things like putting on capes and gloves etc when needed
 * Jarx additions:
