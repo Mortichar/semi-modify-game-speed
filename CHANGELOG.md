@@ -3,7 +3,7 @@
 ## v0.4.4
 ### Small hotfix patches
 * More etc GUI fixes
-* AutoCook fix fixes (no longer changes setting every loop, only if it is enabled)
+* AutoCook fix fixes (no longer changes conflicting game setting every loop, only if it is enabled)
 ### AutoEat Changes
 * AutoEat in combat will still only eat when your HP is below calculated max hit, but now it will eat to nearly full health instead of just to the max hit value. It eats with efficiency in mind, so it won't eat food if your food healing would cause overhealing. However, it will still eat if you are at risk of dying from max hit, ignoring this efficiency rule. This makes it a little more viable for the v0.16+ combat eating changes. I suggest large quantities of low-healing food for maximum efficiency of this bot.
 
