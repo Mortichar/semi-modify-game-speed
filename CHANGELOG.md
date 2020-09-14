@@ -1,5 +1,9 @@
 # SEMI Changelog
 
+## Current patch
+### Small hotfix
+* Update SEMI version to gameVersion
+
 ## v0.4.4
 ### Small hotfix patches
 * More etc GUI fixes
