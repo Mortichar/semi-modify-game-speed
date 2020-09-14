@@ -1,8 +1,6 @@
 (() => {
     // Scripting Engine for Melvor Idle by aldousWatts on GitLab
-    // Major code & script contributions by DanielRX
-    // Many community code contributors!
-    // Built for Melvor Idle alpha v0.15.4
+    // Major code & script contributions by DanielRX & many community code contributors!
     // As always, use and modify at your own risk. But hey, contribute and share!
     // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 
@@ -71,7 +69,7 @@
     const semiHeading = document.createElement('li');
     semiHeading.className = "nav-main-heading";
     navbar.appendChild(semiHeading);
-    semiHeading.style = 'font-size: 12pt; color: white;';
+    semiHeading.style = 'font-size: 12pt; color: white; text-transform: none;';
     semiHeading.textContent = ' SEMI v0.4.4';
     semiHeading.title = 'Scripting Engine for Melvor Idle';
     semiHeading.id = 'SEMI-heading';
