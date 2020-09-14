@@ -8,20 +8,20 @@ var SEMIetcGUI = {
 
 var {semiSetMenu} = (() => {
     const SEMI_VERSION = '0.4.4';
-    const GAME_VERSION = 'Alpha v0.16.2.1';
+    const GAME_VERSION = 'Alpha v0.16.3';
 
     const header = $('#SEMI-heading');
 
     const injectX = () => {
         const skillTitle = 'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.';
-        const skillMenuHeader = `<li class="nav-main-heading" id="${SEMI.ROOT_ID}-skills-header" title="${skillTitle}">Auto Skills</li>`;
+        const skillMenuHeader = `<li class="nav-main-heading SEMI-header" id="${SEMI.ROOT_ID}-skills-header" title="${skillTitle}">Auto Skills</li>`;
         const skillMenuSection = `<div id="${SEMI.ROOT_ID}-skills-section-unsorted"></div>`;
-        const autoCombatheader = `<li class="nav-main-heading" id="${SEMI.ROOT_ID}-combat-header">Auto Combat</li>`;
+        const autoCombatheader = `<li class="nav-main-heading SEMI-header" id="${SEMI.ROOT_ID}-combat-header">Auto Combat</li>`;
         const autoCombatSection = `<div id="${SEMI.ROOT_ID}-combat-section-unsorted"></div>`;
         header.after(skillMenuHeader, skillMenuSection, autoCombatheader, autoCombatSection);
 
         const semiNavImg = `<img class="nav-img" src="${SEMI.iconSrc}">`;
-        const semiNavInner = `<a class="nav-main-link nav-compact" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
+        const semiNavInner = `<a class="nav-main-link nav-compact SEMI-menu-btn" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
         const semiNavEl = $(`<li class="nav-main-item" id="${SEMI.ROOT_ID}-info-header">${semiNavInner}</li>`);
         $('#sidebar').find('.nav-main').append(semiNavEl);
         $(`#${SEMI.ROOT_ID}-info-button`).on('click', () => semiInfo());

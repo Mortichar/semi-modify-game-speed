@@ -51,14 +51,15 @@ var injectEyes = (() => {
         eye.removeClass(toRemove);
         eye.addClass(className);
 
-        const els = SEMI.getElements(idMap[id]);
-        // if (id == 'main') {
-        //     var hideMain = SEMI.getElement('skills-header');
-        //     hideMain.add(SEMI.getElement('combat-header'));
-        //     hideMain.add(SEMI.getElement('info-button'));
-        // }
-        if(state) { els.removeClass('fold-d-none'); }
-        else { els.addClass('fold-d-none'); }
+        if (id == 'main') {
+            const els = $('.SEMI-header, .SEMI-menu-btn');
+            if(state) { els.removeClass('fold-d-none'); }
+            else { els.addClass('fold-d-none'); }
+        } else {
+            const els = SEMI.getElements(idMap[id]);
+            if(state) { els.removeClass('fold-d-none'); }
+            else { els.addClass('fold-d-none'); }
+        }
     };
 
     const showMenus = () => {
