@@ -1,6 +1,6 @@
 # SEMI Changelog
 
-## Current patch
+## v0.4.5
 ### Small hotfix
 * Update SEMI version to gameVersion
 
