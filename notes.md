@@ -1,5 +1,12 @@
 # SEMI General notes
 
+## v0.4.5
+* ~~Game version update~~
+* A couple more fixes...
+* ```$('#SEMI-heading').text(` SEMI v${VERSION}`);```
+* Add SEMI version config.
+    * If a new version is being installed over an old version, give an alert to refresh the page.
+
 ## Next large patch
 * removeGUI uses
     * apply&save toggles
