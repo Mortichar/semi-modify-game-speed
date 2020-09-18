@@ -114,7 +114,7 @@ var autoSellShow = (() => {
         }
     };
 
-    SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc, isCombat: true});
-    SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI, isCombat: true});
+    SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT});
+    SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT});
     SEMI.mergeOnto(SEMI,{refreshMonsterLog});
 })();

@@ -7,21 +7,19 @@ var SEMIetcGUI = {
 };
 
 var {semiSetMenu} = (() => {
-    const SEMI_VERSION = '0.4.5';
-    const GAME_VERSION = 'Alpha v0.16.3';
-
     const header = $('#SEMI-heading');
 
-    const injectX = () => {
-        const skillTitle = 'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.';
-        const skillMenuHeader = `<li class="nav-main-heading SEMI-header" id="${SEMI.ROOT_ID}-skills-header" title="${skillTitle}">Auto Skills</li>`;
-        const skillMenuSection = `<div id="${SEMI.ROOT_ID}-skills-section-unsorted"></div>`;
-        const autoCombatheader = `<li class="nav-main-heading SEMI-header" id="${SEMI.ROOT_ID}-combat-header">Auto Combat</li>`;
-        const autoCombatSection = `<div id="${SEMI.ROOT_ID}-combat-section-unsorted"></div>`;
-        header.after(skillMenuHeader, skillMenuSection, autoCombatheader, autoCombatSection);
+    const injectSidebarSections = () => {
+        for (let key in SEMI.SIDEBAR_MENUS) {
+            const menu = SEMI.SIDEBAR_MENUS[key];
+            const menuHeader = `<li class="nav-main-heading SEMI-header" id="${SEMI.ROOT_ID}-${menu.ID}-header" ${menu.Title !== undefined ? `title="${menu.Title}"` : ''}>${menu.Header}</li>`;
+            const menuSection = `<div id="${SEMI.ROOT_ID}-${menu.ID}-section-unsorted"></div>`;
+
+            header.after(menuHeader, menuSection);
+        }
 
         const semiNavImg = `<img class="nav-img" src="${SEMI.iconSrc}">`;
-        const semiNavInner = `<a class="nav-main-link nav-compact SEMI-menu-btn" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
+        const semiNavInner = `<a class="nav-main-link nav-compact ${SEMI.ROOT_ID}-btn" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
         const semiNavEl = $(`<li class="nav-main-item" id="${SEMI.ROOT_ID}-info-header">${semiNavInner}</li>`);
         $('#sidebar').find('.nav-main').append(semiNavEl);
         $(`#${SEMI.ROOT_ID}-info-button`).on('click', () => semiInfo());
@@ -105,7 +103,7 @@ var {semiSetMenu} = (() => {
                             <i class="fa fa-fw fa-times mr-1"></i>
                             Reset SEMI
                         </button>
-                        <div id="SEMI-menu-info-box" class="d-none SEMI-fixed-textbox">
+                        <div id="${SEMI.ROOT_ID}-info-box" class="d-none SEMI-fixed-textbox">
                             <div style="font-size: 14pt"><b>SEMI v${SEMI_VERSION} by Aldous Watts & DanielRX</b></div>
                             Hover over sidebar buttons or some other SEMI elements to see tooltips that describe the scripts/options and give hints.
                             <br>
@@ -125,7 +123,7 @@ var {semiSetMenu} = (() => {
         $('#modal-account-change').before(semiInfoPopup);
         $(`#hide-SEMI-info-button`).on('click', () => toggleSEMIMenuInfo());
         $(`#SEMI-RESET-button`).on('click', () => resetSEMIPrompt());
-        $(`#SEMI-menu-etc-toggles-apply-save`).on('click', () => saveEtcToggles());
+        $(`#${SEMI.ROOT_ID}-etc-toggles-apply-save`).on('click', () => saveEtcToggles());
         $(`#SEMI-auto-enable-status`).on('click', () => toggleAutoEnableScripts());
     };
 
@@ -136,7 +134,7 @@ var {semiSetMenu} = (() => {
     //SEMI menu setup function
     const setupSEMI = () => {
         if ($('#auto-replant-button').length) return;
-        injectX();
+        injectSidebarSections();
         SEMI.getElement('info-header').before($('<br>'));
         SEMI.setItem('etc-GUI-toggles', SEMIetcGUI); //to prevent errors first-run with thieving-calc
         SEMI.pluginNames.forEach((name) => SEMI.injectGUI(name));
@@ -161,7 +159,7 @@ var {semiSetMenu} = (() => {
     const semiInfo = () => { SEMI.getElement('semi-modal').modal(open); };
 
     const toggleSEMIMenuInfo = () => {
-        $('#SEMI-menu-info-box').toggleClass('d-none');
+        $(`#${SEMI.ROOT_ID}-info-box`).toggleClass('d-none');
         if ($('#hide-SEMI-info-button').text() == 'Show SEMI Info') $('#hide-SEMI-info-button').text('Hide SEMI Info');
         else $('#hide-SEMI-info-button').text('Show SEMI Info');
     };
@@ -194,12 +192,12 @@ var {semiSetMenu} = (() => {
         if(!isLoaded || typeof SEMI === 'undefined' || !SEMI.utilsReady) {return;}
         clearInterval(semiLoader);
         let tryLoad = true;
-        const wrongVersion = gameVersion != GAME_VERSION;
+        const wrongVersion = gameVersion != SEMI.SUPPORTED_GAME_VERSION;
         if (wrongVersion) {
-            const msg = `SEMI\nThis version of SEMI was made for Melvor Idle ${GAME_VERSION}. Loading the extension may cause unexpected behavior or result in errors.\n Try loading it anyways?`;
+            const msg = `SEMI\nThis version of SEMI was made for Melvor Idle ${SEMI.SUPPORTED_GAME_VERSION}. Loading the extension may cause unexpected behavior or result in errors.\n Try loading it anyways?`;
             tryLoad = window.confirm(msg);
         }
-        if(!tryLoad) { return hideSemi('game version incompatability.'); }
+        if(!tryLoad) { return hideSemi('game version incompatibility.'); }
         try {
             setupSEMI();
             const msg = `SEMI v${SEMI_VERSION} Loaded`;

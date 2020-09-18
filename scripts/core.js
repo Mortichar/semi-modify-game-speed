@@ -1,9 +1,43 @@
 var SEMI =  (() => {
     /**
     * @typedef {{enable: () => void, disable: () => void, onDisable: () => void, onEnable: () => void, onLoop: () => void, updateStatus: () => void, onToggle: () => void}} PluginFunctions
-    * @typedef {{imgSrc: string, desc: string, title: string, skill: string, isCombat: boolean}} PluginMeta
+    * @typedef {{imgSrc: string, desc: string, title: string, skill: string, pluginType: number}} PluginMeta
     * @typedef {PluginFunctions & PluginMeta & {f: string, enabled: boolean, interval: number | null, ms: number}} Plugin
+    * @typedef {ID: string, Title: string, Header: string} SidebarHeader
     */
+
+    // Global Constants
+    const ROOT_ID = 'SEMI-menu';
+    const LOCAL_SETTINGS_PREFIX = 'SEMI';
+    const SUPPORTED_GAME_VERSION = 'Alpha v0.16.3';
+
+    // Enums
+    /**
+     * @type {{[sidebarHeaderName: string]: SidebarHeader}}
+     */
+    const SIDEBAR_MENUS = {
+        TWEAK: {
+            ID: 'tweaks',
+            Title: 'Quality of Life Improvements that do not automate any game play',
+            Header: 'Tweaks',
+        },
+        AUTO_COMBAT: {
+            ID: 'combat',
+            Title: undefined,
+            Header: 'Auto Combat',
+        },
+        AUTO_SKILL: {
+            ID: 'skills',
+            Title: 'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.',
+            Header: 'Auto Skills',
+        },
+    }
+
+    const PLUGIN_TYPE = {
+        AUTO_SKILL: SIDEBAR_MENUS.AUTO_SKILL.ID,
+        AUTO_COMBAT: SIDEBAR_MENUS.AUTO_COMBAT.ID,
+        TWEAK: SIDEBAR_MENUS.TWEAK.ID,
+    }
 
     /**
     * @param {string} x
@@ -11,24 +45,24 @@ var SEMI =  (() => {
     */
     const setItem = (x, y) => {
         //console.log("setItem -> x, y", x, y);
-        localStorage.setItem(`SEMI-${x}`, JSON.stringify(y));
+        localStorage.setItem(`${LOCAL_SETTINGS_PREFIX}-${x}`, JSON.stringify(y));
     }
 
     /** @param {string} x */
     const getItem = (x) => {
-        const y = JSON.parse(localStorage.getItem(`SEMI-${x}`));
+        const y = JSON.parse(localStorage.getItem(`${LOCAL_SETTINGS_PREFIX}-${x}`));
         // console.log("getItem -> x, y", x, y);
         return y;
     }
     /** @param {string} x */
     const removeItem = (x) => {
-        localStorage.removeItem(`SEMI-${x}`);
+        localStorage.removeItem(`${LOCAL_SETTINGS_PREFIX}-${x}`);
     }
 
     const backupSEMI = () => {
         const backupKeyData = {};
         for (key in localStorage) {
-            if (key.substring(0,5) == 'SEMI-') {
+            if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`)) {
                 backupKeyData[key] = JSON.parse(localStorage.getItem(key));
                 // console.log(backupKeyData);
             }
@@ -46,8 +80,7 @@ var SEMI =  (() => {
         const restoredConfig = JSON.parse($('#importSEMISettings')[0].value);
         if (restoredConfig == null || typeof restoredConfig !== 'object') return;
         for (key in restoredConfig) {
-            // const keyname = key.slice(5);
-            if (key.substring(0,5) == 'SEMI-' && key !== restoredConfig[key]) {
+            if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`) && key !== restoredConfig[key]) {
                 localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
             }
         }
@@ -57,12 +90,12 @@ var SEMI =  (() => {
 
     const resetSEMI = () => {
         for (key in localStorage) {
-            if (key.substring(0,5) == 'SEMI-') {
+            if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`)) {
                 localStorage.removeItem(key);
             }
         }
         katoroneOn = false;
-        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs erased from localstorage! Refresh to complete the reset process.', 10000);
+        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs erased from your local storage! Refresh to complete the reset process.', 10000);
     }
 
     const mergeOnto = (x, y) => {
@@ -87,15 +120,14 @@ var SEMI =  (() => {
     * @param {string} fName
     * @param {string} title
     * @param {string} name
-    * @param {boolean} isCombat
+    * @param {string} rootId
     */
-    const makeMenuItem = (desc, imgSrc, fName, title, name, isCombat) => {
+    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId) => {
         const imgEl =  createElement('img', {src: imgSrc, id: `${name}-img`, class: 'nav-img'});
         const textEl = createElement('span', {innerHTML: title, class: 'nav-main-link-name'});
         const statusEl = createElement('small', {id: `${name}-status`, innerHTML: 'Disabled'});
         const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact'}, [imgEl, textEl, statusEl]);
-        const rootId = 'SEMI-menu-' + (isCombat ? 'combat' : 'skills');
-        const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: 'nav-main-item SEMI-menu-button'}, [buttonEl]);
+        const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
         return mainEl;
     };
 
@@ -112,7 +144,7 @@ var SEMI =  (() => {
     * @param {string} name
     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, isCombat: false};
+        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL};
         const opts = {...defaults, ...options};
         opts.imgSrc = (opts.imgSrc === '' && opts.skill !== '') ? SEMI.skillImg(opts.skill) : opts.imgSrc;
         pluginNames.push(name);
@@ -120,10 +152,9 @@ var SEMI =  (() => {
         const addToMenu = () => {
             const plugin = plugins[name];
             if(plugin.imgSrc === '') { return; }
-            let el = $('#SEMI-menu-skills-section-unsorted');
-            if(plugin.isCombat) { el = $('#SEMI-menu-combat-section-unsorted'); }
-            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, plugin.isCombat);
-            el.append(pluginEl);
+            let menuRootId = `${ROOT_ID}-${plugin.pluginType}`;
+            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId);
+            $(`#${menuRootId}-section-unsorted`).append(pluginEl);
         };
 
         const removeFromMenu = () => {
@@ -219,5 +250,5 @@ var SEMI =  (() => {
     */
     const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
 
-    return {add, toggle, enable, disable, isEnabled, injectGUI, removeGUI, pluginNames, createElement, setItem, getItem, removeItem, backupSEMI, restoreSEMI, resetSEMI, utilsReady: false};
+    return {add, toggle, enable, disable, isEnabled, injectGUI, removeGUI, pluginNames, createElement, setItem, getItem, removeItem, backupSEMI, restoreSEMI, resetSEMI, ROOT_ID, PLUGIN_TYPE, SUPPORTED_GAME_VERSION, SIDEBAR_MENUS, utilsReady: false};
 })();

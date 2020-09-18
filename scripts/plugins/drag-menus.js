@@ -4,10 +4,15 @@ var injectDragMenus = () => {
     const prefix = SEMI.ROOT_ID;
     const getEl = (id) => SEMI.getElement(id);
 
-    const sections = ['combat', 'skills', 'auto-combat', 'auto-skills', 'other', 'socials'];
+    const sections = ['combat', 'skills', 'other', 'socials'];
     const configVersion = 1;
 
     const menuConfig = { version: configVersion };
+
+    for (let key in SEMI.SIDEBAR_MENUS) {
+        const menu = SEMI.SIDEBAR_MENUS[key];
+        sections.push(`${SEMI.ROOT_ID}-${menu.ID}`);
+    }
 
     sections.forEach((section) => {
         menuConfig[section] = {locked: true, order: []};
@@ -79,7 +84,7 @@ var injectDragMenus = () => {
             if (!storedMenuConfig.version) {
                 const altMagicMenu = 'nav-skill-tooltip-16';
                 const altMagicIndex = menuConfig.skills.order.indexOf(altMagicMenu);
-                const dividerIndex = menuConfig.skills.order.indexOf('SEMI-menu-section-skills-divider');
+                const dividerIndex = menuConfig.skills.order.indexOf(`${SEMI.ROOT_ID}-section-skills-divider`);
                 if (altMagicIndex !== -1 && dividerIndex !== -1 && altMagicIndex > dividerIndex) {
                     menuConfig.skills.order.splice(altMagicIndex, 1);
                     menuConfig.skills.order.splice(dividerIndex, 0, altMagicMenu);
@@ -98,16 +103,20 @@ var injectDragMenus = () => {
     const combatSkills = skillElements.filter((x) => x.lastElementChild.href === 'javascript:changePage(13);');
     const nonCombatSkills = skillElements.filter((x) => x.lastElementChild.href !== 'javascript:changePage(13);');
     const SEMIPlugins = [...$(`.${prefix}-button`)];
-    const SEMICombatPlugins = SEMIPlugins.filter((x) => x.id.startsWith(`${prefix}-combat-skill-`));
-    const SEMISkillPlugins = SEMIPlugins.filter((x) => x.id.startsWith(`${prefix}-skills-skill-`));
     const otherButtons = [...$('.nav-main-item')].filter((x) => x.id.startsWith(`${prefix}-other-`));
     const socialButtons = [...$('.nav-main-item')].filter((x) => x.id.startsWith(`${prefix}-socials-`));
 
+    const skills = {combat: combatSkills, skills: nonCombatSkills, other: otherButtons, socials: socialButtons};
+
+    for (let key in SEMI.SIDEBAR_MENUS) {
+        const menu = SEMI.SIDEBAR_MENUS[key];
+        skills[`${SEMI.ROOT_ID}-${menu.ID}`] = SEMIPlugins.filter((x) => x.id.startsWith(`${prefix}-${menu.ID}-skill-`));
+    }
+
     loadMenuState();
-    const skills = {combat: combatSkills, skills: nonCombatSkills, 'auto-skills': SEMISkillPlugins, 'auto-combat': SEMICombatPlugins, other: otherButtons, socials: socialButtons};
 
     const header = (name) => $(headers.filter((x) => {
-        return x.innerText.toUpperCase().startsWith(name.toUpperCase().replace('-', ' '));
+        return x.id.startsWith(name) || x.innerText.toUpperCase().startsWith(name.toUpperCase().replace('-', ' '));
     })[0]);
 
     const makeSortable = (id) => {

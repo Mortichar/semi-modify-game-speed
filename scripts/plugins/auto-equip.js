@@ -26,6 +26,6 @@
     };
 
     //***************************END AUTO COMBAT*******************************
-    SEMI.add(id, {ms: 500, onLoop, isCombat: true, title, desc, imgSrc});
+    SEMI.add(id, {ms: 500, onLoop, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc});
 })();
 

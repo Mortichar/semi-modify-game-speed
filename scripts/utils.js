@@ -1,13 +1,12 @@
 (() => {
     /** @typedef {keyof typeof CONSTANTS.skill} SkillName */
-    const ROOT_ID = 'SEMI-menu';
     const injectUtils = () => {
         console.log('Starting inject utils!');
         /** @param {string} id */
-        const getElement = (id) => { return $(`#${ROOT_ID}-${id}`).first(); };
+        const getElement = (id) => { return $(`#${SEMI.ROOT_ID}-${id}`).first(); };
 
         /** @param {string} id */
-        const getElements = (id) => { return id == '' ? $(`[id^=${ROOT_ID}]`) : $(`[id^=${ROOT_ID}-${id}]`); };
+        const getElements = (id) => { return id == '' ? $(`[id^=${SEMI.ROOT_ID}]`) : $(`[id^=${SEMI.ROOT_ID}-${id}]`); };
         const iconSrc = getElement('icon')[0].src;
 
         /**
@@ -275,7 +274,7 @@
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
             incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull, hasCapeOn,
             confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
-            customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto, ROOT_ID
+            customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });
         console.log('Utils injected!');

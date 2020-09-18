@@ -29,6 +29,6 @@
         if(SEMI.isEnabled('auto-slayer')) { SEMI.disable('auto-slayer'); }
     };
 
-    SEMI.add(id, {ms: 500, onLoop: autoRun, isCombat: true, title, desc, imgSrc});
+    SEMI.add(id, {ms: 500, onLoop: autoRun, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc});
 })();
 
