@@ -1,11 +1,8 @@
 # SEMI General notes
 
 ## v0.4.6
-* Add SEMI version config.
-    * If a new version is being installed over an old version, give an alert to refresh the page.
-* More merges & such
-* removeGUI uses
-    * apply&save toggles
+* setItem & getItem for semi-version, If a new version is being installed over an old version, give an alert to refresh the page.
+* removeGUI uses (apply&save toggles)
 * 1 or 2 more issues/requests
 
 ## TODO overflow

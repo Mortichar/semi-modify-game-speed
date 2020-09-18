@@ -1,5 +1,14 @@
 # SEMI Changelog
 
+## Current patch...
+### Core changes
+* Zeldo core changes:
+    * Improve load speed of SEMI by making some scripts inject asynchronously
+    * Move SEMI scripts to a SEMI directory
+    * Get SEMI version from manifest & populate more fields with it
+    * New sidebar header & capabilities
+* Starting Aurora core changes
+
 ## v0.4.5
 ### Small hotfix
 * Update SEMI version to gameVersion
