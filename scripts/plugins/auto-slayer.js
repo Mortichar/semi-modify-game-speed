@@ -4,7 +4,7 @@
     const title = 'AutoSlayerEquip';
     const desc = 'The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on.';
     const imgSrc = 'assets/media/bank/mirror_shield.svg';
-    SEMI.add(id, {ms: 0, isCombat: true, title, desc, imgSrc});
+    SEMI.add(id, {ms: 0, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc});
 })();
 
 (() => {
@@ -137,7 +137,7 @@
     };
     // End of AutoSlayer!
 
-    SEMI.add(id, {ms: 2000, isCombat: true, title, desc, imgSrc, onToggle: updateAutoSlayerButtonText, onLoop: autoSlayer, skill: 'Combat'});
+    SEMI.add(id, {ms: 2000, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc, onToggle: updateAutoSlayerButtonText, onLoop: autoSlayer, skill: 'Combat'});
 })();
 
 

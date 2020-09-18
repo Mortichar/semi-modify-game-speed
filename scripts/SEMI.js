@@ -4,7 +4,7 @@
     // As always, use and modify at your own risk. But hey, contribute and share!
     // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 
-    //Injecting Scripts
+    // Injecting Scripts
     const isChrome = navigator.userAgent.match('Chrome');
     const isFirefox = navigator.userAgent.match('Firefox');
 
@@ -23,6 +23,16 @@
         script.src = getURL(name);
         script.setAttribute('id', scriptID);
         document.body.appendChild(script);
+    };
+
+    /**
+     * @param {string} version
+     */
+    const addSemiVersion = (semiVersion) => {
+        const script = document.createElement('script');
+        script.setAttribute('id', 'semiVersion');
+        script.innerText = `SEMI_VERSION='${semiVersion}';`
+        document.body.prepend(script);
     };
 
     /**
@@ -65,12 +75,15 @@
 
     // not sure how to get the icon otherwise. need to leave the heading addition here, could probably just copy the rest to a big injection.
     if (exists('modal-semi-set-menu')) { return; }
+    const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;
+    addSemiVersion(semiVersion);
+
     const navbar = document.getElementsByClassName('nav-main')[0];
     const semiHeading = document.createElement('li');
     semiHeading.className = "nav-main-heading";
     navbar.appendChild(semiHeading);
     semiHeading.style = 'font-size: 12pt; color: white; text-transform: none;';
-    semiHeading.textContent = ' SEMI v0.4.5';
+    semiHeading.textContent = ` SEMI v${semiVersion}`;
     semiHeading.title = 'Scripting Engine for Melvor Idle';
     semiHeading.id = 'SEMI-heading';
     semiHeading.insertBefore(createImage('icons/border-48.png', 'SEMI-menu-icon'), semiHeading.childNodes[0]);

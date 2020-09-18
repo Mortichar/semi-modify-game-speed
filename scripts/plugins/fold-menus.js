@@ -26,20 +26,22 @@ var injectEyes = (() => {
 
         $('.nav-main-heading:contains(\'Other\'):first').append(eye('other'));
         $('.nav-main-heading:contains(\'Socials\')').append(eye('socials'));
-        SEMI.getElement('skills-header').append(eye('skills'));
-        SEMI.getElement('combat-header').append(eye('combat'));
+
+        for (let key in SEMI.SIDEBAR_MENUS) {
+            const menu = SEMI.SIDEBAR_MENUS[key];
+            SEMI.getElement(`${menu.ID}-header`).append(eye(menu.ID));
+        }
+        
         $('#SEMI-heading').append(eye('main'));
         loadMenuState();
         showMenus();
     };
 
-    const moreMenus = {combat: true, skills: true, other: true, socials: true, main: true};
+    const moreMenus = {other: true, socials: true, main: true};
 
     const idMap = {
         socials: 'socials-',
         other: 'other-',
-        skills: 'skills-skill-',
-        combat: 'combat-skill-'
     };
 
     const showMenu = (id) => {
@@ -52,7 +54,7 @@ var injectEyes = (() => {
         eye.addClass(className);
 
         if (id == 'main') {
-            const els = $('.SEMI-header, .SEMI-menu-btn');
+            const els = $(`.SEMI-header, .${SEMI.ROOT_ID}-btn`);
             if(state) { els.removeClass('fold-d-none'); }
             else { els.addClass('fold-d-none'); }
         } else {
@@ -65,9 +67,18 @@ var injectEyes = (() => {
     const showMenus = () => {
         showMenu('socials');
         showMenu('other');
-        showMenu('skills');
-        showMenu('combat');
         showMenu('main');
+
+        for (let key in SEMI.SIDEBAR_MENUS) {
+            const menu = SEMI.SIDEBAR_MENUS[key];
+            idMap[menu.ID] = `${menu.ID}-skill-`;
+
+            if (!moreMenus.hasOwnProperty(menu.ID))
+                moreMenus[menu.ID] = true;
+
+            showMenu(menu.ID);
+        }
+
         SEMI.getElements('eye-').removeClass('fold-d-none');
     };
 

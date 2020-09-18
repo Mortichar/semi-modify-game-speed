@@ -88,5 +88,5 @@ function toggleOreAmount() {
 }
 
 // Add to SEMI
-SEMI.add(name, {onLoop: updateOreAmount, injectGUI: injectOreAmount, onToggle: toggleOreAmount, skill, title, desc, imgSrc});
+SEMI.add(name, {onLoop: updateOreAmount, injectGUI: injectOreAmount, onToggle: toggleOreAmount, skill, title, desc, imgSrc, pluginType: SEMI.PLUGIN_TYPE.TWEAK});
 })()

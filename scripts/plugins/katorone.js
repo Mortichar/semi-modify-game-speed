@@ -185,7 +185,7 @@ const setLoadedKatValues = () => {
 const injectKatGUI = () => {
     //katorone settings gui
     const katMenuEl = $(`
-    <div class="modal" id="SEMI-menu-kat-modal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+    <div class="modal" id="${SEMI.ROOT_ID}-kat-modal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="block block-themed block-transparent mb-0">
