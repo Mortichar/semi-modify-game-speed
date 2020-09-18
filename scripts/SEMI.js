@@ -18,10 +18,15 @@
      * @param {string} name
      * @param {string} scriptID
      */
-    const addScript = (name, scriptID) => {
+    const addScript = (name, scriptID, async = false) => {
         const script = document.createElement('script');
         script.src = getURL(name);
         script.setAttribute('id', scriptID);
+
+        if (async) {
+            script.setAttribute('async', true);
+        }
+        
         document.body.appendChild(script);
     };
 
@@ -39,14 +44,17 @@
      * @param {string} name
      * @param {string} scriptID
      */
-    const replaceScript = (name, scriptID) => {
+    const replaceScript = (name, scriptID, async = false) => {
         const el = document.getElementById(scriptID);
         if (exists(scriptID)) { el.remove(); }
-        addScript(name, scriptID);
+        addScript(name, scriptID, async);
     };
 
     /** @param {string} name */
-    const addPlugin = (name) => { replaceScript(`scripts/plugins/${name}.js`, `SEMI-${name}`); };
+    const addPlugin = async (name) => { replaceScript(`scripts/plugins/${name}.js`, `SEMI-${name}`, true); };
+
+    /** @param {string} name */
+    const addSemiLib = (name) => { replaceScript(`scripts/semi/${name}.js`, `SEMI-${name}`); };
 
     /**
      * Create image element
@@ -65,7 +73,8 @@
     };
 
     const autoNames = [ 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot', 'slayer-skip', 'farm'];
-    const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'time-remaining', 'ore-in-bank', 'barf', 'calc-to-level', 'destroy-crops', 'katorone','thief-calc', 'xp-per-hour', 'fold-menus', 'drag-menus', 'menus'];
+    const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'time-remaining', 'ore-in-bank', 'barf', 'calc-to-level', 'destroy-crops', 'katorone', 'thief-calc', 'xp-per-hour'];
+    const libNames = ['fold-menus', 'drag-menus', 'menus'];
 
     // Only support firefox and chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
     if(!isChrome && !isFirefox) {
@@ -94,6 +103,11 @@
     const loadPlugins = () => {
         if(!exists('SEMI-canary')) { return; }
         clearInterval(pluginLoader);
+
+        // Load Libs first synchronously so that they can depend on each other.
+        libNames.forEach(addSemiLib);
+
+        // Load Plugins async
         pluginNames.forEach(addPlugin);
     };
     const pluginLoader = setInterval(loadPlugins, 50);
