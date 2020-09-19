@@ -26,7 +26,7 @@
         if (async) {
             script.setAttribute('async', true);
         }
-        
+
         document.body.appendChild(script);
     };
 
@@ -89,7 +89,7 @@
 
     const navbar = document.getElementsByClassName('nav-main')[0];
     const semiHeading = document.createElement('li');
-    semiHeading.className = "nav-main-heading";
+    semiHeading.className = 'nav-main-heading';
     navbar.appendChild(semiHeading);
     semiHeading.style = 'font-size: 12pt; color: white; text-transform: none;';
     semiHeading.textContent = ` SEMI v${semiVersion}`;

@@ -1,7 +1,7 @@
 var SEMI =  (() => {
     /**
     * @typedef {{enable: () => void, disable: () => void, onDisable: () => void, onEnable: () => void, onLoop: () => void, updateStatus: () => void, onToggle: () => void}} PluginFunctions
-    * @typedef {{imgSrc: string, desc: string, title: string, skill: string, pluginType: number}} PluginMeta
+    * @typedef {{imgSrc: string, desc: string, title: string, skill: string, pluginType: *}} PluginMeta
     * @typedef {PluginFunctions & PluginMeta & {f: string, enabled: boolean, interval: number | null, ms: number}} Plugin
     * @typedef {ID: string, Title: string, Header: string} SidebarHeader
     */
@@ -81,7 +81,8 @@ var SEMI =  (() => {
         if (restoredConfig == null || typeof restoredConfig !== 'object') return;
         for (key in restoredConfig) {
             if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`) && key !== restoredConfig[key]) {
-                localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
+                // localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
+                SEMI.mergeOnto(key, restoredConfig[key]);
             }
         }
         loadKatSets();
@@ -249,6 +250,10 @@ var SEMI =  (() => {
     * @param {string} name
     */
     const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
+    /**
+    * @param {string} name
+    */
+    const pluginConfig = (name) => { if (plugins[name].config !== undefined) return plugins[name].config; };
 
-    return {add, toggle, enable, disable, isEnabled, injectGUI, removeGUI, pluginNames, createElement, setItem, getItem, removeItem, backupSEMI, restoreSEMI, resetSEMI, ROOT_ID, PLUGIN_TYPE, SUPPORTED_GAME_VERSION, SIDEBAR_MENUS, utilsReady: false};
+    return {add, toggle, enable, disable, isEnabled, pluginConfig, injectGUI, removeGUI, pluginNames, createElement, setItem, getItem, removeItem, backupSEMI, restoreSEMI, resetSEMI, ROOT_ID, PLUGIN_TYPE, SUPPORTED_GAME_VERSION, SIDEBAR_MENUS, utilsReady: false};
 })();

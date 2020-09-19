@@ -31,7 +31,7 @@ var injectEyes = (() => {
             const menu = SEMI.SIDEBAR_MENUS[key];
             SEMI.getElement(`${menu.ID}-header`).append(eye(menu.ID));
         }
-        
+
         $('#SEMI-heading').append(eye('main'));
         loadMenuState();
         showMenus();
