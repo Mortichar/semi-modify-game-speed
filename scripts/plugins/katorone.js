@@ -290,5 +290,5 @@ const updateKatSets = () => {
     saveKatSets();
 };
 
-const configKat = {katBot, katoroneOn};
-SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI, config: configKat});
+const config = {katBot, katoroneOn};
+SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI, config});

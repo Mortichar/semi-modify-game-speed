@@ -81,8 +81,7 @@ var SEMI =  (() => {
         if (restoredConfig == null || typeof restoredConfig !== 'object') return;
         for (key in restoredConfig) {
             if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`) && key !== restoredConfig[key]) {
-                // localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
-                SEMI.mergeOnto(key, restoredConfig[key]);
+                localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
             }
         }
         loadKatSets();
@@ -145,7 +144,7 @@ var SEMI =  (() => {
     * @param {string} name
     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL};
+        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}};
         const opts = {...defaults, ...options};
         opts.imgSrc = (opts.imgSrc === '' && opts.skill !== '') ? SEMI.skillImg(opts.skill) : opts.imgSrc;
         pluginNames.push(name);

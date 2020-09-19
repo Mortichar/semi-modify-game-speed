@@ -7,7 +7,10 @@
     * Move SEMI scripts to a SEMI directory
     * Get SEMI version from manifest & populate more fields with it
     * New sidebar header & capabilities
-* Starting Aurora core changes
+* Starting Aurora-inspired core changes
+    * Plugins have a new default option: config. Set config as an object with plugin settings inside, and pass it with the rest of the options with `SEMI.add()`.
+    * `SEMI.pluginConfig(name)`: New SEMI core function to access and modify plugin configs.
+    * See `auto-sell-gems.js` for an example of the new config use, more refactoring for core config to come.
 
 ## v0.4.5
 ### Small hotfix
