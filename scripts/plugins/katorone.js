@@ -1,12 +1,14 @@
 //Katorone settings defaults
 var katoroneOn = false; //called by radio button. works instantly.
 var katBot = {
+// const config = {
     buyBankSlots: true,
     buyGemGlove_enabled: true,
     reserveGold: 5000000,
     gemGloveUses: 6000,
     gemList: [],
-    sellList: []
+    sellList: []//,
+    // katoroneOn: false
 };
 
 const saveKatSets = () => {
@@ -18,6 +20,7 @@ const loadKatSets = () => {
     if (SEMI.getItem('katorone-config') == null) return;
     const katBotDefaults = katBot;
     katBot = SEMI.getItem('katorone-config');
+    if (katBot.SeedStorage !== undefined) delete katBot.SeedStorage;
     const state = katBotDefaults !== katBot;
     if (state) setLoadedKatValues();
     const autoEnabled = SEMI.getItem('remember-state') && SEMI.getItem('katorone-status');
@@ -124,7 +127,7 @@ const setLoadedKatValues = () => {
 
     katBot.sellList = [];
     katBot.gemList = [128, 129, 130, 131, 132];
-    katBot.SeedStorage = {};
+    // katBot.SeedStorage = {};
 
     const setupKat = () => {
         notifyPlayer(10, 'Katorone Automation is set up and ready to activate.');
