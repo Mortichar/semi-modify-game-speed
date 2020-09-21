@@ -247,8 +247,8 @@
     };
 
     const removeAutoMineGUI = () => {
-        $(`#${id}`).remove();
         $(`#${id} [data-tippy-content]`).each((_, e) => e._tippy.destroy());
+        $(`#${id}`).remove();
     };
 
     SEMI.add(id, { ms: 100, onLoop: autoMine, onEnable, onDisable, desc, title, imgSrc, skill });
