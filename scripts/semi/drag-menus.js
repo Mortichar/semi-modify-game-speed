@@ -1,17 +1,15 @@
 var injectDragMenus = () => {
-    // const is_android = navigator.userAgent.indexOf("Android") > -1;
-    // if (is_android) { return; }
     const prefix = SEMI.ROOT_ID;
     const getEl = (id) => SEMI.getElement(id);
 
     const sections = ['combat', 'skills', 'other', 'socials'];
-    const configVersion = 1;
+    const configVersion = 2;
 
     const menuConfig = { version: configVersion };
 
     for (let key in SEMI.SIDEBAR_MENUS) {
         const menu = SEMI.SIDEBAR_MENUS[key];
-        sections.push(`${SEMI.ROOT_ID}-${menu.ID}`);
+        sections.push(menu.ID);
     }
 
     sections.forEach((section) => {
@@ -78,9 +76,8 @@ var injectDragMenus = () => {
         const storedMenuConfig = SEMI.getItem('drag-menu-config');
         if (storedMenuConfig !== null) {
             Object.keys(storedMenuConfig).map((k) => menuConfig[k] = storedMenuConfig[k]);
-            // menuConfig = { ...menuConfig, ...storedMenuConfig };
 
-            //fixing config to unhide alt-magic by default from previous version bad configs
+            // unhide alt-magic unintentionally hidden by a previous version
             if (!storedMenuConfig.version) {
                 const altMagicMenu = 'nav-skill-tooltip-16';
                 const altMagicIndex = menuConfig.skills.order.indexOf(altMagicMenu);
@@ -89,6 +86,11 @@ var injectDragMenus = () => {
                     menuConfig.skills.order.splice(altMagicIndex, 1);
                     menuConfig.skills.order.splice(dividerIndex, 0, altMagicMenu);
                 }
+            }
+            // update SEMI menu ids
+            if (storedMenuConfig.version < 2) {
+                menuConfig['auto-skills'].order = menuConfig['auto-skills'].order.map(s => s.replace('SEMI-menu-skills', 'SEMI-menu-auto-skills'));
+                menuConfig['auto-combat'].order = menuConfig['auto-combat'].order.map(s => s.replace('SEMI-menu-combat', 'SEMI-menu-auto-combat'));
             }
 
             menuConfig.version = configVersion;
@@ -110,7 +112,7 @@ var injectDragMenus = () => {
 
     for (let key in SEMI.SIDEBAR_MENUS) {
         const menu = SEMI.SIDEBAR_MENUS[key];
-        skills[`${SEMI.ROOT_ID}-${menu.ID}`] = SEMIPlugins.filter((x) => x.id.startsWith(`${prefix}-${menu.ID}-skill-`));
+        skills[menu.ID] = SEMIPlugins.filter((x) => x.id.startsWith(`${prefix}-${menu.ID}-skill-`));
     }
 
     loadMenuState();
@@ -144,5 +146,4 @@ var injectDragMenus = () => {
     orderMenus();
     makeItemsGhost();
     $(".nav-main-heading:contains('Other'):last").remove();
-    // console.log(menuConfig);
 };

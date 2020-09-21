@@ -22,12 +22,12 @@ var SEMI =  (() => {
             Header: 'Tweaks',
         },
         AUTO_COMBAT: {
-            ID: 'combat',
+            ID: 'auto-combat',
             Title: undefined,
             Header: 'Auto Combat',
         },
         AUTO_SKILL: {
-            ID: 'skills',
+            ID: 'auto-skills',
             Title: 'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.',
             Header: 'Auto Skills',
         },
@@ -252,7 +252,7 @@ var SEMI =  (() => {
     /**
     * @param {string} name
     */
-    const pluginConfig = (name) => { if (plugins[name].config !== undefined) return plugins[name].config; };
+    const pluginConfig = (name) => { if (plugins[name]) return plugins[name].config; };
 
     return {add, toggle, enable, disable, isEnabled, pluginConfig, injectGUI, removeGUI, pluginNames, createElement, setItem, getItem, removeItem, backupSEMI, restoreSEMI, resetSEMI, ROOT_ID, PLUGIN_TYPE, SUPPORTED_GAME_VERSION, SIDEBAR_MENUS, utilsReady: false};
 })();

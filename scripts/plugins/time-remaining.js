@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor TimeRemaining
 // @namespace    http://tampermonkey.net/
-// @version      0.4.0
+// @version      0.4.2
 // @description  Shows time remaining for completing a task with your current resources. Takes into account Mastery Levels and other bonuses.
 // @author       Breindahl#2660
 // @match        https://*.melvoridle.com/*
@@ -9,7 +9,7 @@
 // ==/UserScript==
 /* jshint esversion: 9 */
 
-// Note that this script is made for MelvorIdle version 0.16.2
+// Note that this script is made for MelvorIdle version 0.16.3
 // Later versions might break parts of this script
 // Big thanks to Xhaf#6478 and Visua#9999 for helping with parts of the code and troubleshooting
 
@@ -47,7 +47,7 @@
 				notify("Task Done");
 				console.log('task done');
 				let ding = new Audio("https://www.myinstants.com/media/sounds/ding-sound-effect.mp3");
-				ding.volume=0.5;
+				ding.volume=0.1;
 				ding.play();
 			}
 		}
@@ -621,7 +621,7 @@
 	}
 
 	function loadScript() {
-		if (window.isLoaded) {
+		if (window.isLoaded || (typeof unsafeWindow !== 'undefined' && unsafeWindow.isLoaded)) {
 			clearInterval(scriptLoader);
 			injectScript(script);
 		}

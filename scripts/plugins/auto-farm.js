@@ -79,7 +79,7 @@
             const seedId = priority[k];
             if (seedId !== -1 && skillLevel[CONSTANTS.skill.Farming] >= items[seedId].farmingLevel) {
                 const bankId = getBankId(seedId);
-                if (bankId && bank[bankId].qty >= items[seedId].seedsRequired) {
+                if (bankId !== false && bank[bankId].qty >= items[seedId].seedsRequired) {
                     nextSeed = seedId;
                     break;
                 }
@@ -99,15 +99,13 @@
         if (patch.hasGrown) { // Harvest
             let grownId = items[patch.seedID].grownItemID;
             let bankId = getBankId(grownId);
-            if (!(bankId || (bankMax + baseBankMax) > bank.length)) {
+            if (!(bankId !== false || (bankMax + baseBankMax) > bank.length)) {
                 return;
             }
             harvestSeed(areaId, patchId);
             // Auto equip as food. Maybe as an option later
-            // if (!bankId) {
-            //     bankId = getBankId(grownId);
-            // }
-            // if (equippedFood.find(food => food.itemID === grownId) && bankId) { equipFood(bankId, grownId, bank[bankId].qty); }
+            // if (bankId === false) { bankId = getBankId(grownId); }
+            // if (equippedFood.find(food => food.itemID === grownId) && bankId !== false) { equipFood(bankId, grownId, bank[bankId].qty); }
         }
 
         const nextSeed = findNextSeed(patch, patchId);
@@ -266,11 +264,11 @@
 
             function createPriorityTypeSelector(priorityType) {
                 const prefix = `${id}-${patchType}-prioritytype`;
-                const elementId = `${prefix}-${priorityType}`;
+                const elementId = `${prefix}-${priorityType.id}`;
                 return `
                     <div class="custom-control custom-radio custom-control-inline custom-control">
-                        <input class="custom-control-input" type="radio" id="${elementId}" name="${prefix}" value="${priorityType}"${config[patchType].priorityType === priorityType ? ' checked' : ''}>
-                        <label class="custom-control-label" for="${elementId}" data-tippy-content="${priorityTypes[priorityType].tooltip}">${priorityTypes[priorityType].description}</label>
+                        <input class="custom-control-input" type="radio" id="${elementId}" name="${prefix}" value="${priorityType.id}"${config[patchType].priorityType === priorityType.id ? ' checked' : ''}>
+                        <label class="custom-control-label" for="${elementId}" data-tippy-content="${priorityType.tooltip}">${priorityType.description}</label>
                     </div>`;
             }
 
@@ -288,7 +286,7 @@
                             </div>
                         </div>
                         <div class="block-content" style="padding-top: 12px">
-                            ${Object.keys(priorityTypes).map(createPriorityTypeSelector).join('')}
+                            ${Object.values(priorityTypes).map(createPriorityTypeSelector).join('')}
                         </div>
                         <div class="block-content" style="padding-top: 12px">
                             <div id="${prioritySettings}-custom">
@@ -311,16 +309,16 @@
         $('#farming-container .row:first').after($(autoFarmDiv));
 
         function addStateChangeHandler(patchType) {
-            $(`#${id}-${patchType}-enabled`).change(() => {
-                config[patchType].enabled = event.target.checked;
+            $(`#${id}-${patchType}-enabled`).change((event) => {
+                config[patchType].enabled = event.currentTarget.checked;
                 storeConfig();
             });
         }
         patchTypes.forEach(addStateChangeHandler);
 
         function showSelectedPriorityTypeSettings(patchType) {
-            for (const priorityType of Object.keys(priorityTypes)) {
-                $(`#${id}-${patchType}-prioritysettings-${priorityType}`).toggle(priorityType === config[patchType].priorityType);
+            for (const priorityType of Object.values(priorityTypes)) {
+                $(`#${id}-${patchType}-prioritysettings-${priorityType.id}`).toggle(priorityType.id === config[patchType].priorityType);
             }
         }
         patchTypes.forEach(showSelectedPriorityTypeSettings);
@@ -343,13 +341,13 @@
                 addSeedSelectors();
             }
 
-            $(`#${id} input[name="${id}-${patchType}-prioritytype"]`).change(() => {
+            $(`#${id} input[name="${id}-${patchType}-prioritytype"]`).change((event) => {
                 if (config[patchType].priorityType === priorityTypes.replant.id) {
                     lockAllPatches(true);
                 }
 
-                config[patchType].priorityType = event.target.value;
-                if (event.target.value === priorityTypes.replant.id) {
+                config[patchType].priorityType = event.currentTarget.value;
+                if (event.currentTarget.value === priorityTypes.replant.id) {
                     lockAllPatches();
                 }
                 showSelectedPriorityTypeSettings(patchType);
@@ -363,9 +361,9 @@
             Sortable.create(document.getElementById(elementId), {
                 animation: 150,
                 filter: '.locked',
-                onMove: (evt) => {
-                    if (evt.related) {
-                        return !evt.related.classList.contains('locked');
+                onMove: (event) => {
+                    if (event.related) {
+                        return !event.related.classList.contains('locked');
                     }
                 },
                 onEnd: () => {
@@ -410,7 +408,7 @@
             }
         });
 
-        $(`.${id}-seed-toggles div`).on('click', () => {
+        $(`.${id}-seed-toggles div`).on('click', (event) => {
             const toggle = $(event.currentTarget);
             const seedId = toggle.data('seed-id');
             if (config.disabledSeeds[seedId]) {
@@ -477,7 +475,7 @@
                 const dropdown = $(createDropdown(patchType, patchId));
                 updateDropdownSelection(patchType, patchId, dropdown);
 
-                dropdown.find('.dropdown-item').on('click', () => {
+                dropdown.find('.dropdown-item').on('click', (event) => {
                     lockPatch(patchType, patchId, $(event.currentTarget).data('seed-id'));
                     storeConfig();
                     updateDropdownSelection(patchType, patchId, dropdown);
@@ -506,6 +504,6 @@
         $(`.${id}-seed-selector`).remove();
     }
 
-    SEMI.add(id, { ms: 5000, onLoop: autoFarm, onEnable: injectGUI, onDisable: removeGUI, desc, title, imgSrc });
+    SEMI.add(id, { ms: 15000, onLoop: autoFarm, onEnable: injectGUI, onDisable: removeGUI, desc, title, imgSrc });
     if (SEMI.getItem('auto-replant-status') !== null) SEMI.removeItem('auto-replant-status');
 })();
