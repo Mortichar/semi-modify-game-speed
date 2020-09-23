@@ -20,10 +20,6 @@
     let originalShield;
     let originalCape;
 
-    const updateAutoSlayerButtonText = () => {
-        $(`#${id}-status`).css('color', (SEMI.isEnabled(id)) ? 'gold' : '');
-    };
-
     /** @param {number?} item */
     const equipFromBank = (item) => {
         if(typeof item === 'undefined') {return false; }
@@ -42,13 +38,6 @@
             autoSlayerCheck = 0;
             return;
         }
-        //Slayer areas that require items
-        //aw: defunct in melvor v0.13
-        let strangeCave = 10;
-        let highLands = 11;
-        //slayerAreas[1] = strangeCave
-        //slayerAreas[2] = highLands
-        //probably best to change if conditions to "if slayer monster is in these areas, do this"
 
         isDungeon = false; //if you just completed a dungeon, this will be true and throw errors on enemy killed.
 
@@ -65,7 +54,9 @@
             originalRing = currentRing();
         }
 
-        if (SEMI.isEnabled('auto-slayer-skip')) slayerSkip();
+        if (SEMI.isEnabled('auto-slayer-skip') && typeof monsterIDs !== 'undefined' && monsterIDs.includes(slayerTask[0].monsterID)) {
+            newSlayerTask();
+        }
 
         if (slayerTask[0] == null) return;
         const needsShield = slayerAreas[1].monsters.includes(slayerTask[0].monsterID);
@@ -92,10 +83,8 @@
                     originalCape = currentCape();
                     found = equipFromBank(skillCape);
                 }
-            }
-
-            //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
-            else if((needsShield || needsRing) && !SEMI.isEnabled('auto-slayer-equip')) {
+            } else if((needsShield || needsRing) && !SEMI.isEnabled('auto-slayer-equip')) {
+                //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
                 if(needsShield && !hasShield) {
                     newSlayerTask();
                 } else if (needsRing && !hasRing) {
@@ -113,17 +102,14 @@
                             found = equipFromBank(CONSTANTS.item.Mirror_Shield);
                         }
                     }
-                }
-                //Equips Magical Ring for area
-                else if(needsRing) {
+                } else if(needsRing) {
+                    //Equips Magical Ring for area
                     if(!hasRing) {
                         originalRing = currentRing();
                         found = equipFromBank(CONSTANTS.item.Magical_Ring);
                     }
-                }
-                else if(!(needsShield || needsRing)) {
-
-                    slayerLockedItem = null; //not sure what this does, added in Auto Slayer 1.2.1
+                } else if(!(needsShield || needsRing)) {
+                    slayerLockedItem = null; // Ensures the game will allow us to unequip slayer equipment
 
                     //Equips original shield when not in Area
                     if ((hasShield && originalShield != CONSTANTS.item.Mirror_Shield)){ found = equipFromBank(originalShield); }
@@ -135,15 +121,6 @@
             if (slayerTask[0] !== undefined) selectMonster(slayerTask[0].monsterID);
         }
     };
-    // End of AutoSlayer!
 
-    SEMI.add(id, {ms: 2000, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc, onToggle: updateAutoSlayerButtonText, onLoop: autoSlayer, skill: 'Combat'});
+    SEMI.add(id, {ms: 2000, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc, onLoop: autoSlayer, skill: 'Combat'});
 })();
-
-
-// // AS AutoSkip
-// let monsterIDs = [69, 13, 0, 72, 74]; //master farmer, moist monster, black knight, mithril knight, rune knight
-
-const slayerSkip = () => {
-    if (monsterIDs.includes(slayerTask[0].monsterID)) { newSlayerTask(); }
-};
