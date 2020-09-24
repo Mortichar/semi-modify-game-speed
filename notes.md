@@ -1,9 +1,8 @@
 # SEMI General notes
 
 ## v0.4.6
-* setItem & getItem for semi-version, If a new version is being installed over an old version, give an alert to refresh the page.
-* removeGUI uses (apply&save toggles)
-* 1 or 2 more issues/requests
+* Test autoslayer fixes and such
+* Push
 
 ## TODO overflow
 

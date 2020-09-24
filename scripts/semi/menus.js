@@ -1,7 +1,5 @@
 var SEMIetcGUI = {
     thievingXP: true,
-    destroyCrops: true,
-    barf: true,
     xph: true,
     timeRemaining: true
 };
@@ -60,14 +58,6 @@ var {semiSetMenu} = (() => {
                             <label class="custom-control-label" for="SEMI-thieving-xp-enabled">Thieving XP calculators and loot popups in the Thieving page</label>
                         </div>
                         <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="SEMI-destroy-crops-enabled" name="SEMI-destroy-crops-enabled" onchange="SEMIetcGUI.destroyCrops = this.checked" ${SEMIetcGUI.destroyCrops ? 'checked' : ''}>
-                            <label class="custom-control-label" for="SEMI-destroy-crops-enabled">Destroy All Crops button in the Farming page</label>
-                        </div>
-                        <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="SEMI-barf-enabled" name="SEMI-barf-enabled" onchange="SEMIetcGUI.barf = this.checked" ${SEMIetcGUI.barf ? 'checked' : ''}>
-                            <label class="custom-control-label" for="SEMI-barf-enabled">Barf My Potion button in the Potion selection menu</label>
-                        </div>
-                        <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-xph-button-enabled" name="SEMI-xph-button-enabled" onchange="SEMIetcGUI.xph = this.checked" ${SEMIetcGUI.xph ? 'checked' : ''}>
                             <label class="custom-control-label" for="SEMI-xph-button-enabled">XPH button: XP per hour calculations done through a button next to the Potion selection button</label>
                         </div>
@@ -110,7 +100,7 @@ var {semiSetMenu} = (() => {
                             If you unlock the sidebar sections, you can drag and rearrange the items in the section. Dragging an item below the SEMI icon only visible when unlocked will hide the item when the section is locked.
                             <br>
                             <br>
-                            Many functions of SEMI are based on these scripts by others:
+                            Many functions of SEMI were originally based on these scripts by others:
                             ${otherScriptsText}
                             Source code for SEMI, along with issues page for suggestions/bugs, can be found at the GitLab repository <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
                         </div>
@@ -139,10 +129,8 @@ var {semiSetMenu} = (() => {
         SEMI.setItem('etc-GUI-toggles', SEMIetcGUI); //to prevent errors first-run with thieving-calc
         SEMI.pluginNames.forEach((name) => SEMI.injectGUI(name));
 
-        if (SEMIetcGUI.destroyCrops) injectDestroyCropsGUI();
-        if (SEMIetcGUI.barf) injectBarfGUI();
         if (SEMIetcGUI.xph) injectXPHGUI();
-        //Modal for SEMI info popup
+        //Modal for SEMI info popup, now SEMI's menu
         injectSEMIInfoPopup();
 
         injectEyes();
