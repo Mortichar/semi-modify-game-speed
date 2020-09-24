@@ -82,7 +82,6 @@
         return;
     }
 
-    // not sure how to get the icon otherwise. need to leave the heading addition here, could probably just copy the rest to a big injection.
     if (exists('semiVersion')) { return alert('SEMI just tried to load, but found that SEMI already exists on the page. This may mean your browser automatically updated the extension and you need to refresh to finish the update!'); }
     const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;
     addSemiVersion(semiVersion);
