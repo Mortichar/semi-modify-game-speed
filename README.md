@@ -27,6 +27,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * Barf Potion button
         * XP/h button
         * TimeRemaining
+    * Config default option
 * Show Ore in Bank -- adds ore counts to mining page rocks.
 * Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu

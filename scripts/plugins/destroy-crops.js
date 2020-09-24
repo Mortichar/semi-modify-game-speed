@@ -6,6 +6,7 @@
     const imgSrc = 'assets/media/skills/combat/fire_god_dungeon.svg';
 
     const destroyCrops = () => {
+        if (newFarmingAreas[currentFarmingArea] == undefined) return SEMI.customNotify('assets/media/skills/farming/farming.svg', 'No currently selected farming area to destroy crops in!');
         const confirmDestroyCrops = prompt('Wait. Are you sure you want to continue? Type yes in the prompt to destroy currently viewed area crops.', 'wait');
         if (confirmDestroyCrops === 'yes') {
             const area = newFarmingAreas[currentFarmingArea];
@@ -19,10 +20,10 @@
     };
 
     const injectDestroyCropsGUI = () => {
-        const destroyCropsBtn = $(`<div id="destroy-crops-gui" class="block block-content block-rounded block-link-pop border-top border-farming border-4x text-center">
-            <button id="destroyCropsBtn" class="btn btn-warning m-2">[SEMI] Destroy All Crops in This Area</button>
+        const destroyCropsBtn = $(`<div id="destroy-crops-gui" class="block block-content block-rounded block-link-pop border-top border-farming border-4x text-center" style="padding: 0;">
+            <button id="destroy-crops-btn" class="btn btn-warning m-2">[SEMI] Destroy All Crops in Selected Area</button>
         </div>`);
-        destroyCropsBtn.on('click', () => {destroyCrops()});
+        destroyCropsBtn.find('#destroy-crops-btn').on('click', () => {destroyCrops()});
         $('#farming-area-container').before(destroyCropsBtn);
     };
     const removeGUI = () => $('#destroy-crops-gui').remove();
