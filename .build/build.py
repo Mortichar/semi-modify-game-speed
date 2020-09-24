@@ -18,9 +18,11 @@ def main():
     folder1 = "/icons"
     folder2 = "/scripts/plugins"
     folder3 = "/styles"
+    folder4 = "/scripts/semi"
     dir1 = rootDir+folder1
     dir2 = rootDir+folder2
     dir3 = rootDir+folder3
+    dir4 = rootDir+folder4
 
     # Create output zip
     print('Building SEMI.zip...')
@@ -34,6 +36,7 @@ def main():
         zipdir(dir1, fBuild, folder1)
         zipdir(dir2, fBuild, folder2)
         zipdir(dir3, fBuild, folder3)
+        zipdir(dir4, fBuild, folder4)
 
     # Check for outputs directory, make it if doesn't exist
     print("Checking for ./.build/outputs directory and creating if it doesn't exist...")
