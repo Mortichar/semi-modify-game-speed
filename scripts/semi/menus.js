@@ -119,6 +119,8 @@ var {semiSetMenu} = (() => {
 
     if (SEMI.getItem('etc-GUI-toggles') !== null) {
         SEMI.mergeOnto(SEMIetcGUI, SEMI.getItem('etc-GUI-toggles'));
+        if (SEMIetcGUI.barf !== undefined) delete SEMIetcGUI.barf;
+        if (SEMIetcGUI.destroyCrops !== undefined) delete SEMIetcGUI.destroyCrops;
     };
 
     //SEMI menu setup function

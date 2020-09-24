@@ -1,16 +1,23 @@
 # SEMI Changelog
 
-## Current patch...
+## v0.4.6
 ### Core changes
-* Zeldo core changes:
-    * Improve load speed of SEMI by making some scripts inject asynchronously
-    * Move SEMI scripts to a SEMI directory
+* Zeldo core changes
+    * Improve load speed of SEMI by making some scripts inject asynchronously?
+    * Move SEMI scripts to a SEMI directory, injected as libs
     * Get SEMI version from manifest & populate more fields with it
     * New sidebar header & capabilities
+    * Upcoming: finally transition into TypeScript base!
 * Starting Aurora-inspired core changes
     * Plugins have a new default option: config. Set config as an object with plugin settings inside, and pass it with the rest of the options with `SEMI.add()`.
     * `SEMI.pluginConfig(name)`: New SEMI core function to access and modify plugin configs.
-    * See `auto-sell-gems.js` for an example of the new config use, more refactoring for core config to come.
+    * See `auto-sell-gems.js` for an example of the new config use, more refactoring for core config to come, hopefully this is sufficient for now.
+### Script Changes
+* Visua contributions
+    * AutoFarm fixes
+    * AutoSlayer cleanup
+* AutoSlayer fix for >99 slayer folk: AutoSlayerEquip now enforces Slayer cape equipping as well. Previously was ignoring the AutoEquip option for cape equipping.
+* Barf My Potion & Destroy Crops buttons now injected on-demand from the new Tweaks header, moved from the SEMI etc GUI toggles in the menu.
 
 ## v0.4.5
 ### Small hotfix

@@ -1,9 +1,5 @@
 # SEMI General notes
 
-## v0.4.6
-* Test autoslayer fixes and such
-* Push
-
 ## TODO overflow
 
 * Detect if injecting over older version of SEMI and alert that a refresh is needed?
@@ -13,6 +9,8 @@
     * automatically upgrade fishing rod (AutoFish)
     * pickaxe (AutoMine)
     * woodcutting axe (background script)
+
+
 * ~~mastery time calculators~~ wait for 0.17
 * ~~refine calc-to-level to include mastery/other bonuses for xp...~~ wait for 0.17 or use it at all! lol.
 * ~~Potential auto-claim token script, maybe in auto-open?~~
