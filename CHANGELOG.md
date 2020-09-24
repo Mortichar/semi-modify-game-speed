@@ -15,6 +15,7 @@
 * Visua contributions
     * Various core fixes
     * Drag-menu config fixes
+* Etc change: fixed the content script SEMI detection, added an alert if SEMI tries to load on top of an already loaded SEMI instance that suggests refreshing
 ### Script Changes
 * Visua contributions
     * AutoFarm fixes
