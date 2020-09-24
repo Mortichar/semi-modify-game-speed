@@ -1,5 +1,9 @@
 # SEMI Changelog
 
+## v0.4.7
+### Hotfix
+* Update manifest match pattern so that SEMI only loads in the game, not the wiki.
+
 ## v0.4.6
 ### Core changes
 * Zeldo core changes
@@ -16,7 +20,7 @@
     * Various core fixes
     * Drag-menu config fixes
 * Etc change: fixed the content script SEMI detection, added an alert if SEMI tries to load on top of an already loaded SEMI instance that suggests refreshing
-### Script Changes
+### Script changes
 * Visua contributions
     * AutoFarm fixes
     * AutoSlayer cleanup
