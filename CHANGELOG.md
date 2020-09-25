@@ -1,5 +1,9 @@
 # SEMI Changelog
 
+## Current patch...
+### Script updates
+* AutoBonfire: only starts a bonfire if you are currently burning logs. Easy fix.
+
 ## v0.4.7
 ### Hotfix
 * Update manifest match pattern so that SEMI only loads in the game, not the wiki.
