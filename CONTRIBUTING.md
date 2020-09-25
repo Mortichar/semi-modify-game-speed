@@ -6,7 +6,7 @@ Lately, the main active developer is Aldous Watts.
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
-## Pull Request Process
+## Merge Request Process
 
 1. Ensure any install or build dependencies are removed before the end of the layer when doing a 
    build. (In the context of SEMI, don't add any unnecessary items to the repository.)
