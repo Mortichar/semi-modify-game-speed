@@ -12,8 +12,8 @@ Please note we have a code of conduct, please follow it in all your interactions
    build. (In the context of SEMI, don't add any unnecessary items to the repository.)
 2. Update the README.md and CHANGELOG.md with details of changes to the interface, this includes new environment 
    variables, useful file locations, and container parameters.
-3. Increase the version numbers in any examples files and the README.md to the new version that this
-   Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
+3. If applicable, increase the version numbers in any examples files and the README.md to the new version that this
+   Pull/Merge Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
 4. Merge requests will be handled by the owners for now.
 
 ## Code of Conduct
