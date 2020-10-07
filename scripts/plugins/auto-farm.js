@@ -10,7 +10,7 @@
 (() => {
     const id = 'auto-farm';
     const title = 'AutoFarm';
-    const desc = 'AutoFarm will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to.';
+    const desc = 'AutoFarm by Visua will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to. Will use gloop if you have it.';
     const imgSrc = SEMI.skillImg('farming');
     const version = 2;
     const patchTypes = ['allotments', 'herbs', 'trees'];

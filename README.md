@@ -79,7 +79,7 @@ Thanks to everyone who writes scripts for Melvor and provides them to others! Ma
 
 Notice a bug? Have an idea for something SEMI can do?
 
-You can post [here on the issues page of the SEMI repository](https://gitlab.com/aldousWatts/SEMI/-/issues), chat about it in the Melvor discord in the #scripting-and-extensions channel, and/or talk to AldousWatts or DanielRX.
+You can post [here on the issues page of the SEMI repository](https://gitlab.com/aldousWatts/SEMI/-/issues), chat about it in the Melvor discord in the #scripting-and-extensions channel, and/or talk to Aldous Watts.
 
 ## Alternative Installation
 

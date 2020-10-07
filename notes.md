@@ -1,8 +1,9 @@
 # SEMI General notes
 
 ## v0.4.8
-* AutoSlayerSkip bugfix
+* AutoSlayerSkip bugfix... more research? more elegant solution? or is it fine?
 * Attempt work on individual character configs
+    * `currentCharacter`: in-game var that gives you the character index value. 0 first, 1 second, 2 third.
 
 ## TODO overflow
 
