@@ -1,5 +1,9 @@
 # SEMI General notes
 
+## v0.4.8
+* AutoSlayerSkip bugfix
+* Attempt work on individual character configs
+
 ## TODO overflow
 
 * Detect if injecting over older version of SEMI and alert that a refresh is needed?

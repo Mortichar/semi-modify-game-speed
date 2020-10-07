@@ -3,6 +3,7 @@
 ## Current patch...
 ### Script updates
 * AutoBonfire: only starts a bonfire if you are currently burning logs. Easy fix.
+* AutoSlayerSkip bugfix: now actually skips Black Knights!
 
 ## v0.4.7
 ### Hotfix
