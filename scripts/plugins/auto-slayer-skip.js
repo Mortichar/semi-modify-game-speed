@@ -32,7 +32,7 @@ var autoSellShow = (() => {
     };
 
     const doAll = () => {
-        monsterIDs = autoEnabled.map((enabled, i) => enabled ? i : undefined).filter((x) => x+1);
+        monsterIDs = autoEnabled.flatMap((enabled, i) => enabled ? i : []);
     };
 
     const setupContainer = () => {

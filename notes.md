@@ -1,20 +1,18 @@
 # SEMI General notes
 
 ## v0.4.8
-* AutoSlayerSkip bugfix... more research? more elegant solution? or is it fine?
+* ~~AutoSlayerSkip bugfix~~
 * Attempt work on individual character configs
     * `currentCharacter`: in-game var that gives you the character index value. 0 first, 1 second, 2 third.
 
 ## TODO overflow
 
-* Detect if injecting over older version of SEMI and alert that a refresh is needed?
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
 * "Better" checks for things like putting on capes and gloves etc when needed
 * Jarx additions:
     * automatically upgrade fishing rod (AutoFish)
     * pickaxe (AutoMine)
     * woodcutting axe (background script)
-
 
 * ~~mastery time calculators~~ wait for 0.17
 * ~~refine calc-to-level to include mastery/other bonuses for xp...~~ wait for 0.17 or use it at all! lol.

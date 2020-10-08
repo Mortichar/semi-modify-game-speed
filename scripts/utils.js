@@ -267,13 +267,15 @@
             return Math.ceil(adjustedMaxHit);
         };
 
+        const getCharacter = () => { return currentCharacter };
 
         const utilsReady = true;
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
             incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull, hasCapeOn,
-            confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned, enemyMaxStunDamageMultiplier,
+            confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned,
+            enemyMaxStunDamageMultiplier, getCharacter,
             customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });
