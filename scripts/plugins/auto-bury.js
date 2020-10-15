@@ -1,4 +1,4 @@
-(() => {
+(() => { return; //temporary disable: v0.17 breakage
     const pluginKind = 'bury';
 
     const id = `auto-${pluginKind}`;
