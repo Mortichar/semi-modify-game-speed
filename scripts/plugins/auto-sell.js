@@ -1,4 +1,4 @@
-var autoSellShow = (() => {
+var autoSellShow = (() => { return; //temporary disable: v0.17 breakage
     const pluginKind = 'sell';
 
     const id = `auto-${pluginKind}`;

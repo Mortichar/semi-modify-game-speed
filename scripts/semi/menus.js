@@ -70,7 +70,7 @@ var {semiSetMenu} = (() => {
                                 <i class="fa fa-check mr-1"></i>Save Toggles
                             </button>
                         </div>
-                        <p>Since Melvor v0.17 has broken a few scripts, they are temporarily removed/disabled. These include AutoFarm.<p>
+                        <p>Since Melvor v0.17 has broken a few scripts, they are temporarily removed/disabled until fixes can be implemented. Includes AutoFarm.<p>
                         <div style="font-size: 14pt;">
                         SEMI Config Backup, Restore, and Reset:
                         </div>

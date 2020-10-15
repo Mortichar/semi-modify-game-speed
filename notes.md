@@ -8,7 +8,6 @@
 * Attempt work on individual character configs - at the very least give a warning when switching chars & disable auto-enable.
 
 ### Bug Hunt
-* customNotify: $.notify not a function. Move to native game notifs.
 * when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
 
 ## TODO overflow

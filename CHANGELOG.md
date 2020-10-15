@@ -2,6 +2,8 @@
 
 ## v0.4.8
 ## Melvor has updated to Alpha v0.17! Big changes, big breakage.
+### Core changes
+* Notifications are now done in-game through Toastify. Converted SEMI's custom notification system to match.
 ### Script updates
 * AutoBonfire: only starts a bonfire if you are currently burning logs. Easy fix.
 * AutoSlayerSkip bugfix: now actually skips Black Knights!
