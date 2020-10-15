@@ -38,7 +38,7 @@ const setLoadedKatValues = () => {
     if (SEMI.getItem('katorone-status') && SEMI.getItem('remember-state')) $(`#kat-enabled`)[0].checked = true;
 };
 
-(() => {
+(() => { return; //temporary disable: v0.17 breakage
     /**
      * @param {number} id
      */
@@ -294,4 +294,5 @@ const updateKatSets = () => {
 };
 
 const config = {katBot, katoroneOn};
-SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI, config});
+//temporary disable: v0.17 breakage
+// SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI, config});

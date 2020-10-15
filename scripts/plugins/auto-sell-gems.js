@@ -1,4 +1,4 @@
-(() => {
+(() => { return; //temporary disable: v0.17 breakage
     const id = 'auto-sell-gems';
     const desc = 'AutoSell Gems will sell 100 gems once they\'ve reached a stack of 100.';
     const imgSrc = 'assets/media/bank/diamond.svg';

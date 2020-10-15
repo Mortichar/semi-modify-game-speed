@@ -1,5 +1,5 @@
 // Importing Auto Slayer by Bubbalova. Using a modified version of script v1.2.1.
-(() => {
+(() => { return; //temporary disable: v0.17 breakage
     const id = 'auto-slayer-equip';
     const title = 'AutoSlayerEquip';
     const desc = 'The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on. The original script also forced equipping of the Slayer Cape when starting, but this option also controls that cape equip. When this is enabled and you have 99 slayer and the slayer cape, AutoSlayer will always equip the slayer cape.';
@@ -7,7 +7,7 @@
     SEMI.add(id, {ms: 0, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc});
 })();
 
-(() => {
+(() => { return; //temporary disable: v0.17 breakage
     const id = 'auto-slayer';
     const title = 'AutoSlayer';
     const desc = 'AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default, unless you are properly equipped or you turn on AS Auto Equip and have the correct items in the bank.';

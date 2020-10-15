@@ -1,4 +1,4 @@
-var autoSellShow = (() => {
+(() => { return; //temporary disable: v0.17 breakage
     const pluginKind = 'slayer-skip';
 
     const id = `auto-${pluginKind}`;

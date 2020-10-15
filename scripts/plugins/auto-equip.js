@@ -1,4 +1,4 @@
-(() => {
+(() => { return; //temporary disable: v0.17 breakage
     const id = 'auto-equip';
     const title = 'AutoEquip Ammo';
     const desc = 'Auto Equip will automatically equip 1000 more of your currently equipped ammo if you run low.'

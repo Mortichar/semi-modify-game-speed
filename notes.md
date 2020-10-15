@@ -3,15 +3,15 @@
 ## v0.4.8
 ## Melvor v0.17: Big Breaky
 * Fix a lot of things, or temp disable some things that will take more time
-* Add info to the SEMI menu about the temporarily disabled scripts
-* ~~AutoSlayerSkip bugfix~~
-* Attempt work on individual character configs - at the very least give a warning when switching chars & disable auto-enable.
+* ~~Add info to the SEMI menu about the temporarily disabled scripts~~
 
 ### Bug Hunt
 * when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
+* any time a script tries to EQUIP or SELL any items, `bank.js` throws errors.
 
 ## TODO overflow
 
+* Attempt work on individual character configs - at the very least give a warning when switching chars & disable auto-enable.
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
 * "Better" checks for things like putting on capes and gloves etc when needed
 * Jarx additions:

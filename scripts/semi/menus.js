@@ -70,7 +70,7 @@ var {semiSetMenu} = (() => {
                                 <i class="fa fa-check mr-1"></i>Save Toggles
                             </button>
                         </div>
-                        <p>Since Melvor v0.17 has broken a few scripts, they are temporarily removed/disabled until fixes can be implemented. Includes AutoFarm, AutoSell, AutoOpen, AutoBury.<p>
+                        <p>Since Melvor v0.17 has broken a few scripts, they are temporarily removed/disabled until fixes can be implemented. Includes TimeRemaining, AutoFarm, AutoSell, AutoOpen, AutoBury, AutoSlayer, AutoEquip Ammo, AutoSell Gems, and Katorone menu.<p>
                         <div style="font-size: 14pt;">
                         SEMI Config Backup, Restore, and Reset:
                         </div>

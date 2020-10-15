@@ -3,6 +3,9 @@
 [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
+### Temporarily disabled due to v0.17 breakage
+The following scripts have been removed from SEMI for the time being to prevent errors until fixes can be implemented: TimeRemaining, AutoFarm, AutoSell, AutoOpen, AutoBury, AutoSlayer, AutoEquip Ammo, AutoSell Gems, and Katorone menu.
+
 Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source([see Alternative Installation](#alternative-installation)), but be aware it may contain more bugs or be less stable than release versions from above buttons.
 
 Huge thanks to DanielRX for contributing a ton of work to the project!
@@ -13,7 +16,7 @@ Huge thanks to DanielRX for contributing a ton of work to the project!
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* *New Script: AutoFarm by Visua!* [**Temporarily disabled since v0.17 breaks things**]
+* New Script: AutoFarm by Visua!
     * Replaces AutoReplant with a much more customizable farming robot, with detailed settings like AutoMine.
     * Automatically harvests and then plants seeds, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank. Prioritizes gloop over compost. Will not buy gloop
@@ -29,7 +32,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * TimeRemaining
     * Plugin config default option for scripting
 * Show Ore in Bank -- adds ore counts to mining page rocks.
-* *Melvor TimeRemaining script graciously provided by Breindahl & co.* [**Temporarily disabled since v0.17 breaks things**]
+* Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
     * Also has a task-done alert, when a production skill completes all items and can't continue, a Task Complete alert will make an audible ding.
 * AutoBonfire: continuously starts bonfires for you when you have a type of wood selected in Firemaking

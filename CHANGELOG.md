@@ -10,6 +10,8 @@
 ### Temporary script removal
 * AutoFarm is disabled for now. Since it deals heavily with mastery and the mastery system has had an overhaul, it throws errors upon load.
 * TimeRemaining is also heavily involved with mastery, and in the interest of safety & accuracy it will be disabled until it is updated.
+* AutoSell, AutoOpen, AutoBury, AutoSlayer, AutoEquip Ammo all broken by bank changes. Disabled.
+* 
 
 ## v0.4.7
 ### Hotfix
