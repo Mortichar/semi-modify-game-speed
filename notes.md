@@ -7,6 +7,7 @@
 
 ## TODO overflow
 
+* Make menu w i d e r: change the .modal-dialog div style to have max-width of >500px.
 * Attempt work on individual character configs - at the very least give a warning when switching chars & disable auto-enable.
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
 * "Better" checks for things like putting on capes and gloves etc when needed

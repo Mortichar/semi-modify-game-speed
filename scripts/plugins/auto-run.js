@@ -26,7 +26,9 @@
         SEMI.customNotify(imgSrc, `SEMI: Exited Auto Combat @ ${dateTime} because ${username} is out of ${reason}`, 15000);//upgrade to jqueryui modal dialog
         console.log(`SEMI: Exited Auto Combat @ ${dateTime} because ${username} is out of ${reason}`);
         // if(SEMI.isEnabled(id)) { SEMI.disable(id); }
-        if(SEMI.isEnabled('auto-slayer')) { SEMI.disable('auto-slayer'); }
+
+        // temporary disable: 0.17 breakage
+        // if(SEMI.isEnabled('auto-slayer')) { SEMI.disable('auto-slayer'); }
     };
 
     SEMI.add(id, {ms: 500, onLoop: autoRun, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc});
