@@ -1,13 +1,9 @@
 # SEMI General notes
 
-## v0.4.8
 ## Melvor v0.17: Big Breaky
-* Fix a lot of things, or temp disable some things that will take more time
-* ~~Add info to the SEMI menu about the temporarily disabled scripts~~
-
 ### Bug Hunt
 * when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
-* any time a script tries to EQUIP or SELL any items, `bank.js` throws errors.
+* any time a script tries to EQUIP or SELL or bury/use any items, `bank.js` throws errors. Many utils and scripts will need fixing.
 
 ## TODO overflow
 
