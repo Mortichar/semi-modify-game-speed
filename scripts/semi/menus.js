@@ -63,13 +63,14 @@ var {semiSetMenu} = (() => {
                         </div>
                         <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="SEMI-time-remaining-button-enabled" name="SEMI-time-remaining-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.timeRemaining ? 'checked' : ''}>
-                            <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining: time estimates for production skills next to the item. Includes a task timer with a ding noise when a task completes</label>
+                            <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining: time estimates for production skills next to the item. Includes a task timer with a ding noise when a task completes. <b>TEMPORARILY REMOVED</b> while being fixed for 0.17.</label>
                         </div>
                         <div class="block-content block-content-full text-right">
                             <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">
                                 <i class="fa fa-check mr-1"></i>Save Toggles
                             </button>
                         </div>
+                        <p>Since Melvor v0.17 has broken a few scripts, they are temporarily removed/disabled. These include AutoFarm.<p>
                         <div style="font-size: 14pt;">
                         SEMI Config Backup, Restore, and Reset:
                         </div>

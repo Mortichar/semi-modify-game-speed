@@ -3,6 +3,7 @@
 ## v0.4.8
 ## Melvor v0.17: Big Breaky
 * Fix a lot of things, or temp disable some things that will take more time
+* Add info to the SEMI menu about the temporarily disabled scripts
 * ~~AutoSlayerSkip bugfix~~
 * Attempt work on individual character configs - at the very least give a warning when switching chars & disable auto-enable.
 

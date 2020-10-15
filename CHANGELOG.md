@@ -1,9 +1,13 @@
 # SEMI Changelog
 
-## Current patch...
+## v0.4.8
+## Melvor has updated to Alpha v0.17! Big changes, big breakage.
 ### Script updates
 * AutoBonfire: only starts a bonfire if you are currently burning logs. Easy fix.
 * AutoSlayerSkip bugfix: now actually skips Black Knights!
+### Temporary script removal
+* AutoFarm is disabled for now. Since it deals heavily with mastery and the mastery system has had an overhaul, it throws errors upon load.
+* TimeRemaining is also heavily involved with mastery, and in the interest of safety & accuracy it will be disabled until it is updated.
 
 ## v0.4.7
 ### Hotfix

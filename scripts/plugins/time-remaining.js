@@ -14,7 +14,7 @@
 // Big thanks to Xhaf#6478 and Visua#9999 for helping with parts of the code and troubleshooting
 
 
-(function () {
+(function () { return; //temporary disable: 0.17 breakage
 	function injectScript(main) {
 		// SEMI override killswitch
 		if (SEMI.getItem('etc-GUI-toggles') !== null) {

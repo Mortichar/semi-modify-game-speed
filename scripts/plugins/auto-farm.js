@@ -1,5 +1,5 @@
 //AF AutoEquip toggle
-(() => {
+(() => { return; //temporary disable: 0.17 breakage
     const id = 'auto-farm-equip';
     const title = 'AutoFarmEquip';
     const desc = `If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
@@ -7,7 +7,7 @@
     SEMI.add(id, { ms: 0, title, desc, imgSrc });
 })();
 
-(() => {
+(() => { return; //temporary disable: 0.17 breakage
     const id = 'auto-farm';
     const title = 'AutoFarm';
     const desc = 'AutoFarm by Visua will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to. Will use gloop if you have it.';
