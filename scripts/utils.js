@@ -16,11 +16,19 @@
         * @param {number} n
         */
         const customNotify = (imgsrc = '', msg = 'Custom Notifications!', n = 3000) => { //outputs a custom notification with optional first image, SEMI icon, and message.
-            const template = '<div data-notify="container" class="SEMI-notif col-12 text-center notify-event" role="alert"><span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>';
-            const defaults = {type: 'light', placement: {from: 'bottom',  align: 'center'},  newest_on_top: true, animate: {enter: 'animated fadeInUp',  exit: 'animated fadeOut'}, template};
-            const message = `<img class="notification-img" src="${imgsrc}"><img src="${iconSrc}" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success">${msg}</span>`;
+            // const template = '<div data-notify="container" class="SEMI-notif col-12 text-center notify-event" role="alert"><span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>';
+            // const defaults = {type: 'light', placement: {from: 'bottom',  align: 'center'},  newest_on_top: true, animate: {enter: 'animated fadeInUp',  exit: 'animated fadeOut'}, template};
+            // const message = `<img class="notification-img" src="${imgsrc}"><img src="${iconSrc}" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success">${msg}</span>`;
+            Toastify({
+                text: `<div class="text-center"><img class="notification-img" src="${imgsrc}"><img src="${iconSrc}" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success"> ${msg} </span></div>`,
+                duration: n,
+                gravity: "bottom", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                backgroundColor: "transparent",
+                stopOnFocus: false,
+            }).showToast();
 
-            $.notify({message}, {...defaults, delay: n});
+            // Toastify({message}, {...defaults, delay: n}).showToast();
         };
 
         /**

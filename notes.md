@@ -1,9 +1,14 @@
 # SEMI General notes
 
 ## v0.4.8
+## Melvor v0.17: Big Breaky
+* Fix a lot of things, or temp disable some things that will take more time
 * ~~AutoSlayerSkip bugfix~~
-* Attempt work on individual character configs
-    * `currentCharacter`: in-game var that gives you the character index value. 0 first, 1 second, 2 third.
+* Attempt work on individual character configs - at the very least give a warning when switching chars & disable auto-enable.
+
+### Bug Hunt
+* customNotify: $.notify not a function. Move to native game notifs.
+* when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
 
 ## TODO overflow
 
