@@ -38,17 +38,7 @@ const setLoadedKatValues = () => {
     if (SEMI.getItem('katorone-status') && SEMI.getItem('remember-state')) $(`#kat-enabled`)[0].checked = true;
 };
 
-(() => { return; //temporary disable: v0.17 breakage
-    /**
-     * @param {number} id
-     */
-    const getBankCount = (id) => {
-        for (let i = 0; i < bank.length; i++) {
-            if (bank[i].id === id) {return bank[i].qty;}
-        }
-        return 0;
-    };
-
+(() => {
     /**
      * Adds an item to the sell list, or merges if it's already queued.
      * @param {number} id
@@ -75,7 +65,7 @@ const setLoadedKatValues = () => {
         let value = 0;
         for (let i = 0; i < katBot.gemList.length; i++) {
             let id = katBot.gemList[i];
-            let amount = getBankCount(id);
+            let amount = SEMI.getBankQty(id);
             bankGems.push([id, amount, items[id].sellsFor]);
             toSell[id] = {};
             // Little hack to always keep 1 gem in the bank.
@@ -111,8 +101,7 @@ const setLoadedKatValues = () => {
         let price = glovesCost[CONSTANTS.shop.gloves.Gems];
         // Buy one if we can afford it
         if ((gp - price) >= katBot.reserveGold) { //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
-            buyGloves(CONSTANTS.shop.gloves.Gems);
-            SEMI.confirmAndCloseModal();
+            buyGloves(CONSTANTS.shop.gloves.Gems, true);
             //aw: adding notifications
             const notification = 'Katorone Automation just bought Gem Glove charges.';
             notifyPlayer(4, notification);
@@ -141,8 +130,7 @@ const setLoadedKatValues = () => {
             // Does anything need selling?
             let sell = katBot.sellList.shift();
             if (sell) {
-                sellItem(sell[0], sell[1]);
-                SEMI.confirmAndCloseModal();
+                SEMI.sellItemWithoutConfirmation(sell[0], sell[1]);
                 const notification = `Katorone Automation just auto-sold ${sell[1]} ${items[sell[0]].name}.`;
                 notifyPlayer(10, notification);
                 console.log(notification);
@@ -155,8 +143,7 @@ const setLoadedKatValues = () => {
             let cost = Math.min(newNewBankUpgradeCost.level_to_gp(currentBankUpgrade + 1), 4000000);
             // Buy if we have enough gold above reserve.
             if (gp >= (cost + katBot.reserveGold)) {
-                upgradeBank();
-                SEMI.confirmAndCloseModal();
+                upgradeBank(true);
                 const notification = 'Katorone Automation just bought a new bank slot.';
                 notifyPlayer(4, notification);
                 console.log(notification);
@@ -294,5 +281,4 @@ const updateKatSets = () => {
 };
 
 const config = {katBot, katoroneOn};
-//temporary disable: v0.17 breakage
-// SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI, config});
+SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI, config});
