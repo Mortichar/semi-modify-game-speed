@@ -4,17 +4,29 @@
     // As always, use and modify at your own risk. But hey, contribute and share!
     // This code is open source and shared freely under MPL/GNUv3/creative commons licenses.
 
-    // Injecting Scripts
+    //Browser detection cases
     const isChrome = navigator.userAgent.match('Chrome');
     const isFirefox = navigator.userAgent.match('Firefox');
 
-    /** @param {string} name */
-    const getURL = (name) => (isChrome ? chrome : browser).runtime.getURL(name);
-
-    /** @param {string} id */
-    const exists = (id) => document.contains(document.getElementById(id))
+    // Only support Firefox and Chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
+    if(!isChrome && !isFirefox) {
+        return alert('SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main function in SEMI.js. The addon will not load otherwise.');
+    }
 
     /**
+     * Get extension resource URL
+     * @param {string} name
+     */
+    const getURL = (name) => (isChrome ? chrome : browser).runtime.getURL(name);
+
+    /**
+     * Check if an element exists
+     * @param {string} id
+     */
+    const exists = (id) => document.contains(document.getElementById(id));
+
+    /**
+     * Inject a script into the page
      * @param {string} name
      * @param {string} scriptID
      */
@@ -31,16 +43,18 @@
     };
 
     /**
+     * Inject a short script that creates a global constant with SEMI's current version
      * @param {string} version
      */
-    const addSemiVersion = (semiVersion) => {
+    const addSemiVersion = (version) => {
         const script = document.createElement('script');
         script.setAttribute('id', 'semiVersion');
-        script.innerText = `SEMI_VERSION='${semiVersion}';`
+        script.innerText = `const SEMI_VERSION='${version}';`;
         document.body.prepend(script);
     };
 
     /**
+     * Inject a script, removing and replacing it if it already existed on the page
      * @param {string} name
      * @param {string} scriptID
      */
@@ -57,35 +71,41 @@
     const addSemiLib = (name) => { replaceScript(`scripts/semi/${name}.js`, `SEMI-${name}`); };
 
     /**
-     * Create image element
-     * @param {string} name
+     * Create and return image element with height & width of 32px
+     * @param {string} url
      * @param {string} imgId
-     * @param {number} height
-     * @param {number} width
      */
-    const createImage = (name, imgId) => {
+    const createImage = (url, imgId) => {
         const img = document.createElement('img');
-        img.src = getURL(name);
+        img.src = getURL(url);
         img.id = imgId;
         img.height = 32;
         img.width = 32;
         return img;
     };
 
+    //Check if SEMI is already loaded, and if so, let user know and stop trying to load.
+    if (exists('semiVersion')) {
+        return alert('SEMI just tried to load, but found that SEMI already exists on the page. This may mean your browser automatically updated the extension and you need to refresh to finish the update!');
+    }
+
+    //game version compatibility check
+    // const melvorVersion = document.title.match(/v(?:\d\.?)+/)[0];
+    // console.log(melvorVersion);
+    // if (document.getElementById('m-page-loader-test').className == 'show') return;
+    // if (melvorVersion !== 'v0.17.1') {
+    //     const response = window.confirm('SEMI no compatible! Load anyways?');
+    //     if (!response) return;
+    // }
+
+    //Mapping script names for later injection
     const autoNames = [ 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot', 'slayer-skip', 'farm'];
     const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'time-remaining', 'ore-in-bank', 'barf', 'calc-to-level', 'destroy-crops', 'katorone', 'thief-calc', 'xp-per-hour'];
     const libNames = ['fold-menus', 'drag-menus', 'menus'];
 
-    // Only support firefox and chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
-    if(!isChrome && !isFirefox) {
-        alert('SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main function in SEMI.js. The addon will not load otherwise.');
-        return;
-    }
-
-    if (exists('semiVersion')) { return alert('SEMI just tried to load, but found that SEMI already exists on the page. This may mean your browser automatically updated the extension and you need to refresh to finish the update!'); }
+    //Load and inject SEMI
     const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;
     addSemiVersion(semiVersion);
-
     const navbar = document.getElementsByClassName('nav-main')[0];
     const semiHeading = document.createElement('li');
     semiHeading.className = 'nav-main-heading';

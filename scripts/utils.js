@@ -10,15 +10,12 @@
         const iconSrc = getElement('icon')[0].src;
 
         /**
-        * Custom notifications! green background with custom txt, two images, second one optional, main one is add-on icon.
+        * Custom notifications! Green background with text, custom image and SEMI icon, variable display time.
         * @param {string} imgsrc
         * @param {string} msg
-        * @param {number} n
+        * @param {number} n milliseconds that the notification will display
         */
-        const customNotify = (imgsrc = '', msg = 'Custom Notifications!', n = 3000) => { //outputs a custom notification with optional first image, SEMI icon, and message.
-            // const template = '<div data-notify="container" class="SEMI-notif col-12 text-center notify-event" role="alert"><span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>';
-            // const defaults = {type: 'light', placement: {from: 'bottom',  align: 'center'},  newest_on_top: true, animate: {enter: 'animated fadeInUp',  exit: 'animated fadeOut'}, template};
-            // const message = `<img class="notification-img" src="${imgsrc}"><img src="${iconSrc}" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success">${msg}</span>`;
+        const customNotify = (imgsrc = '', msg = 'Custom Notifications!', n = 3000) => {
             Toastify({
                 text: `<div class="text-center"><img class="notification-img" src="${imgsrc}"><img src="${iconSrc}" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success"> ${msg} </span></div>`,
                 duration: n,
@@ -27,8 +24,6 @@
                 backgroundColor: "transparent",
                 stopOnFocus: false,
             }).showToast();
-
-            // Toastify({message}, {...defaults, delay: n}).showToast();
         };
 
         /**
@@ -48,9 +43,10 @@
             return 0;
         };
 
+        //may want to refactor all checkBankForItem() to a SEMI func to make it easier to fix if changed.
         /** @param {number?} itemID */
         const equipFromBank = (itemID, qty = 1) => {
-            if(typeof itemID === 'undefined' || itemID === 0) {return false; }
+            if(typeof itemID === 'undefined' || itemID === 0 || !checkBankForItem(itemID)) { return false; }
             equipItem(itemID, qty, selectedEquipmentSet);
             return true;
         };
@@ -175,7 +171,6 @@
         /** @param {SkillName} skillName */
         const hasCapeOn = (skillName) => equippedItems.includes(CONSTANTS.item[`${skillName}_Skillcape`]) || equippedItems.includes(CONSTANTS.item.Max_Skillcape);
 
-
         const formatTimeFromMinutes = (min = 0) => {
             if(min == 0 || min == Infinity) { return '...'; }
             let hrs = min/60;
@@ -257,13 +252,6 @@
         const currentHP = () => { return combatData.player.hitpoints; };
 
         const maxHitOfCurrentEnemy = () => {
-            // if (enemyInCombat == null) return 0;
-            // if (combatData.enemy.specialAttackID == null) return combatData.enemy.maximumStrengthRoll;
-            // var specialAtkArray = [combatData.enemy.maximumStrengthRoll];
-            // for (const specialAttack of combatData.enemy.specialAttackID) {
-            //     specialAtkArray.push(enemySpecialAttacks[specialAttack].setDamage * numberMultiplier);
-            // }
-            // return Math.max(...specialAtkArray);
             return SEMI.incomingAttackData().incomingDamage;
         };
 

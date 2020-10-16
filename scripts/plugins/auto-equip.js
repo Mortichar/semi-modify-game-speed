@@ -4,9 +4,6 @@
     const desc = 'Auto Equip will automatically equip 1000 more of your currently equipped ammo if you run low.'
     const imgSrc = SEMI.skillImg('ranged');
 
-    //***************************AUTO COMBAT***********************************
-    //AutoCombat Main Function
-
     const equipMoreAmmo = () => {
         const ammoId = SEMI.currentEquipmentInSlot('Quiver');
         if (ammoId === 0) {
