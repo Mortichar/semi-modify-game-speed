@@ -1,4 +1,4 @@
-(() => { return; //temporary disable: v0.17 breakage
+(() => {
     const id = 'auto-equip';
     const title = 'AutoEquip Ammo';
     const desc = 'Auto Equip will automatically equip 1000 more of your currently equipped ammo if you run low.'
@@ -9,12 +9,13 @@
 
     const equipMoreAmmo = () => {
         const ammoId = SEMI.currentEquipmentInSlot('Quiver');
-        const currentAmmo = items[ammoId];
-        for (let i = 0; i < bank.length; i++) {
-            if(items[bank[i].id].name == currentAmmo.name && currentAmmo.name !== 'Normal Logs' ) {
-                equipItem(i, ammoId, 1000, selectedEquipmentSet);
-                SEMI.customNotify(currentAmmo.media, 'SEMI just equipped 1000 '+ currentAmmo.name+'.', 5000);
-            }
+        if (ammoId === 0) {
+            return;
+        }
+        const ammoQty = Math.min(SEMI.getBankQty(ammoId), 1000);
+        if (ammoQty) {
+            SEMI.equipFromBank(ammoId, ammoQty);
+            SEMI.customNotify(items[ammoId].media, `SEMI just equipped ${ammoQty} ${items[ammoId].name}.`, 5000);
         }
     }
 
@@ -28,4 +29,3 @@
     //***************************END AUTO COMBAT*******************************
     SEMI.add(id, {ms: 500, onLoop, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc});
 })();
-
