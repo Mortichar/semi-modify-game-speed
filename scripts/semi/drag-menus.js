@@ -102,8 +102,8 @@ var injectDragMenus = () => {
     const skillElements = [...$('.nav-main-item')].filter((x) => x.id.startsWith('nav-skill-tooltip') || x.id === 'farming-glower');
     const headers = [...$('.nav-main-heading')];
 
-    const combatSkills = skillElements.filter((x) => x.lastElementChild.href === 'javascript:changePage(13);');
-    const nonCombatSkills = skillElements.filter((x) => x.lastElementChild.href !== 'javascript:changePage(13);');
+    const combatSkills = skillElements.filter((x) => x.lastElementChild.getAttribute('onClick') === 'changePage(13);');
+    const nonCombatSkills = skillElements.filter((x) => x.lastElementChild.getAttribute('onClick') !== 'changePage(13);');
     const SEMIPlugins = [...$(`.${prefix}-button`)];
     const otherButtons = [...$('.nav-main-item')].filter((x) => x.id.startsWith(`${prefix}-other-`));
     const socialButtons = [...$('.nav-main-item')].filter((x) => x.id.startsWith(`${prefix}-socials-`));

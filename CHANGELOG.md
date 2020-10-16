@@ -1,9 +1,13 @@
 # SEMI Changelog
 
 ## v0.4.9
+### Core changes
+* Cleanup documentation on content script, also preparing for a change to how SEMI loads
+* Prevent auto-enable scripts on refresh if you loaded a different character
 ### Script updates
 * AutoFarm: Mastery priority now plants seeds with the highest mastery (excluding those with maxed mastery) to maximize mastery and pool xp.
 * Many scripts and utilities fixed by Visua, restoring functionality.
+* AutoSlayer fixes to prevent fighting monsters you can't kill if you don't have equipment, yet you have AutoSlayerEquip enabled
 ### UI Changes
 * Menu updates: credits in the SEMI info section
 
