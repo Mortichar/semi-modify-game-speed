@@ -1,5 +1,9 @@
 # SEMI Changelog
 
+## v0.4.9
+### Script updates
+* AutoFarm: Mastery priority now plants seeds with the highest mastery (excluding those with maxed mastery) to maximize mastery and pool xp.
+
 ## v0.4.8
 ## Hot(mess)fix: Melvor has updated to Alpha v0.17! Big changes, big breakage.
 ### Core changes
