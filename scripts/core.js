@@ -216,7 +216,7 @@ var SEMI =  (() => {
         const useSaved = Boolean(getItem('remember-state'));
         const wasEnabled = Boolean(getItem(`${name}-status`));
         const enabled = wasEnabled && useSaved;
-        const sameCharacter = getItem('previous-character') == currentCharacter;
+        const sameCharacter = getItem('previous-character') == currentCharacter || getItem('previous-character') == null;
         if(enabled && name !== 'katorone' && sameCharacter) {
             if (name == 'auto-cook') { setTimeout(enable, 5000); }
             else { setTimeout(enable, 1000); }

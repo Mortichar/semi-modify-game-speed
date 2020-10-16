@@ -169,7 +169,7 @@ var {semiSetMenu} = (() => {
     injectEyes();
     injectDragMenus();
 
-    const sameCharacter = SEMI.getItem('previous-character') == SEMI.getCharacter();
+    const sameCharacter = SEMI.getItem('previous-character') == SEMI.getCharacter() || SEMI.getItem('previous-character') == null;
     if (!sameCharacter && SEMI.getItem('remember-state')) {
       SEMI.customNotify('assets/media/main/settings_header.svg',
       `SEMI detected that you loaded a different character than previously selected!<br>
