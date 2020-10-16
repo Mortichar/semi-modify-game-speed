@@ -51,7 +51,7 @@
         /** @param {number?} itemID */
         const equipFromBank = (itemID, qty = 1) => {
             if(typeof itemID === 'undefined' || itemID === 0) {return false; }
-            equipItem(0, itemID, qty, selectedEquipmentSet);
+            equipItem(itemID, qty, selectedEquipmentSet);
             return true;
         };
 

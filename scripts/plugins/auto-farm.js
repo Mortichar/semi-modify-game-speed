@@ -1,13 +1,13 @@
 //AF AutoEquip toggle
-(() => { return; //temporary disable: 0.17 breakage
+(() => {
     const id = 'auto-farm-equip';
     const title = 'AutoFarmEquip';
-    const desc = `If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
+    const desc = `If not in combat, equips Farming Cape, Bob's Rake and Signet Ring/Ancient Ring of Mastery if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
     const imgSrc = 'assets/media/bank/skillcape_farming.svg';
     SEMI.add(id, { ms: 0, title, desc, imgSrc });
 })();
 
-(() => { return; //temporary disable: 0.17 breakage
+(() => {
     const id = 'auto-farm';
     const title = 'AutoFarm';
     const desc = 'AutoFarm by Visua will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to. Will use gloop if you have it.';
@@ -17,7 +17,7 @@
     const toPatchType = { Allotment: patchTypes[0], Herb: patchTypes[1], Tree: patchTypes[2] };
     const priorityTypes = {
         custom: { id: 'custom', description: 'Custom priority', tooltip: 'Drag seeds to change their priority' },
-        mastery: { id: 'mastery', description: 'Lowest mastery', tooltip: 'Click seeds to disable/enable them' },
+        mastery: { id: 'mastery', description: 'Highest mastery', tooltip: 'Seeds with maxed mastery are excluded<br>Click seeds to disable/enable them' },
         replant: { id: 'replant', description: 'Replant', tooltip: 'Lock patches to their current seeds' },
     };
     const allSeeds = {
@@ -38,12 +38,6 @@
             lockedPatches: {},
         };
     });
-
-    function orderMasteryPriorityMenu(patchType) {
-        const menu = $(`#${id}-${patchType}-prioritysettings-mastery`);
-        const sortedMenuItems = [...menu.children()].sort((a, b) => farmingMastery[items[$(a).data('seed-id')].masteryID].masteryXP - farmingMastery[items[$(b).data('seed-id')].masteryID].masteryXP);
-        menu.append(sortedMenuItems);
-    }
 
     function canBuyCompost(n = 5) {
         if (SEMI.hasCapeOn('Farming')) {
@@ -71,7 +65,7 @@
         } else if (patchTypeConfig.priorityType === priorityTypes.custom.id) {
             priority = patchTypeConfig.priority;
         } else if (patchTypeConfig.priorityType === priorityTypes.mastery.id) {
-            priority = allSeeds[patchType].filter(s => !config.disabledSeeds[s]).sort((a, b) => farmingMastery[items[a].masteryID].masteryXP - farmingMastery[items[b].masteryID].masteryXP);
+            priority = allSeeds[patchType].filter(s => !config.disabledSeeds[s] && getSeedMasteryLevel(s) < 99).sort((a, b) => getSeedMastery(b) - getSeedMastery(a));
         }
 
         let nextSeed = -1;
@@ -113,13 +107,15 @@
             return;
         }
 
-        if (checkBankForItem(CONSTANTS.item.Weird_Gloop)) {
-            addGloop(areaId, patchId);
-        } else if (farmingMastery[items[nextSeed].masteryID].mastery < 50) {
-            if (canBuyCompost()) {
-                getCompost();
+        if (!patch.gloop) {
+            if (checkBankForItem(CONSTANTS.item.Weird_Gloop)) {
+                addGloop(areaId, patchId);
+            } else if (getSeedMasteryLevel(nextSeed) < 50 && getMasteryPoolProgress(CONSTANTS.skill.Farming) < masteryCheckpoints[1]) {
+                if (canBuyCompost()) {
+                    getCompost();
+                }
+                addCompost(areaId, patchId, 5);
             }
-            addCompost(areaId, patchId, 5);
         }
         selectedPatch = [areaId, patchId];
         selectedSeed = nextSeed;
@@ -160,7 +156,7 @@
         });
     }
 
-    function equipIfNotEquiped(item, slot) {
+    function equipIfNotEquipped(item, slot) {
         if (SEMI.currentEquipmentInSlot(slot) === item) {
             return true;
         }
@@ -171,22 +167,22 @@
         return false;
     }
 
-    function swapFarmingEquipment(x = true) {
-        if (!SEMI.isEnabled('auto-farm-equip')) return;
-        if (x) {
-            equipIfNotEquiped(CONSTANTS.item.Bobs_Rake, 'Weapon');
-            equipIfNotEquiped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
-            if (!SEMI.hasCapeOn('Farming')) {
-                equipIfNotEquiped(CONSTANTS.item.Max_Skillcape, 'Cape') || equipIfNotEquiped(CONSTANTS.item.Farming_Skillcape, 'Cape');
-            }
+    function swapFarmingEquipment(swapTo = true) {
+        if (!SEMI.isEnabled('auto-farm-equip')) {
+            return;
+        }
+        if (swapTo) {
+            equipIfNotEquipped(CONSTANTS.item.Bobs_Rake, 'Weapon');
+            equipIfNotEquipped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
+            equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape') || equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape') || equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
         } else {
-            if (SEMI.currentEquipmentInSlot('Weapon') === CONSTANTS.item.Bobs_Rake && SEMI.equipSwapConfig['Weapon'].swapped) {
+            if (SEMI.equipSwapConfig['Weapon'].swapped) {
                 SEMI.equipSwap(0, 'Weapon');
             }
-            if (SEMI.currentEquipmentInSlot('Ring') === CONSTANTS.item.Aorpheats_Signet_Ring && SEMI.equipSwapConfig['Ring'].swapped) {
+            if (SEMI.equipSwapConfig['Ring'].swapped) {
                 SEMI.equipSwap(0, 'Ring');
             }
-            if (SEMI.hasCapeOn('Farming') && SEMI.equipSwapConfig['Cape'].swapped) {
+            if (SEMI.equipSwapConfig['Cape'].swapped) {
                 SEMI.equipSwap(0, 'Cape');
             }
         }
@@ -203,6 +199,21 @@
             buyQty = 5;
             buyCompost(true);
         }
+    }
+
+    function getSeedMastery(seedId) {
+        return MASTERY[CONSTANTS.skill.Farming].xp[items[seedId].masteryID[1]];
+    }
+
+    function getSeedMasteryLevel(seedId) {
+        return getMasteryLevel(CONSTANTS.skill.Farming, items[seedId].masteryID[1]);
+    }
+
+    function orderMasteryPriorityMenu(patchType) {
+        const menu = $(`#${id}-${patchType}-prioritysettings-mastery`);
+        menu.children().toArray().filter(e => getSeedMasteryLevel($(e).data('seed-id')) >= 99).forEach(e => $(e).remove());
+        const sortedMenuItems = menu.children().toArray().sort((a, b) => getSeedMastery($(b).data('seed-id')) - getSeedMastery($(a).data('seed-id')));
+        menu.append(sortedMenuItems);
     }
 
     function injectGUI() {
@@ -266,7 +277,7 @@
                 const prefix = `${id}-${patchType}-prioritytype`;
                 const elementId = `${prefix}-${priorityType.id}`;
                 return `
-                    <div class="custom-control custom-radio custom-control-inline custom-control">
+                    <div class="custom-control custom-radio custom-control-inline">
                         <input class="custom-control-input" type="radio" id="${elementId}" name="${prefix}" value="${priorityType.id}"${config[patchType].priorityType === priorityType.id ? ' checked' : ''}>
                         <label class="custom-control-label" for="${elementId}" data-tippy-content="${priorityType.tooltip}">${priorityType.description}</label>
                     </div>`;
@@ -492,7 +503,7 @@
         observer = new MutationObserver(addSeedSelectors);
         observer.observe(document.getElementById('farming-area-container'), { childList: true });
 
-        tippy(`#${id} [data-tippy-content]`, { animation: false });
+        tippy(`#${id} [data-tippy-content]`, { animation: false, allowHTML: true });
     }
 
     function removeGUI() {
