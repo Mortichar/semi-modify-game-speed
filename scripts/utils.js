@@ -62,6 +62,27 @@
 
         const isBankFull = () => { return bank.length >= baseBankMax + bankMax; };
 
+        const sellItemWithoutConfirmation = (itemID, qty = 1) => {
+            let saleModifier = 1; // Need to determine saleModifier because for some reason this isn't done inside processItemSale()
+            if (items[itemID].type === 'Logs' && getMasteryPoolProgress(CONSTANTS.skill.Woodcutting) >= masteryCheckpoints[2]) {
+                saleModifier += 0.5;
+            }
+
+            const selectBankItemRef = selectBankItem;
+            selectBankItem = () => {}; // Temporarily replace selectBankItem() because this can cause errors when it gets called in processItemSale()
+            processItemSale(itemID, qty, saleModifier);
+            selectBankItem = selectBankItemRef;
+
+            if ((selectedBankItem === itemID || itemsToSell.includes(itemID)) && !checkBankForItem(itemID)) {
+                if (selectedBankItem === itemID) {
+                    deselectBankItem();
+                }
+                if (itemsToSell.includes(itemID)) {
+                    addItemToItemSaleArray(itemID);
+                }
+            }
+        };
+
         const equipSwapConfig = {
             "Helmet": {
                 slotID: 0,
@@ -281,7 +302,7 @@
         const utils = {utilsReady, changePage: _changePage, currentPageName,
             skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
             currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
-            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull, hasCapeOn,
+            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull, sellItemWithoutConfirmation, hasCapeOn,
             confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned,
             enemyMaxStunDamageMultiplier, getCharacter,
             customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto

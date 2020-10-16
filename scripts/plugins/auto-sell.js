@@ -1,4 +1,4 @@
-var autoSellShow = (() => { return; //temporary disable: v0.17 breakage
+var autoSellShow = (() => {
     const pluginKind = 'sell';
 
     const id = `auto-${pluginKind}`;
@@ -39,14 +39,7 @@ var autoSellShow = (() => { return; //temporary disable: v0.17 breakage
     const doOne = (i) => {
         const itemToTest = bank[i].id;
         const qty = SEMI.getBankQty(itemToTest);
-        let allButOneEnabled = false;
-        if (allButOne) {
-            allButOne = false;
-            allButOneEnabled = true;
-        }
-        sellItem(itemToTest, qty);
-        if (allButOneEnabled) { allButOne = true; }
-        SEMI.confirmAndCloseModal();
+        SEMI.sellItemWithoutConfirmation(itemToTest, qty);
         SEMI.customNotify(items[itemToTest].media, `Selling ${qty} of '${items[itemToTest].name}'`);
         return true;
     }
