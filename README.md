@@ -8,7 +8,7 @@ The following scripts have been removed from SEMI for the time being to prevent 
 
 Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source([see Alternative Installation](#alternative-installation)), but be aware it may contain more bugs or be less stable than release versions from above buttons.
 
-Huge thanks to DanielRX for contributing a ton of work to the project!
+Huge thanks to community contributors such as DanielRX, Visua, Breindahl, and AuroraKy a ton of work to the project!
 
 ### **SEMI** is a Firefox and Chrome web extension for Melvor Idle.
 

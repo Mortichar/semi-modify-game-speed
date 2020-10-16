@@ -34,6 +34,32 @@ var {semiSetMenu} = (() => {
   <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
   <li><a href="https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js" target="_blank" title="">Katorone's automation script</a></li>
   </ul>`;
+  const creditsText = `
+  <ul>
+  <li>Maintainer & owner: AldousWatts</li>
+  <li>Major contributor: DanielRX
+    <ul>
+    <li>Massive refactoring</li>
+    <li>Dragable Menus</li>
+    <li>Repository improvements</li>
+    <li>Many other script cleanups and contributions</li>
+    </ul>
+  </li>
+  <li>Major contributor: Visua
+    <ul>
+    <li>AutoFarm</li>
+    <li>Core fixes and upgrades</li>
+    <li>Debugging, refactoring, and more</li>
+    </ul>
+  </li>
+  <li>Contributor: AuroraKy
+    <ul>
+    <li>Many core changes that haven't made it into the code yet</li>
+    <li>Good ideas & discussions</li>
+    </ul>
+  </li>
+  <li>Many other community coders and bug reporters and supportive helpful folks! <3</li>
+  </ul>`;
 
   const injectSEMIInfoPopup = () => {
     const semiInfoPopup = $(`
@@ -63,14 +89,14 @@ var {semiSetMenu} = (() => {
             </div>
             <div class="custom-control custom-switch mb-1">
               <input type="checkbox" class="custom-control-input" id="SEMI-time-remaining-button-enabled" name="SEMI-time-remaining-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.timeRemaining ? 'checked' : ''}>
-              <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining: time estimates for production skills next to the item. Includes a task timer with a ding noise when a task completes. <b>TEMPORARILY REMOVED</b> while being fixed for 0.17.</label>
+              <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining by Breindahl: time estimates for production skills next to the item. Includes a ding noise when a task completes. <b>TEMPORARILY REMOVED</b> while being fixed for 0.17.</label>
             </div>
             <div class="block-content block-content-full text-right">
               <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">
                 <i class="fa fa-check mr-1"></i>Save Toggles
               </button>
             </div>
-            <p>Since Melvor v0.17 has broken SEMI scripts that deal with mastery or bank interaction, they are temporarily removed/disabled until fixes can be implemented. Includes TimeRemaining, AutoFarm, AutoSell, AutoOpen, AutoBury, AutoSlayer, AutoEquip Ammo, AutoSell Gems, and Katorone menu.<p>
+            <p>Since Melvor v0.17 has broken SEMI scripts that deal with mastery or bank interaction, they are temporarily removed/disabled until fixes can be implemented. Includes TimeRemaining, AutoOpen, and AutoBury.<p>
             <div style="font-size: 14pt;">
             SEMI Config Backup, Restore, and Reset:
             </div>
@@ -95,12 +121,16 @@ var {semiSetMenu} = (() => {
               Reset SEMI
             </button>
             <div id="${SEMI.ROOT_ID}-info-box" class="d-none SEMI-fixed-textbox">
-              <div style="font-size: 14pt"><b>SEMI v${SEMI_VERSION} by Aldous Watts & DanielRX</b></div>
+              <div style="font-size: 14pt"><b>SEMI v${SEMI_VERSION}</b></div>
               Hover over sidebar buttons or some other SEMI elements to see tooltips that describe the scripts/options and give hints.
+              <br>
               <br>
               If you unlock the sidebar sections, you can drag and rearrange the items in the section. Dragging an item below the SEMI icon only visible when unlocked will hide the item when the section is locked.
               <br>
               <br>
+              <b>Credits:</b>
+              <br>
+              ${creditsText}
               Many functions of SEMI were originally based on these scripts by others:
               ${otherScriptsText}
               Source code for SEMI, along with issues page for suggestions/bugs, can be found at the GitLab repository <a href="https://gitlab.com/aldousWatts/SEMI" target="_blank">here.</a>
@@ -138,6 +168,19 @@ var {semiSetMenu} = (() => {
 
     injectEyes();
     injectDragMenus();
+
+    const sameCharacter = SEMI.getItem('previous-character') == SEMI.getCharacter();
+    if (!sameCharacter && SEMI.getItem('remember-state')) {
+      SEMI.customNotify('assets/media/main/settings_header.svg',
+      `SEMI detected that you loaded a different character than previously selected!<br>
+      Auto-enable scripts has been disabled to prevent problems.<br>
+      Beware, at this point in SEMI's development, plugin configs are not character specific.<br>
+      Enabling plugins such as AutoSell will carry over settings from a previous character.<br>
+      Your auto-enable settings are still saved, so if you re-enable auto-enable and refresh<br>
+      and load the same character, everything will turn back on. You have been warned!`, 30000);
+      toggleAutoEnableScripts();
+    }
+    SEMI.setItem('previous-character', SEMI.getCharacter());
 
     //if all goes well, yay, it's loaded
     SEMI.customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',5000);
@@ -185,7 +228,10 @@ var {semiSetMenu} = (() => {
     let tryLoad = true;
     const wrongVersion = gameVersion != SEMI.SUPPORTED_GAME_VERSION;
     if (wrongVersion) {
-      const msg = `SEMI\nThis version of SEMI was made for Melvor Idle ${SEMI.SUPPORTED_GAME_VERSION}. Loading the extension may cause unexpected behavior or result in errors.\n Try loading it anyways?`;
+      const msg = `SEMI Alert:
+      This version of SEMI was made for Melvor Idle ${SEMI.SUPPORTED_GAME_VERSION}. Loading the extension in this game version may cause unexpected behavior or result in errors.
+      IMPORTANT NOTE: Any errors encountered after loading this way should be reported to SEMI DEVS, and NOT Malcs!
+      Try loading it anyways?`;
       tryLoad = window.confirm(msg);
     }
     if(!tryLoad) { return hideSemi('game version incompatibility.'); }

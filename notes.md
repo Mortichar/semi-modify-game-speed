@@ -2,8 +2,12 @@
 
 ## Melvor v0.17: Big Breaky
 ### Bug Hunt
+* 0.17 mega-issue
+    * Drag-menus weirdness with combat section
+
+### Core changes
 * when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
-* any time a script tries to EQUIP or SELL or bury/use any items, `bank.js` throws errors. Many utils and scripts will need fixing.
+* Moving the supported version check to before the SEMI version injection: waiting on Visua's changes to CombatSim Reloaded to have a cleaner loading system.
 
 ## TODO overflow
 
