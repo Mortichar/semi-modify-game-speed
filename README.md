@@ -4,11 +4,11 @@
 [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
 ### Temporarily disabled scripts due to v0.17 breakage
-The following scripts have been removed from SEMI for the time being to prevent errors until fixes can be implemented: TimeRemaining, AutoFarm, AutoSell, AutoOpen, AutoBury, AutoSlayer, AutoEquip Ammo, AutoSell Gems, and Katorone menu.
+The following scripts have been removed from SEMI for the time being to prevent errors until fixes can be implemented: TimeRemaining, AutoOpen, and AutoBury.
 
 Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source([see Alternative Installation](#alternative-installation)), but be aware it may contain more bugs or be less stable than release versions from above buttons.
 
-Huge thanks to community contributors such as DanielRX, Visua, Breindahl, and AuroraKy a ton of work to the project!
+Huge thanks to community contributors such as DanielRX, Visua, Breindahl, AuroraKy, and more for helping with the project!
 
 ### **SEMI** is a Firefox and Chrome web extension for Melvor Idle.
 
@@ -16,7 +16,7 @@ Huge thanks to community contributors such as DanielRX, Visua, Breindahl, and Au
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* New Script: AutoFarm by Visua!
+* AutoFarm by Visua
     * Replaces AutoReplant with a much more customizable farming robot, with detailed settings like AutoMine.
     * Automatically harvests and then plants seeds, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank. Prioritizes gloop over compost. Will not buy gloop
@@ -75,8 +75,6 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * Thieving calculators and tooltips by RedSparr0w (scavenged from Melvor Idle Helper)
     * XPH script by Breakit, now with an in-game GUI to display XP per hour and estimate time until reaching the level of your choice
     * Many code utilities that are useful in scripting for Melvor Idle. See `utils.js`
-
-Thanks to everyone who writes scripts for Melvor and provides them to others! Many coders contributed to ideas here.
 
 ### Bugs & Requests
 

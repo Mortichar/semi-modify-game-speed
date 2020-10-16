@@ -6,10 +6,11 @@
 * Prevent auto-enable scripts on refresh if you loaded a different character
 ### Script updates
 * AutoFarm: Mastery priority now plants seeds with the highest mastery (excluding those with maxed mastery) to maximize mastery and pool xp.
-* Many scripts and utilities fixed by Visua, restoring functionality.
+* Many scripts and utilities fixed by Visua, restoring functionality. Now only 2 that we maintain are down: AutoOpen & AutoBury.
 * AutoSlayer fixes to prevent fighting monsters you can't kill if you don't have equipment, yet you have AutoSlayerEquip enabled
 ### UI Changes
 * Menu updates: credits in the SEMI info section
+* Fix: drag-menus now works properly, a couple filters were looking for the wrong metric.
 
 ## v0.4.8
 ## Hot(mess)fix: Melvor has updated to Alpha v0.17! Big changes, big breakage.

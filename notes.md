@@ -3,7 +3,7 @@
 ## Melvor v0.17: Big Breaky
 ### Bug Hunt
 * 0.17 mega-issue
-    * Drag-menus weirdness with combat section
+    * AutoOpen & AutoBury still bork'd
 
 ### Core changes
 * when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
