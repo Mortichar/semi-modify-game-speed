@@ -1,5 +1,5 @@
 // Importing Auto Slayer by Bubbalova. Using a modified version of script v1.2.1.
-(() => { return; //temporary disable: v0.17 breakage
+(() => {
     const id = 'auto-slayer-equip';
     const title = 'AutoSlayerEquip';
     const desc = 'The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on. The original script also forced equipping of the Slayer Cape when starting, but this option also controls that cape equip. When this is enabled and you have 99 slayer and the slayer cape, AutoSlayer will always equip the slayer cape.';
@@ -7,7 +7,7 @@
     SEMI.add(id, {ms: 0, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc});
 })();
 
-(() => { return; //temporary disable: v0.17 breakage
+(() => {
     const id = 'auto-slayer';
     const title = 'AutoSlayer';
     const desc = 'AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default, unless you are properly equipped or you turn on AS Auto Equip and have the correct items in the bank.';
@@ -19,18 +19,6 @@
     let originalRing;
     let originalShield;
     let originalCape;
-
-    /** @param {number?} item */
-    const equipFromBank = (item) => {
-        if(typeof item === 'undefined') {return false; }
-        for (let i = 0; i < bank.length; i++) {
-            if(items[bank[i].id].name == items[item].name) {
-                equipItem(i, item, 1, selectedEquipmentSet);
-                return true;
-            }
-        }
-        return false;
-    };
 
     //Main function
     const autoSlayer = () => {
@@ -81,7 +69,7 @@
             if(SEMI.currentLevel('Slayer') >= 99 && (checkBankForItem(skillCape) || hasCape) && SEMI.isEnabled('auto-slayer-equip')){
                 if(!hasCape) {
                     originalCape = currentCape();
-                    found = equipFromBank(skillCape);
+                    found = SEMI.equipFromBank(skillCape);
                 }
             } else if((needsShield || needsRing) && !SEMI.isEnabled('auto-slayer-equip')) {
                 //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
@@ -99,22 +87,22 @@
                             newSlayerTask();
                             notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to 2-handed weapon!');
                         } else {
-                            found = equipFromBank(CONSTANTS.item.Mirror_Shield);
+                            found = SEMI.equipFromBank(CONSTANTS.item.Mirror_Shield);
                         }
                     }
                 } else if(needsRing) {
                     //Equips Magical Ring for area
                     if(!hasRing) {
                         originalRing = currentRing();
-                        found = equipFromBank(CONSTANTS.item.Magical_Ring);
+                        found = SEMI.equipFromBank(CONSTANTS.item.Magical_Ring);
                     }
                 } else if(!(needsShield || needsRing)) {
                     slayerLockedItem = null; // Ensures the game will allow us to unequip slayer equipment
 
                     //Equips original shield when not in Area
-                    if ((hasShield && originalShield != CONSTANTS.item.Mirror_Shield)){ found = equipFromBank(originalShield); }
+                    if ((hasShield && originalShield != CONSTANTS.item.Mirror_Shield)){ found = SEMI.equipFromBank(originalShield); }
                     //Equips original ring when not in Area
-                    if ((hasRing && originalRing != CONSTANTS.item.Magical_Ring)){ found = equipFromBank(originalRing); }
+                    if ((hasRing && originalRing != CONSTANTS.item.Magical_Ring)){ found = SEMI.equipFromBank(originalRing); }
                 }
             }
 
