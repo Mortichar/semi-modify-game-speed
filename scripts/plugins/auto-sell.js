@@ -103,7 +103,7 @@ var autoSellShow = (() => {
             <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current item log."></i>
             </button>`);
         refreshLogBtn.on('click', () => SEMI.refreshLog());
-        $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').before(refreshLogBtn);
+        $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').parent().before(refreshLogBtn);
 
         $(`#modal-${id} .block-title`).text(`${title} Menu`);
 
