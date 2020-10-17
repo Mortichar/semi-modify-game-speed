@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# SEMI Python cross-OS build script
 
 from zipfile import ZipFile
 import os
@@ -24,6 +25,12 @@ def main():
     dir3 = rootDir+folder3
     dir4 = rootDir+folder4
 
+    # Get version
+    with open('manifest.json', 'r') as manifest:
+        lines = manifest.readlines()
+        versionline = lines[4]
+        version = versionline.split('"')[3]
+
     # Create output zip
     print('Building SEMI.zip...')
     with ZipFile('SEMI.zip', 'w') as fBuild:
@@ -44,13 +51,13 @@ def main():
         os.makedirs(rootDir+"/.build/outputs")
 
     # Remove previous outputs
-    if os.path.exists(rootDir+"/.build/outputs/SEMI-Master-Build.zip"):
-        print("Removing previous SEMI-Master-Build.zip...")
-        os.remove(rootDir+"/.build/outputs/SEMI-Master-Build.zip")
+    if os.path.exists(rootDir+"/.build/outputs/SEMI-Master-Build-v"+version+".zip"):
+        print("Removing previous SEMI-Master-Build-v"+version+".zip...")
+        os.remove(rootDir+"/.build/outputs/SEMI-Master-Build-v"+version+".zip")
 
     # Move the master build to ./.build/outputs/
-    print("Moving SEMI.zip to ./.build/outputs/SEMI-Master-Build.zip")
-    os.rename(rootDir+"/SEMI.zip", rootDir+"/.build/outputs/SEMI-Master-Build.zip")
+    print("Moving SEMI.zip to ./.build/outputs/SEMI-Master-Build-v"+version+".zip")
+    os.rename(rootDir+"/SEMI.zip", rootDir+"/.build/outputs/SEMI-Master-Build-v"+version+".zip")
 
     print("SEMI build script completed!")
 
