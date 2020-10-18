@@ -81,7 +81,7 @@
             setupContainer();
         });
         const refreshLogBtn = $(`<button type="button" class="btn-block-option" aria-label="Refresh">
-            <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current monster log."></i>
+            <i class="fas fa-redo text-muted" title="Refresh this log page to reflect your current monster log."></i>
             </button>`);
         refreshLogBtn.on('click', () => setupContainer());
         modal.find('.block-options').prepend(refreshLogBtn).prepend(toggleHiddenMonsters);

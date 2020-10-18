@@ -87,10 +87,10 @@
         y.before(enableAutoButton);
 
         const refreshLogBtn = $(`<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-            <i class="fas fa-undo-alt text-muted" title="Refresh this log page to reflect your current bone log."></i>
+            <i class="fas fa-redo text-muted" title="Refresh this log page to reflect your current bone log."></i>
             </button>`);
         refreshLogBtn.on('click', () => SEMI.refreshBoneLog());
-        $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').before(refreshLogBtn);
+        $(`#${id}-status`).parent().find('.fa.fa-fw.fa-times').parent().before(refreshLogBtn);
 
         $(`#modal-${id} .block-title`).text(`${title} Menu`);
 
