@@ -3,8 +3,8 @@
 [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
-### Temporarily disabled scripts due to v0.17 breakage
-The following scripts have been removed from SEMI for the time being to prevent errors until fixes can be implemented: TimeRemaining, AutoOpen, and AutoBury.
+### Temporarily disabled script due to v0.17 breakage
+TimeRemaining has been removed from SEMI for the time being to prevent errors until fixes can be implemented.
 
 Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source([see Alternative Installation](#alternative-installation)), but be aware it may contain more bugs or be less stable than release versions from above buttons.
 
@@ -30,7 +30,6 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
         * Barf Potion button
         * XP/h button
         * TimeRemaining
-    * Plugin config default option for scripting
 * Show Ore in Bank -- adds ore counts to mining page rocks.
 * Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu

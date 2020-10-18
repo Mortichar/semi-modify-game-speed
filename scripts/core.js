@@ -129,36 +129,36 @@ var SEMI =  (() => {
         const textEl = createElement('span', {innerHTML: title, class: 'nav-main-link-name'});
         const statusEl = createElement('i', {id: `${name}-status`, class: 'fas fa-times text-danger', style: 'width: 15px;'});
         // const statusEl = createElement('small', {id: `${name}-status`, innerHTML: 'Disabled'});
-        if (hasConfig) {
-            const configEl = createElement('i', {id: `${name}-config-btn`, class:`fas fa-cog`});
-            const configMenu = tippy(configEl, {
-                content: `<div id="${name}-config-menu" class="form-group">
-                    <label for="???">Minimum Stack to keep in bank: </label>
-                    <input type="text" class="form-control" id="asg-num" placeholder="100">
-                </div>
-                <button type="button" id="${name}-config-save-btn" class="btn btn-sm btn-primary">
-                    <i class="fa fa-check mr-1"></i>Save
-                </button>`,
-                allowHTML: true,
-                interactive: true,
-                appendTo: document.body,
-                interactiveBorder: 30,
-                trigger: 'click',
-                zIndex: 9999,
-                placement: 'right'
-            });
-            configEl.addEventListener("click", (event) => {
-                console.log(`${name} config btn pressed`);
-                event.preventDefault();
-            });
-            const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px; padding-right: 10px;`}, [statusEl, imgEl, textEl, configEl]);
-            const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
-            return mainEl;
-        } else {
+        // if (hasConfig) {
+        //     const configEl = createElement('i', {id: `${name}-config-btn`, class:`fas fa-cog`});
+        //     const configMenu = tippy(configEl, {
+        //         content: `<div id="${name}-config-menu" class="form-group">
+        //             <label for="???">Minimum Stack to keep in bank: </label>
+        //             <input type="text" class="form-control" id="asg-num" placeholder="100">
+        //         </div>
+        //         <button type="button" id="${name}-config-save-btn" class="btn btn-sm btn-primary">
+        //             <i class="fa fa-check mr-1"></i>Save
+        //         </button>`,
+        //         allowHTML: true,
+        //         interactive: true,
+        //         appendTo: document.body,
+        //         interactiveBorder: 30,
+        //         trigger: 'click',
+        //         zIndex: 9999,
+        //         placement: 'right'
+        //     });
+        //     configEl.addEventListener("click", (event) => {
+        //         console.log(`${name} config btn pressed`);
+        //         event.preventDefault();
+        //     });
+        //     const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px; padding-right: 10px;`}, [statusEl, imgEl, textEl, configEl]);
+        //     const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
+        //     return mainEl;
+        // } else {
             const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px;`}, [statusEl, imgEl, textEl]);
             const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
             return mainEl;
-        }
+        // }
     };
 
     /**

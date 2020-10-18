@@ -1,18 +1,16 @@
 # SEMI General notes
 
-## Melvor v0.17: Big Breaky
-### Bug Hunt
-* 0.17 mega-issue
-    * AutoOpen & AutoBury still bork'd
-
+## v0.5 plans
+* Config menus available per-plugin for detailed customization (still needs more work)
+* Config changes, core functions such as getValue, setValue, etc
+* Attempt work on individual character configs
 ### Core changes
 * when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
-* Moving the supported version check to before the SEMI version injection: waiting on Visua's changes to CombatSim Reloaded to have a cleaner loading system.
+    * Moving the supported version check to before the SEMI version injection: waiting on Visua's changes to CombatSim Reloaded to have a cleaner loading system.
 
 ## TODO overflow
 
 * Make menu w i d e r: change the .modal-dialog div style to have max-width of >500px.
-* Attempt work on individual character configs - at the very least give a warning when switching chars & disable auto-enable.
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
 * "Better" checks for things like putting on capes and gloves etc when needed
 * Jarx additions:
@@ -32,7 +30,7 @@ Set slayer task to 2 griffins (magic ring):
 And 2 lots of eyes (mirror shield):
 `slayerTask = [{monsterID: 20, count: 2}]; updateSlayerTask(0);`
 
-100% complete character command (buggy)
+100% complete character command (buggy, probably outdated in 0.17)
 ```
 for(_ of monsterStats)_.killedByPlayer=bankMax=t=891;dungeonCompleteCount.fill(t);
 for(;t--;)addItemToBank(t,slayerCoins=gp=9e9,addXP(t%20,3e5),0);

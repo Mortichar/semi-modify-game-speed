@@ -1,32 +1,38 @@
 # SEMI Changelog
 
+## v0.4.10
+### Core changes
+* Plugin menu buttons have changed: status text is now an icon, making way for future config menu cog btns
+### Script updates
+* All previously temp-disabled scripts (excepting TimeRemaining) are now back online and better than ever thanks to Visua's hard work
+
 ## v0.4.9
 ### Core changes
 * Cleanup documentation on content script, also preparing for a change to how SEMI loads
 * Prevent auto-enable scripts on refresh if you loaded a different character
 ### Script updates
-* AutoFarm: Mastery priority now plants seeds with the highest mastery (excluding those with maxed mastery) to maximize mastery and pool xp.
-* Many scripts and utilities fixed by Visua, restoring functionality. Now only 2 that we maintain are down: AutoOpen & AutoBury.
+* AutoFarm: Mastery priority now plants seeds with the highest mastery (excluding those with maxed mastery) to maximize mastery and pool xp
+* Many scripts and utilities fixed by Visua, restoring functionality. Now only 2 that we maintain are down: AutoOpen & AutoBury
 * AutoSlayer fixes to prevent fighting monsters you can't kill if you don't have equipment, yet you have AutoSlayerEquip enabled
 ### UI Changes
 * Menu updates: credits in the SEMI info section
-* Fix: drag-menus now works properly, a couple filters were looking for the wrong metric.
+* Fix: drag-menus now works properly, a couple filters were looking for the wrong metric
 
 ## v0.4.8
-## Hot(mess)fix: Melvor has updated to Alpha v0.17! Big changes, big breakage.
+## Hot(mess)fix: Melvor has updated to Alpha v0.17! Big changes, big breakage
 ### Core changes
-* Notifications are now done in-game through Toastify. Converted SEMI's custom notification system to match.
+* Notifications are now done in-game through Toastify. Converted SEMI's custom notification system to match
 ### Script updates
-* AutoBonfire: only starts a bonfire if you are currently burning logs. Easy fix.
-* AutoSlayerSkip bugfix: now actually skips Black Knights! Too bad AutoSlayer is broken for the time being. See below.
+* AutoBonfire: only starts a bonfire if you are currently burning logs. Easy fix
+* AutoSlayerSkip bugfix: now actually skips Black Knights! Too bad AutoSlayer is broken for the time being. See below
 ### Temporary script removal
-* AutoFarm is disabled for now. Since it deals heavily with mastery and the mastery system has had an overhaul, it throws errors upon load.
-* TimeRemaining is also heavily involved with mastery, and in the interest of safety & accuracy it will be disabled until it is updated.
-* AutoSell, AutoOpen, AutoBury, AutoSlayer, AutoEquip Ammo, AutoSell Gems, Katorone all broken by bank changes. Disabled.
+* AutoFarm is disabled for now. Since it deals heavily with mastery and the mastery system has had an overhaul, it throws errors upon load
+* TimeRemaining is also heavily involved with mastery, and in the interest of safety & accuracy it will be disabled until it is updated
+* AutoSell, AutoOpen, AutoBury, AutoSlayer, AutoEquip Ammo, AutoSell Gems, Katorone all broken by bank changes. Disabled
 
 ## v0.4.7
 ### Hotfix
-* Update manifest match pattern so that SEMI only loads in the game, not the wiki.
+* Update manifest match pattern so that SEMI only loads in the game, not the wiki
 
 ## v0.4.6
 ### Core changes
