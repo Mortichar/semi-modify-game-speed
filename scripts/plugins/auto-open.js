@@ -102,7 +102,9 @@
         });
         setupContainer();
         setTimeout(() => {
-            $(`#${id}-menu-status`)[0].innerHTML = '';
+            // $(`#${id}-menu-status`)[0].innerHTML = '';
+            $(`#${id}-menu-status`).remove();
+            $(`#${id}-menu-button`).css('padding-left', '20px');
             $(`#${id}-menu-button`).on('click', autoShow);
             $(`#${id}-menu-button`).attr('href', null);
         }, 1000);

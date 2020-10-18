@@ -103,7 +103,7 @@ var SEMI =  (() => {
     };
 
     /**
-    * @param {string} name
+    * @param {string} name the type of HTML element to create. Ex: 'img', 'span', etc
     * @param {{ [x: string]: any; src?: any; id?: string; innerHTML?: any; href?: string; title?: any; }} options
     */
     const createElement = (name, options = {}, children = []) => {
@@ -115,20 +115,50 @@ var SEMI =  (() => {
     };
 
     /**
-    * @param {string} desc
-    * @param {string} imgSrc
-    * @param {string} fName
-    * @param {string} title
-    * @param {string} name
-    * @param {string} rootId
+    * Creation template for SEMI plugin menu items.
+    * @param {string} desc Tooltip text contents
+    * @param {string} imgSrc Image source for the button icon
+    * @param {string} fName Function called when the button is clicked
+    * @param {string} title The name displayed on the button for the plugin
+    * @param {string} name Name of the plugin used for id assignment
+    * @param {string} rootId Root ID to differentiate between types of plugins
+    * @param {boolean} hasConfig Whether or not to include a config button
     */
-    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId) => {
+    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId, hasConfig = false) => {
         const imgEl =  createElement('img', {src: imgSrc, id: `${name}-img`, class: 'nav-img'});
         const textEl = createElement('span', {innerHTML: title, class: 'nav-main-link-name'});
-        const statusEl = createElement('small', {id: `${name}-status`, innerHTML: 'Disabled'});
-        const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact'}, [imgEl, textEl, statusEl]);
-        const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
-        return mainEl;
+        const statusEl = createElement('i', {id: `${name}-status`, class: 'fas fa-times text-danger', style: 'width: 15px;'});
+        // const statusEl = createElement('small', {id: `${name}-status`, innerHTML: 'Disabled'});
+        if (hasConfig) {
+            const configEl = createElement('i', {id: `${name}-config-btn`, class:`fas fa-cog`});
+            const configMenu = tippy(configEl, {
+                content: `<div id="${name}-config-menu" class="form-group">
+                    <label for="???">Minimum Stack to keep in bank: </label>
+                    <input type="text" class="form-control" id="asg-num" placeholder="100">
+                </div>
+                <button type="button" id="${name}-config-save-btn" class="btn btn-sm btn-primary">
+                    <i class="fa fa-check mr-1"></i>Save
+                </button>`,
+                allowHTML: true,
+                interactive: true,
+                appendTo: document.body,
+                interactiveBorder: 30,
+                trigger: 'click',
+                zIndex: 9999,
+                placement: 'right'
+            });
+            configEl.addEventListener("click", (event) => {
+                console.log(`${name} config btn pressed`);
+                event.preventDefault();
+            });
+            const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px; padding-right: 10px;`}, [statusEl, imgEl, textEl, configEl]);
+            const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
+            return mainEl;
+        } else {
+            const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px;`}, [statusEl, imgEl, textEl]);
+            const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
+            return mainEl;
+        }
     };
 
     /**
@@ -141,10 +171,11 @@ var SEMI =  (() => {
     const pluginNames = [];
 
     /**
-    * @param {string} name
+    * @param {string} name the plugin ID
+    * @param {*} options Options such as onLoop, injectGUI, etc
     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}};
+        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false};
         const opts = {...defaults, ...options};
         opts.imgSrc = (opts.imgSrc === '' && opts.skill !== '') ? SEMI.skillImg(opts.skill) : opts.imgSrc;
         pluginNames.push(name);
@@ -153,7 +184,7 @@ var SEMI =  (() => {
             const plugin = plugins[name];
             if(plugin.imgSrc === '') { return; }
             let menuRootId = `${ROOT_ID}-${plugin.pluginType}`;
-            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId);
+            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId, plugin.hasConfig);
             $(`#${menuRootId}-section-unsorted`).append(pluginEl);
         };
 
@@ -200,7 +231,13 @@ var SEMI =  (() => {
 
         const updateStatus = () => {
             setItem(`${name}-status`, plugins[name].enabled);
-            if($(`#${name}-status`) !== null) { $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled'); }
+            const alternateStatusPlugins = ['auto-sell', 'auto-open', 'auto-bury', 'auto-slayer-skip'];
+            if (alternateStatusPlugins.includes(name)) {
+                return $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled');
+            }
+            if($(`#${name}-status`) !== null) {
+                $(`#${name}-status`).attr('class', plugins[name].enabled ? 'fas fa-check text-success' : 'fas fa-times text-danger');
+            }
         };
 
         const injectGUI = () => {

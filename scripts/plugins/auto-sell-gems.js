@@ -26,5 +26,6 @@
         }
     };
 
-    SEMI.add(id, {ms: 5000, onLoop: autoSellGems, desc, title, imgSrc, config});
+    const hasConfig = true;
+    SEMI.add(id, {ms: 5000, onLoop: autoSellGems, desc, title, imgSrc, config, hasConfig});
 })();

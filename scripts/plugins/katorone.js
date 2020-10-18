@@ -260,7 +260,11 @@ const injectKatGUI = () => {
     </div>
     </div>`);
     $('.modal').first().before(katMenuEl);
-    setTimeout(() => { $('#katorone-status')[0].innerHTML = ''; }, 100);
+    setTimeout(() => {
+        // $('#katorone-status')[0].innerHTML = '';
+        $('#katorone-status').remove();
+        $('#katorone-button').css('padding-left', '20px');
+    }, 100);
     loadKatSets();
 };
 
