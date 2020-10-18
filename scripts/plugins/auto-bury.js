@@ -1,4 +1,4 @@
-(() => { return; //temporary disable: v0.17 breakage
+(() => {
     const pluginKind = 'bury';
 
     const id = `auto-${pluginKind}`;
@@ -36,28 +36,15 @@
         return e;
     };
 
-    const doOne = (i) => {
-        const itemToTest = bank[i].id;
-        const qty = SEMI.getBankQty(itemToTest);
-        if(qty < 10) { return false; }
-        buryItem(i, itemToTest, qty);
-        SEMI.customNotify(items[itemToTest].media, `Burying ${qty} of '${items[itemToTest].name}'`);
-        return true;
-    }
-
-    const doFirstFound = () => {
-        for(let i = 0; i < bank.length; i++) {
-            if(autoEnabled[bank[i].id]) {
-                const found = doOne(i);
-                if(found) { return true; }
+    const autoBury = () => {
+        for (let i = bank.length - 1; i >= 0; i--) {
+            const itemID = bank[i].id;
+            if (autoEnabled[itemID]) {
+                const qty = SEMI.getBankQty(itemID);
+                SEMI.buryItemWithoutConfirmation(itemID, qty);
+                SEMI.customNotify(items[itemID].media, `Burying ${numberWithCommas(qty)} ${items[itemID].name} for ${numberWithCommas(items[itemID].prayerPoints * qty)} Prayer Points`);
             }
         }
-        return false;
-    };
-
-    const doAll = () => {
-        let found = doFirstFound();
-        if(found) { setTimeout(doAll, 500); }
     };
 
     const setupContainer = () => {
@@ -130,7 +117,7 @@
         }
     };
 
-    SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc});
+    SEMI.add(id, { onLoop: autoBury, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
     SEMI.mergeOnto(SEMI,{refreshBoneLog});
 })();

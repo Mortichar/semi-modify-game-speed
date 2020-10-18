@@ -1,4 +1,4 @@
-(() => { return; //temporary disable: v0.17 breakage
+(() => {
     const pluginKind = 'open';
 
     const id = `auto-${pluginKind}`;
@@ -36,32 +36,18 @@
         return e;
     };
 
-    const doOne = (i) => {
-        const bankFull = SEMI.isBankFull();
-        if (bankFull) {return;}
-        const itemToTest = bank[i].id;
-        const qty = SEMI.getBankQty(itemToTest);
-        openBankItem(i, itemToTest, true);
-        SEMI.confirmAndCloseModal(1500);
-        SEMI.customNotify(items[itemToTest].media, `Opening ${qty} of ${items[itemToTest].name}`);
-        return true;
-    };
-
-    const doFirstFound = () => {
-        for(let i = 0; i < bank.length; i++) {
-            const itemToTest = bank[i].id;
-            if(autoEnabled[itemToTest]) {
-                const found = doOne(i);
-                if(found) { return true; }
+    const autoOpen = () => {
+        if (SEMI.isBankFull()) {
+            return;
+        }
+        for (let i = bank.length - 1; i >= 0; i--) {
+            const itemID = bank[i].id;
+            if (autoEnabled[itemID]) {
+                const qty = SEMI.getBankQty(itemID);
+                SEMI.openItemWithoutConfirmation(itemID, qty);
+                SEMI.customNotify(items[itemID].media, `Opening ${numberWithCommas(qty)} of ${items[itemID].name}`);
             }
         }
-        return false;
-    };
-
-    const doAll = () => {
-        let found = doFirstFound();
-        let bankFull = SEMI.isBankFull();
-        if(found && !bankFull) { setTimeout(doAll, 2000); }
     };
 
     const setupContainer = () => {
@@ -134,7 +120,7 @@
         }
     };
 
-    SEMI.add(id, {ms: 2000, onLoop: doFirstFound, onEnable, onDisable, title, desc});
+    SEMI.add(id, { ms: 2000, onLoop: autoOpen, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
     SEMI.mergeOnto(SEMI,{refreshContainerLog});
 })();
