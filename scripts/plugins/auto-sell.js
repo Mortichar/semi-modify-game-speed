@@ -36,27 +36,16 @@ var autoSellShow = (() => {
         return e;
     };
 
-    const doOne = (i) => {
-        const itemToTest = bank[i].id;
-        const qty = SEMI.getBankQty(itemToTest);
-        SEMI.sellItemWithoutConfirmation(itemToTest, qty);
-        SEMI.customNotify(items[itemToTest].media, `Selling ${qty} of '${items[itemToTest].name}'`);
-        return true;
-    }
-
-    const doFirstFound = () => {
-        for(let i = 0; i < bank.length; i++) {
-            if(autoEnabled[bank[i].id]) {
-                const found = doOne(i);
-                if(found) { return true; }
+    const autoSell = () => {
+        for (let i = bank.length - 1; i >= 0; i--) {
+            const itemID = bank[i].id;
+            if (autoEnabled[itemID]) {
+                const qty = bank[i].qty;
+                const gpBefore = gp;
+                SEMI.sellItemWithoutConfirmation(itemID, qty);
+                SEMI.customNotify(items[itemID].media, `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`);
             }
         }
-        return false;
-    };
-
-    const doAll = () => {
-        let found = doFirstFound();
-        if(found) { setTimeout(doAll, 500); }
     };
 
     const setupContainer = () => {
@@ -130,7 +119,7 @@ var autoSellShow = (() => {
         }
     };
 
-    SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc});
+    SEMI.add(id, { onLoop: autoSell, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
     SEMI.mergeOnto(SEMI,{refreshLog});
 })();

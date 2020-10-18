@@ -58,17 +58,7 @@
 
         const isBankFull = () => { return bank.length >= baseBankMax + bankMax; };
 
-        const sellItemWithoutConfirmation = (itemID, qty = 1) => {
-            let saleModifier = 1; // Need to determine saleModifier because for some reason this isn't done inside processItemSale()
-            if (items[itemID].type === 'Logs' && getMasteryPoolProgress(CONSTANTS.skill.Woodcutting) >= masteryCheckpoints[2]) {
-                saleModifier += 0.5;
-            }
-
-            const selectBankItemRef = selectBankItem;
-            selectBankItem = () => {}; // Temporarily replace selectBankItem() because this can cause errors when it gets called in processItemSale()
-            processItemSale(itemID, qty, saleModifier);
-            selectBankItem = selectBankItemRef;
-
+        const unselectItemIfNotInBank = (itemID) => {
             if ((selectedBankItem === itemID || itemsToSell.includes(itemID)) && !checkBankForItem(itemID)) {
                 if (selectedBankItem === itemID) {
                     deselectBankItem();
@@ -77,6 +67,89 @@
                     addItemToItemSaleArray(itemID);
                 }
             }
+        };
+
+        const sellItemWithoutConfirmation = (itemID, qty = 1) => {
+            if (!checkBankForItem(itemID)) {
+                return false;
+            }
+
+            let saleModifier = 1; // Need to determine saleModifier because for some reason this isn't done inside processItemSale()
+            if (items[itemID].type === 'Logs' && getMasteryPoolProgress(CONSTANTS.skill.Woodcutting) >= masteryCheckpoints[2]) {
+                saleModifier += 0.5;
+            }
+
+            const _selectBankItem = selectBankItem;
+            selectBankItem = () => {}; // Temporarily replace selectBankItem() because this can cause errors when it gets called in processItemSale()
+            try {
+                processItemSale(itemID, qty, saleModifier);
+            } catch (e) {
+                console.error(`SEMI: Unable to sell ${items[itemID].name} due to an error in processItemSale():`);
+                console.error(e);
+                return false;
+            } finally {
+                selectBankItem = _selectBankItem;
+                unselectItemIfNotInBank(itemID);
+            }
+            return true;
+        };
+
+        const buryItemWithoutConfirmation = (itemID, qty = 1) => {
+            if (!checkBankForItem(itemID)) {
+                return false;
+            }
+
+            const _selectedBankItem = selectedBankItem;
+            selectedBankItem = itemID;
+            const _buryItemQty = buryItemQty;
+            buryItemQty = qty;
+            const _selectBankItem = selectBankItem;
+            selectBankItem = () => { }; // Temporarily replace selectBankItem() because this can cause errors when it gets called in buryItem()
+            try {
+                buryItem();
+            } catch (e) {
+                console.error(`SEMI: Unable to bury ${items[itemID].name} due to an error in buryItem():`);
+                console.error(e);
+                return false;
+            } finally {
+                selectedBankItem = _selectedBankItem;
+                buryItemQty = _buryItemQty;
+                selectBankItem = _selectBankItem;
+                unselectItemIfNotInBank(itemID);
+            }
+            return true;
+        };
+
+        const openItemWithoutConfirmation = (itemID, qty = 1) => {
+            if (!checkBankForItem(itemID)) {
+                return false;
+            }
+
+            const _selectedBankItem = selectedBankItem;
+            selectedBankItem = itemID;
+            const _openItemQty = openItemQty;
+            openItemQty = qty;
+            const _swalFire = Swal.fire;
+            Swal.fire = () => { }; // Temporarily replace swal.fire() to prevent the chest popup
+            try {
+                openBankItem();
+                if (sellItemMode) {
+                    toggleSellItemMode();
+                }
+                if (moveItemMode) {
+                    toggleMoveItemMode();
+                }
+            } catch (e) {
+                console.error(`SEMI: Unable to open ${items[itemID].name} due to an error in openBankItem():`);
+                console.error(e);
+                return false;
+            } finally {
+                selectedBankItem = _selectedBankItem;
+                openItemQty = _openItemQty;
+                Swal.fire = _swalFire;
+                unselectItemIfNotInBank(itemID);
+            }
+            return true;
         };
 
         const equipSwapConfig = {
@@ -168,8 +241,9 @@
 
         /** @param {SkillName} skillName */
         const ownsCape = (skillName) => isMaxLevel(skillName) && checkBankForItem(CONSTANTS.item[`${skillName}_Skillcape`]);
+
         /** @param {SkillName} skillName */
-        const hasCapeOn = (skillName) => equippedItems.includes(CONSTANTS.item[`${skillName}_Skillcape`]) || equippedItems.includes(CONSTANTS.item.Max_Skillcape);
+        const hasCapeOn = (skillName) => equippedItems.includes(CONSTANTS.item[`${skillName}_Skillcape`]) || equippedItems.includes(CONSTANTS.item.Max_Skillcape) || equippedItems.includes(CONSTANTS.item.Cape_of_Completion);
 
         const formatTimeFromMinutes = (min = 0) => {
             if(min == 0 || min == Infinity) { return '...'; }
@@ -287,13 +361,45 @@
         const getCharacter = () => { return currentCharacter };
 
         const utilsReady = true;
-        const utils = {utilsReady, changePage: _changePage, currentPageName,
-            skillImg, isCurrentSkill, stopSkill, currentSkillName, currentSkillId, currentEquipment, currentXP,
-            currentEquipmentInSlot, currentLevel, formatTimeFromMinutes, equipFromBank, isMaxLevel, ownsCape,
-            incomingAttackData, maxHP, currentHP, equipSwap, equipSwapConfig, isBankFull, sellItemWithoutConfirmation, hasCapeOn,
-            confirmAndCloseModal, maxHitOfCurrentEnemy, adjustedMaxHit, playerIsStunned,
-            enemyMaxStunDamageMultiplier, getCharacter,
-            customNotify, getElements, getElement, getBankQty, iconSrc, mergeOnto
+        const utils = {
+            utilsReady,
+            changePage: _changePage,
+            currentPageName,
+            skillImg,
+            isCurrentSkill,
+            stopSkill,
+            currentSkillName,
+            currentSkillId,
+            currentEquipment,
+            currentXP,
+            currentEquipmentInSlot,
+            currentLevel,
+            formatTimeFromMinutes,
+            equipFromBank,
+            isMaxLevel,
+            ownsCape,
+            incomingAttackData,
+            maxHP,
+            currentHP,
+            equipSwap,
+            equipSwapConfig,
+            isBankFull,
+            sellItemWithoutConfirmation,
+            buryItemWithoutConfirmation,
+            openItemWithoutConfirmation,
+            hasCapeOn,
+            confirmAndCloseModal,
+            maxHitOfCurrentEnemy,
+            adjustedMaxHit,
+            playerIsStunned,
+            enemyMaxStunDamageMultiplier,
+            getCharacter,
+            customNotify,
+            getElements,
+            getElement,
+            getBankQty,
+            iconSrc,
+            mergeOnto,
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });
         console.log('Utils injected!');
