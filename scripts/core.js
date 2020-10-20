@@ -179,7 +179,7 @@ var SEMI =  (() => {
     * @param {*} options Options such as onLoop, injectGUI, etc
     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false, configMenu: '<div>This is a default config menu!</div>'};
+        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false, configMenu: '<div>This is a default config menu!</div>', saveConfig: () => {}, updateConfig: () => {}};
         const opts = {...defaults, ...options};
         // Register the name and add ms
         data[name] = {};
