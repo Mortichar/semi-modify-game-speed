@@ -330,7 +330,7 @@ var SEMI =  (() => {
         //         plugin.interval = setInterval(plugin.onLoop, getValue(name,'ms'));
         //     }
         // }
-        SEMI.data[name][key] = value;
+        data[name][key] = value;
     };
 
     /**
@@ -338,13 +338,13 @@ var SEMI =  (() => {
      * @param {string} key
      * @returns {*} value at given name in key, name has to be registered with add first.
      */
-    const getValue = (name, key) => SEMI.data[name][key];
+    const getValue = (name, key) => data[name][key];
 
     /**
      * @param {string} name Name of plugin to get data from
      * @returns {pluginData} Data stored under the name of plugin
      */
-    const getValues = (name) => SEMI.data[name];
+    const getValues = (name) => data[name];
 
     /**
      * @param {string} name
@@ -361,7 +361,7 @@ var SEMI =  (() => {
         isEnabled,
         saveConfigFromMenu,
         updateConfig,
-        data,
+        // data, //to maintain encapsulation, use the getters & setters
         setValue,
         getValue,
         setValues,

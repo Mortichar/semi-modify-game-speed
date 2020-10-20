@@ -16,20 +16,16 @@ Huge thanks to community contributors such as DanielRX, Visua, Breindahl, Aurora
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
+* New Core Features:
+    * Scripts can now include a config menu built-in to the sidebar using tippy, with AutoSellGems being the prototype example
+    * Backup, Restore, and Reset SEMI Configuration in the repurposed SEMI Menu
+    * AutoEnable Scripts on Refresh now available in the SEMI Menu
+    * Toggle non-sidebar SEMI GUI elements
 * AutoFarm by Visua
     * Replaces AutoReplant with a much more customizable farming robot, with detailed settings like AutoMine.
     * Automatically harvests and then plants seeds, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank. Prioritizes gloop over compost. Will not buy gloop
     * Optionally: If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
-* New Core Features:
-    * Backup, Restore, and Reset SEMI Configuration in the repurposed SEMI Menu
-    * AutoEnable Scripts on Refresh now available in the SEMI Menu
-    * Toggle non-sidebar SEMI GUI elements:
-        * Thieving tooltips
-        * Destroy All Crops button
-        * Barf Potion button
-        * XP/h button
-        * TimeRemaining
 * Show Ore in Bank -- adds ore counts to mining page rocks.
 * Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
