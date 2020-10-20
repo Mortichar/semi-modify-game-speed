@@ -2,7 +2,7 @@
 (() => {
     const id = 'auto-farm-equip';
     const title = 'AutoFarmEquip';
-    const desc = `If not in combat, equips Farming Cape, Bob's Rake and Signet Ring/Ancient Ring of Mastery if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
+    const desc = `If not in combat, equips Farming Cape, Bob's Rake and Signet Ring if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
     const imgSrc = 'assets/media/bank/skillcape_farming.svg';
     SEMI.add(id, { ms: 0, title, desc, imgSrc });
 })();
