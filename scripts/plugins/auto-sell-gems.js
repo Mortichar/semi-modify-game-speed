@@ -32,7 +32,7 @@
     const hasConfig = true;
     const configMenu = `<div class="form-group">
         <label for="${id}-config-menu">Target stack:</label>
-        <input type="text" class="form-control" id="${id}-stack-form" placeholder="100">
+        <input type="number" class="form-control" id="${id}-stack-form" placeholder="100">
         <!-- radios for each gem -->
         Choose gems to sell:
         <div class="custom-control custom-switch mb-1">
@@ -45,7 +45,7 @@
     const saveConfig = () => {
         let stackVal = Number($(`#${id}-stack-form`).val());
         if ($(`#${id}-stack-form`).val() === "") stackVal = config.targetStack;
-        if (stackVal !== null && !isNaN(stackVal)) {
+        if (stackVal !== null && !isNaN(stackVal) && stackVal>0) {
             SEMI.setValue(id, 'targetStack', stackVal);
             SEMI.setItem(`${id}-config`, SEMI.getValues(id) );
             SEMI.customNotify(imgSrc, `Saved AutoSellGems targetStack: ${stackVal}`, 3000);

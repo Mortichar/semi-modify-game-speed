@@ -23,28 +23,45 @@
     const onLoop = () => {
         const currentWeapon = items[SEMI.currentEquipmentInSlot('Weapon')];
         const usingRanged = (currentWeapon.isRanged || (currentWeapon.type === 'Ranged Weapon'));
-        if (usingRanged && ammo < 500 && !isDungeon) { equipMoreAmmo(); }
-        if (usingRanged && ammo < 500 && isDungeon && equipmentSwapPurchased) { equipMoreAmmo(); }
+        const minAmmo = SEMI.getValue(id, 'minimumAmmo');
+        if (usingRanged && ammo < minAmmo && !isDungeon) { equipMoreAmmo(); }
+        if (usingRanged && ammo < minAmmo && isDungeon && equipmentSwapPurchased) { equipMoreAmmo(); }
     };
 
     const hasConfig = true;
     const configMenu = `<div class="form-group">
-        <label for="${id}-config-menu">Quantity of ammo to equip automatically:</label>
-        <input type="text" class="form-control" id="${id}-ammo-form" placeholder="1000">
+        <label for="${id}-config-menu">
+        Quantity of ammo to equip automatically:
+        </label>
+        <input type="number" class="form-control" id="${id}-ammo-form" placeholder="1000" title="Warning: If this number is small and min-ammo is much larger than equipped ammo, you'll end up equipping ammo slowly for a long time. Enforced minimum of 10 to be safe for combat.">
+        <label for="${id}-config-menu">Minimum ammo to have equipped:</label>
+        <input type="number" class="form-control" id="${id}-min-ammo-form" placeholder="500">
     </div>`;
     const saveConfig = () => {
+        let saved = false;
         let ammoQtyVal = Number($(`#${id}-ammo-form`).val());
+        if (ammoQtyVal<10) ammoQtyVal = 10;
         if ($(`#${id}-ammo-form`).val() === "") ammoQtyVal = config.ammoQty;
-        if (ammoQtyVal !== null && !isNaN(ammoQtyVal)) {
+        if (ammoQtyVal !== null && !isNaN(ammoQtyVal) && ammoQtyVal>0) {
             SEMI.setValue(id, 'ammoQty', ammoQtyVal);
             SEMI.setItem(`${id}-config`, SEMI.getValues(id));
-            SEMI.customNotify(imgSrc, `Saved AutoEquip Ammo Quantity: ${SEMI.getValue(id, 'ammoQty')}`, 3000);
+            saved = true;
         }
+        let minAmmoVal = Number($(`#${id}-min-ammo-form`).val());
+        if ($(`#${id}-min-ammo-form`).val() === "") minAmmoVal = config.minimumAmmo;
+        if (minAmmoVal !== null && !isNaN(minAmmoVal) && minAmmoVal>0) {
+            SEMI.setValue(id, 'minimumAmmo', minAmmoVal);
+            SEMI.setItem(`${id}-config`, SEMI.getValues(id));
+            saved = true;
+        }
+        if (saved) { SEMI.customNotify(imgSrc, `Saved AutoEquip Ammo Quantity: ${SEMI.getValue(id, 'ammoQty')}<br>and Minimum Ammo Equipped: ${SEMI.getValue(id, 'minimumAmmo')}`, 3000); }
+        updateConfig();
     };
     const updateConfig = () => {
         $(`#${id}-ammo-form`).val(SEMI.getValue(id, 'ammoQty'));
+        $(`#${id}-min-ammo-form`).val(SEMI.getValue(id, 'minimumAmmo'));
     };
-    SEMI.add(id, {ms: 500, onLoop, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc, config, hasConfig,
+    SEMI.add(id, {ms: 5000, onLoop, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc, config, hasConfig,
         configMenu,
         saveConfig, updateConfig});
 })();
