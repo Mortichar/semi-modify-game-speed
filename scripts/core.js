@@ -241,7 +241,12 @@ var SEMI =  (() => {
             setItem(`${name}-status`, plugins[name].enabled);
             const alternateStatusPlugins = ['auto-sell', 'auto-open', 'auto-bury', 'auto-slayer-skip'];
             if (alternateStatusPlugins.includes(name)) {
-                return $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled');
+                const updater = () => {
+                    $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled');
+                    $(`#${name}-menu-status`).attr('class', plugins[name].enabled ? 'fas fa-check text-success' : 'fas fa-times text-danger');
+                }
+                // return $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled');
+                return updater();
             }
             if($(`#${name}-status`) !== null) {
                 $(`#${name}-status`).attr('class', plugins[name].enabled ? 'fas fa-check text-success' : 'fas fa-times text-danger');

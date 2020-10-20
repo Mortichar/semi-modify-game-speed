@@ -8,6 +8,8 @@
 ### Script updates
 * AutoSellGems has a working config menu prototype
 * AutoSell's looping interval has been lengthened to 15s to prevent over-zealous selling of items when using a collection skill, mainly when selling gems while mining with gloves. Should alleviate performance stress on lower-power machines
+### UI Changes
+* Added status icons for AutoSell/Open/Bury as well as AutoSlayerSkip so you can see their status from the sidebar without being inside the actual menus
 
 ## v0.4.10
 ### Core changes
