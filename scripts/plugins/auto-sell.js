@@ -121,7 +121,7 @@ var autoSellShow = (() => {
         }
     };
 
-    SEMI.add(id, { onLoop: autoSell, onEnable, onDisable, title, desc });
+    SEMI.add(id, { ms: 15000, onLoop: autoSell, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
     SEMI.mergeOnto(SEMI,{refreshLog});
 })();

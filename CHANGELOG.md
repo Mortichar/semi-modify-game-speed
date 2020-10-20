@@ -1,5 +1,14 @@
 # SEMI Changelog
 
+## Current patch, probably v0.5 eventually
+### Core changes
+* AuroraKy setters & getters: SEMI now has plugin data & config set and get functions
+* Config menu available per-plugin as a tippy popout menu
+    * Includes new helper functions like `SEMI.saveConfigFromMenu` and `SEMI.updateConfig`
+### Script updates
+* AutoSellGems has a working config menu prototype
+* AutoSell's looping interval has been lengthened to 15s to prevent over-zealous selling of items when using a collection skill, mainly when selling gems while mining with gloves. Should alleviate performance stress on lower-power machines
+
 ## v0.4.10
 ### Core changes
 * Plugin menu buttons have changed: status text is now an icon, making way for future config menu cog btns

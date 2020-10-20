@@ -123,42 +123,41 @@ var SEMI =  (() => {
     * @param {string} name Name of the plugin used for id assignment
     * @param {string} rootId Root ID to differentiate between types of plugins
     * @param {boolean} hasConfig Whether or not to include a config button
+    * @param {string} configMenu HTML for insertion into the tippy config menu
     */
-    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId, hasConfig = false) => {
+    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId, hasConfig = false, configMenu) => {
         const imgEl =  createElement('img', {src: imgSrc, id: `${name}-img`, class: 'nav-img'});
         const textEl = createElement('span', {innerHTML: title, class: 'nav-main-link-name'});
         const statusEl = createElement('i', {id: `${name}-status`, class: 'fas fa-times text-danger', style: 'width: 15px;'});
-        // const statusEl = createElement('small', {id: `${name}-status`, innerHTML: 'Disabled'});
-        // if (hasConfig) {
-        //     const configEl = createElement('i', {id: `${name}-config-btn`, class:`fas fa-cog`});
-        //     const configMenu = tippy(configEl, {
-        //         content: `<div id="${name}-config-menu" class="form-group">
-        //             <label for="???">Minimum Stack to keep in bank: </label>
-        //             <input type="text" class="form-control" id="asg-num" placeholder="100">
-        //         </div>
-        //         <button type="button" id="${name}-config-save-btn" class="btn btn-sm btn-primary">
-        //             <i class="fa fa-check mr-1"></i>Save
-        //         </button>`,
-        //         allowHTML: true,
-        //         interactive: true,
-        //         appendTo: document.body,
-        //         interactiveBorder: 30,
-        //         trigger: 'click',
-        //         zIndex: 9999,
-        //         placement: 'right'
-        //     });
-        //     configEl.addEventListener("click", (event) => {
-        //         console.log(`${name} config btn pressed`);
-        //         event.preventDefault();
-        //     });
-        //     const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px; padding-right: 10px;`}, [statusEl, imgEl, textEl, configEl]);
-        //     const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
-        //     return mainEl;
-        // } else {
+        if (hasConfig) {
+            const configBtnEl = createElement('i', {id: `${name}-config-btn`, class: `fas fa-cog`, style: `padding: 13px 0 13px 13px;`});
+            const configMenuEl = tippy(configBtnEl, {
+                content: `<div id="${name}-config-menu">
+                    ${configMenu}
+                </div>
+                <button type="button" id="${name}-config-save-btn" class="btn btn-sm btn-primary" onclick="SEMI.saveConfigFromMenu('${name}');">
+                    <i class="fa fa-check mr-1"></i>Save
+                </button>`,
+                allowHTML: true,
+                interactive: true,
+                appendTo: document.body,
+                interactiveBorder: 30,
+                trigger: 'click',
+                zIndex: 9999,
+                placement: 'right'
+            });
+            configBtnEl.addEventListener("click", (event) => {
+                SEMI.updateConfig(name);
+                event.preventDefault();
+            });
+            const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px; padding-right: 10px;`}, [statusEl, imgEl, textEl, configBtnEl]);
+            const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
+            return mainEl;
+        } else {
             const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px;`}, [statusEl, imgEl, textEl]);
             const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
             return mainEl;
-        // }
+        }
     };
 
     /**
@@ -171,12 +170,21 @@ var SEMI =  (() => {
     const pluginNames = [];
 
     /**
+     * @type {{[pluginName: string]: pluginData}} data - Data of Plugins, not limited to one.
+     */
+    const data = {};
+
+    /**
     * @param {string} name the plugin ID
     * @param {*} options Options such as onLoop, injectGUI, etc
     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false};
+        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false, configMenu: '<div>This is a default config menu!</div>'};
         const opts = {...defaults, ...options};
+        // Register the name and add ms
+        data[name] = {};
+        setValues(name, opts.config);
+
         opts.imgSrc = (opts.imgSrc === '' && opts.skill !== '') ? SEMI.skillImg(opts.skill) : opts.imgSrc;
         pluginNames.push(name);
 
@@ -184,7 +192,7 @@ var SEMI =  (() => {
             const plugin = plugins[name];
             if(plugin.imgSrc === '') { return; }
             let menuRootId = `${ROOT_ID}-${plugin.pluginType}`;
-            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId, plugin.hasConfig);
+            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId, plugin.hasConfig, plugin.configMenu);
             $(`#${menuRootId}-section-unsorted`).append(pluginEl);
         };
 
@@ -258,6 +266,9 @@ var SEMI =  (() => {
             if (name == 'auto-cook') { setTimeout(enable, 5000); }
             else { setTimeout(enable, 1000); }
         }
+        if (SEMI.getItem(`${name}-config`) !== null) {
+            SEMI.setValues(name, SEMI.getItem(`${name}-config`));
+        }
         const plugin = {...opts, toggle, interval: null, enable, disable, updateStatus, injectGUI, removeGUI, enabled};
         plugins[name] = plugin;
     };
@@ -287,10 +298,83 @@ var SEMI =  (() => {
     * @param {string} name
     */
     const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
+
     /**
     * @param {string} name
     */
-    const pluginConfig = (name) => { if (plugins[name]) return plugins[name].config; };
+    const saveConfigFromMenu = (name) => { plugins[name].saveConfig(); }
+    /**
+    * @param {string} name
+    */
+    const updateConfig = (name) => { plugins[name].updateConfig(); }
 
-    return {add, toggle, enable, disable, isEnabled, pluginConfig, injectGUI, removeGUI, pluginNames, createElement, setItem, getItem, removeItem, backupSEMI, restoreSEMI, resetSEMI, ROOT_ID, PLUGIN_TYPE, SUPPORTED_GAME_VERSION, SIDEBAR_MENUS, utilsReady: false};
+    //AuroraKy Core Config Functions
+    /**
+     * Sets value at given name in key, name has to be registered with add first.
+     * @param {string} name
+     * @param {string} key
+     * @param {*} value
+     */
+    const setValue = (name, key, value) => {
+        // // Changed main interval time
+        // if(key === 'ms') {
+        //     if(value <= 0) return;
+        //     const plugin = plugins[name];
+        //     if(plugin.interval) {
+        //         clearInterval(plugin.interval);
+        //         plugin.interval = setInterval(plugin.onLoop, getValue(name,'ms'));
+        //     }
+        // }
+        SEMI.data[name][key] = value;
+    };
+
+    /**
+     * @param {string} name
+     * @param {string} key
+     * @returns {*} value at given name in key, name has to be registered with add first.
+     */
+    const getValue = (name, key) => SEMI.data[name][key];
+
+    /**
+     * @param {string} name Name of plugin to get data from
+     * @returns {pluginData} Data stored under the name of plugin
+     */
+    const getValues = (name) => SEMI.data[name];
+
+    /**
+     * @param {string} name
+     * @param {pluginData} data - Data for the plugin with the given name.
+     * Sets all values with given name and keys to values of those keys, name has to be registered with add first.
+     */
+    const setValues = (name, data) => { Object.keys(data).forEach((key) => SEMI.setValue(name, key, data[key]))};
+
+    return {
+        add,
+        toggle,
+        enable,
+        disable,
+        isEnabled,
+        saveConfigFromMenu,
+        updateConfig,
+        data,
+        setValue,
+        getValue,
+        setValues,
+        getValues,
+        injectGUI,
+        removeGUI,
+        pluginNames,
+        createElement,
+        setItem,
+        getItem,
+        removeItem,
+        backupSEMI,
+        restoreSEMI,
+        resetSEMI,
+        ROOT_ID,
+        PLUGIN_TYPE,
+        SUPPORTED_GAME_VERSION,
+        SIDEBAR_MENUS,
+        utilsReady: false
+    };
 })();
