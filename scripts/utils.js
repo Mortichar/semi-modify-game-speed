@@ -279,6 +279,16 @@
         /** @param {SkillName} skillName */
         const hasCapeOn = (skillName) => equippedItems.includes(CONSTANTS.item[`${skillName}_Skillcape`]) || equippedItems.includes(CONSTANTS.item.Max_Skillcape) || equippedItems.includes(CONSTANTS.item.Cape_of_Completion);
 
+        const hasMaxCapeOn = () => equippedItems.includes(CONSTANTS.item.Max_Skillcape) || equippedItems.includes(CONSTANTS.item.Cape_of_Completion);
+        const ownsMaxCape = () => checkBankForItem(CONSTANTS.item.Max_Skillcape) || checkBankForItem(CONSTANTS.item.Cape_of_Completion);
+        const equipMaxCape = () => {
+            if (checkBankForItem(CONSTANTS.item.Cape_of_Completion)) {
+                equipFromBank(CONSTANTS.item.Cape_of_Completion);
+            } else if (checkBankForItem(CONSTANTS.item.Max_Skillcape)) {
+                equipFromBank(CONSTANTS.item.Max_Skillcape);
+            }
+        }
+
         const formatTimeFromMinutes = (min = 0) => {
             if(min == 0 || min == Infinity) { return '...'; }
             let hrs = min/60;
@@ -304,6 +314,23 @@
             if(isHerblore) { return 'Herblore'; }
             if(isInCombat) { return 'Hitpoints'; }
             return '';
+        };
+
+        const currentCombatSkillName = () => {
+          if (attackStyle == 0) {
+            return 'Attack';
+          }
+          if (attackStyle == 1) {
+            return 'Strength';
+          }
+          if (attackStyle == 2) {
+            return 'Defence';
+          }
+          if (attackStyle < 6) {
+            return 'Ranged';
+          }
+
+          return 'Magic';
         };
 
         /** @param {SkillName} skillName */
@@ -434,7 +461,11 @@
             getBankQty,
             iconSrc,
             mergeOnto,
-            processItemSaleWithoutBank
+            processItemSaleWithoutBank,
+            currentCombatSkillName,
+            hasMaxCapeOn,
+            ownsMaxCape,
+            equipMaxCape
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });
         console.log('Utils injected!');
