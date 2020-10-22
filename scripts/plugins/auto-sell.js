@@ -6,13 +6,13 @@ var autoSellShow = (() => {
     const desc = 'AutoSell is a script for selling items you no longer want.';
     const imgSrc = 'assets/media/main/gp.svg';
 
-    let autoEnabled = [];
+    let isItemEnabledToSell = {};
 
     const fadeAll = () => {
         for (let i = 0; i < itemStats.length; i++) {
             const x = $(`#${id}-img-${i}`);
             if(x.length === 0) { continue; }
-            const shouldBeFaded = !autoEnabled[i];
+            const shouldBeFaded = !isItemEnabledToSell[i];
             const currentState = typeof x.css('opacity') === 'undefined' ? '1' : x.css('opacity');
             const isFaded = currentState === '0.25';
             const isCorrect = isFaded === shouldBeFaded;
@@ -23,7 +23,7 @@ var autoSellShow = (() => {
 
     /** @param {number} i */
     const toggleAutoEnabled = (i) => {
-        autoEnabled[i] = !autoEnabled[i];
+        isItemEnabledToSell[i] = !isItemEnabledToSell[i];
         fadeAll();
     };
 
@@ -39,7 +39,7 @@ var autoSellShow = (() => {
     const autoSell = () => {
         for (let i = bank.length - 1; i >= 0; i--) {
             const itemID = bank[i].id;
-            if (autoEnabled[itemID]) {
+            if (isItemEnabledToSell[itemID]) {
                 const qty = bank[i].qty;
                 const gpBefore = gp;
                 SEMI.sellItemWithoutConfirmation(itemID, qty);
@@ -50,14 +50,23 @@ var autoSellShow = (() => {
 
     const setupContainer = () => {
         $(`#${id}-container`).html('');
-        autoEnabled = Array(itemStats.length).fill(false);
         for (let i = 0; i < itemStats.length; i++) {
             $(`#${id}-container`).append(el(i));
         }
 
         const loadedAutoEnabled = SEMI.getItem(`${id}-config`);
-        if(loadedAutoEnabled !== null) {
-            autoEnabled = [...loadedAutoEnabled];
+        if (loadedAutoEnabled !== null) {
+            // Migrate old format
+            if (Array.isArray(loadedAutoEnabled)) {
+                for (let i = 0; i < loadedAutoEnabled.length; i++) {
+                    if (loadedAutoEnabled[i]) {
+                        isItemEnabledToSell[i] = true;
+                    }
+                }
+            }
+            else {
+                isItemEnabledToSell = loadedAutoEnabled;
+            }
         }
 
         fadeAll();
@@ -97,7 +106,7 @@ var autoSellShow = (() => {
         $(`#modal-${id} .block-title`).text(`${title} Menu`);
 
         $(`#modal-${id}`).on('hidden.bs.modal', () => {
-            SEMI.setItem(`${id}-config`, autoEnabled);
+            SEMI.setItem(`${id}-config`, isItemEnabledToSell);
         });
         setupContainer();
         setTimeout(() => {
