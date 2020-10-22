@@ -101,7 +101,7 @@
     //Mapping script names for later injection
     const autoNames = [ 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot', 'slayer-skip', 'farm'];
     const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'time-remaining', 'ore-in-bank', 'barf', 'calc-to-level', 'destroy-crops', 'katorone', 'thief-calc', 'xp-per-hour'];
-    const libNames = ['fold-menus', 'drag-menus', 'menus'];
+    const libNames = ['fold-menus', 'drag-menus', 'menus', 'injections'];
 
     //Load and inject SEMI
     const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;

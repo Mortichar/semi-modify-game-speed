@@ -59,14 +59,19 @@ var SEMI =  (() => {
         localStorage.removeItem(`${LOCAL_SETTINGS_PREFIX}-${x}`);
     }
 
-    const backupSEMI = () => {
+    const getSemiData = () => {
         const backupKeyData = {};
-        for (key in localStorage) {
-            if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`)) {
-                backupKeyData[key] = JSON.parse(localStorage.getItem(key));
-                // console.log(backupKeyData);
+        for (let storageKey in localStorage) {
+            if (storageKey.startsWith(`${LOCAL_SETTINGS_PREFIX}-`)) {
+                backupKeyData[storageKey] = JSON.parse(localStorage.getItem(storageKey));
             }
         }
+
+        return backupKeyData;
+    }
+
+    const backupSEMI = () => {
+        const backupKeyData = getSemiData();
         $('#exportSEMISettings').text(JSON.stringify(backupKeyData));
         const copyText = document.getElementById('exportSEMISettings');
         copyText.select();
@@ -79,9 +84,9 @@ var SEMI =  (() => {
         if ($('#importSEMISettings')[0].value == '') return;
         const restoredConfig = JSON.parse($('#importSEMISettings')[0].value);
         if (restoredConfig == null || typeof restoredConfig !== 'object') return;
-        for (key in restoredConfig) {
-            if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`) && key !== restoredConfig[key]) {
-                localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
+        for (let storageKey in restoredConfig) {
+            if (storageKey.startsWith(`${LOCAL_SETTINGS_PREFIX}-`) && storageKey !== restoredConfig[storageKey]) {
+                localStorage.setItem(storageKey, JSON.stringify(restoredConfig[storageKey]));
             }
         }
         loadKatSets();
@@ -238,7 +243,7 @@ var SEMI =  (() => {
         };
 
         const updateStatus = () => {
-            setItem(`${name}-status`, plugins[name].enabled);
+            setItem(`${name}-status-${currentCharacter}`, plugins[name].enabled);
             const alternateStatusPlugins = ['auto-sell', 'auto-open', 'auto-bury', 'auto-slayer-skip'];
             if (alternateStatusPlugins.includes(name)) {
                 const updater = () => {
@@ -263,11 +268,16 @@ var SEMI =  (() => {
             opts.removeGUI();
         };
 
+        // Correct old wasEnabled
+        if (Boolean(getItem(`${name}-status`)) && getItem('previous-character') == currentCharacter) {
+            setItem(`${name}-status-${currentCharacter}`, Boolean(getItem(`${name}-status`)));
+            removeItem(`${name}-status`)
+        }
+
         const useSaved = Boolean(getItem('remember-state'));
-        const wasEnabled = Boolean(getItem(`${name}-status`));
+        const wasEnabled = Boolean(getItem(`${name}-status-${currentCharacter}`));
         const enabled = wasEnabled && useSaved;
-        const sameCharacter = getItem('previous-character') == currentCharacter || getItem('previous-character') == null;
-        if(enabled && name !== 'katorone' && sameCharacter) {
+        if(enabled && name !== 'katorone') {
             if (name == 'auto-cook') { setTimeout(enable, 5000); }
             else { setTimeout(enable, 1000); }
         }
@@ -380,6 +390,7 @@ var SEMI =  (() => {
         PLUGIN_TYPE,
         SUPPORTED_GAME_VERSION,
         SIDEBAR_MENUS,
-        utilsReady: false
+        utilsReady: false,
+        getSemiData
     };
 })();
