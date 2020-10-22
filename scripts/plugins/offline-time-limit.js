@@ -18,11 +18,6 @@
 		Alters the updateOffline function if this plugin is enabled
 	*/
   function injectSelf() {
-    console.log(
-      `${name}-status`,
-      Boolean(SEMI.getItem(`${name}-status`, getCharacterId())),
-      currentCharacter
-    );
     if (!Boolean(SEMI.getItem(`${name}-status`, getCharacterId()))) {
       updateOffline = origUpdateOffline;
       return;
