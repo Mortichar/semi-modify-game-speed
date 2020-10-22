@@ -94,6 +94,40 @@
             return true;
         };
 
+        function processItemSaleWithoutBank(itemID, qty) {
+          let saleModifier = 1;
+          if (
+            items[itemID].type === 'Logs' &&
+            getMasteryPoolProgress(CONSTANTS.skill.Woodcutting) >= masteryCheckpoints[2]
+          ) {
+            saleModifier += 0.5;
+          }
+
+          let saleAmount = Math.floor(items[itemID].sellsFor * qty * saleModifier);
+          //Add gp for the sale
+          gp += saleAmount;
+          //Update respective stats
+          if (items[itemID].category === 'Woodcutting') {
+            statsWoodcutting[1].count += qty;
+            statsWoodcutting[2].count += saleAmount;
+            updateStats('woodcutting');
+          }
+          //Update respective stats
+          if (items[itemID].category === 'Fishing') {
+            statsFishing[3].count += qty;
+            statsFishing[4].count += saleAmount;
+            updateStats('fishing');
+          }
+          statsGeneral[0].count += saleAmount;
+          statsGeneral[1].count += qty;
+          updateStats('general');
+          itemStats[itemID].timesSold += qty;
+          itemStats[itemID].gpFromSale += saleAmount;
+
+          updateGP();
+          //saveData();
+        }
+
         const buryItemWithoutConfirmation = (itemID, qty = 1) => {
             if (!checkBankForItem(itemID)) {
                 return false;
@@ -400,6 +434,7 @@
             getBankQty,
             iconSrc,
             mergeOnto,
+            processItemSaleWithoutBank
         };
         Object.keys(utils).forEach((key) => { SEMI[key] = utils[key]; });
         console.log('Utils injected!');

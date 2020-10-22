@@ -24,6 +24,7 @@ var autoSellShow = (() => {
     /** @param {number} i */
     const toggleAutoEnabled = (i) => {
         isItemEnabledToSell[i] = !isItemEnabledToSell[i];
+        autoSell();
         fadeAll();
     };
 
@@ -80,6 +81,8 @@ var autoSellShow = (() => {
     const onEnable = () => {
         $(`#${id}-status`).addClass('btn-success');
         $(`#${id}-status`).removeClass('btn-danger');
+
+        autoSell();
     };
 
     const autoShow = () => {  $(`#modal-${id}`).modal('show'); };
@@ -130,7 +133,22 @@ var autoSellShow = (() => {
         }
     };
 
-    SEMI.add(id, { ms: 15000, onLoop: autoSell, onEnable, onDisable, title, desc });
+    const ItemEventHandler = (itemID, qty, found, showNotification) => {
+      if (isItemEnabledToSell[itemID]) {
+        const gpBefore = gp;
+        SEMI.processItemSaleWithoutBank(itemID, qty);
+        SEMI.customNotify(
+          items[itemID].media,
+          `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`
+        );
+          
+        return true;
+      }
+    };
+
+    SEMI.EventBus.RegisterAddItemToBankHandler({ HandleAddItemToBankPre: ItemEventHandler });
+
+    SEMI.add(id, { onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
     SEMI.mergeOnto(SEMI,{refreshLog});
 })();
