@@ -102,7 +102,7 @@
     const autoNames = [ 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot', 'slayer-skip', 'farm'];
     const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'time-remaining', 'ore-in-bank', 'barf', 'calc-to-level', 'destroy-crops', 'katorone', 'thief-calc', 'xp-per-hour'];
     const libNames = ['fold-menus', 'drag-menus', 'menus'];
-    const preloadedNames = ['settings-migrator', 'injections'];
+    const preloadedNames = ['event-bus', 'settings-migrator', 'injections'];
     const preloadedPlugins = ['offline-time-limit'];
 
 
