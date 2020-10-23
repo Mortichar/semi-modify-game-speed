@@ -1,6 +1,6 @@
 # SEMI Changelog
 
-## Current patch, probably v0.5 eventually
+## Current dev version, v0.5
 ### Core changes
 * Per-character SEMI Settings! Coded by Zeldo
 * AuroraKy setters & getters: SEMI now has plugin data & config set and get functions
@@ -11,6 +11,8 @@
 * Offline timer extension script by Zeldo
     * Extends the amount of offline time that can be idled
     * Cleans up the calculation of offline skilling
+* Mastery Enhancements, toggled in SEMI menu
+    * Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu
 ### Script updates
 * TimeRemaining is updated and back!
 * AutoSellGems has a working config menu prototype

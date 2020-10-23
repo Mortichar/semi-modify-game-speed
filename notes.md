@@ -1,7 +1,7 @@
 # SEMI General notes
 
 ## Before release
-* Mastery Enhancements script & toggle
+* Anything else?
 
 ## TODO overflow
 

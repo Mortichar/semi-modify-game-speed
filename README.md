@@ -13,7 +13,9 @@ Huge thanks to community contributors such as DanielRX, Visua, Breindahl, Aurora
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* Offline Timer script (Dev Version)
+* New: (Dev Version) Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
+    * Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu
+* New: Offline Timer script by Zeldo (Dev Version)
     * Extends amount of time you can offline-idle
     * Cleans up offline idle calculations
 * New Core Features
