@@ -82,10 +82,6 @@ var {semiSetMenu} = (() => {
               <label class="custom-control-label" for="SEMI-auto-enable">Automatically load previously enabled scripts</label>
             </div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-sync-save" name="SEMI-sync-save" onchange="SEMI.setItem('sync-settings-to-cloud', this.checked)" ${Boolean(SEMI.getItem('sync-settings-to-cloud')) ? 'checked' : ''}>
-              <label class="custom-control-label" for="SEMI-sync-save">Sync SEMI settings to cloud</label>
-            </div>
-            <div class="custom-control custom-switch mb-1">
               <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${SEMIetcGUI.thievingXP ? 'checked' : ''}>
               <label class="custom-control-label" for="SEMI-thieving-xp-enabled">Thieving XP calculators and loot popups in the Thieving page</label>
             </div>
