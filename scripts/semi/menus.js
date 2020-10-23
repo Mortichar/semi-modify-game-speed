@@ -1,7 +1,8 @@
 var SEMIetcGUI = {
   thievingXP: true,
   xph: true,
-  timeRemaining: true
+  timeRemaining: true,
+  masteryEnhancements: true
 };
 
 var {semiSetMenu} = (() => {
@@ -49,7 +50,15 @@ var {semiSetMenu} = (() => {
     <ul>
     <li>AutoFarm</li>
     <li>Core fixes and upgrades</li>
+    <li>0.17 update script repair</li>
     <li>Debugging, refactoring, and more</li>
+    </ul>
+  </li>
+  <li>Major contributor: Zeldo
+    <ul>
+    <li>Offline Timer script</li>
+    <li>Core upgrades & additions</li>
+    <li>Per-character config</li>
     </ul>
   </li>
   <li>Contributor: AuroraKy
@@ -82,10 +91,6 @@ var {semiSetMenu} = (() => {
               <label class="custom-control-label" for="SEMI-auto-enable">Automatically load previously enabled scripts</label>
             </div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-sync-save" name="SEMI-sync-save" onchange="SEMI.setItem('sync-settings-to-cloud', this.checked)" ${Boolean(SEMI.getItem('sync-settings-to-cloud')) ? 'checked' : ''}>
-              <label class="custom-control-label" for="SEMI-sync-save">Sync SEMI settings to cloud</label>
-            </div>
-            <div class="custom-control custom-switch mb-1">
               <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${SEMIetcGUI.thievingXP ? 'checked' : ''}>
               <label class="custom-control-label" for="SEMI-thieving-xp-enabled">Thieving XP calculators and loot popups in the Thieving page</label>
             </div>
@@ -95,7 +100,11 @@ var {semiSetMenu} = (() => {
             </div>
             <div class="custom-control custom-switch mb-1">
               <input type="checkbox" class="custom-control-input" id="SEMI-time-remaining-button-enabled" name="SEMI-time-remaining-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.timeRemaining ? 'checked' : ''}>
-              <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining by Breindahl: time estimates for production skills next to the item. Includes a ding noise when a task completes. <b>TEMPORARILY REMOVED</b> while being fixed for 0.17.</label>
+              <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining by Breindahl: time estimates for production skills next to the item. Includes a ding noise when a task completes.</label>
+            </div>
+            <div class="custom-control custom-switch mb-1">
+              <input type="checkbox" class="custom-control-input" id="SEMI-mastery-enhancements-button-enabled" name="SEMI-mastery-enhancements-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.masteryEnhancements ? 'checked' : ''}>
+              <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu</label>
             </div>
             <div class="block-content block-content-full text-right">
               <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">

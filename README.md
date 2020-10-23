@@ -3,12 +3,9 @@
 [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
-### Temporarily disabled script due to v0.17 breakage
-TimeRemaining has been removed from SEMI for the time being to prevent errors until fixes can be implemented.
-
 Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source([see Alternative Installation](#alternative-installation)), but be aware it may contain more bugs or be less stable than release versions from above buttons.
 
-Huge thanks to community contributors such as DanielRX, Visua, Breindahl, AuroraKy, and more for helping with the project!
+Huge thanks to community contributors such as DanielRX, Visua, Breindahl, AuroraKy, Zeldo, and more for helping with the project!
 
 ### **SEMI** is a Firefox and Chrome web extension for Melvor Idle.
 
@@ -16,8 +13,15 @@ Huge thanks to community contributors such as DanielRX, Visua, Breindahl, Aurora
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
+* New: (Dev Version) Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
+    * Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu
+* New: Offline Timer script by Zeldo (Dev Version)
+    * Extends amount of time you can offline-idle
+    * Cleans up offline idle calculations
 * New Core Features
     * (Dev Version) Scripts can now include a config menu built-in to the sidebar using tippy, with AutoSellGems and AutoEquip Ammo being the prototype examples
+    * (Dev Version) Per-character config saving by Zeldo!
+    * (Dev Version) Event bus to intercept game events
     * Better sidebar menu statuses
     * Backup, Restore, and Reset SEMI Configuration in the repurposed SEMI Menu
     * AutoEnable Scripts on Refresh now available in the SEMI Menu
