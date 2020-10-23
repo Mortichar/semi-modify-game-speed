@@ -49,7 +49,15 @@ var {semiSetMenu} = (() => {
     <ul>
     <li>AutoFarm</li>
     <li>Core fixes and upgrades</li>
+    <li>0.17 update script repair</li>
     <li>Debugging, refactoring, and more</li>
+    </ul>
+  </li>
+  <li>Major contributor: Zeldo
+    <ul>
+    <li>Offline Timer script</li>
+    <li>Core upgrades & additions</li>
+    <li>Per-character config</li>
     </ul>
   </li>
   <li>Contributor: AuroraKy

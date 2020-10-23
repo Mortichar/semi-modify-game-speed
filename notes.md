@@ -1,15 +1,11 @@
 # SEMI General notes
 
-## v0.5 plans
-* Config menus available per-plugin for detailed customization (still needs more work)
-* Config changes, core functions such as getValue, setValue, etc
-* Attempt work on individual character configs
-### Core changes
-* when canceling on new version, SEMI header still injected on bottom of sidebar. is this bad, though?
-    * Moving the supported version check to before the SEMI version injection: waiting on Visua's changes to CombatSim Reloaded to have a cleaner loading system.
+## Before release
+* Mastery Enhancements script & toggle
 
 ## TODO overflow
 
+* Moving the supported version check to before the SEMI version injection: waiting on Visua's changes to CombatSim Reloaded to have a cleaner loading system.
 * Make menu w i d e r: change the .modal-dialog div style to have max-width of >500px.
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
 * "Better" checks for things like putting on capes and gloves etc when needed

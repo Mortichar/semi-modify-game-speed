@@ -2,10 +2,17 @@
 
 ## Current patch, probably v0.5 eventually
 ### Core changes
+* Per-character SEMI Settings! Coded by Zeldo
 * AuroraKy setters & getters: SEMI now has plugin data & config set and get functions
 * Config menu available per-plugin as a tippy popout menu
     * Includes new helper functions like `SEMI.saveConfigFromMenu` and `SEMI.updateConfig`
+* EventBus: intercepting game events coded by Zeldo, used now for intercepting items being added to bank and instead selling with AutoSell
+### New Scripts
+* Offline timer extension script by Zeldo
+    * Extends the amount of offline time that can be idled
+    * Cleans up the calculation of offline skilling
 ### Script updates
+* TimeRemaining is updated and back!
 * AutoSellGems has a working config menu prototype
 * AutoSell's looping interval has been lengthened to 15s to prevent over-zealous selling of items when using a collection skill, mainly when selling gems while mining with gloves. Should alleviate performance stress on lower-power machines
 ### UI Changes
