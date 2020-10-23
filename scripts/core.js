@@ -40,33 +40,79 @@ var SEMI =  (() => {
     }
 
     /**
-    * @param {string} x
-    * @param {*} y
+    * @param {string} id
+    * @param {*} value
     */
-    const setItem = (x, y) => {
-        //console.log("setItem -> x, y", x, y);
-        localStorage.setItem(`${LOCAL_SETTINGS_PREFIX}-${x}`, JSON.stringify(y));
+    const setItem = (id, value, charID = -1) => {
+        if (charID == -1) {
+            charID = currentCharacter;
+        }
+        localStorage.setItem(`${LOCAL_SETTINGS_PREFIX}-Char${charID}-${id}`, JSON.stringify(value));
     }
 
-    /** @param {string} x */
-    const getItem = (x) => {
-        const y = JSON.parse(localStorage.getItem(`${LOCAL_SETTINGS_PREFIX}-${x}`));
-        // console.log("getItem -> x, y", x, y);
-        return y;
-    }
-    /** @param {string} x */
-    const removeItem = (x) => {
-        localStorage.removeItem(`${LOCAL_SETTINGS_PREFIX}-${x}`);
+    /**
+    * @param {string} id
+    * @param {*} value
+    */
+    const setGlobalItem = (id, value) => {
+        localStorage.setItem(`${LOCAL_SETTINGS_PREFIX}-${id}`, JSON.stringify(value));
     }
 
-    const backupSEMI = () => {
+    /** @param {string} id */
+    const getItem = (id, charID = -1) => {
+        if (charID == -1) {
+            charID = currentCharacter;
+        }
+        return JSON.parse(localStorage.getItem(`${LOCAL_SETTINGS_PREFIX}-Char${charID}-${id}`));
+    }
+
+    /** @param {string} id */
+    const getGlobalItem = (id) => {
+        return JSON.parse(localStorage.getItem(`${LOCAL_SETTINGS_PREFIX}-${id}`));
+    }
+
+    /** @param {string} id */
+    const removeItem = (id, charID = -1) => {
+        if (charID == -1) {
+            charID = currentCharacter;
+        }
+        localStorage.removeItem(`${LOCAL_SETTINGS_PREFIX}-Char${charID}-${id}`);
+    }
+
+    /** @param {string} id */
+    const removeGlobalItem = (id) => {
+        localStorage.removeItem(`${LOCAL_SETTINGS_PREFIX}-${id}`);
+    }
+
+    const getSemiData = () => {
         const backupKeyData = {};
-        for (key in localStorage) {
-            if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`)) {
-                backupKeyData[key] = JSON.parse(localStorage.getItem(key));
-                // console.log(backupKeyData);
+        for (let storageKey in localStorage) {
+            if (storageKey.startsWith(`${LOCAL_SETTINGS_PREFIX}-`)) {
+                backupKeyData[storageKey] = JSON.parse(localStorage.getItem(storageKey));
             }
         }
+
+        return backupKeyData;
+    }
+
+    const getSemiCharacterData = (charID = -1) => {
+        if (charID == -1) {
+            charID = currentCharacter;
+        }
+        
+        const backupKeyData = {};
+        for (let storageKey in localStorage) {
+            if (storageKey.startsWith(`${LOCAL_SETTINGS_PREFIX}-Char${charID}`)) {
+                backupKeyData[storageKey] = JSON.parse(localStorage.getItem(storageKey));
+            }
+        }
+
+        return backupKeyData;
+    }
+
+    // TODO Make another GUI for player specific backups?
+    const backupSEMI = () => {
+        const backupKeyData = getSemiData();
         $('#exportSEMISettings').text(JSON.stringify(backupKeyData));
         const copyText = document.getElementById('exportSEMISettings');
         copyText.select();
@@ -79,9 +125,9 @@ var SEMI =  (() => {
         if ($('#importSEMISettings')[0].value == '') return;
         const restoredConfig = JSON.parse($('#importSEMISettings')[0].value);
         if (restoredConfig == null || typeof restoredConfig !== 'object') return;
-        for (key in restoredConfig) {
-            if (key.startsWith(`${LOCAL_SETTINGS_PREFIX}-`) && key !== restoredConfig[key]) {
-                localStorage.setItem(key, JSON.stringify(restoredConfig[key]));
+        for (let storageKey in restoredConfig) {
+            if (storageKey.startsWith(`${LOCAL_SETTINGS_PREFIX}-`) && storageKey !== restoredConfig[storageKey]) {
+                localStorage.setItem(storageKey, JSON.stringify(restoredConfig[storageKey]));
             }
         }
         loadKatSets();
@@ -263,11 +309,11 @@ var SEMI =  (() => {
             opts.removeGUI();
         };
 
+        
         const useSaved = Boolean(getItem('remember-state'));
         const wasEnabled = Boolean(getItem(`${name}-status`));
         const enabled = wasEnabled && useSaved;
-        const sameCharacter = getItem('previous-character') == currentCharacter || getItem('previous-character') == null;
-        if(enabled && name !== 'katorone' && sameCharacter) {
+        if(enabled && name !== 'katorone') {
             if (name == 'auto-cook') { setTimeout(enable, 5000); }
             else { setTimeout(enable, 1000); }
         }
@@ -351,7 +397,7 @@ var SEMI =  (() => {
      * @param {pluginData} data - Data for the plugin with the given name.
      * Sets all values with given name and keys to values of those keys, name has to be registered with add first.
      */
-    const setValues = (name, data) => { Object.keys(data).forEach((key) => SEMI.setValue(name, key, data[key]))};
+    const setValues = (name, data) => { Object.keys(data).forEach((key) => SEMI.setValue(name, key, data[key])) };
 
     return {
         add,
@@ -379,7 +425,13 @@ var SEMI =  (() => {
         ROOT_ID,
         PLUGIN_TYPE,
         SUPPORTED_GAME_VERSION,
+        LOCAL_SETTINGS_PREFIX,
         SIDEBAR_MENUS,
-        utilsReady: false
+        utilsReady: false,
+        getSemiData,
+        getGlobalItem,
+        setGlobalItem,
+        removeGlobalItem,
+        getSemiCharacterData
     };
 })();

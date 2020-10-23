@@ -6,13 +6,13 @@
     const desc = 'AutoBury is a script for burying items you no longer want.';
     const imgSrc = 'assets/media/bank/bones.svg';
 
-    let autoEnabled = [];
+    let isItemEnabledToBury = {};
 
     const fadeAll = () => {
         for (let i = 0; i < itemStats.length; i++) {
             const x = $(`#${id}-img-${i}`);
             if(x.length === 0) { continue; }
-            const shouldBeFaded = !autoEnabled[i];
+            const shouldBeFaded = !isItemEnabledToBury[i];
             const currentState = typeof x.css('opacity') === 'undefined' ? '1' : x.css('opacity');
             const isFaded = currentState === '0.25';
             const isCorrect = isFaded === shouldBeFaded;
@@ -23,7 +23,7 @@
 
     /** @param {number} i */
     const toggleAutoEnabled = (i) => {
-        autoEnabled[i] = !autoEnabled[i];
+        isItemEnabledToBury[i] = !isItemEnabledToBury[i];
         fadeAll();
     };
 
@@ -39,7 +39,7 @@
     const autoBury = () => {
         for (let i = bank.length - 1; i >= 0; i--) {
             const itemID = bank[i].id;
-            if (autoEnabled[itemID]) {
+            if (isItemEnabledToBury[itemID]) {
                 const qty = SEMI.getBankQty(itemID);
                 SEMI.buryItemWithoutConfirmation(itemID, qty);
                 SEMI.customNotify(items[itemID].media, `Burying ${numberWithCommas(qty)} ${items[itemID].name} for ${numberWithCommas(items[itemID].prayerPoints * qty)} Prayer Points`);
@@ -49,15 +49,23 @@
 
     const setupContainer = () => {
         $(`#${id}-container`).html('');
-        autoEnabled = Array(itemStats.length).fill(false);
         for (let i = 0; i < itemStats.length; i++) {
             if(!('prayerPoints' in items[i])) { continue; }
             $(`#${id}-container`).append(el(i));
         }
 
         const loadedAutoEnabled = SEMI.getItem(`${id}-config`);
-        if(loadedAutoEnabled !== null) {
-            autoEnabled = [...loadedAutoEnabled];
+        if (loadedAutoEnabled !== null) {
+            if (Array.isArray(loadedAutoEnabled)) {
+                for (let i = 0; i < loadedAutoEnabled.length; i++) {
+                    if (loadedAutoEnabled[i]) {
+                        isItemEnabledToSell[i] = true;
+                    }
+                }
+            }
+            else {
+                isItemEnabledToBury = loadedAutoEnabled;
+            }
         }
 
         fadeAll();
@@ -95,7 +103,7 @@
         $(`#modal-${id} .block-title`).text(`${title} Menu`);
 
         $(`#modal-${id}`).on('hidden.bs.modal', () => {
-            SEMI.setItem(`${id}-config`, autoEnabled);
+            SEMI.setItem(`${id}-config`, isItemEnabledToBury);
         });
         setupContainer();
         setTimeout(() => {
