@@ -76,9 +76,11 @@ var {semiSetMenu} = (() => {
             </div>
           </div>
           <div class="block-content font-size-sm" style="padding-top: 0 !important;">
-            <span style="font-size: 14pt;">AutoEnable Scripts after Refresh:</span>
-            <button id="SEMI-auto-enable-status" class="btn btn-md ${SEMI.getItem('remember-state') ? 'btn-success' : 'btn-danger'} m-1 SEMI-modal-btn" style="display: revert !important;">${SEMI.getItem('remember-state') ? 'Enabled' : 'Disabled'}</button>
             <div style="font-size: 14pt;">Toggle SEMI features that aren't in the sidebar:</div>
+            <div class="custom-control custom-switch mb-1">
+              <input type="checkbox" class="custom-control-input" id="SEMI-auto-enable" name="SEMI-auto-enable" onchange="SEMI.setItem('remember-state', this.checked)" ${Boolean(SEMI.getItem('remember-state')) ? 'checked' : ''}>
+              <label class="custom-control-label" for="SEMI-auto-enable">Automatically load previously enabled scripts</label>
+            </div>
             <div class="custom-control custom-switch mb-1">
               <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${SEMIetcGUI.thievingXP ? 'checked' : ''}>
               <label class="custom-control-label" for="SEMI-thieving-xp-enabled">Thieving XP calculators and loot popups in the Thieving page</label>
@@ -167,19 +169,6 @@ var {semiSetMenu} = (() => {
 
     injectEyes();
     injectDragMenus();
-
-    const sameCharacter = SEMI.getItem('previous-character') == SEMI.getCharacter() || SEMI.getItem('previous-character') == null;
-    if (!sameCharacter && SEMI.getItem('remember-state')) {
-      SEMI.customNotify('assets/media/main/settings_header.svg',
-      `SEMI detected that you loaded a different character than previously selected!<br>
-      Auto-enable scripts has been disabled to prevent problems.<br>
-      Beware, at this point in SEMI's development, plugin configs are not character specific.<br>
-      Enabling plugins such as AutoSell will carry over settings from a previous character.<br>
-      Your auto-enable settings are still saved, so if you re-enable auto-enable and refresh<br>
-      and load the same character, everything will turn back on. You have been warned!`, 30000);
-      toggleAutoEnableScripts();
-    }
-    SEMI.setItem('previous-character', SEMI.getCharacter());
 
     //if all goes well, yay, it's loaded
     SEMI.customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',5000);
