@@ -1,30 +1,32 @@
 var SEMIetcGUI = {
-  thievingXP: true,
-  xph: true,
-  timeRemaining: true,
-  masteryEnhancements: true
+    thievingXP: true,
+    xph: true,
+    timeRemaining: true,
+    masteryEnhancements: true,
 };
 
-var {semiSetMenu} = (() => {
-  const header = $('#SEMI-heading');
+var { semiSetMenu } = (() => {
+    const header = $('#SEMI-heading');
 
-  const injectSidebarSections = () => {
-    for (let key in SEMI.SIDEBAR_MENUS) {
-      const menu = SEMI.SIDEBAR_MENUS[key];
-      const menuHeader = `<li class="nav-main-heading SEMI-header" id="${SEMI.ROOT_ID}-${menu.ID}-header" ${menu.Title !== undefined ? `title="${menu.Title}"` : ''}>${menu.Header}</li>`;
-      const menuSection = `<div id="${SEMI.ROOT_ID}-${menu.ID}-section-unsorted"></div>`;
+    const injectSidebarSections = () => {
+        for (let key in SEMI.SIDEBAR_MENUS) {
+            const menu = SEMI.SIDEBAR_MENUS[key];
+            const menuHeader = `<li class="nav-main-heading SEMI-header" id="${SEMI.ROOT_ID}-${menu.ID}-header" ${
+                menu.Title !== undefined ? `title="${menu.Title}"` : ''
+            }>${menu.Header}</li>`;
+            const menuSection = `<div id="${SEMI.ROOT_ID}-${menu.ID}-section-unsorted"></div>`;
 
-      header.after(menuHeader, menuSection);
-    }
+            header.after(menuHeader, menuSection);
+        }
 
-    const semiNavImg = `<img class="nav-img" src="${SEMI.iconSrc}">`;
-    const semiNavInner = `<a class="nav-main-link nav-compact ${SEMI.ROOT_ID}-btn" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
-    const semiNavEl = $(`<li class="nav-main-item" id="${SEMI.ROOT_ID}-info-header">${semiNavInner}</li>`);
-    $('#sidebar').find('.nav-main').append(semiNavEl);
-    $(`#${SEMI.ROOT_ID}-info-button`).on('click', () => semiInfo());
-  };
+        const semiNavImg = `<img class="nav-img" src="${SEMI.iconSrc}">`;
+        const semiNavInner = `<a class="nav-main-link nav-compact ${SEMI.ROOT_ID}-btn" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
+        const semiNavEl = $(`<li class="nav-main-item" id="${SEMI.ROOT_ID}-info-header">${semiNavInner}</li>`);
+        $('#sidebar').find('.nav-main').append(semiNavEl);
+        $(`#${SEMI.ROOT_ID}-info-button`).on('click', () => semiInfo());
+    };
 
-  const otherScriptsText = `
+    const otherScriptsText = `
   <ul>
   <li><a href="https://greasyfork.org/en/scripts/394855-melvor-auto-replant" target="_blank">Melvor Auto Replant by Arcanus</a></li>
   <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/669475769671483392" target="_blank">AutoBonfire by Dream</a></li>
@@ -35,7 +37,7 @@ var {semiSetMenu} = (() => {
   <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
   <li><a href="https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js" target="_blank" title="">Katorone's automation script</a></li>
   </ul>`;
-  const creditsText = `
+    const creditsText = `
   <ul>
   <li>Maintainer & owner: AldousWatts</li>
   <li>Major contributor: DanielRX
@@ -70,9 +72,11 @@ var {semiSetMenu} = (() => {
   <li>Many other community coders and bug reporters and supportive helpful folks! <3</li>
   </ul>`;
 
-  const injectSEMIInfoPopup = () => {
-    const semiInfoPopup = $(`
-    <div class="modal" id="${SEMI.ROOT_ID}-semi-modal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+    const injectSEMIInfoPopup = () => {
+        const semiInfoPopup = $(`
+    <div class="modal" id="${
+        SEMI.ROOT_ID
+    }-semi-modal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content"><div class="block block-themed block-transparent mb-0">
           <div class="block-header bg-primary-dark">
@@ -87,23 +91,33 @@ var {semiSetMenu} = (() => {
           <div class="block-content font-size-sm" style="padding-top: 0 !important;">
             <div style="font-size: 14pt;">Toggle SEMI features that aren't in the sidebar:</div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-auto-enable" name="SEMI-auto-enable" onchange="SEMI.setItem('remember-state', this.checked)" ${Boolean(SEMI.getItem('remember-state')) ? 'checked' : ''}>
+              <input type="checkbox" class="custom-control-input" id="SEMI-auto-enable" name="SEMI-auto-enable" onchange="SEMI.setItem('remember-state', this.checked)" ${
+                  Boolean(SEMI.getItem('remember-state')) ? 'checked' : ''
+              }>
               <label class="custom-control-label" for="SEMI-auto-enable">Automatically load previously enabled scripts</label>
             </div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${SEMIetcGUI.thievingXP ? 'checked' : ''}>
+              <input type="checkbox" class="custom-control-input" id="SEMI-thieving-xp-enabled" name="SEMI-thieving-xp-enabled" onchange="SEMIetcGUI.thievingXP = this.checked" ${
+                  SEMIetcGUI.thievingXP ? 'checked' : ''
+              }>
               <label class="custom-control-label" for="SEMI-thieving-xp-enabled">Thieving XP calculators and loot popups in the Thieving page</label>
             </div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-xph-button-enabled" name="SEMI-xph-button-enabled" onchange="SEMIetcGUI.xph = this.checked" ${SEMIetcGUI.xph ? 'checked' : ''}>
+              <input type="checkbox" class="custom-control-input" id="SEMI-xph-button-enabled" name="SEMI-xph-button-enabled" onchange="SEMIetcGUI.xph = this.checked" ${
+                  SEMIetcGUI.xph ? 'checked' : ''
+              }>
               <label class="custom-control-label" for="SEMI-xph-button-enabled">XPH button: XP per hour calculations done through a button next to the Potion selection button</label>
             </div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-time-remaining-button-enabled" name="SEMI-time-remaining-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.timeRemaining ? 'checked' : ''}>
+              <input type="checkbox" class="custom-control-input" id="SEMI-time-remaining-button-enabled" name="SEMI-time-remaining-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${
+                  SEMIetcGUI.timeRemaining ? 'checked' : ''
+              }>
               <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining by Breindahl: time estimates for production skills next to the item. Includes a ding noise when a task completes.</label>
             </div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-mastery-enhancements-button-enabled" name="SEMI-mastery-enhancements-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.masteryEnhancements ? 'checked' : ''}>
+              <input type="checkbox" class="custom-control-input" id="SEMI-mastery-enhancements-button-enabled" name="SEMI-mastery-enhancements-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${
+                  SEMIetcGUI.masteryEnhancements ? 'checked' : ''
+              }>
               <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Mastery Enhancement Script: Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu</label>
             </div>
             <div class="block-content block-content-full text-right">
@@ -116,14 +130,18 @@ var {semiSetMenu} = (() => {
             </div>
             <div class="block-content">
               <textarea class="form-control SEMI-static-textarea" id="exportSEMISettings" name="exportSEMISettings" rows="1" placeholder="Exported SEMI config will be here."></textarea>
-              <button type="button" id="${SEMI.ROOT_ID}-semi-modal-export-button" class="btn btn-sm btn-primary" onclick="SEMI.backupSEMI()">
+              <button type="button" id="${
+                  SEMI.ROOT_ID
+              }-semi-modal-export-button" class="btn btn-sm btn-primary" onclick="SEMI.backupSEMI()">
                 Export
               </button>
             </div>
             <br>
             <div class="block-content">
               <textarea class="form-control SEMI-static-textarea" id="importSEMISettings" name="importSEMISettings" rows="1" placeholder="Paste SEMI config here."></textarea>
-              <button type="button" id="${SEMI.ROOT_ID}-semi-modal-import-button" class="btn btn-sm btn-primary" onclick="SEMI.restoreSEMI()">
+              <button type="button" id="${
+                  SEMI.ROOT_ID
+              }-semi-modal-import-button" class="btn btn-sm btn-primary" onclick="SEMI.restoreSEMI()">
                 Import
               </button>
             </div>
@@ -155,99 +173,119 @@ var {semiSetMenu} = (() => {
         </div>
       </div>
     </div>`);
-    $('#modal-account-change').before(semiInfoPopup);
-    $(`#hide-SEMI-info-button`).on('click', () => toggleSEMIMenuInfo());
-    $(`#SEMI-RESET-button`).on('click', () => resetSEMIPrompt());
-    $(`#${SEMI.ROOT_ID}-etc-toggles-apply-save`).on('click', () => saveEtcToggles());
-    $(`#SEMI-auto-enable-status`).on('click', () => toggleAutoEnableScripts());
-  };
+        $('#modal-account-change').before(semiInfoPopup);
+        $(`#hide-SEMI-info-button`).on('click', () => toggleSEMIMenuInfo());
+        $(`#SEMI-RESET-button`).on('click', () => resetSEMIPrompt());
+        $(`#${SEMI.ROOT_ID}-etc-toggles-apply-save`).on('click', () => saveEtcToggles());
+        $(`#SEMI-auto-enable-status`).on('click', () => toggleAutoEnableScripts());
+    };
 
-  if (SEMI.getItem('etc-GUI-toggles') !== null) {
-    SEMI.mergeOnto(SEMIetcGUI, SEMI.getItem('etc-GUI-toggles'));
-    if (SEMIetcGUI.barf !== undefined) delete SEMIetcGUI.barf;
-    if (SEMIetcGUI.destroyCrops !== undefined) delete SEMIetcGUI.destroyCrops;
-  };
+    if (SEMI.getItem('etc-GUI-toggles') !== null) {
+        SEMI.mergeOnto(SEMIetcGUI, SEMI.getItem('etc-GUI-toggles'));
+        if (SEMIetcGUI.barf !== undefined) delete SEMIetcGUI.barf;
+        if (SEMIetcGUI.destroyCrops !== undefined) delete SEMIetcGUI.destroyCrops;
+    }
 
-  //SEMI menu setup function
-  const setupSEMI = () => {
-    if ($('#auto-replant-button').length) return;
-    injectSidebarSections();
-    SEMI.getElement('info-header').before($('<br>'));
-    SEMI.setItem('etc-GUI-toggles', SEMIetcGUI); //to prevent errors first-run with thieving-calc
-    SEMI.pluginNames.forEach((name) => SEMI.injectGUI(name));
+    //SEMI menu setup function
+    const setupSEMI = () => {
+        if ($('#auto-replant-button').length) return;
+        injectSidebarSections();
+        SEMI.getElement('info-header').before($('<br>'));
+        SEMI.setItem('etc-GUI-toggles', SEMIetcGUI); //to prevent errors first-run with thieving-calc
+        SEMI.pluginNames.forEach((name) => SEMI.injectGUI(name));
 
-    if (SEMIetcGUI.xph) injectXPHGUI();
-    //Modal for SEMI info popup, now SEMI's menu
-    injectSEMIInfoPopup();
+        if (SEMIetcGUI.xph) injectXPHGUI();
+        //Modal for SEMI info popup, now SEMI's menu
+        injectSEMIInfoPopup();
 
-    injectEyes();
-    injectDragMenus();
+        injectEyes();
+        injectDragMenus();
 
-    //if all goes well, yay, it's loaded
-    SEMI.customNotify('assets/media/monsters/dragon_black.svg','Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',5000);
-  };
+        //if all goes well, yay, it's loaded
+        SEMI.customNotify(
+            'assets/media/monsters/dragon_black.svg',
+            'Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',
+            5000
+        );
+    };
 
-  //show SEMI katorone automation settings modal called by nav button
-  const semiSetMenu = () => { SEMI.getElement('kat-modal').modal(open); };
+    //show SEMI katorone automation settings modal called by nav button
+    const semiSetMenu = () => {
+        SEMI.getElement('kat-modal').modal(open);
+    };
 
-  //show SEMI info modal function called by nav button
-  const semiInfo = () => { SEMI.getElement('semi-modal').modal(open); };
+    //show SEMI info modal function called by nav button
+    const semiInfo = () => {
+        SEMI.getElement('semi-modal').modal(open);
+    };
 
-  const toggleSEMIMenuInfo = () => {
-    $(`#${SEMI.ROOT_ID}-info-box`).toggleClass('d-none');
-    if ($('#hide-SEMI-info-button').text() == 'Show SEMI Info') $('#hide-SEMI-info-button').text('Hide SEMI Info');
-    else $('#hide-SEMI-info-button').text('Show SEMI Info');
-  };
+    const toggleSEMIMenuInfo = () => {
+        $(`#${SEMI.ROOT_ID}-info-box`).toggleClass('d-none');
+        if ($('#hide-SEMI-info-button').text() == 'Show SEMI Info')
+            $('#hide-SEMI-info-button').text('Hide SEMI Info');
+        else $('#hide-SEMI-info-button').text('Show SEMI Info');
+    };
 
-  const resetSEMIPrompt = () => {
-    const resetResponse = prompt(`Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start.
+    const resetSEMIPrompt = () => {
+        const resetResponse = prompt(
+            `Wait. This will erase EVERY SINGLE SEMI CONFIGURATION SETTING. This includes every script option, every dragged menu position, every item selection on your AutoSell and such, all AutoMine preferences, EVERYTHING. This is best used for when something has gone very wrong and you'd like to reset SEMI to a fresh start.
 
-    If you are sure you want to do this, please type 'semi' into the prompt.`, 'I changed my mind!');
-    if (resetResponse === 'semi') SEMI.resetSEMI();
-  };
+    If you are sure you want to do this, please type 'semi' into the prompt.`,
+            'I changed my mind!'
+        );
+        if (resetResponse === 'semi') SEMI.resetSEMI();
+    };
 
-  const saveEtcToggles = () => {
-    SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
-    SEMI.customNotify('assets/media/main/settings_header.svg','Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',10000);
-  };
+    const saveEtcToggles = () => {
+        SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
+        SEMI.customNotify(
+            'assets/media/main/settings_header.svg',
+            'Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',
+            10000
+        );
+    };
 
-  const toggleAutoEnableScripts = () => {
-    SEMI.getItem('remember-state') ? SEMI.setItem('remember-state', false) : SEMI.setItem('remember-state', true);
-    $(`#SEMI-auto-enable-status`).text( SEMI.getItem('remember-state') ? 'Enabled' : 'Disabled' );
-    $(`#SEMI-auto-enable-status`).addClass( SEMI.getItem('remember-state') ? 'btn-success' : 'btn-danger' );
-    $(`#SEMI-auto-enable-status`).removeClass( SEMI.getItem('remember-state') ? 'btn-danger' : 'btn-success' );
-  }
+    const toggleAutoEnableScripts = () => {
+        SEMI.getItem('remember-state') ? SEMI.setItem('remember-state', false) : SEMI.setItem('remember-state', true);
+        $(`#SEMI-auto-enable-status`).text(SEMI.getItem('remember-state') ? 'Enabled' : 'Disabled');
+        $(`#SEMI-auto-enable-status`).addClass(SEMI.getItem('remember-state') ? 'btn-success' : 'btn-danger');
+        $(`#SEMI-auto-enable-status`).removeClass(SEMI.getItem('remember-state') ? 'btn-danger' : 'btn-success');
+    };
 
-  const hideSemi = (reason) => {
-    console.warn(`SEMI was not correctly loaded due to ${reason}`);
-    SEMI.getElements().toggleClass('d-none');
-  };
+    const hideSemi = (reason) => {
+        console.warn(`SEMI was not correctly loaded due to ${reason}`);
+        SEMI.getElements().toggleClass('d-none');
+    };
 
-  const loadSemi = () => {
-    if(!isLoaded || typeof SEMI === 'undefined' || !SEMI.utilsReady) {return;}
-    clearInterval(semiLoader);
-    let tryLoad = true;
-    const wrongVersion = gameVersion != SEMI.SUPPORTED_GAME_VERSION;
-    if (wrongVersion) {
-      const msg = `SEMI Alert:
+    const loadSemi = () => {
+        if (!isLoaded || typeof SEMI === 'undefined' || !SEMI.utilsReady) {
+            return;
+        }
+        clearInterval(semiLoader);
+        let tryLoad = true;
+        const wrongVersion = gameVersion != SEMI.SUPPORTED_GAME_VERSION;
+        if (wrongVersion) {
+            const msg = `SEMI Alert:
       This version of SEMI was made for Melvor Idle ${SEMI.SUPPORTED_GAME_VERSION}. Loading the extension in this game version may cause unexpected behavior or result in errors.
       IMPORTANT NOTE: Any errors encountered after loading this way should be reported to SEMI DEVS, and NOT Malcs!
       Try loading it anyways?`;
-      tryLoad = window.confirm(msg);
-    }
-    if(!tryLoad) { return hideSemi('game version incompatibility.'); }
-    try {
-      setupSEMI();
-      const msg = `SEMI v${SEMI_VERSION} Loaded`;
-      const suffix = wrongVersion ? ', but may experience errors.' : '!';
-      console.log(msg + suffix);
-    } catch (error) {
-      hideSemi('the following error:');
-      console.error(error);
-    }
-  };
+            tryLoad = window.confirm(msg);
+        }
+        if (!tryLoad) {
+            return hideSemi('game version incompatibility.');
+        }
+        try {
+            setupSEMI();
+            const msg = `SEMI v${SEMI_VERSION} Loaded`;
+            const suffix = wrongVersion ? ', but may experience errors.' : '!';
+            console.log(msg + suffix);
+        } catch (error) {
+            hideSemi('the following error:');
+            console.error(error);
+        }
+    };
 
-  const semiLoader = setInterval(loadSemi, 200);
+    const semiLoader = setInterval(loadSemi, 200);
 
-  return {semiSetMenu};
+    return { semiSetMenu };
 })();

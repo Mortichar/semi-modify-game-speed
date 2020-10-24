@@ -10,27 +10,32 @@
 (() => {
     const id = 'auto-farm';
     const title = 'AutoFarm';
-    const desc = 'AutoFarm by Visua will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to. Will use gloop if you have it.';
+    const desc =
+        'AutoFarm by Visua will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to. Will use gloop if you have it.';
     const imgSrc = SEMI.skillImg('farming');
     const version = 2;
     const patchTypes = ['allotments', 'herbs', 'trees'];
     const toPatchType = { Allotment: patchTypes[0], Herb: patchTypes[1], Tree: patchTypes[2] };
     const priorityTypes = {
         custom: { id: 'custom', description: 'Custom priority', tooltip: 'Drag seeds to change their priority' },
-        mastery: { id: 'mastery', description: 'Highest mastery', tooltip: 'Seeds with maxed mastery are excluded<br>Click seeds to disable/enable them' },
+        mastery: {
+            id: 'mastery',
+            description: 'Highest mastery',
+            tooltip: 'Seeds with maxed mastery are excluded<br>Click seeds to disable/enable them',
+        },
         replant: { id: 'replant', description: 'Replant', tooltip: 'Lock patches to their current seeds' },
     };
     const allSeeds = {
-        allotments: [...allotmentSeeds].sort((a, b) => b.level - a.level).map(s => s.itemID),
-        herbs: [...herbSeeds].sort((a, b) => b.level - a.level).map(s => s.itemID),
-        trees: [...treeSeeds].sort((a, b) => b.level - a.level).map(s => s.itemID),
+        allotments: [...allotmentSeeds].sort((a, b) => b.level - a.level).map((s) => s.itemID),
+        herbs: [...herbSeeds].sort((a, b) => b.level - a.level).map((s) => s.itemID),
+        trees: [...treeSeeds].sort((a, b) => b.level - a.level).map((s) => s.itemID),
     };
     let observer;
     let config = {
         version: version,
         disabledSeeds: {},
     };
-    patchTypes.forEach(patchType => {
+    patchTypes.forEach((patchType) => {
         config[patchType] = {
             enabled: false,
             priorityType: priorityTypes.custom.id,
@@ -43,12 +48,12 @@
         if (SEMI.hasCapeOn('Farming')) {
             return false;
         }
-        const cost = (n * items[CONSTANTS.item.Compost].buysFor);
-        const balanceAfter = (gp - cost);
+        const cost = n * items[CONSTANTS.item.Compost].buysFor;
+        const balanceAfter = gp - cost;
         if (!katoroneOn || katBot.reserveGold === 0) {
             return balanceAfter > 0;
         }
-        if ((katBot.reserveGold > 0) && (balanceAfter > katBot.reserveGold)) {
+        if (katBot.reserveGold > 0 && balanceAfter > katBot.reserveGold) {
             return true;
         }
         return false;
@@ -65,7 +70,9 @@
         } else if (patchTypeConfig.priorityType === priorityTypes.custom.id) {
             priority = patchTypeConfig.priority;
         } else if (patchTypeConfig.priorityType === priorityTypes.mastery.id) {
-            priority = allSeeds[patchType].filter(s => !config.disabledSeeds[s] && getSeedMasteryLevel(s) < 99).sort((a, b) => getSeedMastery(b) - getSeedMastery(a));
+            priority = allSeeds[patchType]
+                .filter((s) => !config.disabledSeeds[s] && getSeedMasteryLevel(s) < 99)
+                .sort((a, b) => getSeedMastery(b) - getSeedMastery(a));
         }
 
         let nextSeed = -1;
@@ -86,14 +93,16 @@
     function handlePatch(areaId, patchId) {
         const patch = newFarmingAreas[areaId].patches[patchId];
 
-        if (!config[toPatchType[patch.type]].enabled || !patch.unlocked || !(patch.hasGrown || !patch.seedID)) { // AutoFarm disabled for patch type or patch not unlocked or still growing
+        if (!config[toPatchType[patch.type]].enabled || !patch.unlocked || !(patch.hasGrown || !patch.seedID)) {
+            // AutoFarm disabled for patch type or patch not unlocked or still growing
             return;
         }
 
-        if (patch.hasGrown) { // Harvest
+        if (patch.hasGrown) {
+            // Harvest
             let grownId = items[patch.seedID].grownItemID;
             let bankId = getBankId(grownId);
-            if (!(bankId !== false || (bankMax + baseBankMax) > bank.length)) {
+            if (!(bankId !== false || bankMax + baseBankMax > bank.length)) {
                 return;
             }
             harvestSeed(areaId, patchId);
@@ -103,14 +112,18 @@
         }
 
         const nextSeed = findNextSeed(patch, patchId);
-        if (nextSeed === -1) { // No seeds available
+        if (nextSeed === -1) {
+            // No seeds available
             return;
         }
 
         if (!patch.gloop) {
             if (checkBankForItem(CONSTANTS.item.Weird_Gloop)) {
                 addGloop(areaId, patchId);
-            } else if (getSeedMasteryLevel(nextSeed) < 50 && getMasteryPoolProgress(CONSTANTS.skill.Farming) < masteryCheckpoints[1]) {
+            } else if (
+                getSeedMasteryLevel(nextSeed) < 50 &&
+                getMasteryPoolProgress(CONSTANTS.skill.Farming) < masteryCheckpoints[1]
+            ) {
                 if (canBuyCompost()) {
                     getCompost();
                 }
@@ -127,7 +140,11 @@
         for (let i = 0; i < newFarmingAreas.length; i++) {
             for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {
                 const patch = newFarmingAreas[i].patches[j];
-                if (config[toPatchType[patch.type]].enabled && patch.unlocked && (patch.hasGrown || (!patch.seedID && findNextSeed(patch, j) !== -1))) {
+                if (
+                    config[toPatchType[patch.type]].enabled &&
+                    patch.unlocked &&
+                    (patch.hasGrown || (!patch.seedID && findNextSeed(patch, j) !== -1))
+                ) {
                     anyPatchReady = true;
                     break;
                 }
@@ -149,7 +166,7 @@
             }
         }
 
-        patchTypes.forEach(patchType => {
+        patchTypes.forEach((patchType) => {
             if (config[patchType].priorityType === priorityTypes.mastery.id) {
                 orderMasteryPriorityMenu(patchType);
             }
@@ -174,7 +191,9 @@
         if (swapTo) {
             equipIfNotEquipped(CONSTANTS.item.Bobs_Rake, 'Weapon');
             equipIfNotEquipped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
-            equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape') || equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape') || equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
+            equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape') ||
+                equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape') ||
+                equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
         } else {
             if (SEMI.equipSwapConfig['Weapon'].swapped) {
                 SEMI.equipSwap(0, 'Weapon');
@@ -211,8 +230,14 @@
 
     function orderMasteryPriorityMenu(patchType) {
         const menu = $(`#${id}-${patchType}-prioritysettings-mastery`);
-        menu.children().toArray().filter(e => getSeedMasteryLevel($(e).data('seed-id')) >= 99).forEach(e => $(e).remove());
-        const sortedMenuItems = menu.children().toArray().sort((a, b) => getSeedMastery($(b).data('seed-id')) - getSeedMastery($(a).data('seed-id')));
+        menu.children()
+            .toArray()
+            .filter((e) => getSeedMasteryLevel($(e).data('seed-id')) >= 99)
+            .forEach((e) => $(e).remove());
+        const sortedMenuItems = menu
+            .children()
+            .toArray()
+            .sort((a, b) => getSeedMastery($(b).data('seed-id')) - getSeedMastery($(a).data('seed-id')));
         menu.append(sortedMenuItems);
     }
 
@@ -237,7 +262,7 @@
 
             if (config.version === 1) {
                 // Fix wrong seeds in custom priority
-                patchTypes.forEach(patchType => {
+                patchTypes.forEach((patchType) => {
                     if (config[patchType].priority[0] === allSeeds.herbs[0]) {
                         config[patchType].priority = allSeeds[patchType];
                     }
@@ -278,8 +303,12 @@
                 const elementId = `${prefix}-${priorityType.id}`;
                 return `
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" id="${elementId}" name="${prefix}" value="${priorityType.id}"${config[patchType].priorityType === priorityType.id ? ' checked' : ''}>
-                        <label class="custom-control-label" for="${elementId}" data-tippy-content="${priorityType.tooltip}">${priorityType.description}</label>
+                        <input class="custom-control-input" type="radio" id="${elementId}" name="${prefix}" value="${
+                    priorityType.id
+                }"${config[patchType].priorityType === priorityType.id ? ' checked' : ''}>
+                        <label class="custom-control-label" for="${elementId}" data-tippy-content="${
+                    priorityType.tooltip
+                }">${priorityType.description}</label>
                     </div>`;
             }
 
@@ -292,7 +321,9 @@
                         <div class="block-header border-bottom">
                             <h3 class="block-title">${title} ${patchType}</h3>
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="${prefix}-enabled" name="${prefix}-enabled"${config[patchType].enabled ? ' checked' : ''}>
+                                <input type="checkbox" class="custom-control-input" id="${prefix}-enabled" name="${prefix}-enabled"${
+                config[patchType].enabled ? ' checked' : ''
+            }>
                                 <label class="custom-control-label" for="${prefix}-enabled">Enable</label>
                             </div>
                         </div>
@@ -329,7 +360,9 @@
 
         function showSelectedPriorityTypeSettings(patchType) {
             for (const priorityType of Object.values(priorityTypes)) {
-                $(`#${id}-${patchType}-prioritysettings-${priorityType.id}`).toggle(priorityType.id === config[patchType].priorityType);
+                $(`#${id}-${patchType}-prioritysettings-${priorityType.id}`).toggle(
+                    priorityType.id === config[patchType].priorityType
+                );
             }
         }
         patchTypes.forEach(showSelectedPriorityTypeSettings);
@@ -346,7 +379,7 @@
             function lockAllPatches(auto = false) {
                 const area = newFarmingAreas[patchTypes.indexOf(patchType)];
                 for (let i = 0; i < area.patches.length; i++) {
-                    lockPatch(patchType, i, auto ? undefined : (area.patches[i].seedID || -1));
+                    lockPatch(patchType, i, auto ? undefined : area.patches[i].seedID || -1);
                 }
                 $(`.${id}-seed-selector`).remove();
                 addSeedSelectors();
@@ -378,7 +411,9 @@
                     }
                 },
                 onEnd: () => {
-                    config[patchType].priority = [...$(`#${elementId} .${id}-priority-selector`)].map(x => +$(x).data('seed-id'));
+                    config[patchType].priority = [...$(`#${elementId} .${id}-priority-selector`)].map(
+                        (x) => +$(x).data('seed-id')
+                    );
                     storeConfig();
                 },
             });
@@ -398,7 +433,9 @@
                 return i === -1 ? Infinity : i;
             }
 
-            const sortedMenu = menuItems.sort((a, b) => indexOfOrInf($(a).data('seed-id')) - indexOfOrInf($(b).data('seed-id')));
+            const sortedMenu = menuItems.sort(
+                (a, b) => indexOfOrInf($(a).data('seed-id')) - indexOfOrInf($(b).data('seed-id'))
+            );
             menu.append(sortedMenu);
         }
 
@@ -432,7 +469,7 @@
             storeConfig();
         });
 
-        patchTypes.forEach(patchType => {
+        patchTypes.forEach((patchType) => {
             orderCustomPriorityMenu(patchType);
             orderMasteryPriorityMenu(patchType);
         });
@@ -440,7 +477,9 @@
         function createDropdown(patchType) {
             function createDropdownItem(name, icon, seedId) {
                 return `
-                    <button class="dropdown-item"${seedId !== undefined ? ` data-seed-id="${seedId}"` : ''} style="outline: none;">
+                    <button class="dropdown-item"${
+                        seedId !== undefined ? ` data-seed-id="${seedId}"` : ''
+                    } style="outline: none;">
                         <span style="margin-right: 12px; vertical-align: text-top;">${icon}</span>${name}
                     </button>`;
             }
@@ -449,9 +488,24 @@
             <div class="dropdown ${id}-seed-selector" style="position: absolute; right: 19px;">
                 <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" style="padding-left: 8px; padding-right: 8px;"><span class="${id}-seed-selector-icon" style="margin-right: 6px; vertical-align: text-top; margin-top: 1px;"></span><span class="${id}-seed-selector-text"></span></button>
                 <div class="dropdown-menu font-size-sm" style="border-color: #6c757d; border-radius: 0.25rem; padding: 0.25rem 0;">
-                    ${createDropdownItem('Auto', '<img src="assets/media/main/settings_header.svg" width="20" height="20">')}
-                    ${allSeeds[patchType].map(seedId => createDropdownItem(items[items[seedId].grownItemID].name, `<img src="${items[items[seedId].grownItemID].media}" width="20" height="20">`, seedId)).join('')}
-                    ${createDropdownItem('None', '<i class="fa fa-ban" style="width: 20px; font-size: 20px; color: #c81f1f;"></i>', -1)}
+                    ${createDropdownItem(
+                        'Auto',
+                        '<img src="assets/media/main/settings_header.svg" width="20" height="20">'
+                    )}
+                    ${allSeeds[patchType]
+                        .map((seedId) =>
+                            createDropdownItem(
+                                items[items[seedId].grownItemID].name,
+                                `<img src="${items[items[seedId].grownItemID].media}" width="20" height="20">`,
+                                seedId
+                            )
+                        )
+                        .join('')}
+                    ${createDropdownItem(
+                        'None',
+                        '<i class="fa fa-ban" style="width: 20px; font-size: 20px; color: #c81f1f;"></i>',
+                        -1
+                    )}
                 </div>
             </div>`;
         }
@@ -465,8 +519,7 @@
                 if (selectedSeed !== undefined) {
                     selected = dropdown.find(`.dropdown-item[data-seed-id="${selectedSeed}"]`);
                     button.find(`.${id}-seed-selector-text`).text('');
-                }
-                else {
+                } else {
                     selected = dropdown.find('.dropdown-item:not([data-seed-id])');
                     button.find(`.${id}-seed-selector-text`).text('Auto');
                 }
@@ -476,11 +529,13 @@
 
             $('#farming-area-container h3').each((patchId, e) => {
                 const header = $(e);
-                if (header.siblings().length) { // Seed selector already exists
+                if (header.siblings().length) {
+                    // Seed selector already exists
                     return;
                 }
                 const patchType = toPatchType[header.text()];
-                if (patchType === undefined) { // Locked patch
+                if (patchType === undefined) {
+                    // Locked patch
                     return;
                 }
                 const dropdown = $(createDropdown(patchType, patchId));

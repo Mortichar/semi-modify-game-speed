@@ -1,7 +1,8 @@
 (() => {
     const id = 'auto-mine';
     const title = 'AutoMine';
-    const desc = 'AutoMine will mine highest XP ore first automatically. SEMI\'s version will not switch ores until mining action is complete. You can set your mining priorities by dragging and dropping in the Mining page while the script is running.';
+    const desc =
+        "AutoMine will mine highest XP ore first automatically. SEMI's version will not switch ores until mining action is complete. You can set your mining priorities by dragging and dropping in the Mining page while the script is running.";
     const imgSrc = 'assets/media/shop/pickaxe_dragon.svg';
     const skill = 'Mining';
 
@@ -41,12 +42,24 @@
         }
 
         menuConfig['AM'] = { coalRatio: 'default', order: [] };
-        const storedMenuConfig = SEMI.getItem("AM-priority-config");
+        const storedMenuConfig = SEMI.getItem('AM-priority-config');
         if (storedMenuConfig !== null) {
             menuConfig['AM'] = storedMenuConfig['AM'];
         }
 
-        const ores = ['copper', 'tin', 'iron', 'coal', 'silver', 'gold', 'mithril', 'adamantite', 'runite', 'dragonite', 'rune_essence'];
+        const ores = [
+            'copper',
+            'tin',
+            'iron',
+            'coal',
+            'silver',
+            'gold',
+            'mithril',
+            'adamantite',
+            'runite',
+            'dragonite',
+            'rune_essence',
+        ];
         const createDragDiv = (i) => {
             let title = `${ores[i].charAt(0).toUpperCase() + ores[i].slice(1)} Ore`;
             let src = `assets/media/skills/mining/rock_${ores[i]}.svg`;
@@ -71,7 +84,11 @@
             const elementId = `${description}-${value}`;
             return `
                 <div class="custom-control custom-radio custom-control-inline custom-control">
-                    <input class="custom-control-input" type="radio" id="${elementId}" name="${name}" value="${value}"${menuConfig['AM'].coalRatio === value || (defaultOption && !menuConfig['AM'].coalRatio) ? ' checked' : ''}>
+                    <input class="custom-control-input" type="radio" id="${elementId}" name="${name}" value="${value}"${
+                menuConfig['AM'].coalRatio === value || (defaultOption && !menuConfig['AM'].coalRatio)
+                    ? ' checked'
+                    : ''
+            }>
                     <label class="custom-control-label" for="${elementId}" data-tippy-content="${tooltip}">${description}</label>
                 </div>`;
         };
@@ -97,12 +114,14 @@
         const prioritySetting = createBlock(
             'AutoMine Priority Setting',
             'Set priority directly by dragging.<br><-- Highest Priority || Lower Priority -->',
-            `<div id="SEMI-Auto-Mine-drag-div">${ores.map((_, i) => createDragDiv(i)).join('')}</div>`);
+            `<div id="SEMI-Auto-Mine-drag-div">${ores.map((_, i) => createDragDiv(i)).join('')}</div>`
+        );
 
         const barSelection = createBlock(
             'AutoMine Bar Selection',
             'Mine by ratios of resources in your bank. Ex: 4 coal per 1 mithril.<br>Click current selection to de-select and return to priority-based mining.',
-            barOptions);
+            barOptions
+        );
 
         const autoMineDiv = `<div id="${id}" class="row row-deck">${prioritySetting}${barSelection}</div>`;
 
@@ -127,7 +146,7 @@
             Sortable.create(document.getElementById(id), {
                 animation: 150,
                 filter: '.SEMI-locked',
-                onEnd: storeAutoMineOrder
+                onEnd: storeAutoMineOrder,
             });
         };
         makeSortable('SEMI-Auto-Mine-drag-div');
@@ -138,7 +157,19 @@
         orderMenu();
     };
 
-    const ORES = { Copper: 0, Tin: 1, Iron: 2, Coal: 3, Silver: 4, Gold: 5, Mithril: 6, Adamantite: 7, Runite: 8, Dragonite: 9, RuneEssence: 10 };
+    const ORES = {
+        Copper: 0,
+        Tin: 1,
+        Iron: 2,
+        Coal: 3,
+        Silver: 4,
+        Gold: 5,
+        Mithril: 6,
+        Adamantite: 7,
+        Runite: 8,
+        Dragonite: 9,
+        RuneEssence: 10,
+    };
 
     const oreIDs = [45, 46, 47, 48, 49, 50, 51, 52, 53, 54];
 
@@ -152,7 +183,19 @@
         [ORES.Adamantite, ORES.Coal], // addy bar
         [ORES.Runite, ORES.Coal], // rune bar
         [ORES.Dragonite, ORES.Runite, ORES.Coal], // dragon bar (snack legendarily ®)
-        [ORES.Dragonite, ORES.Runite, ORES.Adamantite, ORES.Mithril, ORES.Gold, ORES.Silver, ORES.Coal, ORES.Iron, ORES.Tin, ORES.Copper, ORES.RuneEssence], // xp priority
+        [
+            ORES.Dragonite,
+            ORES.Runite,
+            ORES.Adamantite,
+            ORES.Mithril,
+            ORES.Gold,
+            ORES.Silver,
+            ORES.Coal,
+            ORES.Iron,
+            ORES.Tin,
+            ORES.Copper,
+            ORES.RuneEssence,
+        ], // xp priority
         [ORES.RuneEssence],
     ];
 
@@ -204,13 +247,27 @@
         removeAutoMineGUI();
     };
 
-    let mineArray = [ORES.Dragonite, ORES.Runite, ORES.Adamantite, ORES.Mithril, ORES.Gold, ORES.Silver, ORES.Coal, ORES.Iron, ORES.Tin, ORES.Copper, ORES.RuneEssence];
+    let mineArray = [
+        ORES.Dragonite,
+        ORES.Runite,
+        ORES.Adamantite,
+        ORES.Mithril,
+        ORES.Gold,
+        ORES.Silver,
+        ORES.Coal,
+        ORES.Iron,
+        ORES.Tin,
+        ORES.Copper,
+        ORES.RuneEssence,
+    ];
 
     /** @param {number[]} rocks */
     const autoMine = (rocks = mineArray) => {
         let swingRatio = 0;
         if (SEMI.isCurrentSkill(skill)) {
-            swingRatio = Number(document.getElementById(`mining-rock-progress-${currentRock}`).style.width.split('%')[0]);
+            swingRatio = Number(
+                document.getElementById(`mining-rock-progress-${currentRock}`).style.width.split('%')[0]
+            );
         }
         if (AMselection !== 9 && AMselection !== -1) {
             let resourceRatios = [];
@@ -218,7 +275,7 @@
                 if (rock === ORES.Coal && menuConfig['AM'].coalRatio === 'none') {
                     resourceRatios[rock] = Infinity;
                 } else {
-                    resourceRatios[rock] = SEMI.getBankQty(oreIDs[rock]) / (barRatios[AMselection][rock]);
+                    resourceRatios[rock] = SEMI.getBankQty(oreIDs[rock]) / barRatios[AMselection][rock];
                     if (rock === ORES.Coal && menuConfig['AM'].coalRatio === 'half') {
                         resourceRatios[rock] *= 2;
                     }
@@ -229,15 +286,28 @@
         const order = menuConfig['AM'].order;
         if (order.length !== 0 && AMselection === -1) {
             const indexOf = indexOrInf(order);
-            mineArray = [ORES.Dragonite, ORES.Runite, ORES.Adamantite, ORES.Mithril, ORES.Gold, ORES.Silver, ORES.Coal, ORES.Iron, ORES.Tin, ORES.Copper, ORES.RuneEssence];
+            mineArray = [
+                ORES.Dragonite,
+                ORES.Runite,
+                ORES.Adamantite,
+                ORES.Mithril,
+                ORES.Gold,
+                ORES.Silver,
+                ORES.Coal,
+                ORES.Iron,
+                ORES.Tin,
+                ORES.Copper,
+                ORES.RuneEssence,
+            ];
             mineArray.sort((a, b) => indexOf(`AutoMineDrag${a}`) - indexOf(`AutoMineDrag${b}`));
         }
         for (const rock of rocks) {
             if (!SEMI.isCurrentSkill(skill)) {
                 mineRock(rock);
             }
-            if (!rockData[rock].depleted && miningData[rock].level <= SEMI.currentLevel(skill)) { // added extra condition to make universal
-                if (currentRock !== rock && (swingRatio < 10)) {
+            if (!rockData[rock].depleted && miningData[rock].level <= SEMI.currentLevel(skill)) {
+                // added extra condition to make universal
+                if (currentRock !== rock && swingRatio < 10) {
                     mineRock(rock);
                 }
                 return; // necessary to stop it looping all the way to last rock. i see now.

@@ -20,26 +20,34 @@
         $(`#${id}-img-${monsterId}`).fadeTo(500, getNeededOpacity(monsterId));
     };
 
-    const emptyObj = {media: 'assets/media/main/question.svg', name: '???'};
+    const emptyObj = { media: 'assets/media/main/question.svg', name: '???' };
 
     /** @param {number} monsterId */
     const createImg = (monsterId) => {
         const empty = monsterStats[monsterId].killedByPlayer === 0 && !showHiddenMonsters;
-        const {media, name} = empty ? emptyObj : MONSTERS[monsterId];
-        const e = $(`<img id="${id}-img-${monsterId}" class="skill-icon-md" src="${media}" data-tippy-content="${name}" data-tippy-placement="bottom" style="opacity: ${getNeededOpacity(monsterId)};">`);
-        if(!empty) { e.on('click', () => toggleAutoEnabled(monsterId)); }
+        const { media, name } = empty ? emptyObj : MONSTERS[monsterId];
+        const e = $(
+            `<img id="${id}-img-${monsterId}" class="skill-icon-md" src="${media}" data-tippy-content="${name}" data-tippy-placement="bottom" style="opacity: ${getNeededOpacity(
+                monsterId
+            )};">`
+        );
+        if (!empty) {
+            e.on('click', () => toggleAutoEnabled(monsterId));
+        }
         return e;
     };
 
     const doAll = () => {
-        monsterIDs = autoEnabled.flatMap((enabled, i) => enabled ? i : []);
+        monsterIDs = autoEnabled.flatMap((enabled, i) => (enabled ? i : []));
     };
 
     const setupContainer = () => {
         $(`#${id}-container [data-tippy-content]`).each((_, e) => e._tippy.destroy());
         $(`#${id}-container`).html('');
 
-        const slayerTasks = combatAreaDisplayOrder.flatMap(area => combatAreas[area].monsters).concat(slayerAreaDisplayOrder.flatMap(area => slayerAreas[area].monsters));
+        const slayerTasks = combatAreaDisplayOrder
+            .flatMap((area) => combatAreas[area].monsters)
+            .concat(slayerAreaDisplayOrder.flatMap((area) => slayerAreas[area].monsters));
         for (let i = 0; i < slayerTasks.length; i++) {
             $(`#${id}-container`).append(createImg(slayerTasks[i]));
         }
@@ -57,12 +65,14 @@
         $(`#${id}-status`).removeClass('btn-danger');
     };
 
-    const autoShow = () => {  $(`#modal-${id}`).modal('show'); };
+    const autoShow = () => {
+        $(`#modal-${id}`).modal('show');
+    };
 
     const injectGUI = () => {
         autoEnabled = Array(MONSTERS.length).fill(false);
         const loadedAutoEnabled = SEMI.getItem(`${id}-config`);
-        if(loadedAutoEnabled !== null) {
+        if (loadedAutoEnabled !== null) {
             autoEnabled = [...loadedAutoEnabled];
         }
 
@@ -72,11 +82,15 @@
         const y = modal.children().children().children().children('.font-size-sm');
         y.children().children().attr('id', `${id}-container`);
 
-        const enableAutoButton = $(`<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>`);
+        const enableAutoButton = $(
+            `<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>`
+        );
         enableAutoButton.on('click', () => SEMI.toggle(id));
         y.before(enableAutoButton);
 
-        const toggleHiddenMonsters = $(`<button type="button" class="btn-block-option"><i class="far fa-eye" title="Show hidden monsters"></i></button>`).on('click', () => {
+        const toggleHiddenMonsters = $(
+            `<button type="button" class="btn-block-option"><i class="far fa-eye" title="Show hidden monsters"></i></button>`
+        ).on('click', () => {
             showHiddenMonsters = !showHiddenMonsters;
             setupContainer();
         });
@@ -104,6 +118,6 @@
         }, 1000);
     };
 
-    SEMI.add(id, {onLoop: doAll, onEnable, onDisable, title, desc, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT});
-    SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT});
+    SEMI.add(id, { onLoop: doAll, onEnable, onDisable, title, desc, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT });
+    SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT });
 })();

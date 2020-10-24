@@ -11,13 +11,17 @@ var autoSellShow = (() => {
     const fadeAll = () => {
         for (let i = 0; i < itemStats.length; i++) {
             const x = $(`#${id}-img-${i}`);
-            if(x.length === 0) { continue; }
+            if (x.length === 0) {
+                continue;
+            }
             const shouldBeFaded = !isItemEnabledToSell[i];
             const currentState = typeof x.css('opacity') === 'undefined' ? '1' : x.css('opacity');
             const isFaded = currentState === '0.25';
             const isCorrect = isFaded === shouldBeFaded;
             const neededOpacity = shouldBeFaded ? 0.25 : 1;
-            if(!isCorrect) { x.fadeTo(500, neededOpacity); }
+            if (!isCorrect) {
+                x.fadeTo(500, neededOpacity);
+            }
         }
     };
 
@@ -28,12 +32,16 @@ var autoSellShow = (() => {
         fadeAll();
     };
 
-    const emptyObj = {media: 'assets/media/main/question.svg', name: '???'};
+    const emptyObj = { media: 'assets/media/main/question.svg', name: '???' };
     const el = (i) => {
         const empty = itemStats[i].timesFound === 0;
-        const {media, name} = empty ? emptyObj : items[i];
-        const e = $(`<img id="${id}-img-${i}" class="skill-icon-sm js-tooltip-enable" src="${media}" data-toggle="tooltip" data-html="true" data-placement="bottom" title="" data-original-title="${name}">`);
-        if(!empty) { e.on('click', () => toggleAutoEnabled(i)); }
+        const { media, name } = empty ? emptyObj : items[i];
+        const e = $(
+            `<img id="${id}-img-${i}" class="skill-icon-sm js-tooltip-enable" src="${media}" data-toggle="tooltip" data-html="true" data-placement="bottom" title="" data-original-title="${name}">`
+        );
+        if (!empty) {
+            e.on('click', () => toggleAutoEnabled(i));
+        }
         return e;
     };
 
@@ -44,7 +52,12 @@ var autoSellShow = (() => {
                 const qty = bank[i].qty;
                 const gpBefore = gp;
                 SEMI.sellItemWithoutConfirmation(itemID, qty);
-                SEMI.customNotify(items[itemID].media, `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`);
+                SEMI.customNotify(
+                    items[itemID].media,
+                    `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(
+                        gp - gpBefore
+                    )} GP`
+                );
             }
         }
     };
@@ -64,8 +77,7 @@ var autoSellShow = (() => {
                         isItemEnabledToSell[i] = true;
                     }
                 }
-            }
-            else {
+            } else {
                 isItemEnabledToSell = loadedAutoEnabled;
             }
         }
@@ -85,7 +97,9 @@ var autoSellShow = (() => {
         autoSell();
     };
 
-    const autoShow = () => {  $(`#modal-${id}`).modal('show'); };
+    const autoShow = () => {
+        $(`#modal-${id}`).modal('show');
+    };
 
     const injectGUI = () => {
         const x = $('#modal-item-log').clone().first();
@@ -96,7 +110,9 @@ var autoSellShow = (() => {
         const y = $(`#modal-${id}`).children().children().children().children('.font-size-sm');
         y.children().children().attr('id', `${id}-container`);
 
-        const enableAutoButton = $(`<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>`);
+        const enableAutoButton = $(
+            `<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>`
+        );
         enableAutoButton.on('click', () => SEMI.toggle(`${id}`));
         y.before(enableAutoButton);
 
@@ -122,7 +138,7 @@ var autoSellShow = (() => {
     };
 
     const refreshLog = () => {
-        $(".modal.show").find(".fa.fa-fw.fa-times").click();
+        $('.modal.show').find('.fa.fa-fw.fa-times').click();
         $(`#modal-${id}`).remove();
         injectGUI();
         $(`#modal-${id}`).modal('show');
@@ -149,6 +165,6 @@ var autoSellShow = (() => {
     SEMIEventBus.RegisterAddItemToBankHandler({ HandleAddItemToBankPre: ItemEventHandler });
 
     SEMI.add(id, { ms: 15000, onEnable, onDisable, title, desc });
-    SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
-    SEMI.mergeOnto(SEMI,{refreshLog});
+    SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI });
+    SEMI.mergeOnto(SEMI, { refreshLog });
 })();
