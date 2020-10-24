@@ -24,10 +24,12 @@ SEMIEventBus = (() => {
   // cumbersome and a lot of maintenance. Instead we run the main loop
   // so that all scripts can use the data without their own loops.
   let _currentSkill = -1;
+  let _isMagic = false;
   const checkIfSkillChanged = () => {
-    if (SEMI.currentSkillId() != _currentSkill) {
+    if (SEMI.currentSkillId() != _currentSkill || isMagic != _isMagic) {
       const _prevSkill = _currentSkill;
       _currentSkill = SEMI.currentSkillId();
+      _isMagic = isMagic;
 
       for (var handler of _skillChangeHandlers) {
         try {

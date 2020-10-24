@@ -291,6 +291,9 @@
     /** @param {SkillName} skillName */
     const isMaxLevel = (skillName) => currentLevel(skillName) >= 99;
 
+     /** @param {number} skillId */
+     const isMaxLevelById = (skillId) => currentLevelById(skillId) >= 99;
+
     /** @param {SkillName} skillName */
     const ownsCape = (skillName) =>
       isMaxLevel(skillName) && checkBankForItem(CONSTANTS.item[`${skillName}_Skillcape`]);
@@ -614,6 +617,7 @@
       currentLevelById,
       currentCombatSkillId,
       getItemTooltip,
+      isMaxLevelById
     };
     Object.keys(utils).forEach((key) => {
       SEMI[key] = utils[key];
