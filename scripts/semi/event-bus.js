@@ -1,8 +1,6 @@
 SEMI.EventBus = (() => {
   /**
    * @typedef {HandleAddItemToBankPre: function, HandleAddItemToBankPost: function} AddItemToBankHandler
-   */
-  /**
    * @typedef {HandleSkillChange: function} SkillChangeHandler
    */
 
