@@ -34,7 +34,7 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * Automatically harvests and then plants seeds, buying and using compost as needed, using seeds from your bank. Be sure you have enough seeds!
     * Automatically adds Weird Gloop if you have any in the bank. Prioritizes gloop over compost. Will not buy gloop
     * Optionally: If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
-* Show Ore in Bank -- adds ore counts to mining page rocks.
+* Show Ore in Bank: adds ore counts to mining page rocks.
 * Melvor TimeRemaining script graciously provided by Breindahl & co.
     * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
     * Also has a task-done alert, when a production skill completes all items and can't continue, a Task Complete alert will make an audible ding.

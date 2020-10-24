@@ -21,15 +21,18 @@
 ### Script updates
 * TimeRemaining is updated and back!
 * AutoSellGems & AutoEquip Ammo have working config menu prototypes
+* AutoSellGems now has the ability to choose stack size to sell at, as well as toggles for each gem
 * AutoSell's looping interval has been lengthened to 15s to prevent over-zealous selling of items when using a collection skill, mainly when selling gems while mining with gloves. Should alleviate performance stress on lower-power machines
 
 ### UI Changes
 * Added status icons for AutoSell/Open/Bury as well as AutoSlayerSkip so you can see their status from the sidebar without being inside the actual menus
+* Credits update in SEMI menu
 
 ### Repository changes
 * Prettier formatting for the project files
 * Melvor Type definitions included in the repo
 * vscode directory un-gitignore'd, settings and more available
+* Refactoring done to SEMI utils, now available in intellisense
 
 ## v0.4.10
 

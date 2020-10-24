@@ -58,18 +58,21 @@ var { semiSetMenu } = (() => {
   </li>
   <li>Major contributor: Zeldo
     <ul>
-    <li>Offline Timer script & more</li>
-    <li>Core upgrades & additions</li>
+    <li>Offline Timer script</li>
+    <li>AutoEquip Best Item script (beta)</li>
     <li>Per-character config</li>
+    <li>Core upgrades & additions</li>
+    <li>Refactoring & development improvements</li>
     </ul>
   </li>
   <li>Contributor: AuroraKy
     <ul>
     <li>Object-Oriented Core Changes finally included</li>
     <li>Good ideas & discussions</li>
+    <li>Contributions to other scripts that have made it into SEMI</li>
     </ul>
   </li>
-  <li>Many other community coders and bug reporters and supportive helpful folks! <3</li>
+  <li>Many other community coders and bug reporters and supportive helpful folks! <i class="fas fa-heart"></i></li>
   </ul>`;
 
     const injectSEMIInfoPopup = () => {
