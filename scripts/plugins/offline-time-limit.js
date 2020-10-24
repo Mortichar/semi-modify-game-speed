@@ -92,6 +92,13 @@
     });
   };
 
+  function waitForLoad() {
+    if (!SEMI) return;
+    clearInterval(semiLoaderInject);
+    
+    injectSelf();
+  }
+
+  const semiLoaderInject = setInterval(waitForLoad, 50);
   const semiLoader = setInterval(addSelfToSemi, 200);
-  injectSelf();
 })();

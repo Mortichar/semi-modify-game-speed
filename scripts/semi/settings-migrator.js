@@ -1,4 +1,4 @@
-SEMI.SettingsMigrator = (() => {
+SEMISettingsMigrator = (() => {
   const migrateSettings = () => {
     let currentSettingsVersion = SEMI.getGlobalItem("settings-version");
     if (!currentSettingsVersion) {
@@ -42,6 +42,13 @@ SEMI.SettingsMigrator = (() => {
     }
   };
 
-  // We want to load this before the user selects a save.
-  migrateSettings();
+  function waitForLoad() {
+    if (!SEMI) return;
+    clearInterval(semiLoader);
+    
+    // We want to load this before the user selects a save.
+    migrateSettings();
+  }
+
+  const semiLoader = setInterval(waitForLoad, 50);
 })();

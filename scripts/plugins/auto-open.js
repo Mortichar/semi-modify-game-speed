@@ -62,7 +62,7 @@
             if (Array.isArray(loadedAutoEnabled)) {
                 for (let i = 0; i < loadedAutoEnabled.length; i++) {
                     if (loadedAutoEnabled[i]) {
-                        isItemEnabledToSell[i] = true;
+                        isItemEnabledToOpen[i] = true;
                     }
                 }
             }
