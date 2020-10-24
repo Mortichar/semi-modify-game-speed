@@ -134,16 +134,16 @@ var autoSellShow = (() => {
     };
 
     const ItemEventHandler = (itemID, qty, found, showNotification) => {
-      if (isItemEnabledToSell[itemID]) {
-        const gpBefore = gp;
-        SEMI.processItemSaleWithoutBank(itemID, qty);
-        SEMI.customNotify(
-          items[itemID].media,
-          `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`
-        );
-          
-        return true;
-      }
+        if (isItemEnabledToSell[itemID]) {
+            const gpBefore = gp;
+            SEMI.processItemSaleWithoutBank(itemID, qty);
+            SEMI.customNotify(
+                items[itemID].media,
+                `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`
+            );
+
+            return true;
+        }
     };
 
     SEMIEventBus.RegisterAddItemToBankHandler({ HandleAddItemToBankPre: ItemEventHandler });
