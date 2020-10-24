@@ -148,7 +148,7 @@ var autoSellShow = (() => {
 
     SEMIEventBus.RegisterAddItemToBankHandler({ HandleAddItemToBankPre: ItemEventHandler });
 
-    SEMI.add(id, { onEnable, onDisable, title, desc });
+    SEMI.add(id, { ms: 15000, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', {title, desc, imgSrc, injectGUI});
     SEMI.mergeOnto(SEMI,{refreshLog});
 })();

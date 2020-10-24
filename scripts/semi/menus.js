@@ -56,14 +56,14 @@ var {semiSetMenu} = (() => {
   </li>
   <li>Major contributor: Zeldo
     <ul>
-    <li>Offline Timer script</li>
+    <li>Offline Timer script & more</li>
     <li>Core upgrades & additions</li>
     <li>Per-character config</li>
     </ul>
   </li>
   <li>Contributor: AuroraKy
     <ul>
-    <li>Many core changes that haven't made it into the code yet</li>
+    <li>Object-Oriented Core Changes finally included</li>
     <li>Good ideas & discussions</li>
     </ul>
   </li>
@@ -104,7 +104,7 @@ var {semiSetMenu} = (() => {
             </div>
             <div class="custom-control custom-switch mb-1">
               <input type="checkbox" class="custom-control-input" id="SEMI-mastery-enhancements-button-enabled" name="SEMI-mastery-enhancements-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${SEMIetcGUI.masteryEnhancements ? 'checked' : ''}>
-              <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu</label>
+              <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Mastery Enhancement Script: Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu</label>
             </div>
             <div class="block-content block-content-full text-right">
               <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">
