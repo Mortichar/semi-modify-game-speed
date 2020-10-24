@@ -118,7 +118,7 @@ var { semiSetMenu } = (() => {
               <label class="custom-control-label" for="SEMI-time-remaining-button-enabled">TimeRemaining by Breindahl: time estimates for production skills next to the item. Includes a ding noise when a task completes.</label>
             </div>
             <div class="custom-control custom-switch mb-1">
-              <input type="checkbox" class="custom-control-input" id="SEMI-mastery-enhancements-button-enabled" name="SEMI-mastery-enhancements-button-enabled" onchange="SEMIetcGUI.timeRemaining = this.checked" ${
+              <input type="checkbox" class="custom-control-input" id="SEMI-mastery-enhancements-button-enabled" name="SEMI-mastery-enhancements-button-enabled" onchange="SEMIetcGUI.masteryEnhancements = this.checked" ${
                   SEMIetcGUI.masteryEnhancements ? 'checked' : ''
               }>
               <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Mastery Enhancement Script: Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu</label>
