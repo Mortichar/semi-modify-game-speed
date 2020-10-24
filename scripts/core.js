@@ -171,7 +171,7 @@ var SEMI =  (() => {
     * @param {boolean} hasConfig Whether or not to include a config button
     * @param {string} configMenu HTML for insertion into the tippy config menu
     */
-    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId, hasConfig = false, configMenu) => {
+    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId, hasConfig = false, configMenu, configMenuOnShown = undefined) => {
         const imgEl =  createElement('img', {src: imgSrc, id: `${name}-img`, class: 'nav-img'});
         const textEl = createElement('span', {innerHTML: title, class: 'nav-main-link-name'});
         const statusEl = createElement('i', {id: `${name}-status`, class: 'fas fa-times text-danger', style: 'width: 15px;'});
@@ -190,7 +190,9 @@ var SEMI =  (() => {
                 interactiveBorder: 30,
                 trigger: 'click',
                 zIndex: 9999,
-                placement: 'right'
+                placement: 'right',
+                onShown: configMenuOnShown,
+                maxWidth: 'none',
             });
             configBtnEl.addEventListener("click", (event) => {
                 SEMI.updateConfig(name);
@@ -225,7 +227,7 @@ var SEMI =  (() => {
     * @param {*} options Options such as onLoop, injectGUI, etc
     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false, configMenu: '<div>This is a default config menu!</div>', saveConfig: () => {}, updateConfig: () => {}};
+        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false, configMenu: '<div>This is a default config menu!</div>', saveConfig: () => {}, updateConfig: () => {}, onConfigMenuShown: () => {}};
         const opts = {...defaults, ...options};
         // Register the name and add ms
         data[name] = {};
@@ -238,7 +240,7 @@ var SEMI =  (() => {
             const plugin = plugins[name];
             if(plugin.imgSrc === '') { return; }
             let menuRootId = `${ROOT_ID}-${plugin.pluginType}`;
-            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId, plugin.hasConfig, plugin.configMenu);
+            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId, plugin.hasConfig, plugin.configMenu, plugin.onConfigMenuShown);
             $(`#${menuRootId}-section-unsorted`).append(pluginEl);
         };
 
