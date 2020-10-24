@@ -31,13 +31,13 @@
                 moveToNext();
             }
         }
-        if (!SEMI.isCurrentSkill(skill)) {
+        if (!SEMIUtils.isCurrentSkill(skill)) {
             startSmithing(true);
         }
     };
 
     const onDisable = () => {
-        SEMI.stopSkill(skill);
+        SEMIUtils.stopSkill(skill);
     };
 
     SEMI.add(id, { onLoop: autoSmithBars, onEnable: getBarTypes, onDisable, title, desc, imgSrc, skill });

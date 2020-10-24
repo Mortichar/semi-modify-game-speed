@@ -236,14 +236,14 @@
 
     // AutoMine: Will mine based on your or priorities set in mineArray // aw: this still works awesomely!
     const onEnable = () => {
-        if (!SEMI.isCurrentSkill(skill)) {
+        if (!SEMIUtils.isCurrentSkill(skill)) {
             mineRock(0);
         }
         injectAutoMineGUI();
     };
 
     const onDisable = () => {
-        SEMI.stopSkill(skill);
+        SEMIUtils.stopSkill(skill);
         removeAutoMineGUI();
     };
 
@@ -264,7 +264,7 @@
     /** @param {number[]} rocks */
     const autoMine = (rocks = mineArray) => {
         let swingRatio = 0;
-        if (SEMI.isCurrentSkill(skill)) {
+        if (SEMIUtils.isCurrentSkill(skill)) {
             swingRatio = Number(
                 document.getElementById(`mining-rock-progress-${currentRock}`).style.width.split('%')[0]
             );
@@ -275,7 +275,7 @@
                 if (rock === ORES.Coal && menuConfig['AM'].coalRatio === 'none') {
                     resourceRatios[rock] = Infinity;
                 } else {
-                    resourceRatios[rock] = SEMI.getBankQty(oreIDs[rock]) / barRatios[AMselection][rock];
+                    resourceRatios[rock] = SEMIUtils.getBankQty(oreIDs[rock]) / barRatios[AMselection][rock];
                     if (rock === ORES.Coal && menuConfig['AM'].coalRatio === 'half') {
                         resourceRatios[rock] *= 2;
                     }
@@ -302,10 +302,10 @@
             mineArray.sort((a, b) => indexOf(`AutoMineDrag${a}`) - indexOf(`AutoMineDrag${b}`));
         }
         for (const rock of rocks) {
-            if (!SEMI.isCurrentSkill(skill)) {
+            if (!SEMIUtils.isCurrentSkill(skill)) {
                 mineRock(rock);
             }
-            if (!rockData[rock].depleted && miningData[rock].level <= SEMI.currentLevel(skill)) {
+            if (!rockData[rock].depleted && miningData[rock].level <= SEMIUtils.currentLevel(skill)) {
                 // added extra condition to make universal
                 if (currentRock !== rock && swingRatio < 10) {
                     mineRock(rock);

@@ -13,7 +13,7 @@
     const title = 'AutoSlayer';
     const desc =
         'AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default, unless you are properly equipped or you turn on AS Auto Equip and have the correct items in the bank.';
-    const imgSrc = SEMI.skillImg('slayer');
+    const imgSrc = SEMIUtils.skillImg('slayer');
 
     let autoSlayerCheck = 0;
 
@@ -35,9 +35,9 @@
             getSlayerTask();
         } //If there is no slayer task, get one
 
-        const currentCape = () => SEMI.currentEquipmentInSlot('Cape');
-        const currentRing = () => SEMI.currentEquipmentInSlot('Ring');
-        const currentShield = () => SEMI.currentEquipmentInSlot('Shield');
+        const currentCape = () => SEMIUtils.currentEquipmentInSlot('Cape');
+        const currentRing = () => SEMIUtils.currentEquipmentInSlot('Ring');
+        const currentShield = () => SEMIUtils.currentEquipmentInSlot('Shield');
 
         if (autoSlayerCheck == 0) {
             autoSlayerCheck = 1;
@@ -65,9 +65,9 @@
         const skillCape = CONSTANTS.item.Slayer_Skillcape;
 
         //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
-        if (forcedEnemy !== slayerTask[0].monsterID || !SEMI.isCurrentSkill('Hitpoints')) {
-            if (SEMI.isCurrentSkill('Hitpoints')) {
-                SEMI.stopSkill('Hitpoints');
+        if (forcedEnemy !== slayerTask[0].monsterID || !SEMIUtils.isCurrentSkill('Hitpoints')) {
+            if (SEMIUtils.isCurrentSkill('Hitpoints')) {
+                SEMIUtils.stopSkill('Hitpoints');
             }
             for (let i = 0; i < combatAreas.length; i++) {
                 if (combatAreas[i].areaName == findEnemyArea(slayerTask[0].monsterID)) {
@@ -77,13 +77,13 @@
             }
             //Equips Slayer Skillcape if owned
             if (
-                SEMI.currentLevel('Slayer') >= 99 &&
+                SEMIUtils.currentLevel('Slayer') >= 99 &&
                 (checkBankForItem(skillCape) || hasCape) &&
                 SEMI.isEnabled('auto-slayer-equip')
             ) {
                 if (!hasCape) {
                     originalCape = currentCape();
-                    found = SEMI.equipFromBank(skillCape);
+                    found = SEMIUtils.equipFromBank(skillCape);
                 }
             } else if ((needsShield || needsRing) && !SEMI.isEnabled('auto-slayer-equip')) {
                 //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
@@ -104,7 +104,7 @@
                                 'Skipping task due to 2-handed weapon or missing shield!'
                             );
                         } else {
-                            found = SEMI.equipFromBank(CONSTANTS.item.Mirror_Shield);
+                            found = SEMIUtils.equipFromBank(CONSTANTS.item.Mirror_Shield);
                         }
                     }
                 } else if (needsRing) {
@@ -115,18 +115,18 @@
                             notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing ring!');
                         }
                         originalRing = currentRing();
-                        found = SEMI.equipFromBank(CONSTANTS.item.Magical_Ring);
+                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Magical_Ring);
                     }
                 } else if (!(needsShield || needsRing)) {
                     slayerLockedItem = null; // Ensures the game will allow us to unequip slayer equipment
 
                     //Equips original shield when not in Area
                     if (hasShield && originalShield != CONSTANTS.item.Mirror_Shield) {
-                        found = SEMI.equipFromBank(originalShield);
+                        found = SEMIUtils.equipFromBank(originalShield);
                     }
                     //Equips original ring when not in Area
                     if (hasRing && originalRing != CONSTANTS.item.Magical_Ring) {
-                        found = SEMI.equipFromBank(originalRing);
+                        found = SEMIUtils.equipFromBank(originalRing);
                     }
                 }
             }

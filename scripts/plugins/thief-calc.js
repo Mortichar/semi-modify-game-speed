@@ -76,7 +76,7 @@
             addCalcToEl(npcEl, [`~${xpPerSecond} XP/s`]); // Add the xp/s amounts
             npcEl.classList.add('js-popover'); // Add the popovers for the loot
             const data = { toggle: 'popover', html: 'true', placement: 'bottom', content: g(npc) };
-            SEMI.mergeOnto(npcEl.dataset, data);
+            SEMIUtils.mergeOnto(npcEl.dataset, data);
         };
 
         thievingNPC.forEach(f);

@@ -68,7 +68,7 @@
             let elementToChange = document.getElementById(`${GUI.idName}${i}`);
             if (elementToChange !== null) {
                 // Changing inner html
-                $(`#${GUI.idName}${i}`).text(`${GUI.prefix}${formatNumber(SEMI.getBankQty(miningData[i].ore))}`);
+                $(`#${GUI.idName}${i}`).text(`${GUI.prefix}${formatNumber(SEMIUtils.getBankQty(miningData[i].ore))}`);
             }
         }
     }

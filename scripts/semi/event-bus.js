@@ -26,9 +26,9 @@ SEMIEventBus = (() => {
     let _currentSkill = -1;
     let _isMagic = false;
     const checkIfSkillChanged = () => {
-        if (SEMI.currentSkillId() != _currentSkill || isMagic != _isMagic) {
+        if (SEMIUtils.currentSkillId() != _currentSkill || isMagic != _isMagic) {
             const _prevSkill = _currentSkill;
-            _currentSkill = SEMI.currentSkillId();
+            _currentSkill = SEMIUtils.currentSkillId();
             _isMagic = isMagic;
 
             for (var handler of _skillChangeHandlers) {
@@ -45,9 +45,10 @@ SEMIEventBus = (() => {
     };
 
     const startEventBusTimers = () => {
-        if (!isLoaded || typeof SEMI === 'undefined' || !SEMI.utilsReady) {
+        if (typeof SEMIUtils === 'undefined' || !SEMIUtils.utilsReady()) {
             return;
         }
+
         console.log('Starting Event Bus');
         clearInterval(eventBusWaiter);
         setInterval(checkIfSkillChanged, 100);

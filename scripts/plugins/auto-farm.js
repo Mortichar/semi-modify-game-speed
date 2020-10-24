@@ -12,7 +12,7 @@
     const title = 'AutoFarm';
     const desc =
         'AutoFarm by Visua will automatically farm everything for you, planting seeds according to your selected priority, buying and using compost when it needs to. Will use gloop if you have it.';
-    const imgSrc = SEMI.skillImg('farming');
+    const imgSrc = SEMIUtils.skillImg('farming');
     const version = 2;
     const patchTypes = ['allotments', 'herbs', 'trees'];
     const toPatchType = { Allotment: patchTypes[0], Herb: patchTypes[1], Tree: patchTypes[2] };
@@ -45,7 +45,7 @@
     });
 
     function canBuyCompost(n = 5) {
-        if (SEMI.hasCapeOn('Farming')) {
+        if (SEMIUtils.hasCapeOn('Farming')) {
             return false;
         }
         const cost = n * items[CONSTANTS.item.Compost].buysFor;
@@ -153,16 +153,16 @@
         if (anyPatchReady) {
             if (!isInCombat) {
                 swapFarmingEquipment(true);
-                SEMI.equipSwapConfig.script = id;
+                SEMIUtils.equipSwapConfig.script = id;
             }
             for (let i = 0; i < newFarmingAreas.length; i++) {
                 for (let j = 0; j < newFarmingAreas[i].patches.length; j++) {
                     handlePatch(i, j);
                 }
             }
-            if (SEMI.equipSwapConfig.script === id) {
+            if (SEMIUtils.equipSwapConfig.script === id) {
                 swapFarmingEquipment(false);
-                SEMI.equipSwapConfig.script = '';
+                SEMIUtils.equipSwapConfig.script = '';
             }
         }
 
@@ -174,11 +174,11 @@
     }
 
     function equipIfNotEquipped(item, slot) {
-        if (SEMI.currentEquipmentInSlot(slot) === item) {
+        if (SEMIUtils.currentEquipmentInSlot(slot) === item) {
             return true;
         }
         if (checkBankForItem(item)) {
-            SEMI.equipSwap(item, slot);
+            SEMIUtils.equipSwap(item, slot);
             return true;
         }
         return false;
@@ -195,21 +195,21 @@
                 equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape') ||
                 equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
         } else {
-            if (SEMI.equipSwapConfig['Weapon'].swapped) {
-                SEMI.equipSwap(0, 'Weapon');
+            if (SEMIUtils.equipSwapConfig['Weapon'].swapped) {
+                SEMIUtils.equipSwap(0, 'Weapon');
             }
-            if (SEMI.equipSwapConfig['Ring'].swapped) {
-                SEMI.equipSwap(0, 'Ring');
+            if (SEMIUtils.equipSwapConfig['Ring'].swapped) {
+                SEMIUtils.equipSwap(0, 'Ring');
             }
-            if (SEMI.equipSwapConfig['Cape'].swapped) {
-                SEMI.equipSwap(0, 'Cape');
+            if (SEMIUtils.equipSwapConfig['Cape'].swapped) {
+                SEMIUtils.equipSwap(0, 'Cape');
             }
         }
     }
 
     function getCompost() {
         if (checkBankForItem(CONSTANTS.item.Compost)) {
-            const qty = SEMI.getBankQty(CONSTANTS.item.Compost);
+            const qty = SEMIUtils.getBankQty(CONSTANTS.item.Compost);
             if (qty < 5) {
                 buyQty = 5 - qty;
                 buyCompost(true);

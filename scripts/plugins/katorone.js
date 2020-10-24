@@ -65,7 +65,7 @@ const setLoadedKatValues = () => {
         let value = 0;
         for (let i = 0; i < katBot.gemList.length; i++) {
             let id = katBot.gemList[i];
-            let amount = SEMI.getBankQty(id);
+            let amount = SEMIUtils.getBankQty(id);
             bankGems.push([id, amount, items[id].sellsFor]);
             toSell[id] = {};
             // Little hack to always keep 1 gem in the bank.
@@ -96,7 +96,7 @@ const setLoadedKatValues = () => {
             return;
         }
         // Is the gem glove equipped? - Same reason
-        if (SEMI.currentEquipmentInSlot('Gloves') !== CONSTANTS.item.Gem_Gloves) {
+        if (SEMIUtils.currentEquipmentInSlot('Gloves') !== CONSTANTS.item.Gem_Gloves) {
             return;
         }
         // How many uses left?
@@ -141,7 +141,7 @@ const setLoadedKatValues = () => {
             // Does anything need selling?
             let sell = katBot.sellList.shift();
             if (sell) {
-                SEMI.sellItemWithoutConfirmation(sell[0], sell[1]);
+                SEMIUtils.sellItemWithoutConfirmation(sell[0], sell[1]);
                 const notification = `Katorone Automation just auto-sold ${sell[1]} ${items[sell[0]].name}.`;
                 notifyPlayer(10, notification);
                 console.log(notification);
@@ -200,7 +200,7 @@ const injectKatGUI = () => {
     <div class="modal-content">
     <div class="block block-themed block-transparent mb-0">
     <div class="block-header bg-primary-dark">
-    <img class="nav-img" src="${SEMI.iconSrc}">
+    <img class="nav-img" src="${SEMIUtils.iconSrc}">
     <h3 class="block-title">Katorone Automation Settings</h3>
     <div class="block-options">
     <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">

@@ -41,7 +41,7 @@ var injectXPHGUI = (() => {
         }
         $(`#${key}-rate`).text('...');
         $(`#${key}-lvl`).text('... hrs');
-        $(`#${key}-lvl-in`).val(SEMI.currentLevel(data[key].skill) + 1);
+        $(`#${key}-lvl-in`).val(SEMIUtils.currentLevel(data[key].skill) + 1);
         $(`#${key}-time`).text('0');
     };
 
@@ -54,7 +54,7 @@ var injectXPHGUI = (() => {
         }
         value.time = Date.now();
         value.running = true;
-        value.exp = SEMI.currentXP(value.skill);
+        value.exp = SEMIUtils.currentXP(value.skill);
     };
 
     /** @param {string} key */
@@ -68,11 +68,11 @@ var injectXPHGUI = (() => {
         let hoursToLvl = 0;
         const lvlIn = Number($(`#${key}-lvl-in`).val()); // Math.min(99, lvlIn) to cap to 99
         const rate = Number(xpPerHour.split(',').join(''));
-        if (lvlIn > SEMI.currentLevel(skill) && rate > 0) {
-            hoursToLvl = (exp.level_to_xp(lvlIn) - SEMI.currentXP(skill)) / rate;
+        if (lvlIn > SEMIUtils.currentLevel(skill) && rate > 0) {
+            hoursToLvl = (exp.level_to_xp(lvlIn) - SEMIUtils.currentXP(skill)) / rate;
         }
         $(`#${key}-rate`).text(xpPerHour);
-        $(`#${key}-lvl`).text(SEMI.formatTimeFromMinutes(hoursToLvl * 60));
+        $(`#${key}-lvl`).text(SEMIUtils.formatTimeFromMinutes(hoursToLvl * 60));
         $(`#${key}-time`).text(((Date.now() - time) / 1000).toFixed(0));
     };
 
@@ -87,7 +87,7 @@ var injectXPHGUI = (() => {
         const oldXP = exp || 0;
         const oldTime = time || Date.now();
         const timeSince = (Date.now() - oldTime) / 1000;
-        const xpLeft = SEMI.currentXP(skill) - oldXP;
+        const xpLeft = SEMIUtils.currentXP(skill) - oldXP;
         let xpPerHour = Math.floor((xpLeft / timeSince) * 3600).toString();
         const pattern = /(-?\d+)(\d{3})/;
         while (pattern.test(xpPerHour)) {
@@ -170,7 +170,7 @@ var injectXPHGUI = (() => {
     let XPHtoggledOff = false;
 
     const startXPH = () => {
-        const n = SEMI.currentSkillId();
+        const n = SEMIUtils.currentSkillId();
         if (n === -1) {
             return;
         }
@@ -187,10 +187,10 @@ var injectXPHGUI = (() => {
     };
 
     const startXPHC = () => {
-        if (!SEMI.isCurrentSkill('Hitpoints')) {
+        if (!SEMIUtils.isCurrentSkill('Hitpoints')) {
             return;
         } // Not in combat
-        SEMI.customNotify(
+        SEMIUtils.customNotify(
             'assets/media/main/statistics_header.svg',
             'Check Combat Page Skill Progress table for XPH Combat Display!',
             10000
@@ -198,8 +198,8 @@ var injectXPHGUI = (() => {
         if ($('#combat-skill-progress-menu').attr('class').split(' ').includes('d-none')) {
             toggleCombatSkillMenu();
         }
-        if (SEMI.currentPageName() !== 'Combat') {
-            SEMI.changePage('Combat');
+        if (SEMIUtils.currentPageName() !== 'Combat') {
+            SEMIUtils.changePage('Combat');
         }
     };
 
@@ -214,7 +214,7 @@ var injectXPHGUI = (() => {
         if (n == 11) {
             return toggleRunning('xphf');
         }
-        const currentSkill = SEMI.currentSkillName();
+        const currentSkill = SEMIUtils.currentSkillName();
         if (currentSkill !== '' && currentSkill !== 'Hitpoints') {
             return toggleRunning('xph');
         }

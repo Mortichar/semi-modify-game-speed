@@ -11,7 +11,7 @@
         bonus.itemID = 0;
         bonus.bonus = [null, null];
         bonus.charges = 0;
-        SEMI.customNotify('assets/media/skills/herblore/potion_empty.svg', 'Your potion has been BARFED!', 5000);
+        SEMIUtils.customNotify('assets/media/skills/herblore/potion_empty.svg', 'Your potion has been BARFED!', 5000);
         if (currentPage === 13) {
             updatePlayerStats();
         }
@@ -38,7 +38,7 @@
         $('.row.no-gutters.bg-primary').append(barfButton);
     };
     const removeGUI = () => $('#barf-gui').remove();
-    // SEMI.mergeOnto(SEMI, {barf});
+    // SEMIUtils.mergeOnto(SEMI, {barf});
     SEMI.add(id, {
         ms: 0,
         pluginType: SEMI.PLUGIN_TYPE.TWEAK,

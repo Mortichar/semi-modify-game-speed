@@ -2,7 +2,7 @@
     const id = 'auto-equip';
     const title = 'AutoEquip Ammo';
     const desc = 'Auto Equip will automatically equip more of your currently equipped ammo if you run low.';
-    const imgSrc = SEMI.skillImg('ranged');
+    const imgSrc = SEMIUtils.skillImg('ranged');
 
     const config = {
         ammoQty: 1000,
@@ -10,18 +10,18 @@
     };
 
     const equipMoreAmmo = () => {
-        const ammoId = SEMI.currentEquipmentInSlot('Quiver');
+        const ammoId = SEMIUtils.currentEquipmentInSlot('Quiver');
         if (ammoId === 0) return;
-        // const ammoQty = Math.min(SEMI.getBankQty(ammoId), 1000);
+        // const ammoQty = Math.min(SEMIUtils.getBankQty(ammoId), 1000);
         const ammoQty = SEMI.getValue(id, 'ammoQty');
-        if (SEMI.getBankQty(ammoId)) {
-            SEMI.equipFromBank(ammoId, ammoQty);
-            SEMI.customNotify(items[ammoId].media, `SEMI just equipped ${ammoQty} ${items[ammoId].name}.`, 5000);
+        if (SEMIUtils.getBankQty(ammoId)) {
+            SEMIUtils.equipFromBank(ammoId, ammoQty);
+            SEMIUtils.customNotify(items[ammoId].media, `SEMI just equipped ${ammoQty} ${items[ammoId].name}.`, 5000);
         }
     };
 
     const onLoop = () => {
-        const currentWeapon = items[SEMI.currentEquipmentInSlot('Weapon')];
+        const currentWeapon = items[SEMIUtils.currentEquipmentInSlot('Weapon')];
         const usingRanged = currentWeapon.isRanged || currentWeapon.type === 'Ranged Weapon';
         const minAmmo = SEMI.getValue(id, 'minimumAmmo');
         if (usingRanged && ammo < minAmmo && !isDungeon) {
@@ -59,7 +59,7 @@
             saved = true;
         }
         if (saved) {
-            SEMI.customNotify(
+            SEMIUtils.customNotify(
                 imgSrc,
                 `Saved AutoEquip Ammo Quantity: ${SEMI.getValue(
                     id,

@@ -23,13 +23,13 @@
         const toggleArray = SEMI.getValue(id, 'gemToggle');
         let togIndex = 0;
         for (const gemId of gemIdList) {
-            const curQty = SEMI.getBankQty(gemId);
+            const curQty = SEMIUtils.getBankQty(gemId);
             //console.log('GEM ID '+gemId+' you have '+curQty);
             if (curQty > targetStack && toggleArray[togIndex]) {
                 count++;
                 setTimeout(() => {
-                    SEMI.sellItemWithoutConfirmation(gemId, targetStack);
-                    SEMI.customNotify(
+                    SEMIUtils.sellItemWithoutConfirmation(gemId, targetStack);
+                    SEMIUtils.customNotify(
                         'assets/media/main/coins.svg',
                         `Auto Sell Gems just sold ${targetStack} ${items[gemId].name}.`,
                         5000
@@ -103,7 +103,7 @@
         });
         SEMI.setValue(id, 'gemToggle', toggleArray);
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
-        SEMI.customNotify(imgSrc, `Saved AutoSellGems config!`, 3000);
+        SEMIUtils.customNotify(imgSrc, `Saved AutoSellGems config!`, 3000);
     };
     const updateConfig = () => {
         $(`#${id}-stack-form`).val(SEMI.getValue(id, 'targetStack'));

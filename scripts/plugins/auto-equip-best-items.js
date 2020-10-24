@@ -208,7 +208,7 @@ SEMI.AutoEquipBestItems = (() => {
             .each((index, child) => {
                 tooltips.concat(
                     tippy(`#auto-equip-best-item-id-${child.dataset.id}`, {
-                        content: SEMI.getItemTooltip(Number(child.dataset.id)),
+                        content: SEMIUtils.getItemTooltip(Number(child.dataset.id)),
                         placement: 'top',
                         allowHTML: true,
                         interactive: false,
@@ -255,10 +255,10 @@ SEMI.AutoEquipBestItems = (() => {
             currentSkillId = CONSTANTS.skill.Magic;
         }
 
-        const currentCombatSkillId = SEMI.currentCombatSkillId();
-        const isSkillMaxLevel = SEMI.isMaxLevelById(currentSkillId);
+        const currentCombatSkillId = SEMIUtils.currentCombatSkillId();
+        const isSkillMaxLevel = SEMIUtils.isMaxLevelById(currentSkillId);
         const isCombatMaxLevel =
-            SEMI.isMaxLevelById(currentCombatSkillId) && SEMI.isMaxLevelById(CONSTANTS.skill.Hitpoints);
+            SEMIUtils.isMaxLevelById(currentCombatSkillId) && SEMIUtils.isMaxLevelById(CONSTANTS.skill.Hitpoints);
 
         // Cape Slot
         for (var itemId of itemsBySlotConfig[CONSTANTS.equipmentSlot.Cape]) {
@@ -386,7 +386,7 @@ SEMI.AutoEquipBestItems = (() => {
             return (
                 isInCombat &&
                 currentCombatSkillId == CONSTANTS.skill.Magic &&
-                item.magicLevelRequired <= SEMI.currentLevelById(CONSTANTS.skill.Magic)
+                item.magicLevelRequired <= SEMIUtils.currentLevelById(CONSTANTS.skill.Magic)
             );
         }
 
@@ -396,7 +396,7 @@ SEMI.AutoEquipBestItems = (() => {
                 (currentCombatSkillId == CONSTANTS.skill.Attack ||
                     currentCombatSkillId == CONSTANTS.skill.Strength ||
                     currentCombatSkillId == CONSTANTS.skill.Defence) &&
-                item.defenceLevelRequired <= SEMI.currentLevelById(CONSTANTS.skill.Defence)
+                item.defenceLevelRequired <= SEMIUtils.currentLevelById(CONSTANTS.skill.Defence)
             );
         }
 
@@ -404,7 +404,7 @@ SEMI.AutoEquipBestItems = (() => {
             return (
                 isInCombat &&
                 currentCombatSkillId == CONSTANTS.skill.Ranged &&
-                item.rangedLevelRequired <= SEMI.currentLevelById(CONSTANTS.skill.Ranged)
+                item.rangedLevelRequired <= SEMIUtils.currentLevelById(CONSTANTS.skill.Ranged)
             );
         }
 
@@ -443,7 +443,7 @@ SEMI.AutoEquipBestItems = (() => {
             return (
                 isInCombat &&
                 currentCombatSkillId == CONSTANTS.skill.Magic &&
-                item.magicLevelRequired <= SEMI.currentLevelById(CONSTANTS.skill.Magic)
+                item.magicLevelRequired <= SEMIUtils.currentLevelById(CONSTANTS.skill.Magic)
             );
         }
 
@@ -453,7 +453,7 @@ SEMI.AutoEquipBestItems = (() => {
                 (currentCombatSkillId == CONSTANTS.skill.Attack ||
                     currentCombatSkillId == CONSTANTS.skill.Strength ||
                     currentCombatSkillId == CONSTANTS.skill.Defence) &&
-                item.defenceLevelRequired <= SEMI.currentLevelById(CONSTANTS.skill.Defence)
+                item.defenceLevelRequired <= SEMIUtils.currentLevelById(CONSTANTS.skill.Defence)
             );
         }
 
@@ -461,7 +461,7 @@ SEMI.AutoEquipBestItems = (() => {
             return (
                 isInCombat &&
                 currentCombatSkillId == CONSTANTS.skill.Ranged &&
-                item.rangedLevelRequired <= SEMI.currentLevelById(CONSTANTS.skill.Ranged)
+                item.rangedLevelRequired <= SEMIUtils.currentLevelById(CONSTANTS.skill.Ranged)
             );
         }
 
@@ -488,7 +488,7 @@ SEMI.AutoEquipBestItems = (() => {
             return true;
         }
 
-        return SEMI.equipFromBank(itemId);
+        return SEMIUtils.equipFromBank(itemId);
     };
 
     gatherItemData();

@@ -37,7 +37,7 @@ var injectEyes = (() => {
 
         for (let key in SEMI.SIDEBAR_MENUS) {
             const menu = SEMI.SIDEBAR_MENUS[key];
-            SEMI.getElement(`${menu.ID}-header`).append(eye(menu.ID));
+            SEMIUtils.getElement(`${menu.ID}-header`).append(eye(menu.ID));
         }
 
         $('#SEMI-heading').append(eye('main'));
@@ -57,7 +57,7 @@ var injectEyes = (() => {
 
         const className = 'fa-eye' + (state ? '' : '-slash');
         const toRemove = 'fa-eye' + (!state ? '' : '-slash');
-        const eye = SEMI.getElement(`eye-${id}`);
+        const eye = SEMIUtils.getElement(`eye-${id}`);
         eye.removeClass(toRemove);
         eye.addClass(className);
 
@@ -69,7 +69,7 @@ var injectEyes = (() => {
                 els.addClass('fold-d-none');
             }
         } else {
-            const els = SEMI.getElements(idMap[id]);
+            const els = SEMIUtils.getElements(idMap[id]);
             if (state) {
                 els.removeClass('fold-d-none');
             } else {
@@ -92,7 +92,7 @@ var injectEyes = (() => {
             showMenu(menu.ID);
         }
 
-        SEMI.getElements('eye-').removeClass('fold-d-none');
+        SEMIUtils.getElements('eye-').removeClass('fold-d-none');
     };
 
     return injectEyes;

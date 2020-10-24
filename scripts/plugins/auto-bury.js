@@ -48,9 +48,9 @@
         for (let i = bank.length - 1; i >= 0; i--) {
             const itemID = bank[i].id;
             if (isItemEnabledToBury[itemID]) {
-                const qty = SEMI.getBankQty(itemID);
-                SEMI.buryItemWithoutConfirmation(itemID, qty);
-                SEMI.customNotify(
+                const qty = SEMIUtils.getBankQty(itemID);
+                SEMIUtils.buryItemWithoutConfirmation(itemID, qty);
+                SEMIUtils.customNotify(
                     items[itemID].media,
                     `Burying ${numberWithCommas(qty)} ${items[itemID].name} for ${numberWithCommas(
                         items[itemID].prayerPoints * qty
@@ -147,5 +147,5 @@
 
     SEMI.add(id, { onLoop: autoBury, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI });
-    SEMI.mergeOnto(SEMI, { refreshBoneLog });
+    SEMIUtils.mergeOnto(SEMI, { refreshBoneLog });
 })();

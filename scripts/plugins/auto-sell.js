@@ -51,8 +51,8 @@ var autoSellShow = (() => {
             if (isItemEnabledToSell[itemID]) {
                 const qty = bank[i].qty;
                 const gpBefore = gp;
-                SEMI.sellItemWithoutConfirmation(itemID, qty);
-                SEMI.customNotify(
+                SEMIUtils.sellItemWithoutConfirmation(itemID, qty);
+                SEMIUtils.customNotify(
                     items[itemID].media,
                     `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(
                         gp - gpBefore
@@ -152,8 +152,8 @@ var autoSellShow = (() => {
     const ItemEventHandler = (itemID, qty, found, showNotification) => {
         if (isItemEnabledToSell[itemID]) {
             const gpBefore = gp;
-            SEMI.processItemSaleWithoutBank(itemID, qty);
-            SEMI.customNotify(
+            SEMIUtils.processItemSaleWithoutBank(itemID, qty);
+            SEMIUtils.customNotify(
                 items[itemID].media,
                 `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`
             );
@@ -166,5 +166,5 @@ var autoSellShow = (() => {
 
     SEMI.add(id, { ms: 15000, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI });
-    SEMI.mergeOnto(SEMI, { refreshLog });
+    SEMIUtils.mergeOnto(SEMI, { refreshLog });
 })();
