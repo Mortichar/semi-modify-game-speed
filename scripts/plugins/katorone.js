@@ -1,13 +1,13 @@
 //Katorone settings defaults
 var katoroneOn = false; //called by radio button. works instantly.
 var katBot = {
-// const config = {
+    // const config = {
     buyBankSlots: true,
     buyGemGlove_enabled: true,
     reserveGold: 5000000,
     gemGloveUses: 6000,
     gemList: [],
-    sellList: []//,
+    sellList: [], //,
     // katoroneOn: false
 };
 
@@ -70,16 +70,18 @@ const setLoadedKatValues = () => {
             toSell[id] = {};
             // Little hack to always keep 1 gem in the bank.
             toSell[id].amount = -1;
-            value = value + ((amount-1) * items[id].sellsFor);
+            value = value + (amount - 1) * items[id].sellsFor;
         }
         // If selling all gems doesn't match target_gold, stop.
-        if (value < targetGold) {return;}
+        if (value < targetGold) {
+            return;
+        }
 
         let sellValue = 0;
         // Add gems to sell until the target gold is reached
         while (sellValue < targetGold) {
             // Sort bank_gems on amount
-            bankGems.sort((a,b) => b[1] - a[1]);
+            bankGems.sort((a, b) => b[1] - a[1]);
             // Add gems to the selling queue
             bankGems[0][1]--;
             sellValue = sellValue + bankGems[0][2];
@@ -90,17 +92,24 @@ const setLoadedKatValues = () => {
     // MINING
     const checkGloves = () => {
         // Are we mining? - Do this check to avoid spending saved gp
-        if (!isMining) { return; }
+        if (!isMining) {
+            return;
+        }
         // Is the gem glove equipped? - Same reason
-        if (SEMI.currentEquipmentInSlot('Gloves') !== CONSTANTS.item.Gem_Gloves) {return;}
+        if (SEMI.currentEquipmentInSlot('Gloves') !== CONSTANTS.item.Gem_Gloves) {
+            return;
+        }
         // How many uses left?
         let uses_left = glovesTracker[CONSTANTS.shop.gloves.Gems].remainingActions;
         let to_buy = Math.ceil((katBot.gemGloveUses - uses_left) / 2000);
         // Quit if we don't need more gloves.
-        if (to_buy <= 0) {return;}
+        if (to_buy <= 0) {
+            return;
+        }
         let price = glovesCost[CONSTANTS.shop.gloves.Gems];
         // Buy one if we can afford it
-        if ((gp - price) >= katBot.reserveGold) { //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
+        if (gp - price >= katBot.reserveGold) {
+            //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
             buyGloves(CONSTANTS.shop.gloves.Gems, true);
             //aw: adding notifications
             const notification = 'Katorone Automation just bought Gem Glove charges.';
@@ -109,8 +118,8 @@ const setLoadedKatValues = () => {
             return;
         }
         // Do we need to sell gems?
-        if (gp < (katBot.reserveGold+price)) {
-            sellGems((price+katBot.reserveGold) - gp); //0.2.3.1 hotfix: added katBot.reserveGold to this.
+        if (gp < katBot.reserveGold + price) {
+            sellGems(price + katBot.reserveGold - gp); //0.2.3.1 hotfix: added katBot.reserveGold to this.
         }
     };
 
@@ -123,7 +132,9 @@ const setLoadedKatValues = () => {
         // Do actions every second. (aw: more like action of selling things.)
 
         const mediumF = () => {
-            if (!katoroneOn) { return; }
+            if (!katoroneOn) {
+                return;
+            }
             updateKatSets();
             ////DEV
             //console.log('Katorone short loop running.');
@@ -142,7 +153,7 @@ const setLoadedKatValues = () => {
         const buyBankSlot = () => {
             let cost = Math.min(newNewBankUpgradeCost.level_to_gp(currentBankUpgrade + 1), 4000000);
             // Buy if we have enough gold above reserve.
-            if (gp >= (cost + katBot.reserveGold)) {
+            if (gp >= cost + katBot.reserveGold) {
                 upgradeBank(true);
                 const notification = 'Katorone Automation just bought a new bank slot.';
                 notifyPlayer(4, notification);
@@ -153,13 +164,21 @@ const setLoadedKatValues = () => {
         };
 
         const slowF = () => {
-            if (!katoroneOn) { return; }
+            if (!katoroneOn) {
+                return;
+            }
             // Try buying a bank slot
-            if (katBot.buyBankSlots === true && bank.length >= (baseBankMax + bankMax)) { buyBankSlot(); }
+            if (katBot.buyBankSlots === true && bank.length >= baseBankMax + bankMax) {
+                buyBankSlot();
+            }
             // Make sure our money reserves are replenished
-            if (gp < katBot.reserveGold) { sellGems(katBot.reserveGold - gp); }
+            if (gp < katBot.reserveGold) {
+                sellGems(katBot.reserveGold - gp);
+            }
             // One gem glove lasts at least 750 seconds.
-            if (katBot.buyGemGlove_enabled) { checkGloves(); }
+            if (katBot.buyGemGlove_enabled) {
+                checkGloves();
+            }
         };
 
         // Do actions every minute.
@@ -171,11 +190,12 @@ const setLoadedKatValues = () => {
     //:: end import Katorone's automation
 })();
 
-
 const injectKatGUI = () => {
     //katorone settings gui
     const katMenuEl = $(`
-    <div class="modal" id="${SEMI.ROOT_ID}-kat-modal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+    <div class="modal" id="${
+        SEMI.ROOT_ID
+    }-kat-modal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="block block-themed block-transparent mb-0">
@@ -204,7 +224,9 @@ const injectKatGUI = () => {
     <div class="col-sm-12">
 
     <div style="border-radius: 5px; padding: 10px;" class="SEMI-gold custom-control custom-switch mb-1">
-    <input type="checkbox" class="custom-control-input" id="kat-enabled" name="kat-enabled" onchange="katoroneOn = this.checked" ${katoroneOn ? 'checked' : ''}>
+    <input type="checkbox" class="custom-control-input" id="kat-enabled" name="kat-enabled" onchange="katoroneOn = this.checked" ${
+        katoroneOn ? 'checked' : ''
+    }>
     <label class="custom-control-label" for="kat-enabled"><b>Toggle All Katorone Automation</b></label>
     </div>
 
@@ -227,7 +249,9 @@ const injectKatGUI = () => {
     Currently, Katorone will only sell gems to buy gem glove charges and won't acquire GP to buy compost.
 
     <div class="custom-control custom-switch mb-1" title="Warning from Katorone: can drain money fast early game.">
-    <input type="checkbox" class="custom-control-input" id="auto-bbs-enabled" name="auto-bbs-enabled" onchange="katBot.buyBankSlots = this.checked" ${katBot.buyBankSlots ? 'checked' : ''}>
+    <input type="checkbox" class="custom-control-input" id="auto-bbs-enabled" name="auto-bbs-enabled" onchange="katBot.buyBankSlots = this.checked" ${
+        katBot.buyBankSlots ? 'checked' : ''
+    }>
     <label class="custom-control-label" for="auto-bbs-enabled">Automatically Buy More Bank Space</label>
     </div>
 
@@ -237,7 +261,9 @@ const injectKatGUI = () => {
     <b class="font-size-h5">Mining & Gem Gloves settings:</b>
 
     <div class="custom-control custom-switch mb-1">
-    <input type="checkbox" class="custom-control-input" id="auto-bgg-enabled" name="auto-bgg-enabled" onchange="katBot.buyGemGlove_enabled = this.checked" ${katBot.buyGemGlove_enabled ? 'checked' : ''}>
+    <input type="checkbox" class="custom-control-input" id="auto-bgg-enabled" name="auto-bgg-enabled" onchange="katBot.buyGemGlove_enabled = this.checked" ${
+        katBot.buyGemGlove_enabled ? 'checked' : ''
+    }>
     <label class="custom-control-label" for="auto-bgg-enabled">Automatically Buy Gem Glove Charges</label>
     </div>
 
@@ -276,13 +302,26 @@ const updateKatSets = () => {
     const placeholders = settings.map((x) => x.placeholder);
 
     //if settings fields are empty, set vars to placeholders, otherwise set values
-    for(let i = 0; i < settings.length; i++) { ks[i] = Number(values[i] == '' ? placeholders[i] : values[i]); }
+    for (let i = 0; i < settings.length; i++) {
+        ks[i] = Number(values[i] == '' ? placeholders[i] : values[i]);
+    }
 
     //if they're not NaN (letters or symbols in the field) and they're positive numbers, change values.
-    if (!isNaN(ks[0]) && ks[0] >= 0) { katBot.reserveGold        = ks[0]; }
-    if (!isNaN(ks[1]) && ks[1] >= 0) { katBot.gemGloveUses       = ks[1]; }
+    if (!isNaN(ks[0]) && ks[0] >= 0) {
+        katBot.reserveGold = ks[0];
+    }
+    if (!isNaN(ks[1]) && ks[1] >= 0) {
+        katBot.gemGloveUses = ks[1];
+    }
     saveKatSets();
 };
 
-const config = {katBot, katoroneOn};
-SEMI.add('katorone', {ms: 0, imgSrc: 'assets/media/bank/gloves_gems.svg', f: 'semiSetMenu()', title: '<b>Katorone Menu</b>', injectGUI: injectKatGUI, config});
+const config = { katBot, katoroneOn };
+SEMI.add('katorone', {
+    ms: 0,
+    imgSrc: 'assets/media/bank/gloves_gems.svg',
+    f: 'semiSetMenu()',
+    title: '<b>Katorone Menu</b>',
+    injectGUI: injectKatGUI,
+    config,
+});

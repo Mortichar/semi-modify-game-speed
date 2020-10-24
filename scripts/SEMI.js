@@ -9,8 +9,10 @@
     const isFirefox = navigator.userAgent.match('Firefox');
 
     // Only support Firefox and Chrome. To allow loading on other browsers, delete this entire if statement including brackets & contents {}.
-    if(!isChrome && !isFirefox) {
-        return alert('SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main function in SEMI.js. The addon will not load otherwise.');
+    if (!isChrome && !isFirefox) {
+        return alert(
+            'SEMI is only officially supported on Firefox and Chrome. To try on another browser, you must modify the main function in SEMI.js. The addon will not load otherwise.'
+        );
     }
 
     /**
@@ -60,15 +62,21 @@
      */
     const replaceScript = (name, scriptID, async = false) => {
         const el = document.getElementById(scriptID);
-        if (exists(scriptID)) { el.remove(); }
+        if (exists(scriptID)) {
+            el.remove();
+        }
         addScript(name, scriptID, async);
     };
 
     /** @param {string} name */
-    const addPlugin = async (name) => { replaceScript(`scripts/plugins/${name}.js`, `SEMI-${name}`, true); };
+    const addPlugin = async (name) => {
+        replaceScript(`scripts/plugins/${name}.js`, `SEMI-${name}`, true);
+    };
 
     /** @param {string} name */
-    const addSemiLib = (name) => { replaceScript(`scripts/semi/${name}.js`, `SEMI-${name}`); };
+    const addSemiLib = (name) => {
+        replaceScript(`scripts/semi/${name}.js`, `SEMI-${name}`);
+    };
 
     /**
      * Create and return image element with height & width of 32px
@@ -86,7 +94,9 @@
 
     //Check if SEMI is already loaded, and if so, let user know and stop trying to load.
     if (exists('semiVersion')) {
-        return alert('SEMI just tried to load, but found that SEMI already exists on the page. This may mean your browser automatically updated the extension and you need to refresh to finish the update!');
+        return alert(
+            'SEMI just tried to load, but found that SEMI already exists on the page. This may mean your browser automatically updated the extension and you need to refresh to finish the update!'
+        );
     }
 
     //game version compatibility check
@@ -99,12 +109,39 @@
     // }
 
     //Mapping script names for later injection
-    const autoNames = [ 'bonfire', 'cook', 'mine', 'sell-gems', 'smith', 'eat', 'slayer', 'sell', 'open', 'bury', 'equip', 'run', 'loot', 'slayer-skip', 'farm', 'equip-best-items'];
-    const pluginNames = [...autoNames.map((name) => `auto-${name}`), 'mastery-enhancements', 'time-remaining', 'ore-in-bank', 'barf', 'calc-to-level', 'destroy-crops', 'katorone', 'thief-calc', 'xp-per-hour'];
+    const autoNames = [
+        'bonfire',
+        'cook',
+        'mine',
+        'sell-gems',
+        'smith',
+        'eat',
+        'slayer',
+        'sell',
+        'open',
+        'bury',
+        'equip',
+        'run',
+        'loot',
+        'slayer-skip',
+        'farm',
+        'equip-best-items',
+    ];
+    const pluginNames = [
+        ...autoNames.map((name) => `auto-${name}`),
+        'mastery-enhancements',
+        'time-remaining',
+        'ore-in-bank',
+        'barf',
+        'calc-to-level',
+        'destroy-crops',
+        'katorone',
+        'thief-calc',
+        'xp-per-hour',
+    ];
     const libNames = ['fold-menus', 'drag-menus', 'menus'];
     const preloadedNames = ['event-bus', 'settings-migrator', 'injections'];
     const preloadedPlugins = ['offline-time-limit'];
-
 
     //Load and inject SEMI
     const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;
@@ -129,7 +166,9 @@
     preloadedPlugins.forEach(addPlugin);
 
     const loadPlugins = () => {
-        if(!exists('SEMI-canary')) { return; }
+        if (!exists('SEMI-canary')) {
+            return;
+        }
         clearInterval(pluginLoader);
 
         // Load Libs first synchronously so that they can depend on each other.
@@ -139,5 +178,4 @@
         pluginNames.forEach(addPlugin);
     };
     const pluginLoader = setInterval(loadPlugins, 50);
-
 })();

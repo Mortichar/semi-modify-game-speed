@@ -1,10 +1,10 @@
-var SEMI =  (() => {
+var SEMI = (() => {
     /**
-    * @typedef {{enable: () => void, disable: () => void, onDisable: () => void, onEnable: () => void, onLoop: () => void, updateStatus: () => void, onToggle: () => void}} PluginFunctions
-    * @typedef {{imgSrc: string, desc: string, title: string, skill: string, pluginType: *}} PluginMeta
-    * @typedef {PluginFunctions & PluginMeta & {f: string, enabled: boolean, interval: number | null, ms: number}} Plugin
-    * @typedef {ID: string, Title: string, Header: string} SidebarHeader
-    */
+     * @typedef {{enable: () => void, disable: () => void, onDisable: () => void, onEnable: () => void, onLoop: () => void, updateStatus: () => void, onToggle: () => void}} PluginFunctions
+     * @typedef {{imgSrc: string, desc: string, title: string, skill: string, pluginType: *}} PluginMeta
+     * @typedef {PluginFunctions & PluginMeta & {f: string, enabled: boolean, interval: number | null, ms: number}} Plugin
+     * @typedef {ID: string, Title: string, Header: string} SidebarHeader
+     */
 
     // Global Constants
     const ROOT_ID = 'SEMI-menu';
@@ -28,35 +28,36 @@ var SEMI =  (() => {
         },
         AUTO_SKILL: {
             ID: 'auto-skills',
-            Title: 'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.',
+            Title:
+                'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.',
             Header: 'Auto Skills',
         },
-    }
+    };
 
     const PLUGIN_TYPE = {
         AUTO_SKILL: SIDEBAR_MENUS.AUTO_SKILL.ID,
         AUTO_COMBAT: SIDEBAR_MENUS.AUTO_COMBAT.ID,
         TWEAK: SIDEBAR_MENUS.TWEAK.ID,
-    }
+    };
 
     /**
-    * @param {string} id
-    * @param {*} value
-    */
+     * @param {string} id
+     * @param {*} value
+     */
     const setItem = (id, value, charID = -1) => {
         if (charID == -1) {
             charID = currentCharacter;
         }
         localStorage.setItem(`${LOCAL_SETTINGS_PREFIX}-Char${charID}-${id}`, JSON.stringify(value));
-    }
+    };
 
     /**
-    * @param {string} id
-    * @param {*} value
-    */
+     * @param {string} id
+     * @param {*} value
+     */
     const setGlobalItem = (id, value) => {
         localStorage.setItem(`${LOCAL_SETTINGS_PREFIX}-${id}`, JSON.stringify(value));
-    }
+    };
 
     /** @param {string} id */
     const getItem = (id, charID = -1) => {
@@ -64,12 +65,12 @@ var SEMI =  (() => {
             charID = currentCharacter;
         }
         return JSON.parse(localStorage.getItem(`${LOCAL_SETTINGS_PREFIX}-Char${charID}-${id}`));
-    }
+    };
 
     /** @param {string} id */
     const getGlobalItem = (id) => {
         return JSON.parse(localStorage.getItem(`${LOCAL_SETTINGS_PREFIX}-${id}`));
-    }
+    };
 
     /** @param {string} id */
     const removeItem = (id, charID = -1) => {
@@ -77,12 +78,12 @@ var SEMI =  (() => {
             charID = currentCharacter;
         }
         localStorage.removeItem(`${LOCAL_SETTINGS_PREFIX}-Char${charID}-${id}`);
-    }
+    };
 
     /** @param {string} id */
     const removeGlobalItem = (id) => {
         localStorage.removeItem(`${LOCAL_SETTINGS_PREFIX}-${id}`);
-    }
+    };
 
     const getSemiData = () => {
         const backupKeyData = {};
@@ -93,13 +94,13 @@ var SEMI =  (() => {
         }
 
         return backupKeyData;
-    }
+    };
 
     const getSemiCharacterData = (charID = -1) => {
         if (charID == -1) {
             charID = currentCharacter;
         }
-        
+
         const backupKeyData = {};
         for (let storageKey in localStorage) {
             if (storageKey.startsWith(`${LOCAL_SETTINGS_PREFIX}-Char${charID}`)) {
@@ -108,7 +109,7 @@ var SEMI =  (() => {
         }
 
         return backupKeyData;
-    }
+    };
 
     // TODO Make another GUI for player specific backups?
     const backupSEMI = () => {
@@ -118,8 +119,12 @@ var SEMI =  (() => {
         copyText.select();
         copyText.setSelectionRange(0, 999969); /*For mobile devices*/
         document.execCommand('copy');
-        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs exported to textarea and copied to clipboard!', 10000);
-    }
+        SEMI.customNotify(
+            'assets/media/main/settings_header.svg',
+            'SEMI configs exported to textarea and copied to clipboard!',
+            10000
+        );
+    };
 
     const restoreSEMI = () => {
         if ($('#importSEMISettings')[0].value == '') return;
@@ -131,8 +136,12 @@ var SEMI =  (() => {
             }
         }
         loadKatSets();
-        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs restored from your import! Refresh to complete the import process.', 10000);
-    }
+        SEMI.customNotify(
+            'assets/media/main/settings_header.svg',
+            'SEMI configs restored from your import! Refresh to complete the import process.',
+            10000
+        );
+    };
 
     const resetSEMI = () => {
         for (key in localStorage) {
@@ -141,17 +150,23 @@ var SEMI =  (() => {
             }
         }
         katoroneOn = false;
-        SEMI.customNotify('assets/media/main/settings_header.svg', 'SEMI configs erased from your local storage! Refresh to complete the reset process.', 10000);
-    }
+        SEMI.customNotify(
+            'assets/media/main/settings_header.svg',
+            'SEMI configs erased from your local storage! Refresh to complete the reset process.',
+            10000
+        );
+    };
 
     const mergeOnto = (x, y) => {
-        Object.keys(y).forEach((key) => { x[key] = y[key]; });
+        Object.keys(y).forEach((key) => {
+            x[key] = y[key];
+        });
     };
 
     /**
-    * @param {string} name the type of HTML element to create. Ex: 'img', 'span', etc
-    * @param {{ [x: string]: any; src?: any; id?: string; innerHTML?: any; href?: string; title?: any; }} options
-    */
+     * @param {string} name the type of HTML element to create. Ex: 'img', 'span', etc
+     * @param {{ [x: string]: any; src?: any; id?: string; innerHTML?: any; href?: string; title?: any; }} options
+     */
     const createElement = (name, options = {}, children = []) => {
         const x = document.createElement(name);
         x.setAttribute('class', options.class || '');
@@ -161,22 +176,40 @@ var SEMI =  (() => {
     };
 
     /**
-    * Creation template for SEMI plugin menu items.
-    * @param {string} desc Tooltip text contents
-    * @param {string} imgSrc Image source for the button icon
-    * @param {string} fName Function called when the button is clicked
-    * @param {string} title The name displayed on the button for the plugin
-    * @param {string} name Name of the plugin used for id assignment
-    * @param {string} rootId Root ID to differentiate between types of plugins
-    * @param {boolean} hasConfig Whether or not to include a config button
-    * @param {string} configMenu HTML for insertion into the tippy config menu
-    */
-    const makeMenuItem = (desc, imgSrc, fName, title, name, rootId, hasConfig = false, configMenu, configMenuOnShown = undefined) => {
-        const imgEl =  createElement('img', {src: imgSrc, id: `${name}-img`, class: 'nav-img'});
-        const textEl = createElement('span', {innerHTML: title, class: 'nav-main-link-name'});
-        const statusEl = createElement('i', {id: `${name}-status`, class: 'fas fa-times text-danger', style: 'width: 15px;'});
+     * Creation template for SEMI plugin menu items.
+     * @param {string} desc Tooltip text contents
+     * @param {string} imgSrc Image source for the button icon
+     * @param {string} fName Function called when the button is clicked
+     * @param {string} title The name displayed on the button for the plugin
+     * @param {string} name Name of the plugin used for id assignment
+     * @param {string} rootId Root ID to differentiate between types of plugins
+     * @param {boolean} hasConfig Whether or not to include a config button
+     * @param {string} configMenu HTML for insertion into the tippy config menu
+     */
+    const makeMenuItem = (
+        desc,
+        imgSrc,
+        fName,
+        title,
+        name,
+        rootId,
+        hasConfig = false,
+        configMenu,
+        configMenuOnShown = undefined
+    ) => {
+        const imgEl = createElement('img', { src: imgSrc, id: `${name}-img`, class: 'nav-img' });
+        const textEl = createElement('span', { innerHTML: title, class: 'nav-main-link-name' });
+        const statusEl = createElement('i', {
+            id: `${name}-status`,
+            class: 'fas fa-times text-danger',
+            style: 'width: 15px;',
+        });
         if (hasConfig) {
-            const configBtnEl = createElement('i', {id: `${name}-config-btn`, class: `fas fa-cog`, style: `padding: 13px 0 13px 13px;`});
+            const configBtnEl = createElement('i', {
+                id: `${name}-config-btn`,
+                class: `fas fa-cog`,
+                style: `padding: 13px 0 13px 13px;`,
+            });
             const configMenuEl = tippy(configBtnEl, {
                 content: `<div id="${name}-config-menu">
                     ${configMenu}
@@ -194,27 +227,53 @@ var SEMI =  (() => {
                 onShown: configMenuOnShown,
                 maxWidth: 'none',
             });
-            configBtnEl.addEventListener("click", (event) => {
+            configBtnEl.addEventListener('click', (event) => {
                 SEMI.updateConfig(name);
                 event.preventDefault();
             });
-            const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px; padding-right: 10px;`}, [statusEl, imgEl, textEl, configBtnEl]);
-            const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
+            const buttonEl = createElement(
+                'a',
+                {
+                    href: `javascript:${fName};`,
+                    id: `${name}-button`,
+                    class: 'nav-main-link nav-compact',
+                    style: `padding-left: 5px; padding-right: 10px;`,
+                },
+                [statusEl, imgEl, textEl, configBtnEl]
+            );
+            const mainEl = createElement(
+                'li',
+                { title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button` },
+                [buttonEl]
+            );
             return mainEl;
         } else {
-            const buttonEl = createElement('a', {href:`javascript:${fName};`, id: `${name}-button`, class: 'nav-main-link nav-compact', style:`padding-left: 5px;`}, [statusEl, imgEl, textEl]);
-            const mainEl = createElement('li', {title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button`}, [buttonEl]);
+            const buttonEl = createElement(
+                'a',
+                {
+                    href: `javascript:${fName};`,
+                    id: `${name}-button`,
+                    class: 'nav-main-link nav-compact',
+                    style: `padding-left: 5px;`,
+                },
+                [statusEl, imgEl, textEl]
+            );
+            const mainEl = createElement(
+                'li',
+                { title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button` },
+                [buttonEl]
+            );
             return mainEl;
         }
     };
 
     /**
-    * @type {{[pluginName: string]: Plugin}}
-    */
+     * @type {{[pluginName: string]: Plugin}}
+     */
     const plugins = {};
     /**
-    * @type {string[]}
-    */
+     * @type {string[]}
+     */
     const pluginNames = [];
 
     /**
@@ -223,24 +282,57 @@ var SEMI =  (() => {
     const data = {};
 
     /**
-    * @param {string} name the plugin ID
-    * @param {*} options Options such as onLoop, injectGUI, etc
-    */
+     * @param {string} name the plugin ID
+     * @param {*} options Options such as onLoop, injectGUI, etc
+     */
     const add = (name, options = {}) => {
-        const defaults = {onLoop: () => {}, injectGUI: () => {}, removeGUI: () => {}, onToggle: () => {}, onEnable: () => {}, onDisable: () => {}, ms: 1000, skill: '', statusId: `${name}-status`, title: '', desc: '', imgSrc: '', f: `SEMI.toggle('${name}')`, pluginType: PLUGIN_TYPE.AUTO_SKILL, config: {}, hasConfig: false, configMenu: '<div>This is a default config menu!</div>', saveConfig: () => {}, updateConfig: () => {}, onConfigMenuShown: () => {}};
-        const opts = {...defaults, ...options};
+        const defaults = {
+            onLoop: () => {},
+            injectGUI: () => {},
+            removeGUI: () => {},
+            onToggle: () => {},
+            onEnable: () => {},
+            onDisable: () => {},
+            ms: 1000,
+            skill: '',
+            statusId: `${name}-status`,
+            title: '',
+            desc: '',
+            imgSrc: '',
+            f: `SEMI.toggle('${name}')`,
+            pluginType: PLUGIN_TYPE.AUTO_SKILL,
+            config: {},
+            hasConfig: false,
+            configMenu: '<div>This is a default config menu!</div>',
+            saveConfig: () => {},
+            updateConfig: () => {},
+            onConfigMenuShown: () => {},
+        };
+        const opts = { ...defaults, ...options };
         // Register the name and add ms
         data[name] = {};
         setValues(name, opts.config);
 
-        opts.imgSrc = (opts.imgSrc === '' && opts.skill !== '') ? SEMI.skillImg(opts.skill) : opts.imgSrc;
+        opts.imgSrc = opts.imgSrc === '' && opts.skill !== '' ? SEMI.skillImg(opts.skill) : opts.imgSrc;
         pluginNames.push(name);
 
         const addToMenu = () => {
             const plugin = plugins[name];
-            if(plugin.imgSrc === '') { return; }
+            if (plugin.imgSrc === '') {
+                return;
+            }
             let menuRootId = `${ROOT_ID}-${plugin.pluginType}`;
-            const pluginEl = makeMenuItem(plugin.desc, plugin.imgSrc, plugin.f, plugin.title, name, menuRootId, plugin.hasConfig, plugin.configMenu, plugin.onConfigMenuShown);
+            const pluginEl = makeMenuItem(
+                plugin.desc,
+                plugin.imgSrc,
+                plugin.f,
+                plugin.title,
+                name,
+                menuRootId,
+                plugin.hasConfig,
+                plugin.configMenu,
+                plugin.onConfigMenuShown
+            );
             $(`#${menuRootId}-section-unsorted`).append(pluginEl);
         };
 
@@ -258,8 +350,12 @@ var SEMI =  (() => {
             plugin.enabled = false;
             plugin.onDisable();
             console.log(`${name} Disabled!`);
-            if(plugin.imgSrc !== '') { SEMI.customNotify(plugin.imgSrc, `${plugin.title} Disabled!`, 1000); }
-            if(plugin.ms !== 0 && plugin.interval) {  clearInterval(plugin.interval); }
+            if (plugin.imgSrc !== '') {
+                SEMI.customNotify(plugin.imgSrc, `${plugin.title} Disabled!`, 1000);
+            }
+            if (plugin.ms !== 0 && plugin.interval) {
+                clearInterval(plugin.interval);
+            }
             plugin.updateStatus();
             plugin.removeGUI();
         };
@@ -267,11 +363,20 @@ var SEMI =  (() => {
         const enable = () => {
             const plugin = plugins[name];
             plugin.enabled = true;
-            if(plugin.onEnable() === false) { console.log(`${plugin.title} failed to start!`); return false; };
+            if (plugin.onEnable() === false) {
+                console.log(`${plugin.title} failed to start!`);
+                return false;
+            }
             console.log(`${name} Enabled!`);
-            if(plugin.skill !== '') { SEMI.changePage(plugin.skill); }
-            if(plugin.imgSrc !== '') { SEMI.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, 1000); }
-            if(plugin.ms !== 0) { plugin.interval = setInterval(plugin.onLoop, plugin.ms); }
+            if (plugin.skill !== '') {
+                SEMI.changePage(plugin.skill);
+            }
+            if (plugin.imgSrc !== '') {
+                SEMI.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, 1000);
+            }
+            if (plugin.ms !== 0) {
+                plugin.interval = setInterval(plugin.onLoop, plugin.ms);
+            }
             plugin.onLoop();
             plugin.updateStatus();
         };
@@ -281,7 +386,9 @@ var SEMI =  (() => {
             plugin.enabled = !plugin.enabled;
             plugin.onToggle();
             plugin.updateStatus();
-            if (plugin.enabled) { return plugin.enable(); }
+            if (plugin.enabled) {
+                return plugin.enable();
+            }
             return plugin.disable();
         };
 
@@ -291,13 +398,19 @@ var SEMI =  (() => {
             if (alternateStatusPlugins.includes(name)) {
                 const updater = () => {
                     $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled');
-                    $(`#${name}-menu-status`).attr('class', plugins[name].enabled ? 'fas fa-check text-success' : 'fas fa-times text-danger');
-                }
+                    $(`#${name}-menu-status`).attr(
+                        'class',
+                        plugins[name].enabled ? 'fas fa-check text-success' : 'fas fa-times text-danger'
+                    );
+                };
                 // return $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled');
                 return updater();
             }
-            if($(`#${name}-status`) !== null) {
-                $(`#${name}-status`).attr('class', plugins[name].enabled ? 'fas fa-check text-success' : 'fas fa-times text-danger');
+            if ($(`#${name}-status`) !== null) {
+                $(`#${name}-status`).attr(
+                    'class',
+                    plugins[name].enabled ? 'fas fa-check text-success' : 'fas fa-times text-danger'
+                );
             }
         };
 
@@ -311,55 +424,86 @@ var SEMI =  (() => {
             opts.removeGUI();
         };
 
-        
         const useSaved = Boolean(getItem('remember-state'));
         const wasEnabled = Boolean(getItem(`${name}-status`));
         const enabled = wasEnabled && useSaved;
-        if(enabled && name !== 'katorone') {
-            if (name == 'auto-cook') { setTimeout(enable, 5000); }
-            else { setTimeout(enable, 1000); }
+        if (enabled && name !== 'katorone') {
+            if (name == 'auto-cook') {
+                setTimeout(enable, 5000);
+            } else {
+                setTimeout(enable, 1000);
+            }
         }
         if (SEMI.getItem(`${name}-config`) !== null) {
             SEMI.setValues(name, SEMI.getItem(`${name}-config`));
         }
-        const plugin = {...opts, toggle, interval: null, enable, disable, updateStatus, injectGUI, removeGUI, enabled};
+        const plugin = {
+            ...opts,
+            toggle,
+            interval: null,
+            enable,
+            disable,
+            updateStatus,
+            injectGUI,
+            removeGUI,
+            enabled,
+        };
         plugins[name] = plugin;
     };
 
     /**
-    * @param {string} name
-    */
-    const injectGUI = (name) => { plugins[name].injectGUI(); };
+     * @param {string} name
+     */
+    const injectGUI = (name) => {
+        plugins[name].injectGUI();
+    };
     /**
-    * @param {string} name
-    */
-    const removeGUI = (name) => { plugins[name].removeGUI(); };
+     * @param {string} name
+     */
+    const removeGUI = (name) => {
+        plugins[name].removeGUI();
+    };
 
     /**
-    * @param {string} name
-    */
-    const toggle = (name) => { plugins[name].toggle(); };
+     * @param {string} name
+     */
+    const toggle = (name) => {
+        plugins[name].toggle();
+    };
     /**
-    * @param {string} name
-    */
-    const enable = (name) => { plugins[name].enable(); };
+     * @param {string} name
+     */
+    const enable = (name) => {
+        plugins[name].enable();
+    };
     /**
-    * @param {string} name
-    */
-    const disable = (name) => { plugins[name].disable(); };
+     * @param {string} name
+     */
+    const disable = (name) => {
+        plugins[name].disable();
+    };
     /**
-    * @param {string} name
-    */
-    const isEnabled = (name) => { if(name in plugins) { return plugins[name].enabled; } console.warn(`Attempted to check 'isEnabled' of ${name}`); };
+     * @param {string} name
+     */
+    const isEnabled = (name) => {
+        if (name in plugins) {
+            return plugins[name].enabled;
+        }
+        console.warn(`Attempted to check 'isEnabled' of ${name}`);
+    };
 
     /**
-    * @param {string} name
-    */
-    const saveConfigFromMenu = (name) => { plugins[name].saveConfig(); }
+     * @param {string} name
+     */
+    const saveConfigFromMenu = (name) => {
+        plugins[name].saveConfig();
+    };
     /**
-    * @param {string} name
-    */
-    const updateConfig = (name) => { plugins[name].updateConfig(); }
+     * @param {string} name
+     */
+    const updateConfig = (name) => {
+        plugins[name].updateConfig();
+    };
 
     //AuroraKy Core Config Functions
     /**
@@ -399,7 +543,9 @@ var SEMI =  (() => {
      * @param {pluginData} data - Data for the plugin with the given name.
      * Sets all values with given name and keys to values of those keys, name has to be registered with add first.
      */
-    const setValues = (name, data) => { Object.keys(data).forEach((key) => SEMI.setValue(name, key, data[key])) };
+    const setValues = (name, data) => {
+        Object.keys(data).forEach((key) => SEMI.setValue(name, key, data[key]));
+    };
 
     return {
         add,
@@ -434,6 +580,6 @@ var SEMI =  (() => {
         getGlobalItem,
         setGlobalItem,
         removeGlobalItem,
-        getSemiCharacterData
+        getSemiCharacterData,
     };
 })();

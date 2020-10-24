@@ -23,7 +23,7 @@
         const toggle = SEMI.getItem('etc-GUI-toggles').masteryEnhancements;
         if (toggle !== undefined && !toggle) return;
     }
-    'use strict';
+    ('use strict');
 
     function addColoredButtons() {
         const _updateMasteryPoolProgress = updateMasteryPoolProgress;
@@ -39,17 +39,19 @@
         function colorButtons(skill) {
             const poolXP = Math.floor(MASTERY[skill].pool);
             const progress = (MASTERY[skill].pool / getMasteryPoolTotalXP(skill)) * 100;
-            const activeCheckpoint = masteryCheckpoints.reduce((max, c) => (c < progress && c > max) ? c : max, 0);
-            const threshold = getMasteryPoolTotalXP(skill) * activeCheckpoint / 100;
+            const activeCheckpoint = masteryCheckpoints.reduce((max, c) => (c < progress && c > max ? c : max), 0);
+            const threshold = (getMasteryPoolTotalXP(skill) * activeCheckpoint) / 100;
             for (let i = 0; i < MASTERY[skill].xp.length; i++) {
                 const masteryRequired = document.getElementById(`mastery-item-xp-required-${skill}-${i}`);
                 if (masteryRequired != null) {
                     const masteryXP = parseInt(masteryRequired.innerText.replace(/,/g, ''));
-                    const button = masteryRequired.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("btn")[0];
+                    const button = masteryRequired.parentElement.parentElement.parentElement.parentElement.getElementsByClassName(
+                        'btn'
+                    )[0];
                     button.classList.remove('btn-success', 'btn-danger', 'btn-warning');
                     if (poolXP < masteryXP) {
                         button.classList.add('btn-danger');
-                    } else if ((poolXP - masteryXP) < threshold) {
+                    } else if (poolXP - masteryXP < threshold) {
                         button.classList.add('btn-warning');
                     } else {
                         button.classList.add('btn-success');
@@ -64,7 +66,8 @@
             for (const id in SKILLS) {
                 if (SKILLS[id].hasMastery) {
                     if ($(`#skill-nav-mastery-${id} .progress-bar`)[0]) {
-                        $(`#skill-nav-mastery-${id} .progress-bar`)[0].style.width = ((MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100) + '%';
+                        $(`#skill-nav-mastery-${id} .progress-bar`)[0].style.width =
+                            (MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100 + '%';
                         const tip = $(`#skill-nav-mastery-${id}`)[0]._tippy;
                         tip.setContent(((MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100).toFixed(2) + '%');
                     } else {
@@ -80,12 +83,12 @@
                         progress.style.margin = '.25rem 0rem';
                         progress.style.setProperty('background', 'rgb(76,80,84)', 'important');
                         progressBar.className = 'progress-bar bg-warning';
-                        progressBar.style.width = ((MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100) + '%';
+                        progressBar.style.width = (MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100 + '%';
                         progress.appendChild(progressBar);
                         skillItem.appendChild(progress);
                         tippy($(`#skill-nav-mastery-${id}`)[0], {
                             placement: 'right',
-                            content: ((MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100).toFixed(2) + '%'
+                            content: ((MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100).toFixed(2) + '%',
                         });
                     }
                 }

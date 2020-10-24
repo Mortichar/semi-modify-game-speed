@@ -7,13 +7,33 @@ const getData = (skill) => {
     const hasCraftCape = SEMI.currentEquipmentInSlot('Cape') === CONSTANTS.item.Crafting_Skillcape;
     const craftInterval = hasCraftCape ? 1500 : 3000;
     const data = {
-        [Skill.Woodcutting]:  {interval: 2000,          key: 'xp',             itemData: logsData,          selectedItem: selectedLog},
-        [Skill.Cooking]:      {interval: 3000,          key: 'cookingXP',      itemData: items,             selectedItem: selectedFood},
-        [Skill.Smithing]:     {interval: 2000,          key: 'smithingXP',     itemData: smithingItems,     selectedItem: selectedSmith},
-        [Skill.Fletching]:    {interval: 2000,          key: 'fletchingXP',    itemData: fletchingItems,    selectedItem: selectedFletch},
-        [Skill.Crafting]:     {interval: craftInterval, key: 'craftingXP',     itemData: craftingItems,     selectedItem: selectedCraft},
-        [Skill.Runecrafting]: {interval: 2000,          key: 'runecraftingXP', itemData: runecraftingItems, selectedItem: selectedRunecraft},
-        [Skill.Herblore]:     {interval: 2000,          key: 'herbloreXP',     itemData: herbloreItemData,  selectedItem: selectedHerblore}
+        [Skill.Woodcutting]: { interval: 2000, key: 'xp', itemData: logsData, selectedItem: selectedLog },
+        [Skill.Cooking]: { interval: 3000, key: 'cookingXP', itemData: items, selectedItem: selectedFood },
+        [Skill.Smithing]: { interval: 2000, key: 'smithingXP', itemData: smithingItems, selectedItem: selectedSmith },
+        [Skill.Fletching]: {
+            interval: 2000,
+            key: 'fletchingXP',
+            itemData: fletchingItems,
+            selectedItem: selectedFletch,
+        },
+        [Skill.Crafting]: {
+            interval: craftInterval,
+            key: 'craftingXP',
+            itemData: craftingItems,
+            selectedItem: selectedCraft,
+        },
+        [Skill.Runecrafting]: {
+            interval: 2000,
+            key: 'runecraftingXP',
+            itemData: runecraftingItems,
+            selectedItem: selectedRunecraft,
+        },
+        [Skill.Herblore]: {
+            interval: 2000,
+            key: 'herbloreXP',
+            itemData: herbloreItemData,
+            selectedItem: selectedHerblore,
+        },
     };
     return data[skill];
 };
@@ -29,18 +49,20 @@ const calcToLvl = (skill) => {
     const selectedItem = data.selectedItem;
     if (selectedItem == null) return;
 
-    let expToLvl = exp.level_to_xp(Number($(`#${name}-lvl-in`).val())) +1 - skillXP[skill];
+    let expToLvl = exp.level_to_xp(Number($(`#${name}-lvl-in`).val())) + 1 - skillXP[skill];
     let itemsToLvl;
     //need to account for mastery here. preserves ores, increases XP in runecrafting.
     //omg need to account for fire type in cooking...AND burn chance without gloves... smithing gloves in smithing...jeeeeeez
     //also should probably try to make runecrafting more precise based on mastery level & xp gained per rune etc, if will reach higher mastery tier then etc
     const item = data.itemData[selectedItem];
-    if (alternateCalcSkills.includes(skill)) { itemsToLvl = Math.round((expToLvl) / items[item.itemID][data.key]) + 1; }
-    else { itemsToLvl = Math.round((expToLvl) / item[data.key]) + 1; }
+    if (alternateCalcSkills.includes(skill)) {
+        itemsToLvl = Math.round(expToLvl / items[item.itemID][data.key]) + 1;
+    } else {
+        itemsToLvl = Math.round(expToLvl / item[data.key]) + 1;
+    }
     $(`#${name}-needed`).text(numberWithCommas(itemsToLvl));
 
-
-    const craftTimeMin = (data.interval / 1000) / 60;
+    const craftTimeMin = data.interval / 1000 / 60;
     let timeToLvl = itemsToLvl * craftTimeMin;
     $(`#${name}-calc-time`).text(SEMI.formatTimeFromMinutes(timeToLvl));
 };
@@ -49,8 +71,18 @@ const calcToLvl = (skill) => {
 //changeup. a small gold-border calculator image button, similar to the loot chest button in MICE.
 //opens up a panel beneath crafting panel displaying table with infos like mastery/level calcs, estimated time, etc. Unless estimated time should be up above.
 const calcItemsInjectBtn = (skill = Skill.Firemaking) => {
-    const validSkills = [Skill.Firemaking, Skill.Cooking, Skill.Smithing, Skill.Fletching, Skill.Crafting, Skill.Runecrafting, Skill.Herblore];
-    if (!validSkills.includes(skill)) { return; }
+    const validSkills = [
+        Skill.Firemaking,
+        Skill.Cooking,
+        Skill.Smithing,
+        Skill.Fletching,
+        Skill.Crafting,
+        Skill.Runecrafting,
+        Skill.Herblore,
+    ];
+    if (!validSkills.includes(skill)) {
+        return;
+    }
     const name = skillName[skill];
     return $(`
         <hr style="border-top: 1px solid gold !important;">
@@ -76,13 +108,20 @@ const injectItemsCalculators = () => {
     //cooking injection
     $('#cooking').children().children().first().append(calcItemsInjectBtn(Skill.Cooking));
     //smithing
-    $('#smithing-category-container').children().children().children().first().append(calcItemsInjectBtn(Skill.Smithing));
+    $('#smithing-category-container')
+        .children()
+        .children()
+        .children()
+        .first()
+        .append(calcItemsInjectBtn(Skill.Smithing));
     //fletching
     $('#fletching-container .block-content.block-content-full').first().after(calcItemsInjectBtn(Skill.Fletching));
     //crafting
     $('#crafting-container .block-content.block-content-full').first().after(calcItemsInjectBtn(Skill.Crafting));
     //runecrafting
-    $('#runecrafting-container .block-content.block-content-full').first().after(calcItemsInjectBtn(Skill.Runecrafting));
+    $('#runecrafting-container .block-content.block-content-full')
+        .first()
+        .after(calcItemsInjectBtn(Skill.Runecrafting));
     //herblore
     $('#herblore-progress').parent().parent().append(calcItemsInjectBtn(Skill.Herblore));
 };

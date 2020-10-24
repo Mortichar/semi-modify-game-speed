@@ -13,12 +13,14 @@ var injectDragMenus = () => {
     }
 
     sections.forEach((section) => {
-        menuConfig[section] = {locked: true, order: []};
+        menuConfig[section] = { locked: true, order: [] };
     });
 
     const orderMenu = (section) => {
         const order = menuConfig[section].order;
-        if(order.length === 0) {return;}
+        if (order.length === 0) {
+            return;
+        }
         const menu = getEl(`section-${section}-inner`);
         const menuItems = [...menu.children()];
         const sortedMenu = menuItems.sort((menuA, menuB) => order.indexOf(menuA.id) - order.indexOf(menuB.id));
@@ -30,7 +32,7 @@ var injectDragMenus = () => {
         lockItems();
     };
 
-    const lockClasses = {'false': 'fa-unlock-alt', 'true': 'fa-lock'};
+    const lockClasses = { false: 'fa-unlock-alt', true: 'fa-lock' };
 
     const lockMenus = () => {
         sections.forEach((x) => {
@@ -49,7 +51,7 @@ var injectDragMenus = () => {
         sections.forEach((key) => {
             const menuItems = getEl(`section-${key}-inner`).children();
             const div = getEl(`section-${key}-divider`);
-            if(menuConfig[key].locked) {
+            if (menuConfig[key].locked) {
                 menuItems.addClass('SEMI-locked');
                 div.addClass('lock-d-none');
                 div.nextAll().addClass('lock-d-none');
@@ -75,7 +77,7 @@ var injectDragMenus = () => {
     const loadMenuState = () => {
         const storedMenuConfig = SEMI.getItem('drag-menu-config');
         if (storedMenuConfig !== null) {
-            Object.keys(storedMenuConfig).map((k) => menuConfig[k] = storedMenuConfig[k]);
+            Object.keys(storedMenuConfig).map((k) => (menuConfig[k] = storedMenuConfig[k]));
 
             // unhide alt-magic unintentionally hidden by a previous version
             if (!storedMenuConfig.version) {
@@ -89,26 +91,38 @@ var injectDragMenus = () => {
             }
             // update SEMI menu ids
             if (storedMenuConfig.version < 2) {
-                menuConfig['auto-skills'].order = menuConfig['auto-skills'].order.map(s => s.replace('SEMI-menu-skills', 'SEMI-menu-auto-skills'));
-                menuConfig['auto-combat'].order = menuConfig['auto-combat'].order.map(s => s.replace('SEMI-menu-combat', 'SEMI-menu-auto-combat'));
+                menuConfig['auto-skills'].order = menuConfig['auto-skills'].order.map((s) =>
+                    s.replace('SEMI-menu-skills', 'SEMI-menu-auto-skills')
+                );
+                menuConfig['auto-combat'].order = menuConfig['auto-combat'].order.map((s) =>
+                    s.replace('SEMI-menu-combat', 'SEMI-menu-auto-combat')
+                );
             }
 
             menuConfig.version = configVersion;
         }
     };
 
-    const storeMenuState = () => { SEMI.setItem('drag-menu-config', menuConfig); };
+    const storeMenuState = () => {
+        SEMI.setItem('drag-menu-config', menuConfig);
+    };
 
-    const skillElements = [...$('.nav-main-item')].filter((x) => x.id.startsWith('nav-skill-tooltip') || x.id === 'farming-glower');
+    const skillElements = [...$('.nav-main-item')].filter(
+        (x) => x.id.startsWith('nav-skill-tooltip') || x.id === 'farming-glower'
+    );
     const headers = [...$('.nav-main-heading')];
 
-    const combatSkills = skillElements.filter((x) => x.lastElementChild.getAttribute('onClick') === 'changePage(13);');
-    const nonCombatSkills = skillElements.filter((x) => x.lastElementChild.getAttribute('onClick') !== 'changePage(13);');
+    const combatSkills = skillElements.filter(
+        (x) => x.lastElementChild.getAttribute('onClick') === 'changePage(13);'
+    );
+    const nonCombatSkills = skillElements.filter(
+        (x) => x.lastElementChild.getAttribute('onClick') !== 'changePage(13);'
+    );
     const SEMIPlugins = [...$(`.${prefix}-button`)];
     const otherButtons = [...$('.nav-main-item')].filter((x) => x.id.startsWith(`${prefix}-other-`));
     const socialButtons = [...$('.nav-main-item')].filter((x) => x.id.startsWith(`${prefix}-socials-`));
 
-    const skills = {combat: combatSkills, skills: nonCombatSkills, other: otherButtons, socials: socialButtons};
+    const skills = { combat: combatSkills, skills: nonCombatSkills, other: otherButtons, socials: socialButtons };
 
     for (let key in SEMI.SIDEBAR_MENUS) {
         const menu = SEMI.SIDEBAR_MENUS[key];
@@ -117,18 +131,33 @@ var injectDragMenus = () => {
 
     loadMenuState();
 
-    const header = (name) => $(headers.filter((x) => {
-        return x.id.startsWith(name) || x.innerText.toUpperCase().startsWith(name.toUpperCase().replace('-', ' '));
-    })[0]);
+    const header = (name) =>
+        $(
+            headers.filter((x) => {
+                return (
+                    x.id.startsWith(name) ||
+                    x.innerText.toUpperCase().startsWith(name.toUpperCase().replace('-', ' '))
+                );
+            })[0]
+        );
 
     const makeSortable = (id) => {
-        Sortable.create(document.getElementById(id), {onEnd: makeItemsGhost, filter: '.SEMI-locked'});
+        Sortable.create(document.getElementById(id), { onEnd: makeItemsGhost, filter: '.SEMI-locked' });
     };
 
     const makeDrag = (name) => {
         const fullPrefix = `${prefix}-section-${name}`;
-        if($(`#${fullPrefix}`).length !== 1) { header(name).before($(`<div id="${fullPrefix}"><div id="${fullPrefix}-inner"></div></div>`)); }
-        $(`#${fullPrefix}-inner`).append(skills[name], $(`<div id="${fullPrefix}-divider" class="nav-main-link nav-compact"><img class="nav-img" src="${SEMI.iconSrc}"><small>Unlocked! Items below this hide when locked.</small></div>`)).before(header(name));
+        if ($(`#${fullPrefix}`).length !== 1) {
+            header(name).before($(`<div id="${fullPrefix}"><div id="${fullPrefix}-inner"></div></div>`));
+        }
+        $(`#${fullPrefix}-inner`)
+            .append(
+                skills[name],
+                $(
+                    `<div id="${fullPrefix}-divider" class="nav-main-link nav-compact"><img class="nav-img" src="${SEMI.iconSrc}"><small>Unlocked! Items below this hide when locked.</small></div>`
+                )
+            )
+            .before(header(name));
         makeSortable(`${fullPrefix}-inner`);
         addLockIcon(name);
     };
