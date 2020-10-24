@@ -1,7 +1,15 @@
 {
-  "printWidth": 118,
-  "singleQuote": true,
-  "tabWidth": 4,
-  "trailingComma": "es5",
-  "semi": true
+    "printWidth": 118,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "es5",
+    "semi": true,
+    "overrides": [
+        {
+            "files": "semi/menus.js",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
