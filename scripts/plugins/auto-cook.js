@@ -28,13 +28,13 @@
                 moveToNext();
             }
         }
-        if (foodQty() !== 0 && !SEMI.isCurrentSkill(skill)) {
+        if (foodQty() !== 0 && !SEMIUtils.isCurrentSkill(skill)) {
             startCooking(0, false);
         }
     };
 
     const onDisable = () => {
-        SEMI.stopSkill(skill);
+        SEMIUtils.stopSkill(skill);
     };
 
     SEMI.add(id, { onLoop: autoCookAll, onDisable, title, desc, skill });

@@ -6,20 +6,20 @@
     const imgSrc = 'assets/media/shop/autoeat.svg';
 
     const autoEat = () => {
-        const hp = SEMI.currentHP(); // this number is already multiplied
-        const hpmax = SEMI.currentLevel('Hitpoints') * numberMultiplier; // same here
+        const hp = SEMIUtils.currentHP(); // this number is already multiplied
+        const hpmax = SEMIUtils.currentLevel('Hitpoints') * numberMultiplier; // same here
         const hpdeficit = hpmax - hp;
         const currentFood = equippedFood[currentCombatFood];
         const hpfood = numberMultiplier * items[currentFood.itemID].healsFor; // numberMultiplier = 10, adjusts hp math
-        const adjustedMaxHit = SEMI.adjustedMaxHit();
+        const adjustedMaxHit = SEMIUtils.adjustedMaxHit();
         const maxHitEatingCase = hp <= adjustedMaxHit && isInCombat;
         const generalEatingCase = (hpdeficit > hpfood || hp <= 50) && !isInCombat;
         const eatingCase = maxHitEatingCase || generalEatingCase;
         if (eatingCase) {
             eatFood();
             if (!isInCombat) return;
-            // while ((SEMI.currentHP() <= adjustedMaxHit) && (hpmax > adjustedMaxHit) && (currentFood.qty >= 1)) { eatFood(); }
-            while (SEMI.currentHP() <= hpmax - hpfood && hpmax > adjustedMaxHit && currentFood.qty >= 1) {
+            // while ((SEMIUtils.currentHP() <= adjustedMaxHit) && (hpmax > adjustedMaxHit) && (currentFood.qty >= 1)) { eatFood(); }
+            while (SEMIUtils.currentHP() <= hpmax - hpfood && hpmax > adjustedMaxHit && currentFood.qty >= 1) {
                 eatFood();
             }
         }
@@ -35,10 +35,10 @@
     };
 
     const onEnable = () => {
-        const hpmax = SEMI.currentLevel('Hitpoints') * numberMultiplier; // same here
-        const adjustedMaxHit = SEMI.adjustedMaxHit();
+        const hpmax = SEMIUtils.currentLevel('Hitpoints') * numberMultiplier; // same here
+        const adjustedMaxHit = SEMIUtils.adjustedMaxHit();
         if (hpmax <= adjustedMaxHit) {
-            SEMI.customNotify(
+            SEMIUtils.customNotify(
                 'assets/media/monsters/ghost.svg',
                 "WARNING: You are engaged with an enemy that can one-hit-kill you. \n Its damage-reduction-adjusted max hit is at or above your max HP. \n This script can't save you now.",
                 10000

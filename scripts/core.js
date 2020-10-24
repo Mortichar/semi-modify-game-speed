@@ -119,7 +119,7 @@ var SEMI = (() => {
         copyText.select();
         copyText.setSelectionRange(0, 999969); /*For mobile devices*/
         document.execCommand('copy');
-        SEMI.customNotify(
+        SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs exported to textarea and copied to clipboard!',
             10000
@@ -136,7 +136,7 @@ var SEMI = (() => {
             }
         }
         loadKatSets();
-        SEMI.customNotify(
+        SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs restored from your import! Refresh to complete the import process.',
             10000
@@ -150,7 +150,7 @@ var SEMI = (() => {
             }
         }
         katoroneOn = false;
-        SEMI.customNotify(
+        SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs erased from your local storage! Refresh to complete the reset process.',
             10000
@@ -313,7 +313,7 @@ var SEMI = (() => {
         data[name] = {};
         setValues(name, opts.config);
 
-        opts.imgSrc = opts.imgSrc === '' && opts.skill !== '' ? SEMI.skillImg(opts.skill) : opts.imgSrc;
+        opts.imgSrc = opts.imgSrc === '' && opts.skill !== '' ? SEMIUtils.skillImg(opts.skill) : opts.imgSrc;
         pluginNames.push(name);
 
         const addToMenu = () => {
@@ -351,7 +351,7 @@ var SEMI = (() => {
             plugin.onDisable();
             console.log(`${name} Disabled!`);
             if (plugin.imgSrc !== '') {
-                SEMI.customNotify(plugin.imgSrc, `${plugin.title} Disabled!`, 1000);
+                SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Disabled!`, 1000);
             }
             if (plugin.ms !== 0 && plugin.interval) {
                 clearInterval(plugin.interval);
@@ -369,10 +369,10 @@ var SEMI = (() => {
             }
             console.log(`${name} Enabled!`);
             if (plugin.skill !== '') {
-                SEMI.changePage(plugin.skill);
+                SEMIUtils.changePage(plugin.skill);
             }
             if (plugin.imgSrc !== '') {
-                SEMI.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, 1000);
+                SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, 1000);
             }
             if (plugin.ms !== 0) {
                 plugin.interval = setInterval(plugin.onLoop, plugin.ms);
@@ -575,7 +575,6 @@ var SEMI = (() => {
         SUPPORTED_GAME_VERSION,
         LOCAL_SETTINGS_PREFIX,
         SIDEBAR_MENUS,
-        utilsReady: false,
         getSemiData,
         getGlobalItem,
         setGlobalItem,

@@ -19,7 +19,7 @@ var { semiSetMenu } = (() => {
             header.after(menuHeader, menuSection);
         }
 
-        const semiNavImg = `<img class="nav-img" src="${SEMI.iconSrc}">`;
+        const semiNavImg = `<img class="nav-img" src="${SEMIUtils.iconSrc}">`;
         const semiNavInner = `<a class="nav-main-link nav-compact ${SEMI.ROOT_ID}-btn" id="${SEMI.ROOT_ID}-info-button">${semiNavImg}<span class="nav-main-link-name">SEMI Menu</span></a>`;
         const semiNavEl = $(`<li class="nav-main-item" id="${SEMI.ROOT_ID}-info-header">${semiNavInner}</li>`);
         $('#sidebar').find('.nav-main').append(semiNavEl);
@@ -80,7 +80,7 @@ var { semiSetMenu } = (() => {
       <div class="modal-dialog" role="document">
         <div class="modal-content"><div class="block block-themed block-transparent mb-0">
           <div class="block-header bg-primary-dark">
-            <img class="nav-img" src="${SEMI.iconSrc}">
+            <img class="nav-img" src="${SEMIUtils.iconSrc}">
             <h3 class="block-title">Scripting Engine for Melvor Idle Menu</h3>
             <div class="block-options">
               <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
@@ -181,7 +181,7 @@ var { semiSetMenu } = (() => {
     };
 
     if (SEMI.getItem('etc-GUI-toggles') !== null) {
-        SEMI.mergeOnto(SEMIetcGUI, SEMI.getItem('etc-GUI-toggles'));
+        SEMIUtils.mergeOnto(SEMIetcGUI, SEMI.getItem('etc-GUI-toggles'));
         if (SEMIetcGUI.barf !== undefined) delete SEMIetcGUI.barf;
         if (SEMIetcGUI.destroyCrops !== undefined) delete SEMIetcGUI.destroyCrops;
     }
@@ -190,7 +190,7 @@ var { semiSetMenu } = (() => {
     const setupSEMI = () => {
         if ($('#auto-replant-button').length) return;
         injectSidebarSections();
-        SEMI.getElement('info-header').before($('<br>'));
+        SEMIUtils.getElement('info-header').before($('<br>'));
         SEMI.setItem('etc-GUI-toggles', SEMIetcGUI); //to prevent errors first-run with thieving-calc
         SEMI.pluginNames.forEach((name) => SEMI.injectGUI(name));
 
@@ -202,7 +202,7 @@ var { semiSetMenu } = (() => {
         injectDragMenus();
 
         //if all goes well, yay, it's loaded
-        SEMI.customNotify(
+        SEMIUtils.customNotify(
             'assets/media/monsters/dragon_black.svg',
             'Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',
             5000
@@ -211,12 +211,12 @@ var { semiSetMenu } = (() => {
 
     //show SEMI katorone automation settings modal called by nav button
     const semiSetMenu = () => {
-        SEMI.getElement('kat-modal').modal(open);
+        SEMIUtils.getElement('kat-modal').modal(open);
     };
 
     //show SEMI info modal function called by nav button
     const semiInfo = () => {
-        SEMI.getElement('semi-modal').modal(open);
+        SEMIUtils.getElement('semi-modal').modal(open);
     };
 
     const toggleSEMIMenuInfo = () => {
@@ -238,7 +238,7 @@ var { semiSetMenu } = (() => {
 
     const saveEtcToggles = () => {
         SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
-        SEMI.customNotify(
+        SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',
             10000
@@ -254,11 +254,11 @@ var { semiSetMenu } = (() => {
 
     const hideSemi = (reason) => {
         console.warn(`SEMI was not correctly loaded due to ${reason}`);
-        SEMI.getElements().toggleClass('d-none');
+        SEMIUtils.getElements().toggleClass('d-none');
     };
 
     const loadSemi = () => {
-        if (!isLoaded || typeof SEMI === 'undefined' || !SEMI.utilsReady) {
+        if (typeof SEMIUtils === 'undefined' || !SEMIUtils.utilsReady()) {
             return;
         }
         clearInterval(semiLoader);

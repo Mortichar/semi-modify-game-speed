@@ -60,7 +60,7 @@
         console.log('Successfully removed 12 hour limit.');
 
         if (!Boolean(SEMI.getItem('remember-state'))) {
-            SEMI.customNotify(
+            SEMIUtils.customNotify(
                 imgSrc,
                 'You enabled the 12 hour time limit remover, but do not have plugins auto-enable when SEMI loads. We suggest enabling that in the SEMI settings for this script to be useful.',
                 5000
@@ -70,7 +70,7 @@
 
     // We load before SEMI is ready, we have to wait to add the plugin in otherwise currentCharacter is not valid.
     const addSelfToSemi = () => {
-        if (!isLoaded || typeof SEMI === 'undefined' || !SEMI.utilsReady) {
+        if (typeof SEMIUtils === 'undefined' || !SEMIUtils.utilsReady()) {
             return;
         }
 

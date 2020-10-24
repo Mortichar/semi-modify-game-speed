@@ -8,7 +8,7 @@
 
     const destroyCrops = () => {
         if (newFarmingAreas[currentFarmingArea] == undefined)
-            return SEMI.customNotify(
+            return SEMIUtils.customNotify(
                 'assets/media/skills/farming/farming.svg',
                 'No currently selected farming area to destroy crops in!'
             );
@@ -23,7 +23,11 @@
                     removeSeed(area.id, i);
                 }
             }
-            SEMI.customNotify(SEMI.skillImg('farming'), `SEMI destroyed all of your ${area.areaName}.`, 4000);
+            SEMIUtils.customNotify(
+                SEMIUtils.skillImg('farming'),
+                `SEMI destroyed all of your ${area.areaName}.`,
+                4000
+            );
         }
     };
 
@@ -37,7 +41,7 @@
         $('#farming-area-container').before(destroyCropsBtn);
     };
     const removeGUI = () => $('#destroy-crops-gui').remove();
-    // SEMI.mergeOnto(SEMI, {barf});
+    // SEMIUtils.mergeOnto(SEMI, {barf});
     SEMI.add(id, {
         ms: 0,
         pluginType: SEMI.PLUGIN_TYPE.TWEAK,

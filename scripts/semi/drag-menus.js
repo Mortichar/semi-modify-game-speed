@@ -1,6 +1,6 @@
 var injectDragMenus = () => {
     const prefix = SEMI.ROOT_ID;
-    const getEl = (id) => SEMI.getElement(id);
+    const getEl = (id) => SEMIUtils.getElement(id);
 
     const sections = ['combat', 'skills', 'other', 'socials'];
     const configVersion = 2;
@@ -154,7 +154,7 @@ var injectDragMenus = () => {
             .append(
                 skills[name],
                 $(
-                    `<div id="${fullPrefix}-divider" class="nav-main-link nav-compact"><img class="nav-img" src="${SEMI.iconSrc}"><small>Unlocked! Items below this hide when locked.</small></div>`
+                    `<div id="${fullPrefix}-divider" class="nav-main-link nav-compact"><img class="nav-img" src="${SEMIUtils.iconSrc}"><small>Unlocked! Items below this hide when locked.</small></div>`
                 )
             )
             .before(header(name));

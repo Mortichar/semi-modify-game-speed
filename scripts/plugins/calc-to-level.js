@@ -4,7 +4,7 @@ const Skill = CONSTANTS.skill;
 
 /** @param {number} skill */
 const getData = (skill) => {
-    const hasCraftCape = SEMI.currentEquipmentInSlot('Cape') === CONSTANTS.item.Crafting_Skillcape;
+    const hasCraftCape = SEMIUtils.currentEquipmentInSlot('Cape') === CONSTANTS.item.Crafting_Skillcape;
     const craftInterval = hasCraftCape ? 1500 : 3000;
     const data = {
         [Skill.Woodcutting]: { interval: 2000, key: 'xp', itemData: logsData, selectedItem: selectedLog },
@@ -64,7 +64,7 @@ const calcToLvl = (skill) => {
 
     const craftTimeMin = data.interval / 1000 / 60;
     let timeToLvl = itemsToLvl * craftTimeMin;
-    $(`#${name}-calc-time`).text(SEMI.formatTimeFromMinutes(timeToLvl));
+    $(`#${name}-calc-time`).text(SEMIUtils.formatTimeFromMinutes(timeToLvl));
 };
 
 //universal calc injector
@@ -128,7 +128,7 @@ const injectItemsCalculators = () => {
 
 /** @param {string} skillName */
 const _initializeCalcLvl = (skillName) => {
-    $(`#${skillName}-lvl-in`).val(SEMI.currentLevel(skillName) + 1);
+    $(`#${skillName}-lvl-in`).val(SEMIUtils.currentLevel(skillName) + 1);
 };
 
 const initializeCalcLvl = () => {

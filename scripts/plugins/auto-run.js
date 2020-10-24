@@ -6,16 +6,16 @@
     const imgSrc = 'assets/media/skills/combat/run.svg';
 
     const autoRun = () => {
-        if (!SEMI.isCurrentSkill('Hitpoints')) {
+        if (!SEMIUtils.isCurrentSkill('Hitpoints')) {
             return;
         }
-        const currentWeapon = items[SEMI.currentEquipmentInSlot('Weapon')];
+        const currentWeapon = items[SEMIUtils.currentEquipmentInSlot('Weapon')];
         const usingRanged = currentWeapon.isRanged || currentWeapon.type === 'Ranged Weapon';
-        const hpmax = SEMI.maxHP();
-        const deadlyEnemyMaxHit = SEMI.adjustedMaxHit() > hpmax;
+        const hpmax = SEMIUtils.maxHP();
+        const deadlyEnemyMaxHit = SEMIUtils.adjustedMaxHit() > hpmax;
         if (deadlyEnemyMaxHit) {
             return runFromCombat(
-                `courage: the adjusted max hit of the current enemy (${SEMI.maxHitOfCurrentEnemy()} raw DMG, ${SEMI.adjustedMaxHit()} %reduced DMG) is greater than your max hp! (${hpmax} HP)`
+                `courage: the adjusted max hit of the current enemy (${SEMIUtils.maxHitOfCurrentEnemy()} raw DMG, ${SEMIUtils.adjustedMaxHit()} %reduced DMG) is greater than your max hp! (${hpmax} HP)`
             );
         }
         if (equippedFood[currentCombatFood].qty < 1) {
@@ -39,8 +39,8 @@
         const date = today.toDateString();
         const time = today.toTimeString().split(' ')[0];
         const dateTime = `${date} @ ${time}`;
-        SEMI.stopSkill('Hitpoints');
-        SEMI.customNotify(
+        SEMIUtils.stopSkill('Hitpoints');
+        SEMIUtils.customNotify(
             imgSrc,
             `SEMI: Exited Auto Combat @ ${dateTime} because ${username} is out of ${reason}`,
             15000

@@ -7,11 +7,11 @@
     const skill = 'Firemaking';
 
     const autoBonfire = () => {
-        if (bonfireBonus === 0 && SEMI.isCurrentSkill('Firemaking')) lightBonfire();
+        if (bonfireBonus === 0 && SEMIUtils.isCurrentSkill('Firemaking')) lightBonfire();
     };
 
     const onEnable = () => {
-        SEMI.customNotify(imgSrc, 'To begin, start burning some logs.', 5000);
+        SEMIUtils.customNotify(imgSrc, 'To begin, start burning some logs.', 5000);
     };
     SEMI.add(id, { ms: 500, onLoop: autoBonfire, onEnable, desc, imgSrc, title, skill });
 })();

@@ -45,15 +45,18 @@
     };
 
     const autoOpen = () => {
-        if (SEMI.isBankFull()) {
+        if (SEMIUtils.isBankFull()) {
             return;
         }
         for (let i = bank.length - 1; i >= 0; i--) {
             const itemID = bank[i].id;
             if (isItemEnabledToOpen[itemID]) {
-                const qty = SEMI.getBankQty(itemID);
-                SEMI.openItemWithoutConfirmation(itemID, qty);
-                SEMI.customNotify(items[itemID].media, `Opening ${numberWithCommas(qty)} of ${items[itemID].name}`);
+                const qty = SEMIUtils.getBankQty(itemID);
+                SEMIUtils.openItemWithoutConfirmation(itemID, qty);
+                SEMIUtils.customNotify(
+                    items[itemID].media,
+                    `Opening ${numberWithCommas(qty)} of ${items[itemID].name}`
+                );
             }
         }
     };
@@ -145,5 +148,5 @@
 
     SEMI.add(id, { ms: 2000, onLoop: autoOpen, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI });
-    SEMI.mergeOnto(SEMI, { refreshContainerLog });
+    SEMIUtils.mergeOnto(SEMI, { refreshContainerLog });
 })();
