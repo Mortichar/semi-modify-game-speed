@@ -1,4 +1,4 @@
-SEMI.Injections = (() => {
+SEMIInjections = (() => {
   const doInjections = () => {
     // getSave for adding our data to a player save
     injectGetSave();
@@ -20,7 +20,7 @@ SEMI.Injections = (() => {
       if (showNotification) itemNotify(itemID, quantity);
 
       // If a function returns true it has handled the item and we are not adding it to the bank.
-      if (SEMI.EventBus.AddItemToBankPre(itemID, quantity, found, showNotification)) {
+      if (SEMIEventBus.AddItemToBankPre(itemID, quantity, found, showNotification)) {
         return true;
       }
 
@@ -29,7 +29,7 @@ SEMI.Injections = (() => {
         return result;
       }
 
-      SEMI.EventBus.AddItemToBankPost(itemID, quantity, found, showNotification);
+      SEMIEventBus.AddItemToBankPost(itemID, quantity, found, showNotification);
 
       return result;
     };
@@ -67,7 +67,10 @@ SEMI.Injections = (() => {
     console.log('Attempting to modify Save.js getSave');
 
     var getSaveNew = getSave.toString();
-    getSaveNew = getSaveNew.replace('let toSave = {};', 'let toSave = SEMI.Injections.semiGetSave();');
+    getSaveNew = getSaveNew.replace(
+      "let toSave = {};",
+      "let toSave = SEMIInjections.semiGetSave();"
+    );
 
     if (getSaveNew == getSave.toString()) {
       console.error('Failed to find injection point');
@@ -87,7 +90,14 @@ SEMI.Injections = (() => {
     return SEMI.getSemiCharacterData();
   };
 
-  doInjections();
+  function waitForLoad() {
+    if (!SEMI) return;
+    clearInterval(semiLoader);
+    
+    doInjections();
+  }
+
+  const semiLoader = setInterval(waitForLoad, 50);
 
   return { semiGetSave };
 })();
