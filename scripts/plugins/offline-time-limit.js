@@ -55,7 +55,8 @@
             console.error('Failed to find 12 hour message for removal.');
         }
 
-        updateOffline = eval('(' + UpdateOfflineNew + ')');
+        // updateOffline = eval('(' + UpdateOfflineNew + ')');
+        SEMI.replaceGameFunc('updateOffline', UpdateOfflineNew);
 
         console.log('Successfully removed 12 hour limit.');
 

@@ -74,7 +74,8 @@ SEMIInjections = (() => {
             return;
         }
 
-        getSave = eval('(' + getSaveNew + ')');
+        // getSave = eval('(' + getSaveNew + ')');
+        SEMI.replaceGameFunc('getSave', getSaveNew);
 
         console.log('Successfully injected into getSave');
     };

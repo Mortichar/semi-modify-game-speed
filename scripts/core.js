@@ -547,6 +547,18 @@ var SEMI = (() => {
         Object.keys(data).forEach((key) => SEMI.setValue(name, key, data[key]));
     };
 
+    /** Inject a script to override game functions as an alternative to eval
+     * @param {string} fName The name of game function to be overridden
+     * @param {string} func String that will be passed as the definition of the function
+     */
+    const replaceGameFunc = (fName, func) => {
+        const script = document.createElement('script');
+        script.setAttribute('id', fName + '-replacement-script');
+        // script.innerText = `${func.replace(/(\r\n|\n|\r)/gm, '')}`;
+        script.textContent = func;
+        document.body.append(script);
+    };
+
     return {
         add,
         toggle,
@@ -580,5 +592,6 @@ var SEMI = (() => {
         setGlobalItem,
         removeGlobalItem,
         getSemiCharacterData,
+        replaceGameFunc,
     };
 })();
