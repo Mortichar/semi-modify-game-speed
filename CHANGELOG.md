@@ -1,14 +1,14 @@
 # SEMI Changelog
 
-## Current dev version, v0.5
+## v0.5
 
 ### Core changes
 * Per-character SEMI Settings! Coded by Zeldo
 * AuroraKy setters & getters: SEMI now has plugin data & config set and get functions
-* Config menu available per-plugin as a tippy popout menu
+* Config menu available per-plugin as a tippy popout menu from cog buttons in the sidebar
     * Includes new helper functions like `SEMI.saveConfigFromMenu` and `SEMI.updateConfig`
 * EventBus: intercepting game events coded by Zeldo
-    * Used now for intercepting items being added to bank and instead selling with AutoSell
+    * Mainly used now for intercepting items being added to bank and instead selling with AutoSell
 
 ### New Scripts
 * Offline idle time extension script by Zeldo
@@ -17,16 +17,17 @@
 * AutoEquip Best Item script by Zeldo (beta version)
     * Equips best item for a situation
 * Mastery Enhancements by many coders, toggled in SEMI menu
-    * Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu
+    * Colors buttons to spend pool xp depending on current xp
+    * Adds progress bars for pools to skills in the menu
 
 ### Script updates
 * TimeRemaining is updated and back!
-* AutoSellGems & AutoEquip Ammo have working config menu prototypes
+* AutoSellGems & AutoEquip Ammo have working config menus! Access via the cog button on right side of plugin sidebar button.
 * AutoSellGems now has the ability to choose stack size to sell at, as well as toggles for each gem
 * AutoSell no longer requires a loop interval and instead relies on the new SEMI Event Bus, so it should save on CPU usage and improve performance
 * XPH improvements by Visua: time display enhancements and virtual level toggles maximum input value
 
-### UI Changes
+### UI changes
 * Added status icons for AutoSell/Open/Bury as well as AutoSlayerSkip so you can see their status from the sidebar without being inside the actual menus
 * Credits update in SEMI menu
 
@@ -59,7 +60,7 @@
 * Many scripts and utilities fixed by Visua, restoring functionality. Now only 2 that we maintain are down: AutoOpen & AutoBury
 * AutoSlayer fixes to prevent fighting monsters you can't kill if you don't have equipment, yet you have AutoSlayerEquip enabled
 
-### UI Changes
+### UI changes
 
 * Menu updates: credits in the SEMI info section
 * Fix: drag-menus now works properly, a couple filters were looking for the wrong metric

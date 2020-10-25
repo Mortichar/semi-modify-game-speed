@@ -13,18 +13,18 @@ Huge thanks to community contributors such as DanielRX, Visua, Breindahl, Aurora
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* New: (Dev Version) Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
+* New: Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
     * Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu
-* New scripts by Zeldo: (Dev Version)
+* New scripts by Zeldo:
     * Offline Time >12h
         * Extends amount of time you can offline-idle
         * Cleans up offline idle calculations
     * AutoEquip Best Item (Beta version of script)
         * Equips best item for a situation
 * New Core Features
-    * (Dev Version) Scripts can now include a config menu built-in to the sidebar using tippy, with AutoSellGems and AutoEquip Ammo being the prototype examples
-    * (Dev Version) Per-character config saving by Zeldo!
-    * (Dev Version) Event bus to intercept game events
+    * Scripts can now include a config menu built-in to the sidebar using tippy, with AutoSellGems and AutoEquip Ammo being the prototype examples
+    * Per-character config saving by Zeldo!
+    * Event bus to intercept game events
     * Better sidebar menu statuses
     * Backup, Restore, and Reset SEMI Configuration in the repurposed SEMI Menu
     * AutoEnable Scripts on Refresh now available in the SEMI Menu
