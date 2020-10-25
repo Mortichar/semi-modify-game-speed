@@ -3,6 +3,8 @@
 [![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
 [![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
 
+Version 0.5 is a less stable than previously thought and has been disabled on Mozilla, but may still become live on Chrome. Working on halting that update for a little while. If you installed 0.5 on Firefox, and you revert to 0.4.10 again, you'll have to restore your SEMI settings, perhaps manually. Please, please backup everything in your games before trying the newer versions of SEMI, including all of your characters, and SEMI settings if possible. There are lots of new features in this repository dev version of SEMI, but as always, may be less stable. We'll get more testing done, more issues found and squashed, and a better update out soon.
+
 Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source([see Alternative Installation](#alternative-installation)), but be aware it may contain more bugs or be less stable than release versions from above buttons.
 
 Huge thanks to community contributors such as DanielRX, Visua, Breindahl, AuroraKy, Zeldo, and more for helping with the project!

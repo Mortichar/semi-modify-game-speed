@@ -40,7 +40,7 @@ var { semiSetMenu } = (() => {
     const creditsText = `
   <ul>
   <li>Maintainer & owner: AldousWatts</li>
-  <li>Major contributor: DanielRX
+  <li>Contributor: DanielRX
     <ul>
     <li>Massive refactoring</li>
     <li>Dragable Menus</li>
@@ -48,7 +48,7 @@ var { semiSetMenu } = (() => {
     <li>Many other script cleanups and contributions</li>
     </ul>
   </li>
-  <li>Major contributor: Visua
+  <li>Contributor: Visua
     <ul>
     <li>AutoFarm</li>
     <li>Core fixes and upgrades</li>
@@ -56,7 +56,7 @@ var { semiSetMenu } = (() => {
     <li>Debugging, refactoring, and more</li>
     </ul>
   </li>
-  <li>Major contributor: Zeldo
+  <li>Contributor: Zeldo
     <ul>
     <li>Offline Timer script</li>
     <li>AutoEquip Best Item script (beta)</li>
