@@ -278,8 +278,21 @@ const SEMIUtils = (() => {
         equipSwapConfig[slotName].swapped = !equipSwapConfig[slotName].swapped;
     };
 
-    /** @param {SkillName} skillName */
-    const currentLevel = (skillName) => skillLevel[CONSTANTS.skill[skillName]];
+    /**
+     * Returns the current level of a skill
+     * @param {SkillName} skillName
+     * @param {boolean} [virtualLevel=false] Whether it should return the virtual level if it's greater than 99
+     */
+    const currentLevel = (skillName, virtualLevel = false) => {
+        if (virtualLevel) {
+            return Math.max(
+                skillLevel[CONSTANTS.skill[skillName]],
+                exp.xp_to_level(skillXP[CONSTANTS.skill[skillName]]) - 1
+            );
+        } else {
+            return skillLevel[CONSTANTS.skill[skillName]];
+        }
+    };
 
     /** @param {number} skillId */
     const currentLevelById = (skillId) => skillLevel[skillId];

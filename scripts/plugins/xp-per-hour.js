@@ -34,6 +34,10 @@ var injectXPHGUI = (() => {
 
     /** @param {string} key */
     const resetXPHEl = (key) => {
+        let nextLevel = SEMIUtils.currentLevel(data[key].skill, showVirtualLevels) + 1;
+        if (!showVirtualLevels && nextLevel > 99) {
+            nextLevel = 99;
+        }
         if (data[key].children !== 0) {
             for (let i = 0; i < data[key].children; i++) {
                 resetXPHEl(`${key}-${i}`);
@@ -41,7 +45,7 @@ var injectXPHGUI = (() => {
         }
         $(`#${key}-rate`).text('...');
         $(`#${key}-lvl`).text('... hrs');
-        $(`#${key}-lvl-in`).val(SEMIUtils.currentLevel(data[key].skill) + 1);
+        $(`#${key}-lvl-in`).val(nextLevel);
         $(`#${key}-time`).text('0');
     };
 
@@ -57,6 +61,15 @@ var injectXPHGUI = (() => {
         value.exp = SEMIUtils.currentXP(value.skill);
     };
 
+    const formatTimeFromSeconds = (seconds) => {
+        if (seconds === 0 || seconds === Infinity) {
+            return '...';
+        }
+        const secondsPerDay = 60 * 60 * 24;
+        const days = Math.floor(seconds / secondsPerDay);
+        return (days ? days + 'd ' : '') + new Date((seconds % secondsPerDay) * 1000).toISOString().substr(11, 8);
+    };
+
     /** @param {string} key */
     const updateXPHEl = (key) => {
         const { skill, xpPerHour, time, children } = data[key];
@@ -66,13 +79,17 @@ var injectXPHGUI = (() => {
             }
         }
         let hoursToLvl = 0;
-        const lvlIn = Number($(`#${key}-lvl-in`).val()); // Math.min(99, lvlIn) to cap to 99
-        const rate = Number(xpPerHour.split(',').join(''));
-        if (lvlIn > SEMIUtils.currentLevel(skill) && rate > 0) {
-            hoursToLvl = (exp.level_to_xp(lvlIn) - SEMIUtils.currentXP(skill)) / rate;
+        const lvlIn = Number($(`#${key}-lvl-in`).val());
+        if (lvlIn > SEMIUtils.currentLevel(skill, showVirtualLevels) && xpPerHour > 0) {
+            hoursToLvl = (exp.level_to_xp(lvlIn) - SEMIUtils.currentXP(skill)) / xpPerHour;
         }
-        $(`#${key}-rate`).text(xpPerHour);
-        $(`#${key}-lvl`).text(SEMIUtils.formatTimeFromMinutes(hoursToLvl * 60));
+        let xpPerHourString = Math.round(xpPerHour).toString();
+        const pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(xpPerHourString)) {
+            xpPerHourString = xpPerHourString.replace(pattern, '$1,$2');
+        }
+        $(`#${key}-rate`).text(xpPerHourString);
+        $(`#${key}-lvl`).text(formatTimeFromSeconds(hoursToLvl * 3600));
         $(`#${key}-time`).text(((Date.now() - time) / 1000).toFixed(0));
     };
 
@@ -88,12 +105,7 @@ var injectXPHGUI = (() => {
         const oldTime = time || Date.now();
         const timeSince = (Date.now() - oldTime) / 1000;
         const xpLeft = SEMIUtils.currentXP(skill) - oldXP;
-        let xpPerHour = Math.floor((xpLeft / timeSince) * 3600).toString();
-        const pattern = /(-?\d+)(\d{3})/;
-        while (pattern.test(xpPerHour)) {
-            xpPerHour = xpPerHour.replace(pattern, '$1,$2');
-        }
-        data[key].xpPerHour = xpPerHour;
+        data[key].xpPerHour = (xpLeft / timeSince) * 3600;
     };
 
     const stats = [
@@ -127,13 +139,11 @@ var injectXPHGUI = (() => {
         if (data[key].running) {
             updateRate(key);
             if (!running) {
-                console.log('Stopping');
                 data[key].running = false;
             } else {
                 updateXPHEl(key);
             }
         } else {
-            console.log('Starting');
             setupData(key);
             resetXPHEl(key);
         }
@@ -225,22 +235,22 @@ var injectXPHGUI = (() => {
 
     const injectXPHCGUI = () => {
         $('#combat-skill-progress-menu tr:first').append(
-            $(
-                '<th id="xphc-th" class="xphc d-none" style="width: 125px;">xp/h (<span id="xphc-time">0</span> s)</th>'
-            )
+            $('<th id="xphc-th" class="xphc d-none" style="width: 125px; text-align: right;">xp/h</th>')
         );
         $('#combat-skill-progress-menu tr:not(:first)').append(
-            $('<td class="font-w600 xphc d-none"><small>...</small></td>')
+            $('<td class="font-w600 xphc d-none" style="text-align: right;"><small>...</small></td>')
         );
         for (let i = 0; i < COMBAT_LEVELS; i++) {
             $('.xphc:not(:first)')[i].id = 'xphc-' + i + '-rate';
         }
         $('#combat-skill-progress-menu tr:first').append(
-            $('<th id="xphc-th2" class="xphc xphcl d-none" style="width: 175px;">Time to Level</th>')
+            $(
+                '<th id="xphc-th2" class="xphc xphcl d-none" style="width: 210px; text-align: right;">Time to Level</th>'
+            )
         );
         $('#combat-skill-progress-menu tr:not(:first)').append(
             $(
-                `<td class="font-w600 xphc xphcl d-none"><span>... hrs</span> to L<input type="number" id="xphc-lvl-in" name="xphc-lvl" min="2" style="width: 50px; float: right;"></td>`
+                `<td class="font-w600 xphc xphcl d-none" style="text-align: right;"><span>...</span> to <input type="number" id="xphc-lvl-in" name="xphc-lvl" min="2" style="width: 50px; margin-left: 0.25em;"></td>`
             )
         ); //add level selector
         for (let i = 0; i < COMBAT_LEVELS; i++) {
@@ -254,7 +264,7 @@ var injectXPHGUI = (() => {
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-rate">...</span> <span id="xph-skill"></span> XP per hour.</h3>
         <br>
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xph-time">0</span> seconds spent running XPH.</h3>
-        <h4 class="text-muted m-1"><span id="xph-lvl">... hrs</span> to L<input type="number" id="xph-lvl-in" name="xph-lvl-in" min="2" style="width: 60px;">
+        <h4 class="text-muted m-1"><span id="xph-lvl">... hrs</span> to <input type="number" id="xph-lvl-in" name="xph-lvl-in" min="2" style="width: 60px;">
         <br>
     </div>`;
 
@@ -263,7 +273,7 @@ var injectXPHGUI = (() => {
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xphf-rate">...</span> Farming XP per hour.</h3>
         <br>
         <h3 class="text-muted m-1"><span class="p-1 bg-info rounded" id="xphf-time">0</span> seconds spent running XPHf.</h3>
-        <h4 class="text-muted m-1"><span id="xphf-lvl">... hrs</span> to L<input type="number" id="xphf-lvl-in" name="xph-lvl-in" min="2" style="width: 60px;">
+        <h4 class="text-muted m-1"><span id="xphf-lvl">... hrs</span> to <input type="number" id="xphf-lvl-in" name="xph-lvl-in" min="2" style="width: 60px;">
         <br>
     </div>`;
 
