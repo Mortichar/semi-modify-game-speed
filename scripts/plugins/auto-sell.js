@@ -48,7 +48,7 @@ var autoSellShow = (() => {
     const autoSell = () => {
         for (let i = bank.length - 1; i >= 0; i--) {
             const itemID = bank[i].id;
-            if (isItemEnabledToSell[itemID]) {
+            if (isItemEnabledToSell[itemID] && SEMI.isEnabled(id)) {
                 const qty = bank[i].qty;
                 const gpBefore = gp;
                 SEMIUtils.sellItemWithoutConfirmation(itemID, qty);
@@ -150,7 +150,7 @@ var autoSellShow = (() => {
     };
 
     const ItemEventHandler = (itemID, qty, found, showNotification) => {
-        if (isItemEnabledToSell[itemID]) {
+        if (isItemEnabledToSell[itemID] && SEMI.isEnabled(id)) {
             const gpBefore = gp;
             SEMIUtils.processItemSaleWithoutBank(itemID, qty);
             SEMIUtils.customNotify(
@@ -164,7 +164,7 @@ var autoSellShow = (() => {
 
     SEMIEventBus.RegisterAddItemToBankHandler({ HandleAddItemToBankPre: ItemEventHandler });
 
-    SEMI.add(id, { ms: 15000, onEnable, onDisable, title, desc });
+    SEMI.add(id, { ms: 0, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI });
     SEMIUtils.mergeOnto(SEMI, { refreshLog });
 })();
