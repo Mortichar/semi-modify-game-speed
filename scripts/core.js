@@ -309,7 +309,7 @@ var SEMI = (() => {
             onConfigMenuShown: () => {},
         };
         const opts = { ...defaults, ...options };
-        // Register the name and add ms
+        // Register the name and add the config
         data[name] = {};
         setValues(name, opts.config);
 
