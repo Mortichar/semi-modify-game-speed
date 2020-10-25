@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor TimeRemaining
 // @namespace    http://tampermonkey.net/
-// @version      0.5.1
+// @version      0.5.2
 // @description  Shows time remaining for completing a task with your current resources. Takes into account Mastery Levels and other bonuses.
 // @author       Breindahl#2660
 // @match        https://melvoridle.com/*
@@ -456,7 +456,7 @@
                     //none
                 }
                 if (currentSkill == 'Runecrafting') {
-                    if (currentPoolMasteryXP >= poolLim[1]) xpMultiplier += 1.5;
+                    if (currentPoolMasteryXP >= poolLim[1] && items[item].type === 'Rune') xpMultiplier += 1.5;
                 }
                 if (currentSkill == 'Crafting') {
                     //none
