@@ -7,7 +7,8 @@
 * AuroraKy setters & getters: SEMI now has plugin data & config set and get functions
 * Config menu available per-plugin as a tippy popout menu
     * Includes new helper functions like `SEMI.saveConfigFromMenu` and `SEMI.updateConfig`
-* EventBus: intercepting game events coded by Zeldo, used now for intercepting items being added to bank and instead selling with AutoSell
+* EventBus: intercepting game events coded by Zeldo
+    * Used now for intercepting items being added to bank and instead selling with AutoSell
 
 ### New Scripts
 * Offline idle time extension script by Zeldo
@@ -22,7 +23,7 @@
 * TimeRemaining is updated and back!
 * AutoSellGems & AutoEquip Ammo have working config menu prototypes
 * AutoSellGems now has the ability to choose stack size to sell at, as well as toggles for each gem
-* AutoSell's looping interval has been lengthened to 15s to prevent over-zealous selling of items when using a collection skill, mainly when selling gems while mining with gloves. Should alleviate performance stress on lower-power machines
+* AutoSell no longer requires a loop interval and instead relies on the new SEMI Event Bus, so it should save on CPU usage and improve performance
 * XPH improvements by Visua: time display enhancements and virtual level toggles maximum input value
 
 ### UI Changes

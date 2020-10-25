@@ -1,7 +1,10 @@
 # SEMI General notes
 
-## Before release
-* Anything else?
+## v0.5.1
+* Any bugfixes that need doing
+* AutoEat wasteful mode config menu toggle
+* AutoFarmEquip config menu toggle between Signet & other ring
+* Ambitious: AutoSell per-item target stack/min stack to keep? -> kill AutoSellGems
 
 ## TODO overflow
 
