@@ -2,6 +2,8 @@
 
 ## v0.5.1
 * Any bugfixes that need doing
+    * AutoFarm preserve per-char config transfer somehow?
+    * AutoSell event bus handler should include tracking item stats
 * AutoEat wasteful mode config menu toggle
 * AutoFarmEquip config menu toggle between Signet & other ring
 * Ambitious: AutoSell per-item target stack/min stack to keep? -> kill AutoSellGems
