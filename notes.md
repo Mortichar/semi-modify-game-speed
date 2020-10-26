@@ -5,6 +5,7 @@
 * AutoEat wasteful mode config menu toggle
 * AutoFarmEquip config menu toggle between Signet & other ring
 * Ambitious: AutoSell per-item target stack/min stack to keep? -> kill AutoSellGems
+* katorone -> automine config menu? gp min script? split n stuff?
 
 ## TODO overflow
 
