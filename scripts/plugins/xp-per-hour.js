@@ -32,12 +32,16 @@ var injectXPHGUI = (() => {
 
     data.xphc.children = 8;
 
-    /** @param {string} key */
-    const resetXPHEl = (key) => {
+    const getNextLevel = (data, key) => {
         let nextLevel = SEMIUtils.currentLevel(data[key].skill, showVirtualLevels) + 1;
         if (!showVirtualLevels && nextLevel > 99) {
             nextLevel = 99;
         }
+        return nextLevel;
+    };
+
+    /** @param {string} key */
+    const resetXPHEl = (key) => {
         if (data[key].children !== 0) {
             for (let i = 0; i < data[key].children; i++) {
                 resetXPHEl(`${key}-${i}`);
@@ -45,7 +49,7 @@ var injectXPHGUI = (() => {
         }
         $(`#${key}-rate`).text('...');
         $(`#${key}-lvl`).text('... hrs');
-        $(`#${key}-lvl-in`).val(nextLevel);
+        $(`#${key}-lvl-in`).val(getNextLevel(data, key));
         $(`#${key}-time`).text('0');
     };
 
@@ -79,9 +83,13 @@ var injectXPHGUI = (() => {
             }
         }
         let hoursToLvl = 0;
-        const lvlIn = Number($(`#${key}-lvl-in`).val());
-        if (lvlIn > SEMIUtils.currentLevel(skill, showVirtualLevels) && xpPerHour > 0) {
-            hoursToLvl = (exp.level_to_xp(lvlIn) - SEMIUtils.currentXP(skill)) / xpPerHour;
+        let nextLevel = Number($(`#${key}-lvl-in`).val());
+        if (nextLevel <= SEMIUtils.currentLevel(skill, showVirtualLevels)) {
+            nextLevel = getNextLevel(data, key);
+            $(`#${key}-lvl-in`).val(nextLevel);
+        }
+        if (nextLevel > SEMIUtils.currentLevel(skill) && xpPerHour > 0) {
+            hoursToLvl = (exp.level_to_xp(nextLevel) - SEMIUtils.currentXP(skill)) / xpPerHour;
         }
         let xpPerHourString = Math.round(xpPerHour).toString();
         const pattern = /(-?\d+)(\d{3})/;
