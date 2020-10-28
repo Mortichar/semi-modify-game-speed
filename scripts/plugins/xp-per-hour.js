@@ -69,9 +69,8 @@ var injectXPHGUI = (() => {
         if (seconds === 0 || seconds === Infinity) {
             return '...';
         }
-        const secondsPerDay = 60 * 60 * 24;
-        const days = Math.floor(seconds / secondsPerDay);
-        return (days ? days + 'd ' : '') + new Date((seconds % secondsPerDay) * 1000).toISOString().substr(11, 8);
+        const days = Math.floor(seconds / (60 * 60 * 24));
+        return (days ? days + 'd ' : '') + new Date(seconds * 1000).toISOString().substr(11, 8);
     };
 
     /** @param {string} key */
@@ -88,7 +87,7 @@ var injectXPHGUI = (() => {
             nextLevel = getNextLevel(data, key);
             $(`#${key}-lvl-in`).val(nextLevel);
         }
-        if (nextLevel > SEMIUtils.currentLevel(skill) && xpPerHour > 0) {
+        if (nextLevel > SEMIUtils.currentLevel(skill, true) && xpPerHour > 0) {
             hoursToLvl = (exp.level_to_xp(nextLevel) - SEMIUtils.currentXP(skill)) / xpPerHour;
         }
         let xpPerHourString = Math.round(xpPerHour).toString();
@@ -183,8 +182,6 @@ var injectXPHGUI = (() => {
         return startRunning(key);
     };
 
-    // ! -----------------
-
     let XPHtoggledOff = false;
 
     const startXPH = () => {
@@ -193,7 +190,6 @@ var injectXPHGUI = (() => {
             return;
         }
         const key = 'xph';
-        // ! ----
         let skill = typeof n === 'string' ? n : stats[n];
         if (skill == data[key].skill && !XPHtoggledOff) {
             XPHtoggledOff = true;
@@ -206,13 +202,8 @@ var injectXPHGUI = (() => {
 
     const startXPHC = () => {
         if (!SEMIUtils.isCurrentSkill('Hitpoints')) {
-            return;
-        } // Not in combat
-        SEMIUtils.customNotify(
-            'assets/media/main/statistics_header.svg',
-            'Check Combat Page Skill Progress table for XPH Combat Display!',
-            10000
-        );
+            return; // Not in combat
+        }
         if ($('#combat-skill-progress-menu').attr('class').split(' ').includes('d-none')) {
             toggleCombatSkillMenu();
         }
