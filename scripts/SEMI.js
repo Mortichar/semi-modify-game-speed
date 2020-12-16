@@ -114,6 +114,7 @@
         'cook',
         'mine',
         'sell-gems',
+        'master',
         'smith',
         'eat',
         'slayer',
