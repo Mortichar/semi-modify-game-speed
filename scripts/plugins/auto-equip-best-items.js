@@ -420,7 +420,7 @@ SEMI.AutoEquipBestItems = (() => {
             case CONSTANTS.item.Amulet_of_Looting:
                 return isInCombat;
             case CONSTANTS.item.Amulet_of_Fishing:
-                return currentCombatSkillId == CONSTANTS.skill.Fishing;
+                return currentSkillId == CONSTANTS.skill.Fishing;
             case CONSTANTS.item.Clue_Chasers_Insignia:
                 return skillsThatHaveSecondaryDrops.includes(currentSkillId);
         }
