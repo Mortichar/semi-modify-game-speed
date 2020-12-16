@@ -15,12 +15,23 @@
         'AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default, unless you are properly equipped or you turn on AS Auto Equip and have the correct items in the bank.';
     const imgSrc = SEMIUtils.skillImg('slayer');
 
+    const config = {
+        taskTier: 0,
+    };
+
     let autoSlayerCheck = 0;
 
     //Holds values for unequipped equipment
-    let originalRing;
-    let originalShield;
+    let originalBoots;
     let originalCape;
+    let originalHelmet;
+    let originalShield;
+    let originalRing;
+
+    const selectNewSlayerTaskWithConfig = () => {
+        let taskTier = SEMI.getValue(id, 'taskTier');
+        selectNewSlayerTask(taskTier);
+    };
 
     //Main function
     const autoSlayer = () => {
@@ -32,16 +43,20 @@
         isDungeon = false; //if you just completed a dungeon, this will be true and throw errors on enemy killed.
 
         if (!slayerTask.length) {
-            getSlayerTask();
+            selectNewSlayerTaskWithConfig();
         } //If there is no slayer task, get one
 
+        const currentBoots = () => SEMIUtils.currentEquipmentInSlot('Boots');
         const currentCape = () => SEMIUtils.currentEquipmentInSlot('Cape');
+        const currentHelmet = () => SEMIUtils.currentEquipmentInSlot('Helmet');
         const currentRing = () => SEMIUtils.currentEquipmentInSlot('Ring');
         const currentShield = () => SEMIUtils.currentEquipmentInSlot('Shield');
 
         if (autoSlayerCheck == 0) {
             autoSlayerCheck = 1;
+            originalBoots = currentBoots();
             originalCape = currentCape();
+            originalHelmet = currentHelmet();
             originalShield = currentShield();
             originalRing = currentRing();
         }
@@ -51,16 +66,23 @@
             typeof monsterIDs !== 'undefined' &&
             monsterIDs.includes(slayerTask[0].monsterID)
         ) {
-            newSlayerTask();
+            selectNewSlayerTaskWithConfig();
         }
 
         if (slayerTask[0] == null) return;
-        const needsShield = slayerAreas[1].monsters.includes(slayerTask[0].monsterID);
-        const needsRing = slayerAreas[2].monsters.includes(slayerTask[0].monsterID);
+        const needsItemMirrorShield = slayerAreas[1].monsters.includes(slayerTask[0].monsterID);
+        const needsItemMagicalRing = slayerAreas[2].monsters.includes(slayerTask[0].monsterID);
+        const needsItemDesertHat = slayerAreas[7].monsters.includes(slayerTask[0].monsterID);
+        const needsItemBlazingLantern = slayerAreas[8].monsters.includes(slayerTask[0].monsterID);
+        const needsItemClimbingBoots = slayerAreas[9].monsters.includes(slayerTask[0].monsterID);
+        const needsClearIntoTheMist = slayerAreas[10].monsters.includes(slayerTask[0].monsterID);
 
-        const hasShield = currentShield() == CONSTANTS.item.Mirror_Shield;
-        const hasRing = currentRing() == CONSTANTS.item.Magical_Ring;
-        const hasCape = currentCape() == CONSTANTS.item.Slayer_Skillcape;
+        const hasItemMirrorShield = currentShield() == CONSTANTS.item.Mirror_Shield;
+        const hasItemMagicalRing = currentRing() == CONSTANTS.item.Magical_Ring;
+        const hasItemDesertHat = currentHelmet() == CONSTANTS.item.Desert_Hat;
+        const hasItemBlazingLantern = currentShield() == CONSTANTS.item.Blazing_Lantern;
+        const hasItemClimbingBoots = currentBoots() == CONSTANTS.item.Climbing_Boots;
+        const hasItemSlayerSkillcape = currentCape() == CONSTANTS.item.Slayer_Skillcape;
 
         const skillCape = CONSTANTS.item.Slayer_Skillcape;
 
@@ -75,30 +97,42 @@
                     break;
                 }
             }
+
             //Equips Slayer Skillcape if owned
             if (
                 SEMIUtils.currentLevel('Slayer') >= 99 &&
-                (checkBankForItem(skillCape) || hasCape) &&
+                (checkBankForItem(skillCape) || hasItemSlayerSkillcape) &&
                 SEMI.isEnabled('auto-slayer-equip')
             ) {
-                if (!hasCape) {
+                if (!hasItemSlayerSkillcape) {
                     originalCape = currentCape();
                     found = SEMIUtils.equipFromBank(skillCape);
                 }
-            } else if ((needsShield || needsRing) && !SEMI.isEnabled('auto-slayer-equip')) {
+            } else if (
+                (needsItemMirrorShield ||
+                    needsItemMagicalRing ||
+                    needsItemDesertHat ||
+                    needsItemBlazingLantern ||
+                    needsItemClimbingBoots) &&
+                !SEMI.isEnabled('auto-slayer-equip')
+            ) {
                 //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
-                if (needsShield && !hasShield) {
-                    newSlayerTask();
-                } else if (needsRing && !hasRing) {
-                    newSlayerTask();
+                if (
+                    (needsItemMirrorShield && !hasItemMirrorShield) ||
+                    (needsItemMagicalRing && !hasItemMagicalRing) ||
+                    (needsItemDesertHat && !hasItemDesertHat) ||
+                    (needsItemBlazingLantern && !hasItemBlazingLantern) ||
+                    (needsItemClimbingBoots && !hasItemClimbingBoots)
+                ) {
+                    selectNewSlayerTaskWithConfig();
                 }
             } else if (SEMI.isEnabled('auto-slayer-equip')) {
                 //Equips Mirror Shield for area
-                if (needsShield) {
-                    if (!hasShield) {
+                if (needsItemMirrorShield) {
+                    if (!hasItemMirrorShield) {
                         originalShield = currentShield();
                         if (currentShield() == 0 || !getBankId(CONSTANTS.item.Mirror_Shield)) {
-                            newSlayerTask();
+                            selectNewSlayerTaskWithConfig();
                             notifyPlayer(
                                 CONSTANTS.skill.Slayer,
                                 'Skipping task due to 2-handed weapon or missing shield!'
@@ -107,26 +141,74 @@
                             found = SEMIUtils.equipFromBank(CONSTANTS.item.Mirror_Shield);
                         }
                     }
-                } else if (needsRing) {
+                } else if (needsItemMagicalRing) {
                     //Equips Magical Ring for area
-                    if (!hasRing) {
+                    if (!hasItemMagicalRing) {
                         if (!getBankId(CONSTANTS.item.Magical_Ring)) {
-                            newSlayerTask();
+                            selectNewSlayerTaskWithConfig();
                             notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing ring!');
                         }
                         originalRing = currentRing();
                         found = SEMIUtils.equipFromBank(CONSTANTS.item.Magical_Ring);
                     }
-                } else if (!(needsShield || needsRing)) {
+                } else if (needsItemDesertHat) {
+                    //Equips Magical Ring for area
+                    if (!hasItemDesertHat) {
+                        if (!getBankId(CONSTANTS.item.Desert_Hat)) {
+                            selectNewSlayerTaskWithConfig();
+                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing helmet!');
+                        }
+                        originalHelmet = currentHelmet();
+                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Desert_Hat);
+                    }
+                } else if (needsItemBlazingLantern) {
+                    //Equips Blazing Lantern for area
+                    if (!hasItemBlazingLantern) {
+                        if (!getBankId(CONSTANTS.item.Blazing_Lantern)) {
+                            selectNewSlayerTaskWithConfig();
+                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing shield!');
+                        }
+                        originalShield = currentShield();
+                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Blazing_Lantern);
+                    }
+                } else if (needsItemClimbingBoots) {
+                    //Equips Climbing Boots for area
+                    if (!hasItemClimbingBoots) {
+                        if (!getBankId(CONSTANTS.item.Climbing_Boots)) {
+                            selectNewSlayerTaskWithConfig();
+                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing boots!');
+                        }
+                        originalBoots = currentBoots();
+                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Climbing_Boots);
+                    }
+                } else if (
+                    !(needsItemMirrorShield && !hasItemMirrorShield) ||
+                    (needsItemMagicalRing && !hasItemMagicalRing) ||
+                    (needsItemDesertHat && !hasItemDesertHat) ||
+                    (needsItemBlazingLantern && !hasItemBlazingLantern) ||
+                    (needsItemClimbingBoots && !hasItemClimbingBoots)
+                ) {
                     slayerLockedItem = null; // Ensures the game will allow us to unequip slayer equipment
 
                     //Equips original shield when not in Area
-                    if (hasShield && originalShield != CONSTANTS.item.Mirror_Shield) {
+                    if (hasItemMirrorShield && originalShield != CONSTANTS.item.Mirror_Shield) {
                         found = SEMIUtils.equipFromBank(originalShield);
                     }
                     //Equips original ring when not in Area
-                    if (hasRing && originalRing != CONSTANTS.item.Magical_Ring) {
+                    if (hasItemMagicalRing && originalRing != CONSTANTS.item.Magical_Ring) {
                         found = SEMIUtils.equipFromBank(originalRing);
+                    }
+                    //Equips original helmet when not in Area
+                    if (hasItemDesertHat && originalHelmet != CONSTANTS.item.Desert_Hat) {
+                        found = SEMIUtils.equipFromBank(originalHelmet);
+                    }
+                    //Equips original shield when not in Area
+                    if (hasItemBlazingLantern && originalShield != CONSTANTS.item.Blazing_Lantern) {
+                        found = SEMIUtils.equipFromBank(originalShield);
+                    }
+                    //Equips original boots when not in Area
+                    if (hasItemClimbingBoots && originalBoots != CONSTANTS.item.Blazing_Lantern) {
+                        found = SEMIUtils.equipFromBank(originalBoots);
                     }
                 }
             }
@@ -135,12 +217,44 @@
         }
     };
 
+    //Config menu
+    const hasConfig = true;
+    const configMenu = `<div class="form-group">
+        <label for="${id}-config-tasktier">Slayer Task Tier</label>
+        <select id="${id}-config-tasktier" class="form-control">
+            <option selected value="0">Easy</option>
+            <option value="1">Normal</option>
+            <option value="2">Hard</option>
+            <option value="3">Elite</option>
+            <option value="4">Master</option>
+        </select>
+    </div>`;
+
+    const saveConfig = () => {
+        let taskTier = Number(document.getElementById(`${id}-config-tasktier`).value);
+        SEMI.setValue(id, 'taskTier', taskTier);
+        SEMI.setItem(`${id}-config`, SEMI.getValues(id));
+
+        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, 3000);
+
+        updateConfig();
+    };
+
+    const updateConfig = () => {
+        document.getElementById(`${id}-config-tasktier`).value = SEMI.getValue(id, 'taskTier');
+    };
+
     SEMI.add(id, {
         ms: 2000,
         pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT,
         title,
         desc,
         imgSrc,
+        config,
+        hasConfig,
+        configMenu,
+        saveConfig,
+        updateConfig,
         onLoop: autoSlayer,
         skill: 'Combat',
     });

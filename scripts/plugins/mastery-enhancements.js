@@ -25,42 +25,6 @@
     }
     ('use strict');
 
-    function addColoredButtons() {
-        const _updateMasteryPoolProgress = updateMasteryPoolProgress;
-        updateMasteryPoolProgress = (...args) => {
-            _updateMasteryPoolProgress(...args);
-            try {
-                colorButtons(args[0]);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-
-        function colorButtons(skill) {
-            const poolXP = Math.floor(MASTERY[skill].pool);
-            const progress = (MASTERY[skill].pool / getMasteryPoolTotalXP(skill)) * 100;
-            const activeCheckpoint = masteryCheckpoints.reduce((max, c) => (c < progress && c > max ? c : max), 0);
-            const threshold = (getMasteryPoolTotalXP(skill) * activeCheckpoint) / 100;
-            for (let i = 0; i < MASTERY[skill].xp.length; i++) {
-                const masteryRequired = document.getElementById(`mastery-item-xp-required-${skill}-${i}`);
-                if (masteryRequired != null) {
-                    const masteryXP = parseInt(masteryRequired.innerText.replace(/,/g, ''));
-                    const button = masteryRequired.parentElement.parentElement.parentElement.parentElement.getElementsByClassName(
-                        'btn'
-                    )[0];
-                    button.classList.remove('btn-success', 'btn-danger', 'btn-warning');
-                    if (poolXP < masteryXP) {
-                        button.classList.add('btn-danger');
-                    } else if (poolXP - masteryXP < threshold) {
-                        button.classList.add('btn-warning');
-                    } else {
-                        button.classList.add('btn-success');
-                    }
-                }
-            }
-        }
-    }
-
     function addProgressBars() {
         setInterval(() => {
             for (const id in SKILLS) {
@@ -100,7 +64,6 @@
         if (typeof confirmedLoaded !== 'undefined' && confirmedLoaded && !currentlyCatchingUp) {
             clearInterval(interval);
             console.log('Loading Mastery Enhancements');
-            addColoredButtons();
             addProgressBars();
         }
     }
