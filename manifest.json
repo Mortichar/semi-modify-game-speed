@@ -10,7 +10,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://melvoridle.com/*", "*://www.melvoridle.com/*"],
+      "matches": ["*://melvoridle.com/*", "*://www.melvoridle.com/*", "*://test.melvoridle.com/*"],
       "js": ["scripts/SEMI.js"],
       "css": ["styles/semi.css"]
     }
