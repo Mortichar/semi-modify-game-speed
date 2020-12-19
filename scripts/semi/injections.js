@@ -15,21 +15,21 @@ SEMIInjections = (() => {
         }
 
         const orgAddItemToBank = addItemToBank;
-        addItemToBank = (itemID, quantity, found = true, showNotification = true) => {
+        addItemToBank = (itemID, quantity, found = true, showNotification = true, ignoreBankSpace = false) => {
             // We show the notification incase a script absorbs the item
             if (showNotification) itemNotify(itemID, quantity);
 
             // If a function returns true it has handled the item and we are not adding it to the bank.
-            if (SEMIEventBus.AddItemToBankPre(itemID, quantity, found, showNotification)) {
+            if (SEMIEventBus.AddItemToBankPre(itemID, quantity, found, showNotification, ignoreBankSpace)) {
                 return true;
             }
 
-            const result = orgAddItemToBank(itemID, quantity, found, false);
+            const result = orgAddItemToBank(itemID, quantity, found, false, ignoreBankSpace);
             if (!result) {
                 return result;
             }
 
-            SEMIEventBus.AddItemToBankPost(itemID, quantity, found, showNotification);
+            SEMIEventBus.AddItemToBankPost(itemID, quantity, found, showNotification, ignoreBankSpace);
 
             return result;
         };
@@ -67,7 +67,7 @@ SEMIInjections = (() => {
         console.log('Attempting to modify Save.js getSave');
 
         var getSaveNew = getSave.toString();
-        getSaveNew = getSaveNew.replace('let toSave = {};', 'let toSave = SEMIInjections.semiGetSave();');
+        getSaveNew = getSaveNew.replace('let toSave={};', 'let toSave = SEMIInjections.semiGetSave();');
 
         if (getSaveNew == getSave.toString()) {
             console.error('Failed to find injection point');

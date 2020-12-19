@@ -1,6 +1,6 @@
 (function () {
     const name = 'offline-time-limit';
-    const title = 'Remove 12 hour offline limit';
+    const title = 'Remove 12 hour offline limit (Beta)';
     const desc = 'Removes the 12 hour time limit when processing offline time';
     const imgSrc = 'assets/media/main/milestones_header.svg';
 
