@@ -121,7 +121,7 @@ var { semiSetMenu } = (() => {
               <input type="checkbox" class="custom-control-input" id="SEMI-mastery-enhancements-button-enabled" name="SEMI-mastery-enhancements-button-enabled" onchange="SEMIetcGUI.masteryEnhancements = this.checked" ${
                   SEMIetcGUI.masteryEnhancements ? 'checked' : ''
               }>
-              <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Mastery Enhancement Script: Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu</label>
+              <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Mastery Enhancement Script: Adds progress bars for pools to skills in the menu</label>
             </div>
             <div class="block-content block-content-full text-right">
               <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">
