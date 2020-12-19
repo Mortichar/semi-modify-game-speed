@@ -24,5 +24,5 @@
 
     const hasConfig = false;
 
-    SEMI.add(id, { onLoop: autoMaster, onDisable, title, desc, skill });
+    SEMI.add(id, { ms: 2000, onLoop: autoMaster,  title, desc, imgSrc });
 })();
