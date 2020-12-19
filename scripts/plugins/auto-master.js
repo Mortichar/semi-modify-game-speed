@@ -1,8 +1,8 @@
 (() => {
     const id = 'auto-master';
-    const desc = `AutoMaster will automatically spend down mastery pools when they are above 95%`;
+    const desc = `AutoMaster will automatically spend down mastery pools when they are above 95%. It will spend your mastery points on your lowest mastery item in the particular skill above 95%. Warning: at this stage it will constantly open your mastery spending page and may interrupt gameplay. Also, be aware that it will be affected by the Mastery XP Spending Multiplier buttons (+1, +5, +10)`;
     const imgSrc = 'assets/media/main/mastery_pool.svg';
-    const title = 'AutoMaster';
+    const title = 'AutoMaster (Beta)';
 
     //AutoMaster: will spend down mastery pool
     const autoMaster = () => {
@@ -21,7 +21,5 @@
         }
     };
 
-    const hasConfig = false;
-
-    SEMI.add(id, { ms: 2000, onLoop: autoMaster,  title, desc, imgSrc });
+    SEMI.add(id, { ms: 2000, onLoop: autoMaster, title, desc, imgSrc });
 })();

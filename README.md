@@ -1,21 +1,30 @@
 # Scripting Engine for Melvor Idle
 
-[![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
-[![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
-
-Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install this master version from source([see Alternative Installation](#alternative-installation)), but be aware it may contain more bugs or be less stable than release versions from above buttons.
-
-Huge thanks to community contributors such as DanielRX, Visua, Breindahl, AuroraKy, Zeldo, and more for helping with the project!
-
-### **SEMI** is a Firefox and Chrome web extension for Melvor Idle.
+### **SEMI** is an **UNOFFICIAL** Firefox and Chrome web extension for Melvor Idle.
 
 **As with any scripts or game mods, please back up your data before making any changes!**
 
+[![Mozilla Firefox](https://img.shields.io/amo/v/scripting-engine-melvor-idle?label=Get%20SEMI%20for%20Firefox&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/scripting-engine-melvor-idle/)
+[![Google Chrome](https://img.shields.io/chrome-web-store/v/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?label=Get%20SEMI%20for%20Chrome&logo=Google%20Chrome)](https://chrome.google.com/webstore/detail/scripting-engine-for-melv/mnjfmmpkdmgfpabgbeoclagnclmpmjgm?authuser=0&hl=en)
+
+Please note when a new update is released, the Mozilla add-on database verifies the files quicker than the Chrome web store. Chrome updates are one or two days behind on average. Buttons above reflect currently available versions on the official platforms. You are free to install from source([see Alternative Installation](#alternative-installation)), but be aware the repository's code may contain more bugs or be less stable than release versions from above buttons.
+
+### Contributors
+
+Huge thanks to DanielRX, Visua, Breindahl, AuroraKy, Zeldo, Parataku, Alex Mauney, Shamus Taylor, and more for helping with the project!
+
+## What can SEMI do?
+
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
-* New: Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
-    * Colors buttons to spend pool xp depending on current xp and adds progress bars for pools to skills in the menu
-* New scripts by Zeldo:
+* ### Melvor v0.18 has broken these scripts
+    * These scripts are unavailable in the latest version until fixes can be implemented:
+    * AutoSlayer/SlayerEquip/SlayerSkip, AutoEat, AutoRun
+* New Beta script: Auto Mastery by Alex Mauney!
+    * AutoMaster will automatically spend down mastery pools when they are above 95%. It will spend your mastery points on your lowest mastery item in the particular skill above 95%. Warning: at this stage it will constantly open your mastery spending page and may interrupt gameplay. Also, be aware that it will be affected by the Mastery XP Spending Multiplier buttons (+1, +5, +10)
+* Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
+    * Adds progress bars for pools to skills in the menu
+* New Beta scripts by Zeldo:
     * Offline Time >12h
         * Extends amount of time you can offline-idle
         * Cleans up offline idle calculations
@@ -106,6 +115,7 @@ On newest firefox, go to the "This Firefox" page using the link on the top left 
 Install the addon by clicking the "Load Temporary Add-on" button on the right, then opening manifest.json.
 
 ## Goal of the Software
+
 This software was made to unify many Melvor automation and QOL scripts, including my own, into one easy-to-use platform with a UI that mirrors the game, without worrying about compatibility or maintaining individual userscripts.
 
 This was built around Melvor Idle alpha v0.17.

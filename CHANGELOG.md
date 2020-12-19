@@ -1,5 +1,33 @@
 # SEMI Changelog
 
+## v0.5.1
+
+## Melvor is now v0.18!
+
+### Currently broken scripts
+
+* AutoSlayer/SlayerEquip/SlayerSkip, AutoEat, AutoRun
+* These scripts will be disabled until fixes can be implemented.
+
+### New Scripts
+
+* AutoMastery provided by Alex Mauney!
+    * AutoMaster will automatically spend down mastery pools when they are above 95%. It will spend your mastery points on your lowest mastery item in the particular skill above 95%. Warning: at this stage it will constantly open your mastery spending page and may interrupt gameplay. Also, be aware that it will be affected by the Mastery XP Spending Multiplier buttons (+1, +5, +10)
+
+### Script Updates
+
+* AutoEquipBestItems had a small fix by Shamus Taylor for amulet of fishing
+
+### Other Fixes
+
+* Colored mastery buttons no longer present in the mastery enhancement script
+
+### Community Coder Shoutouts
+
+* Parataku: taking the initiative on the v0.18 fixes!
+* Alex Mauney: providing an auto-mastery script!
+* Shamus Taylor: various fixes!
+
 ## v0.5
 
 ### Core changes
