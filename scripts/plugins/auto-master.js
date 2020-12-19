@@ -4,21 +4,20 @@
     const imgSrc = 'assets/media/main/mastery_pool.svg';
     const title = 'AutoMaster';
 
-
     //AutoMaster: will spend down mastery pool
     const autoMaster = () => {
-        var skillList = [0,1,2,3,4,5,10,11,13,14,15,19];
+        var skillList = [0, 1, 2, 3, 4, 5, 10, 11, 13, 14, 15, 19];
 
         for (const skillId of skillList) {
-          const poolSize = getMasteryPoolTotalXP(skillId)
-          const currPool = MASTERY[skillId].pool
-          if (currPool/poolSize > .95) {
-            const minSkill = MASTERY[skillId].xp.indexOf(Math.min(...MASTERY[skillId].xp))
-            const toLevel = getMasteryXpForNextLevel(skillId,minSkill)
-            if ((currPool-toLevel)/poolSize > .95) {
-              levelUpMasteryWithPool(skillId, minSkill);
+            const poolSize = getMasteryPoolTotalXP(skillId);
+            const currPool = MASTERY[skillId].pool;
+            if (currPool / poolSize > 0.95) {
+                const minSkill = MASTERY[skillId].xp.indexOf(Math.min(...MASTERY[skillId].xp));
+                const toLevel = getMasteryXpForNextLevel(skillId, minSkill);
+                if ((currPool - toLevel) / poolSize > 0.95) {
+                    levelUpMasteryWithPool(skillId, minSkill);
+                }
             }
-          }
         }
     };
 
