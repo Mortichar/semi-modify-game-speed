@@ -55,12 +55,12 @@ SEMIEventBus = (() => {
     };
     const eventBusWaiter = setInterval(startEventBusTimers, 50);
 
-    const AddItemToBankPre = (itemID, quantity, found = true, showNotification = true) => {
+    const AddItemToBankPre = (itemID, quantity, found = true, showNotification = true, ignoreBankSpace = false) => {
         for (var handler of _addItemToBankHandlers) {
             try {
                 if (
                     handler.HandleAddItemToBankPre &&
-                    handler.HandleAddItemToBankPre(itemID, quantity, found, showNotification)
+                    handler.HandleAddItemToBankPre(itemID, quantity, found, showNotification, ignoreBankSpace)
                 ) {
                     return true;
                 }
@@ -71,11 +71,11 @@ SEMIEventBus = (() => {
         }
     };
 
-    const AddItemToBankPost = (itemID, quantity, found = true, showNotification = true) => {
+    const AddItemToBankPost = (itemID, quantity, found = true, showNotification = true, ignoreBankSpace = false) => {
         for (var handler of _addItemToBankHandlers) {
             try {
                 if (handler.HandleAddItemToBankPost) {
-                    handler.HandleAddItemToBankPost(itemID, quantity, found, showNotification);
+                    handler.HandleAddItemToBankPost(itemID, quantity, found, showNotification, ignoreBankSpace);
                 }
             } catch (e) {
                 console.error(`SEMI: ItemHandler Failed.`);
