@@ -117,6 +117,7 @@
         'master',
         'smith',
         'sell',
+        'slayer',
         'open',
         'bury',
         'equip',
