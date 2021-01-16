@@ -45,9 +45,23 @@
         $(`#${id}-container [data-tippy-content]`).each((_, e) => e._tippy.destroy());
         $(`#${id}-container`).html('');
 
-        const slayerTasks = combatAreaDisplayOrder
+        const monsterOrder = combatAreaDisplayOrder
             .flatMap((area) => combatAreas[area].monsters)
             .concat(slayerAreaDisplayOrder.flatMap((area) => slayerAreas[area].monsters));
+        const getMonsterSortOrder = (monster) => {
+            const idx = monsterOrder.indexOf(monster);
+            if (idx === -1) {
+                // Put any extra monsters at the end (Wandering Bard for example, since he is not assigned to an area)
+                return Infinity;
+            }
+            return idx;
+        };
+
+        const slayerTasks = MONSTERS.map((monster, id) => [monster, id])
+            .filter(([monster, id]) => monster.canSlayer)
+            .map(([monster, id]) => id)
+            .sort((a, b) => getMonsterSortOrder(a) - getMonsterSortOrder(b));
+
         for (let i = 0; i < slayerTasks.length; i++) {
             $(`#${id}-container`).append(createImg(slayerTasks[i]));
         }
