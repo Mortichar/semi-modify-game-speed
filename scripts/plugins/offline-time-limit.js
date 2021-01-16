@@ -64,7 +64,7 @@
             SEMIUtils.customNotify(
                 imgSrc,
                 'You enabled the 12 hour time limit remover, but do not have plugins auto-enable when SEMI loads. We suggest enabling that in the SEMI settings for this script to be useful.',
-                5000
+                { duration: 5000 }
             );
         }
     }

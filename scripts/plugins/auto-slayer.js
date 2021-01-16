@@ -235,7 +235,9 @@
         SEMI.setValue(id, 'taskTier', taskTier);
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
 
-        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, 3000);
+        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, {
+            duration: 3000,
+        });
 
         updateConfig();
     };

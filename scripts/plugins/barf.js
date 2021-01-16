@@ -11,7 +11,9 @@
         bonus.itemID = 0;
         bonus.bonus = [null, null];
         bonus.charges = 0;
-        SEMIUtils.customNotify('assets/media/skills/herblore/potion_empty.svg', 'Your potion has been BARFED!', 5000);
+        SEMIUtils.customNotify('assets/media/skills/herblore/potion_empty.svg', 'Your potion has been BARFED!', {
+            duration: 5000,
+        });
         if (currentPage === 13) {
             updatePlayerStats();
         }

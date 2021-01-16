@@ -11,7 +11,7 @@
     };
 
     const onEnable = () => {
-        SEMIUtils.customNotify(imgSrc, 'To begin, start burning some logs.', 5000);
+        SEMIUtils.customNotify(imgSrc, 'To begin, start burning some logs.', { duration: 5000 });
     };
     SEMI.add(id, { ms: 500, onLoop: autoBonfire, onEnable, desc, imgSrc, title, skill });
 })();

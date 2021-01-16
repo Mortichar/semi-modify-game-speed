@@ -41,7 +41,7 @@
             SEMIUtils.customNotify(
                 'assets/media/monsters/ghost.svg',
                 "WARNING: You are engaged with an enemy that can one-hit-kill you. \n Its damage-reduction-adjusted max hit is at or above your max HP. \n This script can't save you now.",
-                10000
+                { duration: 10000 }
             );
         }
     };

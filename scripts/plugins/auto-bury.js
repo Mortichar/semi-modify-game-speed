@@ -54,7 +54,8 @@
                     items[itemID].media,
                     `Burying ${numberWithCommas(qty)} ${items[itemID].name} for ${numberWithCommas(
                         items[itemID].prayerPoints * qty
-                    )} Prayer Points`
+                    )} Prayer Points`,
+                    { lowPriority: true }
                 );
             }
         }

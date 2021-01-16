@@ -56,7 +56,8 @@ var autoSellShow = (() => {
                     items[itemID].media,
                     `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(
                         gp - gpBefore
-                    )} GP`
+                    )} GP`,
+                    { lowPriority: true }
                 );
             }
         }
@@ -155,7 +156,8 @@ var autoSellShow = (() => {
             SEMIUtils.processItemSaleWithoutBank(itemID, qty);
             SEMIUtils.customNotify(
                 items[itemID].media,
-                `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`
+                `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`,
+                { lowPriority: true }
             );
 
             return true;

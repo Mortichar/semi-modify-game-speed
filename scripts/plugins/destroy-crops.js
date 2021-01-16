@@ -23,11 +23,9 @@
                     removeSeed(area.id, i);
                 }
             }
-            SEMIUtils.customNotify(
-                SEMIUtils.skillImg('farming'),
-                `SEMI destroyed all of your ${area.areaName}.`,
-                4000
-            );
+            SEMIUtils.customNotify(SEMIUtils.skillImg('farming'), `SEMI destroyed all of your ${area.areaName}.`, {
+                duration: 4000,
+            });
         }
     };
 
