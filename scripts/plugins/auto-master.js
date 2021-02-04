@@ -15,6 +15,8 @@
                 const minSkill = MASTERY[skillId].xp.indexOf(Math.min(...MASTERY[skillId].xp));
                 const toLevel = getMasteryXpForNextLevel(skillId, minSkill);
                 if ((currPool - toLevel) / poolSize > 0.95) {
+                    //skip if mastery skill is at 99
+                    if (toLevel == 0) { continue; }
                     levelUpMasteryWithPool(skillId, minSkill);
                 }
             }
