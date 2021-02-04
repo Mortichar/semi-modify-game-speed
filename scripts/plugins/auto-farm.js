@@ -88,7 +88,7 @@
         for (let k = 0; k < priority.length; k++) {
             const seedId = priority[k];
             if (seedId !== -1 && skillLevel[CONSTANTS.skill.Farming] >= items[seedId].farmingLevel) {
-                const bankId = getBankId(seedId);
+                const bankId = SEMIUtils.getBankId(seedId);
                 if (bankId !== false && bank[bankId].qty >= items[seedId].seedsRequired) {
                     nextSeed = seedId;
                     break;
@@ -110,13 +110,13 @@
         if (patch.hasGrown) {
             // Harvest
             let grownId = items[patch.seedID].grownItemID;
-            let bankId = getBankId(grownId);
+            let bankId = SEMIUtils.getBankId(grownId);
             if (!(bankId !== false || bankMax + baseBankMax > bank.length)) {
                 return;
             }
             harvestSeed(areaId, patchId);
             // Auto equip as food. Maybe as an option later
-            // if (bankId === false) { bankId = getBankId(grownId); }
+            // if (bankId === false) { bankId = SEMIUtils.getBankId(grownId); }
             // if (equippedFood.find(food => food.itemID === grownId) && bankId !== false) { equipFood(bankId, grownId, bank[bankId].qty); }
         }
 

@@ -97,7 +97,7 @@ pick one random monster from the monsterSelection array
                 // overwrite required item with cape if available in bank
                 else {
                     capePriority.forEach((item) => {
-                        if (getBankId(item)) {
+                        if (SEMIUtils.getBankId(item)) {
                             if (
                                 // cape of completion needs a special check because its not equipable without completion
                                 item !== CONSTANTS.item.Cape_of_Completion ||
@@ -110,7 +110,7 @@ pick one random monster from the monsterSelection array
                     });
                 }
 
-                if (!ready && getBankId(requiredItem)) {
+                if (!ready && SEMIUtils.getBankId(requiredItem)) {
                     originalItem = SEMIUtils.currentEquipmentInSlot(items[requiredItem].type);
                     ready = SEMIUtils.equipFromBank(requiredItem);
                 }
