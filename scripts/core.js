@@ -9,7 +9,7 @@ var SEMI = (() => {
     // Global Constants
     const ROOT_ID = 'SEMI-menu';
     const LOCAL_SETTINGS_PREFIX = 'SEMI';
-    const SUPPORTED_GAME_VERSION = 'Alpha v0.18.1';
+    const SUPPORTED_GAME_VERSION = 'Alpha v0.18.2';
 
     // Enums
     /**
