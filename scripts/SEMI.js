@@ -129,7 +129,7 @@
     const pluginNames = [
         ...autoNames.map((name) => `auto-${name}`),
         'mastery-enhancements',
-        'time-remaining',
+        'eta',
         'ore-in-bank',
         'barf',
         'calc-to-level',
