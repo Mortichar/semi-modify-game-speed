@@ -1,5 +1,24 @@
 # SEMI Changelog
 
+## v0.5.3
+
+## Minor fixes & additions
+
+### New Scripts
+
+* ETA, the more up-to-date fork of the TimeRemaining script, has replaced TimeRemaining in SEMI.
+    * Note: to use ETA's new GUI menu, you must have Melvor Idle Combat Simulator Reloaded extension installed.
+
+### Script Fixes
+
+* AutoFarm had a bug with the new implementation of the getBankId function, and is now fixed.
+* AutoSlayer's config menu options are now named differently than the AutoSkip plugin. (Auto-Skip Unmet Requirements)
+* Thief-calc's faulty xp/s calculations removed in favor of ETA's more precise calculations; now properly clears the loading interval when done injecting loot tables
+
+### UI Changes
+
+* Credits update in SEMI menu
+
 ## v0.5.2
 
 ## Long time no see!

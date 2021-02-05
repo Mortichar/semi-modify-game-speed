@@ -24,7 +24,7 @@ pick one random monster from the monsterSelection array
 (() => {
     const id = 'auto-slayer';
     const title = 'AutoSlayer';
-    const desc = `Fixed AutoSlayer, will turn off Melvor's auto-slayer setting. If using AutoSlayerSkip, it will select a new slayer task within the same tier. Using the Skip option in the AutoSlayer menu will allow you to cycle to a new slayer task in the same tier if you don't have the proper equipment. Leave it off if you want to jump to new tier when complete. Extend option will attempt to extend your current task if you have the coins.`;
+    const desc = `Fixed AutoSlayer, will turn off Melvor's auto-slayer setting. If using AutoSlayerSkip, it will select a new slayer task within the same tier. Using the Skip option in the AutoSlayer menu will allow you to cycle to a new slayer task in the same tier if you don't have the proper equipment for a currently assigned task. Leave it off if you want to manually select a new tier when complete. Extend option will attempt to extend your current task if you have the coins.`;
     const imgSrc = SEMIUtils.skillImg('slayer');
 
     const config = {
@@ -135,7 +135,7 @@ pick one random monster from the monsterSelection array
                 } else {
                     notifyPlayer(
                         CONSTANTS.skill.Slayer,
-                        'Missing equipment for slayer task! Manually select new task or enable auto-skip option.'
+                        'Missing equipment for slayer task! Manually select new task or enable auto-skip unmet requirements option.'
                     );
                 }
             }
@@ -152,7 +152,7 @@ pick one random monster from the monsterSelection array
             <label class="custom-control-label" for="${id}-config-extend">Enabled</label>
         </div>
         <br/>
-        <b>Auto-Skip</b><br/>
+        <b>Auto-Skip Unmet Requirements</b><br/>
         <span>Enable this option to auto-skip all slayer tasks if the required equipment is not available.</span>
         <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="${id}-config-skip" name="${id}-config-skip">
