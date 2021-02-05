@@ -76,7 +76,7 @@ var { semiSetMenu } = (() => {
     <ul>
     <li>Spearheaded Melvor v0.18 super-issue</li>
     <li>Got many scripts up to date with the changes</li>
-    <li></li>
+    <li>Completely reworked AutoSlayer to be easier to maintain</li>
     </ul>
   </li>
   <li>Contributor: Shamus Taylor
