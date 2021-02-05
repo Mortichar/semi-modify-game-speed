@@ -89,7 +89,7 @@
             const seedId = priority[k];
             if (seedId !== -1 && skillLevel[CONSTANTS.skill.Farming] >= items[seedId].farmingLevel) {
                 const bankId = SEMIUtils.getBankId(seedId);
-                if (bankId !== -1 && bank[bankId].qty >= items[seedId].seedsRequired) {
+                if (bankId !== false && bank[bankId].qty >= items[seedId].seedsRequired) {
                     nextSeed = seedId;
                     break;
                 }
