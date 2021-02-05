@@ -1,5 +1,31 @@
 # SEMI Changelog
 
+## v0.5.2
+
+## Long time no see!
+
+* Wow! I've been busy and/or lazy lately. New job and whatnot. Here's a quick freshen-up update for SEMI to get it working again.
+* Much of this SEMI update has been community devs helping with merge requests and such. Thanks a bunch! Ideally, I'll get some sort of system worked out where more people than just myself can push updates to FF/Chrome, and the whole DevOps flow will be much better, even when I'm unavailable.
+
+### Currently Broken
+
+* AutoEat & run still needs some fixing, basically need to recalculate how Max Hit detection works for it to be safe.
+* Seems that the 12hr limit script wasn't doing much and I'm getting errors, so I'm going to temp disable it for now.
+
+### Script Updates/Fixes
+
+* AutoSlayer seems back up to full speed.
+    * AutoSlayerSkip is also functional, updated, & enabled.
+* AutoFarm looks fixed as well.
+* AutoMaster has some improvements
+    * Skip master increases for things already maxed
+    * Auto-closes the modal so it does the spending in the background; drawback: you can't access any mastery page while this script is running.
+* Katorone now sets buy quantity to 1 before buying glove charges, preventing buying of many more charges than you intended.
+
+### Still needs testing
+
+* AutoEquipBest, a few others in-depth
+
 ## v0.5.1
 
 ## Melvor is now v0.18!

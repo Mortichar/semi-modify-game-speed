@@ -19,16 +19,16 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 
 * ### Melvor v0.18 has broken these scripts
     * These scripts are unavailable in the latest version until fixes can be implemented:
-    * AutoSlayer/SlayerEquip/SlayerSkip, AutoEat, AutoRun
-* New Beta script: Auto Mastery by Alex Mauney!
-    * AutoMaster will automatically spend down mastery pools when they are above 95%. It will spend your mastery points on your lowest mastery item in the particular skill above 95%. Warning: at this stage it will constantly open your mastery spending page and may interrupt gameplay. Also, be aware that it will be affected by the Mastery XP Spending Multiplier buttons (+1, +5, +10)
+    * AutoEat & AutoRun (need better MaxHit calculation)
+* New **Beta** script: Auto Mastery by Alex Mauney!
+    * AutoMaster will automatically spend down mastery pools when they are above 95%. It will spend your mastery points on your lowest mastery item in the particular skill above 95%. Warning: at this stage it will constantly close your mastery spending page and may interrupt attempts to spend other Mastery XP than what it is automating. Also, be aware that it will be affected by the Mastery XP Spending Multiplier buttons (+1, +5, +10)
 * Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
     * Adds progress bars for pools to skills in the menu
-* New Beta scripts by Zeldo:
-    * Offline Time >12h
+* New **Beta** scripts by Zeldo:
+    * Offline Time >12h [temporarily disabled]
         * Extends amount of time you can offline-idle
         * Cleans up offline idle calculations
-    * AutoEquip Best Item (Beta version of script)
+    * AutoEquip Best Item
         * Equips best item for a situation
 * New Core Features
     * Scripts can now include a config menu built-in to the sidebar using tippy, with AutoSellGems and AutoEquip Ammo being the prototype examples

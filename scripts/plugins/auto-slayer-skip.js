@@ -3,7 +3,8 @@
 
     const id = `auto-${pluginKind}`;
     const title = 'AS AutoSkip';
-    const desc = 'This script option for AutoSlayer will skip all monsters selected in this menu.';
+    const desc =
+        'This script option for AutoSlayer will skip all monsters selected in this menu. Since v0.18 it will select a new slayer task in the same tier.';
     const imgSrc = 'assets/media/monsters/m13.svg';
 
     let showHiddenMonsters = false;

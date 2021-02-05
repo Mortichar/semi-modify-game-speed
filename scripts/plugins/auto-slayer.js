@@ -24,7 +24,7 @@ pick one random monster from the monsterSelection array
 (() => {
     const id = 'auto-slayer';
     const title = 'AutoSlayer';
-    const desc = '';
+    const desc = `Fixed AutoSlayer, will turn off Melvor's auto-slayer setting. If using AutoSlayerSkip, it will select a new slayer task within the same tier. Using the Skip option in the AutoSlayer menu will allow you to cycle to a new slayer task in the same tier if you don't have the proper equipment. Leave it off if you want to jump to new tier when complete. Extend option will attempt to extend your current task if you have the coins.`;
     const imgSrc = SEMIUtils.skillImg('slayer');
 
     const config = {
@@ -124,7 +124,12 @@ pick one random monster from the monsterSelection array
                 jumpToEnemy(slayerTask[0].monsterID);
                 waitForEnemyLoaded = true;
             } else {
-                if (SEMI.getValue(id, 'skip')) {
+                if (
+                    SEMI.getValue(id, 'skip') ||
+                    (SEMI.isEnabled('auto-slayer-skip') &&
+                        typeof monsterIDs !== 'undefined' &&
+                        monsterIDs.includes(slayerTask[0].monsterID))
+                ) {
                     // pick a new slayer task with the same difficulty setting
                     selectNewSlayerTask(slayerTask[0].tier);
                 } else {

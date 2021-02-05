@@ -118,6 +118,7 @@
         'smith',
         'sell',
         'slayer',
+        'slayer-skip',
         'open',
         'bury',
         'equip',
@@ -139,7 +140,7 @@
     ];
     const libNames = ['fold-menus', 'drag-menus', 'menus'];
     const preloadedNames = ['event-bus', 'settings-migrator', 'injections'];
-    const preloadedPlugins = ['offline-time-limit'];
+    // const preloadedPlugins = ['offline-time-limit'];
 
     //Load and inject SEMI
     const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;
@@ -161,7 +162,7 @@
     preloadedNames.forEach(addSemiLib);
 
     // Plugins that need to load with Melvor
-    preloadedPlugins.forEach(addPlugin);
+    // preloadedPlugins.forEach(addPlugin);
 
     const loadPlugins = () => {
         if (!exists('SEMI-canary')) {
