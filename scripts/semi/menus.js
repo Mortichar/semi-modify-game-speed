@@ -3,6 +3,7 @@ var SEMIetcGUI = {
   xph: true,
   timeRemaining: true,
   masteryEnhancements: true,
+  lessNotifications: false,
 };
 
 var { semiSetMenu } = (() => {
@@ -138,7 +139,7 @@ var { semiSetMenu } = (() => {
             </div>
             <div class="custom-control custom-switch mb-1">
               <input type="checkbox" class="custom-control-input" id="SEMI-less-notifications-enabled" name="SEMI-less-notifications-enabled" onchange="SEMIetcGUI.lessNotifications = this.checked" ${
-                  SEMIetcGUI.lessNotifications ? 'checked' : ''
+                SEMIetcGUI.lessNotifications ? 'checked' : ''
               }>
               <label class="custom-control-label" for="SEMI-less-notifications-enabled">Less notifications: Disables notifications for repetetive actions like auto-sell and auto-bury. Important notifications will still be shown.</label>
             </div>
@@ -223,13 +224,13 @@ var { semiSetMenu } = (() => {
     injectEyes();
     injectDragMenus();
 
-        //if all goes well, yay, it's loaded
-        SEMIUtils.customNotify(
-            'assets/media/monsters/dragon_black.svg',
-            'Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',
-            { duration: 5000 }
-        );
-    };
+    //if all goes well, yay, it's loaded
+    SEMIUtils.customNotify(
+      'assets/media/monsters/dragon_black.svg',
+      'Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',
+      { duration: 5000 }
+    );
+  };
 
   //show SEMI katorone automation settings modal called by nav button
   const semiSetMenu = () => {
@@ -257,14 +258,14 @@ var { semiSetMenu } = (() => {
     if (resetResponse === 'semi') SEMI.resetSEMI();
   };
 
-    const saveEtcToggles = () => {
-        SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
-        SEMIUtils.customNotify(
-            'assets/media/main/settings_header.svg',
-            'Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',
-            { duration: 10000 }
-        );
-    };
+  const saveEtcToggles = () => {
+    SEMI.setItem('etc-GUI-toggles', SEMIetcGUI);
+    SEMIUtils.customNotify(
+      'assets/media/main/settings_header.svg',
+      'Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',
+      { duration: 10000 }
+    );
+  };
 
   const toggleAutoEnableScripts = () => {
     SEMI.getItem('remember-state') ? SEMI.setItem('remember-state', false) : SEMI.setItem('remember-state', true);
