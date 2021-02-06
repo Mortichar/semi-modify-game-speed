@@ -167,7 +167,9 @@ pick one random monster from the monsterSelection array
         SEMI.setValue(id, 'skip', skip);
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
 
-        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer`, 3000);
+        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, {
+            duration: 3000,
+        });
 
         updateConfig();
     };
