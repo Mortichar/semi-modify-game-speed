@@ -110,6 +110,9 @@ const setLoadedKatValues = () => {
         // Buy one if we can afford it
         if (gp - price >= katBot.reserveGold) {
             //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
+
+            //prevent ridiculous spending
+            updateBuyQty(1);
             buyGloves(CONSTANTS.shop.gloves.Gems, true);
             //aw: adding notifications
             const notification = 'Katorone Automation just bought Gem Glove charges.';

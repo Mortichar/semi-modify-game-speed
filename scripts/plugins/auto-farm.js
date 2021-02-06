@@ -24,6 +24,11 @@
             tooltip: 'Seeds with maxed mastery are excluded<br>Click seeds to disable/enable them',
         },
         replant: { id: 'replant', description: 'Replant', tooltip: 'Lock patches to their current seeds' },
+        lowestQuantity: {
+            id: 'lowestQuantity',
+            description: 'Lowest Quantity',
+            tooltip: 'Crops with the lowest quantity in the bank are planted',
+        },
     };
     const allSeeds = {
         allotments: [...allotmentSeeds].sort((a, b) => b.level - a.level).map((s) => s.itemID),
@@ -73,13 +78,17 @@
             priority = allSeeds[patchType]
                 .filter((s) => !config.disabledSeeds[s] && getSeedMasteryLevel(s) < 99)
                 .sort((a, b) => getSeedMastery(b) - getSeedMastery(a));
+        } else if (patchTypeConfig.priorityType === priorityTypes.lowestQuantity.id) {
+            priority = allSeeds[patchType]
+                .filter((s) => !config.disabledSeeds[s])
+                .sort((a, b) => getSeedCropQuantity(a) - getSeedCropQuantity(b));
         }
 
         let nextSeed = -1;
         for (let k = 0; k < priority.length; k++) {
             const seedId = priority[k];
             if (seedId !== -1 && skillLevel[CONSTANTS.skill.Farming] >= items[seedId].farmingLevel) {
-                const bankId = getBankId(seedId);
+                const bankId = SEMIUtils.getBankId(seedId);
                 if (bankId !== false && bank[bankId].qty >= items[seedId].seedsRequired) {
                     nextSeed = seedId;
                     break;
@@ -101,13 +110,13 @@
         if (patch.hasGrown) {
             // Harvest
             let grownId = items[patch.seedID].grownItemID;
-            let bankId = getBankId(grownId);
+            let bankId = SEMIUtils.getBankId(grownId);
             if (!(bankId !== false || bankMax + baseBankMax > bank.length)) {
                 return;
             }
             harvestSeed(areaId, patchId);
             // Auto equip as food. Maybe as an option later
-            // if (bankId === false) { bankId = getBankId(grownId); }
+            // if (bankId === false) { bankId = SEMIUtils.getBankId(grownId); }
             // if (equippedFood.find(food => food.itemID === grownId) && bankId !== false) { equipFood(bankId, grownId, bank[bankId].qty); }
         }
 
@@ -224,6 +233,10 @@
         return MASTERY[CONSTANTS.skill.Farming].xp[items[seedId].masteryID[1]];
     }
 
+    function getSeedCropQuantity(seedId) {
+        return SEMIUtils.getBankQty(items[seedId].grownItemID);
+    }
+
     function getSeedMasteryLevel(seedId) {
         return getMasteryLevel(CONSTANTS.skill.Farming, items[seedId].masteryID[1]);
     }
@@ -336,6 +349,9 @@
                                 <button id="${prioritySettings}-reset" class="btn btn-primary locked" data-tippy-content="Reset order to default (highest to lowest level)" style="margin: 5px 0 0 2px; float: right;">Reset</button>
                             </div>
                             <div id="${prioritySettings}-mastery" class="${id}-seed-toggles">
+                                ${seedDivs}
+                            </div>
+                            <div id="${prioritySettings}-lowestQuantity" class="${id}-seed-toggles">
                                 ${seedDivs}
                             </div>
                         </div>

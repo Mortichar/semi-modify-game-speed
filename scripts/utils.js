@@ -64,6 +64,19 @@ const SEMIUtils = (() => {
         return 0;
     };
 
+    const melvorGetBankId = window.getBankId;
+    /**
+     * @param {number} id
+     * @returns {number | boolean} the index of the item in the bank, or false if the item is not in the bank
+     */
+    const getBankId = (itemId) => {
+        const id = melvorGetBankId(itemId);
+        if (id === false || id === -1) {
+            return false;
+        }
+        return id;
+    };
+
     //may want to refactor all checkBankForItem() to a SEMI func to make it easier to fix if changed.
     /** @param {number?} itemID */
     const equipFromBank = (itemID, qty = 1) => {
@@ -661,6 +674,7 @@ const SEMIUtils = (() => {
         getElements,
         getElement,
         getBankQty,
+        getBankId,
         iconSrc,
         mergeOnto,
         processItemSaleWithoutBank,

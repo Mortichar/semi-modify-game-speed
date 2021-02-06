@@ -6,7 +6,7 @@
     "semi": true,
     "overrides": [
         {
-            "files": "semi/menus.js",
+            "files": "scripts/semi/menus.js",
             "options": {
                 "tabWidth": 2
             }

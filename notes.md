@@ -1,28 +1,25 @@
 # SEMI General notes
 
-## v0.5.1
-* Any bugfixes that need doing
-    * AutoFarm preserve per-char config transfer somehow?
-    * AutoSell event bus handler should include tracking item stats
+## Broken/needs fixing
+
+* TimeRemaining -> that other script
+* Deeper testing
+* Repo CI/CD stuff
+* Add wiki to help new devs/users
+* Find a way to poll users to see what they want
+    * Migrate to Github?
+
+## TODO overflow
+
 * AutoEat wasteful mode config menu toggle
 * AutoFarmEquip config menu toggle between Signet & other ring
 * Ambitious: AutoSell per-item target stack/min stack to keep? -> kill AutoSellGems
 * katorone -> automine config menu? gp min script? split n stuff?
-
-## TODO overflow
-
-* Moving the supported version check to before the SEMI version injection: waiting on Visua's changes to CombatSim Reloaded to have a cleaner loading system.
-* Make menu w i d e r: change the .modal-dialog div style to have max-width of >500px.
 * Reset-to-default button for the UI drags. SEMI.removeItem('drag-menu-config'); orderMenus();?
-* "Better" checks for things like putting on capes and gloves etc when needed
 * Jarx additions:
     * automatically upgrade fishing rod (AutoFish)
     * pickaxe (AutoMine)
     * woodcutting axe (background script)
-
-* ~~mastery time calculators~~ wait for 0.17
-* ~~refine calc-to-level to include mastery/other bonuses for xp...~~ wait for 0.17 or use it at all! lol.
-* ~~Potential auto-claim token script, maybe in auto-open?~~
 
 ## bug squashing & code snips
 

@@ -19,16 +19,22 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
 
 * ### Melvor v0.18 has broken these scripts
     * These scripts are unavailable in the latest version until fixes can be implemented:
-    * AutoSlayer/SlayerEquip/SlayerSkip, AutoEat, AutoRun
-* New Beta script: Auto Mastery by Alex Mauney!
-    * AutoMaster will automatically spend down mastery pools when they are above 95%. It will spend your mastery points on your lowest mastery item in the particular skill above 95%. Warning: at this stage it will constantly open your mastery spending page and may interrupt gameplay. Also, be aware that it will be affected by the Mastery XP Spending Multiplier buttons (+1, +5, +10)
+    * AutoEat & AutoRun (need better MaxHit calculation)
+* Updated script: ETA replaces TimeRemaining
+    * More recently maintained fork by TinyCoyote
+    * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
+    * Also has a task-done alert, when a production skill completes all items and can't continue, a Task Complete alert will make an audible ding. Other dings available too!
+    * It is more configurable than TimeRemaining, you can use the console to change parameters. [Check the script's code here to see what you can change.](https://greasyfork.org/en/scripts/415592-melvor-eta/code)
+        * To change ETA settings with its new GUI, you must have the Melvor Idle Combat Simulator Reloaded extension installed.
+* New **Beta** script: Auto Mastery by Alex Mauney!
+    * AutoMaster will automatically spend down mastery pools when they are above 95%. It will spend your mastery points on your lowest mastery item in the particular skill above 95%. Warning: at this stage it will constantly close your mastery spending page and may interrupt attempts to spend other Mastery XP than what it is automating. Also, be aware that it will be affected by the Mastery XP Spending Multiplier buttons (+1, +5, +10)
 * Mastery Enhancements Script by Acrone#1563, Aurora Aquir#4272, Breindahl#2660, NotCorgan#1234 and Visua#9999
     * Adds progress bars for pools to skills in the menu
-* New Beta scripts by Zeldo:
-    * Offline Time >12h
+* New **Beta** scripts by Zeldo:
+    * Offline Time >12h [temporarily disabled]
         * Extends amount of time you can offline-idle
         * Cleans up offline idle calculations
-    * AutoEquip Best Item (Beta version of script)
+    * AutoEquip Best Item
         * Equips best item for a situation
 * New Core Features
     * Scripts can now include a config menu built-in to the sidebar using tippy, with AutoSellGems and AutoEquip Ammo being the prototype examples
@@ -44,9 +50,6 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * Automatically adds Weird Gloop if you have any in the bank. Prioritizes gloop over compost. Will not buy gloop
     * Optionally: If not in combat, equips Farming Cape/Signet Ring/Bob's Rake if you have them before harvesting and replanting
 * Show Ore in Bank: adds ore counts to mining page rocks.
-* Melvor TimeRemaining script graciously provided by Breindahl & co.
-    * Calculates estimated time to completion of your currently selected craft/production skill item, displaying in-menu
-    * Also has a task-done alert, when a production skill completes all items and can't continue, a Task Complete alert will make an audible ding.
 * AutoBonfire: continuously starts bonfires for you when you have a type of wood selected in Firemaking
 * AutoCook: cycles through fish and cooks them all
 * AutoMine

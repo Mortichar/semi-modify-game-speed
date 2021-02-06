@@ -1,238 +1,170 @@
-// Importing Auto Slayer by Bubbalova. Using a modified version of script v1.2.1.
-(() => {
-    const id = 'auto-slayer-equip';
-    const title = 'AutoSlayerEquip';
-    const desc =
-        'The original Melvor Auto Slayer script by Bubbalova attempts to equip the Mirror Shield or Magic Ring when assigned a monster in zones that require them to enter. This option, disabled by default in SEMI, turns that functionality back on. The original script also forced equipping of the Slayer Cape when starting, but this option also controls that cape equip. When this is enabled and you have 99 slayer and the slayer cape, AutoSlayer will always equip the slayer cape.';
-    const imgSrc = 'assets/media/bank/mirror_shield.svg';
-    SEMI.add(id, { ms: 0, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT, title, desc, imgSrc });
-})();
+/*
+Melvor Slayer Task Selection Explanation
+
+player slects new slayer task
+minLevel and maxLevel is based on task difficulty
+loop over all monsters
+    skip if monster is not slayer-able (MONSTERS[i].canSlayer) or if monster is outside combat level range
+    skip if monster is inside a slayer area with level requirement (slayerAreas[area[1]].slayerLevel) if not fullfilled
+    if area has item requirement (slayerAreas[area[1]].slayerItem > 0)
+        if melvor's auto-slayer is enabled
+            skip if none of the following is equipped: required item, Slayer_Skillcape, Max_Skillcape, Cape_of_Completion
+
+        if melvor's auto-slayer is disabled
+            skip if the player never had one of the following items: required item, Slayer_Skillcape, Max_Skillcape, Cape_of_Completion
+    
+    if area has dungeon requirement (slayerAreas[area[1]].dungeonCompleted >= 0) 
+        skip if dungeon clear requirement is not fullfilled
+
+    if not skipped add monster to monsterSelection array
+
+pick one random monster from the monsterSelection array
+*/
 
 (() => {
     const id = 'auto-slayer';
     const title = 'AutoSlayer';
-    const desc =
-        'AutoSlayer, based on Melvor Auto Slayer by Bubbalova, automatically seeks slayer tasks and sets out to kill that enemy. If you are assigned a monster in a zone that requires special equipment, this version of AutoSlayer will simply reroll your assignment and continue on by default, unless you are properly equipped or you turn on AS Auto Equip and have the correct items in the bank.';
+    const desc = `Fixed AutoSlayer, will turn off Melvor's auto-slayer setting. If using AutoSlayerSkip, it will select a new slayer task within the same tier. Using the Skip option in the AutoSlayer menu will allow you to cycle to a new slayer task in the same tier if you don't have the proper equipment for a currently assigned task. Leave it off if you want to manually select a new tier when complete. Extend option will attempt to extend your current task if you have the coins.`;
     const imgSrc = SEMIUtils.skillImg('slayer');
 
     const config = {
-        taskTier: 0,
+        extend: false,
+        skip: false,
     };
 
-    let autoSlayerCheck = 0;
+    // holds value for uneqipped equipment
+    let originalItem = 0;
+    let capePriority = [
+        CONSTANTS.item.Slayer_Skillcape,
+        CONSTANTS.item.Max_Skillcape,
+        CONSTANTS.item.Cape_of_Completion,
+    ];
+    let waitForEnemyLoaded = false;
 
-    //Holds values for unequipped equipment
-    let originalBoots;
-    let originalCape;
-    let originalHelmet;
-    let originalShield;
-    let originalRing;
-
-    const selectNewSlayerTaskWithConfig = () => {
-        let taskTier = SEMI.getValue(id, 'taskTier');
-        selectNewSlayerTask(taskTier);
-    };
-
-    //Main function
-    const autoSlayer = () => {
-        if (!SEMI.isEnabled(id)) {
-            autoSlayerCheck = 0;
+    const loop = () => {
+        // on a character that has never accepted a slayer task
+        if (slayerTask.length == 0) {
+            notifyPlayer(CONSTANTS.skill.Slayer, 'No active slayer task found. Please start a new slayer task.');
             return;
         }
 
-        isDungeon = false; //if you just completed a dungeon, this will be true and throw errors on enemy killed.
-
-        if (!slayerTask.length) {
-            selectNewSlayerTaskWithConfig();
-        } //If there is no slayer task, get one
-
-        const currentBoots = () => SEMIUtils.currentEquipmentInSlot('Boots');
-        const currentCape = () => SEMIUtils.currentEquipmentInSlot('Cape');
-        const currentHelmet = () => SEMIUtils.currentEquipmentInSlot('Helmet');
-        const currentRing = () => SEMIUtils.currentEquipmentInSlot('Ring');
-        const currentShield = () => SEMIUtils.currentEquipmentInSlot('Shield');
-
-        if (autoSlayerCheck == 0) {
-            autoSlayerCheck = 1;
-            originalBoots = currentBoots();
-            originalCape = currentCape();
-            originalHelmet = currentHelmet();
-            originalShield = currentShield();
-            originalRing = currentRing();
+        // disable melvor's own auto-slayer as it makes no sense in combination with this plugin
+        if (autoSlayer === true) {
+            toggleSetting(32);
         }
 
-        if (
-            SEMI.isEnabled('auto-slayer-skip') &&
-            typeof monsterIDs !== 'undefined' &&
-            monsterIDs.includes(slayerTask[0].monsterID)
-        ) {
-            selectNewSlayerTaskWithConfig();
+        // auto-extend
+        if (!slayerTask[0].extended && SEMI.getValue(id, 'extend')) {
+            if (getSlayerTaskExtensionCost() <= slayerCoins) {
+                extendSlayerTask();
+            }
         }
 
-        if (slayerTask[0] == null) return;
-        const needsItemMirrorShield = slayerAreas[1].monsters.includes(slayerTask[0].monsterID);
-        const needsItemMagicalRing = slayerAreas[2].monsters.includes(slayerTask[0].monsterID);
-        const needsItemDesertHat = slayerAreas[7].monsters.includes(slayerTask[0].monsterID);
-        const needsItemBlazingLantern = slayerAreas[8].monsters.includes(slayerTask[0].monsterID);
-        const needsItemClimbingBoots = slayerAreas[9].monsters.includes(slayerTask[0].monsterID);
-        const needsClearIntoTheMist = slayerAreas[10].monsters.includes(slayerTask[0].monsterID);
-
-        const hasItemMirrorShield = currentShield() == CONSTANTS.item.Mirror_Shield;
-        const hasItemMagicalRing = currentRing() == CONSTANTS.item.Magical_Ring;
-        const hasItemDesertHat = currentHelmet() == CONSTANTS.item.Desert_Hat;
-        const hasItemBlazingLantern = currentShield() == CONSTANTS.item.Blazing_Lantern;
-        const hasItemClimbingBoots = currentBoots() == CONSTANTS.item.Climbing_Boots;
-        const hasItemSlayerSkillcape = currentCape() == CONSTANTS.item.Slayer_Skillcape;
-
-        const skillCape = CONSTANTS.item.Slayer_Skillcape;
+        // because of timing issues we should not run the rest of the loop if an enemy is loading after issuing a jumpToEnemy function call
+        if (waitForEnemyLoaded) {
+            if (newEnemyLoading) {
+                return;
+            } else {
+                waitForEnemyLoaded = false;
+            }
+        }
 
         //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
         if (forcedEnemy !== slayerTask[0].monsterID || !SEMIUtils.isCurrentSkill('Hitpoints')) {
             if (SEMIUtils.isCurrentSkill('Hitpoints')) {
                 SEMIUtils.stopSkill('Hitpoints');
             }
-            for (let i = 0; i < combatAreas.length; i++) {
-                if (combatAreas[i].areaName == findEnemyArea(slayerTask[0].monsterID)) {
-                    selectedCombatArea = i;
-                    break;
-                }
-            }
 
-            //Equips Slayer Skillcape if owned
-            if (
-                SEMIUtils.currentLevel('Slayer') >= 99 &&
-                (checkBankForItem(skillCape) || hasItemSlayerSkillcape) &&
-                SEMI.isEnabled('auto-slayer-equip')
-            ) {
-                if (!hasItemSlayerSkillcape) {
-                    originalCape = currentCape();
-                    found = SEMIUtils.equipFromBank(skillCape);
-                }
-            } else if (
-                (needsItemMirrorShield ||
-                    needsItemMagicalRing ||
-                    needsItemDesertHat ||
-                    needsItemBlazingLantern ||
-                    needsItemClimbingBoots) &&
-                !SEMI.isEnabled('auto-slayer-equip')
-            ) {
-                //skips task if unequipped for the zone and the monster is in an equipment-restricted zone with AS AutoEquip off
+            waitForEnemyLoaded = false;
+
+            let targetArea = findEnemyArea(slayerTask[0].monsterID, false);
+            let requiredItem = slayerAreas[targetArea[1]].slayerItem;
+            let requiredItemType = items[requiredItem].type;
+            let ready = false;
+
+            // re-equip original item, there is an edgecase where the same item is required again but it will simply reequip it
+            if (originalItem > 0) {
+                SEMIUtils.equipFromBank(originalItem);
+                originalItem = 0;
+            } else if (requiredItem > 0) {
+                // there is no need to switch any items if the required item, a slayer, max or completion cape is equipped
                 if (
-                    (needsItemMirrorShield && !hasItemMirrorShield) ||
-                    (needsItemMagicalRing && !hasItemMagicalRing) ||
-                    (needsItemDesertHat && !hasItemDesertHat) ||
-                    (needsItemBlazingLantern && !hasItemBlazingLantern) ||
-                    (needsItemClimbingBoots && !hasItemClimbingBoots)
+                    capePriority.includes(SEMIUtils.currentEquipmentInSlot('Cape')) ||
+                    requiredItem === SEMIUtils.currentEquipmentInSlot(requiredItemType)
                 ) {
-                    selectNewSlayerTaskWithConfig();
+                    ready = true;
                 }
-            } else if (SEMI.isEnabled('auto-slayer-equip')) {
-                //Equips Mirror Shield for area
-                if (needsItemMirrorShield) {
-                    if (!hasItemMirrorShield) {
-                        originalShield = currentShield();
-                        if (currentShield() == 0 || !getBankId(CONSTANTS.item.Mirror_Shield)) {
-                            selectNewSlayerTaskWithConfig();
-                            notifyPlayer(
-                                CONSTANTS.skill.Slayer,
-                                'Skipping task due to 2-handed weapon or missing shield!'
-                            );
-                        } else {
-                            found = SEMIUtils.equipFromBank(CONSTANTS.item.Mirror_Shield);
+                // overwrite required item with cape if available in bank
+                else {
+                    capePriority.forEach((item) => {
+                        if (SEMIUtils.getBankId(item)) {
+                            if (
+                                // cape of completion needs a special check because its not equipable without completion
+                                item !== CONSTANTS.item.Cape_of_Completion ||
+                                (item === CONSTANTS.item.Cape_of_Completion && completionStats >= 100)
+                            ) {
+                                requiredItem = item;
+                                requiredItemType = 'Cape';
+                            }
                         }
-                    }
-                } else if (needsItemMagicalRing) {
-                    //Equips Magical Ring for area
-                    if (!hasItemMagicalRing) {
-                        if (!getBankId(CONSTANTS.item.Magical_Ring)) {
-                            selectNewSlayerTaskWithConfig();
-                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing ring!');
-                        }
-                        originalRing = currentRing();
-                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Magical_Ring);
-                    }
-                } else if (needsItemDesertHat) {
-                    //Equips Magical Ring for area
-                    if (!hasItemDesertHat) {
-                        if (!getBankId(CONSTANTS.item.Desert_Hat)) {
-                            selectNewSlayerTaskWithConfig();
-                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing helmet!');
-                        }
-                        originalHelmet = currentHelmet();
-                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Desert_Hat);
-                    }
-                } else if (needsItemBlazingLantern) {
-                    //Equips Blazing Lantern for area
-                    if (!hasItemBlazingLantern) {
-                        if (!getBankId(CONSTANTS.item.Blazing_Lantern)) {
-                            selectNewSlayerTaskWithConfig();
-                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing shield!');
-                        }
-                        originalShield = currentShield();
-                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Blazing_Lantern);
-                    }
-                } else if (needsItemClimbingBoots) {
-                    //Equips Climbing Boots for area
-                    if (!hasItemClimbingBoots) {
-                        if (!getBankId(CONSTANTS.item.Climbing_Boots)) {
-                            selectNewSlayerTaskWithConfig();
-                            notifyPlayer(CONSTANTS.skill.Slayer, 'Skipping task due to missing boots!');
-                        }
-                        originalBoots = currentBoots();
-                        found = SEMIUtils.equipFromBank(CONSTANTS.item.Climbing_Boots);
-                    }
-                } else if (
-                    !(needsItemMirrorShield && !hasItemMirrorShield) ||
-                    (needsItemMagicalRing && !hasItemMagicalRing) ||
-                    (needsItemDesertHat && !hasItemDesertHat) ||
-                    (needsItemBlazingLantern && !hasItemBlazingLantern) ||
-                    (needsItemClimbingBoots && !hasItemClimbingBoots)
-                ) {
-                    slayerLockedItem = null; // Ensures the game will allow us to unequip slayer equipment
+                    });
+                }
 
-                    //Equips original shield when not in Area
-                    if (hasItemMirrorShield && originalShield != CONSTANTS.item.Mirror_Shield) {
-                        found = SEMIUtils.equipFromBank(originalShield);
-                    }
-                    //Equips original ring when not in Area
-                    if (hasItemMagicalRing && originalRing != CONSTANTS.item.Magical_Ring) {
-                        found = SEMIUtils.equipFromBank(originalRing);
-                    }
-                    //Equips original helmet when not in Area
-                    if (hasItemDesertHat && originalHelmet != CONSTANTS.item.Desert_Hat) {
-                        found = SEMIUtils.equipFromBank(originalHelmet);
-                    }
-                    //Equips original shield when not in Area
-                    if (hasItemBlazingLantern && originalShield != CONSTANTS.item.Blazing_Lantern) {
-                        found = SEMIUtils.equipFromBank(originalShield);
-                    }
-                    //Equips original boots when not in Area
-                    if (hasItemClimbingBoots && originalBoots != CONSTANTS.item.Blazing_Lantern) {
-                        found = SEMIUtils.equipFromBank(originalBoots);
-                    }
+                if (!ready && SEMIUtils.getBankId(requiredItem)) {
+                    originalItem = SEMIUtils.currentEquipmentInSlot(items[requiredItem].type);
+                    ready = SEMIUtils.equipFromBank(requiredItem);
                 }
+            } else {
+                ready = true;
+                8;
             }
 
-            if (slayerTask[0] !== undefined) selectMonster(slayerTask[0].monsterID);
+            if (ready) {
+                // jumpToEnemy instead of selectMonster because selectMonster does not check for equipment requirements
+                jumpToEnemy(slayerTask[0].monsterID);
+                waitForEnemyLoaded = true;
+            } else {
+                if (
+                    SEMI.getValue(id, 'skip') ||
+                    (SEMI.isEnabled('auto-slayer-skip') &&
+                        typeof monsterIDs !== 'undefined' &&
+                        monsterIDs.includes(slayerTask[0].monsterID))
+                ) {
+                    // pick a new slayer task with the same difficulty setting
+                    selectNewSlayerTask(slayerTask[0].tier);
+                } else {
+                    notifyPlayer(
+                        CONSTANTS.skill.Slayer,
+                        'Missing equipment for slayer task! Manually select new task or enable auto-skip unmet requirements option.'
+                    );
+                }
+            }
         }
     };
 
     //Config menu
     const hasConfig = true;
-    const configMenu = `<div class="form-group">
-        <label for="${id}-config-tasktier">Slayer Task Tier</label>
-        <select id="${id}-config-tasktier" class="form-control">
-            <option selected value="0">Easy</option>
-            <option value="1">Normal</option>
-            <option value="2">Hard</option>
-            <option value="3">Elite</option>
-            <option value="4">Master</option>
-        </select>
+    const configMenu = `<div class="form-group" style="max-width: 300px;">
+        <b>Auto-Extend</b><br/>
+        <span>Enable this option to auto-extend all slayer tasks. This will check periodicaly if enough slayer coins are available and extend if possible.</span>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="${id}-config-extend" name="${id}-config-extend">
+            <label class="custom-control-label" for="${id}-config-extend">Enabled</label>
+        </div>
+        <br/>
+        <b>Auto-Skip Unmet Requirements</b><br/>
+        <span>Enable this option to auto-skip all slayer tasks if the required equipment is not available.</span>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="${id}-config-skip" name="${id}-config-skip">
+            <label class="custom-control-label" for="${id}-config-skip">Enabled</label>
+        </div>
     </div>`;
 
     const saveConfig = () => {
-        let taskTier = Number(document.getElementById(`${id}-config-tasktier`).value);
-        SEMI.setValue(id, 'taskTier', taskTier);
+        let extend = Number(document.getElementById(`${id}-config-extend`).checked);
+        let skip = Number(document.getElementById(`${id}-config-skip`).checked);
+        SEMI.setValue(id, 'extend', extend);
+        SEMI.setValue(id, 'skip', skip);
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
 
         SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, {
@@ -243,7 +175,8 @@
     };
 
     const updateConfig = () => {
-        document.getElementById(`${id}-config-tasktier`).value = SEMI.getValue(id, 'taskTier');
+        document.getElementById(`${id}-config-extend`).checked = SEMI.getValue(id, 'extend');
+        document.getElementById(`${id}-config-skip`).checked = SEMI.getValue(id, 'skip');
     };
 
     SEMI.add(id, {
@@ -257,7 +190,7 @@
         configMenu,
         saveConfig,
         updateConfig,
-        onLoop: autoSlayer,
+        onLoop: loop,
         skill: 'Combat',
     });
 })();
