@@ -1,58 +1,34 @@
 (() => {
     const id = 'auto-lute';
     const title = 'AutoLute';
-    const desc =
-        'AutoLute monitors your opponents health and switches to Lute for the final kill for the 5x GP reward.';
+    const desc = `AutoLute monitors your combat opponent's health and switches to Lute for the final kill of a dungeon, or the killing blow for normal combat, for the 5x GP reward.`;
     const imgSrc = 'assets/media/bank/almighty_lute.svg';
 
     const autoLute = () => {
         const enemyHp = combatData.enemy.hitpoints;
         const playerMaxHit = baseMaxHit;
+        const dungeon = DUNGEONS[selectedDungeon];
+        const monster = combatData.enemy.id;
+        const isFinalMonster =
+            dungeon !== undefined ? monster === dungeon.monsters[dungeon.monsters.length - 1] : false;
+        const shouldSwitchToLute = dungeon !== undefined ? isFinalMonster : true;
+        const lute = CONSTANTS.item.Almighty_Lute;
+        const slot = 'Weapon';
+        const wieldingLute = SEMIUtils.currentEquipmentInSlot(slot) === lute;
+        const ableToKill = enemyHp > 0 && playerMaxHit >= enemyHp;
+        const inCombat = SEMIUtils.currentSkillName() === 'Hitpoints';
 
-        function isFinalMonsterOfDungeon(monster) {
-            const dungeon = DUNGEONS[selectedDungeon];
-            return monster === dungeon.monsters[dungeon.monsters.length - 1];
-        }
-
-        function shouldSwitchToLute(monster) {
-            if (DUNGEONS[selectedDungeon] !== undefined) {
-                return isFinalMonsterOfDungeon(monster);
-            } else {
-                return true;
-            }
-        }
-
-        function equipLute(swapTo = true) {
-            if (!SEMI.isEnabled('auto-lute')) {
-                return;
-            }
-            if (swapTo) {
-                equipIfNotEquipped(CONSTANTS.item.Almighty_Lute, 'Weapon');
-            } else {
-                if (enemyHp == 0 && SEMIUtils.equipSwapConfig['Weapon'].swapped) {
-                    SEMIUtils.equipSwap(0, 'Weapon');
-                    SEMIUtils.equipSwap(0, 'Shield');
-                }
-            }
-        }
-
-        function equipIfNotEquipped(item, slot) {
-            if (SEMIUtils.currentEquipmentInSlot(slot) === item) {
-                return true;
-            }
-            if (checkBankForItem(item)) {
-                SEMIUtils.equipSwap(item, slot);
-                return true;
-            }
-            return false;
-        }
-
-        if (enemyHp > 0 && playerMaxHit >= enemyHp && shouldSwitchToLute(combatData.enemy.id)) {
-            equipLute(true);
-            return;
-        } else {
-            equipLute(false);
-            return;
+        if (
+            ableToKill &&
+            shouldSwitchToLute &&
+            !wieldingLute &&
+            checkBankForItem(lute) &&
+            !newEnemyLoading &&
+            inCombat
+        ) {
+            SEMIUtils.equipSwap(lute, slot);
+        } else if ((enemyHp === 0 || newEnemyLoading || !inCombat) && SEMIUtils.equipSwapConfig[slot].swapped) {
+            SEMIUtils.equipSwap(0, slot);
         }
     };
 

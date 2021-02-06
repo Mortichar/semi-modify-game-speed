@@ -4,7 +4,7 @@
 
 ### New Scripts
 
-* AutoLute by Ugh: Monitors your dungeon activity and will equip the lute for the final monster so you get 5X gp reward at the end!
+* AutoLute by Ugh: AutoLute monitors your combat opponent's health and switches to Lute for the final kill of a dungeon, or the killing blow for normal combat, for the 5x GP reward!
 
 ## v0.5.3
 
