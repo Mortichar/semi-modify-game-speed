@@ -1,5 +1,11 @@
 # SEMI Changelog
 
+## Current Patch
+
+### New Scripts
+
+* AutoLute by Ugh: Monitors your dungeon activity and will equip the lute for the final monster so you get 5X gp reward at the end!
+
 ## v0.5.3
 
 ## Minor fixes & additions

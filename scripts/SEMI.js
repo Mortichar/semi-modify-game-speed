@@ -125,6 +125,7 @@
         'loot',
         'farm',
         'equip-best-items',
+        'lute',
     ];
     const pluginNames = [
         ...autoNames.map((name) => `auto-${name}`),
