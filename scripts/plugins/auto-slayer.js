@@ -116,7 +116,6 @@ pick one random monster from the monsterSelection array
                 }
             } else {
                 ready = true;
-                8;
             }
 
             if (ready) {

@@ -296,15 +296,15 @@ var { semiSetMenu } = (() => {
     if (!tryLoad) {
       return hideSemi('game version incompatibility.');
     }
-    try {
-      setupSEMI();
-      const msg = `SEMI v${SEMI_VERSION} Loaded`;
-      const suffix = wrongVersion ? ', but may experience errors.' : '!';
-      console.log(msg + suffix);
-    } catch (error) {
-      hideSemi('the following error:');
-      console.error(error);
-    }
+    // try {
+    setupSEMI();
+    const msg = `SEMI v${SEMI_VERSION} Loaded`;
+    const suffix = wrongVersion ? ', but may experience errors.' : '!';
+    console.log(msg + suffix);
+    // } catch (error) {
+    // hideSemi('the following error:');
+    // console.error(error);
+    // }
   };
 
   const semiLoader = setInterval(loadSemi, 200);
