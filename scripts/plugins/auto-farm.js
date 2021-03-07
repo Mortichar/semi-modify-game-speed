@@ -193,25 +193,6 @@
         return false;
     }
 
-    function allSkillsMaxed() {
-        for (const k in CONSTANTS.skill) {
-            const skillId = CONSTANTS.skill[k];
-            const level = skillLevel[skillId];
-            if (level < 99) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function canEquipCompletionCape() {
-        return completionStats >= 100;
-    }
-
-    function canEquipMaxSkillcape() {
-        return allSkillsMaxed();
-    }
-
     function swapFarmingEquipment(swapTo = true) {
         if (!SEMI.isEnabled('auto-farm-equip')) {
             return;
@@ -219,8 +200,8 @@
         if (swapTo) {
             equipIfNotEquipped(CONSTANTS.item.Bobs_Rake, 'Weapon');
             equipIfNotEquipped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
-            (canEquipCompletionCape() && equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape')) ||
-                (canEquipMaxSkillcape() && equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape')) ||
+            (checkCompletionCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape')) ||
+                (checkMaxCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape')) ||
                 equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
         } else {
             if (SEMIUtils.equipSwapConfig['Weapon'].swapped) {
