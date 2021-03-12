@@ -323,7 +323,10 @@ SEMI.AutoEquipBestItems = (() => {
             case CONSTANTS.item.Mining_Skillcape:
                 return currentSkillId == CONSTANTS.skill.Mining;
             case CONSTANTS.item.Smithing_Skillcape:
-                return currentSkillId == CONSTANTS.skill.Smithing;
+                return (
+                    currentSkillId == CONSTANTS.skill.Smithing &&
+                    items[smithingItems[currentSmith].itemID].smithReq.some((r) => r.id === CONSTANTS.item.Coal_Ore)
+                );
             case CONSTANTS.item.Attack_Skillcape:
                 return isInCombat && currentCombatSkillId == CONSTANTS.skill.Attack;
             case CONSTANTS.item.Strength_Skillcape:
