@@ -906,8 +906,8 @@
                     successRate = npc.maxSuccess;
                 }
                 if (
-                    glovesTracker[CONSTANTS.shop.gloves.Thieving].isActive &&
-                    glovesTracker[CONSTANTS.shop.gloves.Thieving].remainingActions > 0 && // TODO: handle charge use
+                    glovesTracker[CONSTANTS.shop.gloves.Thieving_Gloves].isActive &&
+                    glovesTracker[CONSTANTS.shop.gloves.Thieving_Gloves].remainingActions > 0 && // TODO: handle charge use
                     equippedItems[CONSTANTS.equipmentSlot.Gloves] === CONSTANTS.item.Thieving_Gloves
                 ) {
                     successRate += 10;
