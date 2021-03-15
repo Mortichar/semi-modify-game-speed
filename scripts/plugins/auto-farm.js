@@ -111,7 +111,7 @@
             // Harvest
             let grownId = items[patch.seedID].grownItemID;
             let bankId = SEMIUtils.getBankId(grownId);
-            if (!(bankId !== false || bankMax + baseBankMax > bank.length)) {
+            if (!(bankId !== false || currentBankUpgrade + baseBankMax > bank.length)) {
                 return;
             }
             harvestSeed(areaId, patchId);
