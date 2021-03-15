@@ -79,7 +79,7 @@ const SEMIUtils = (() => {
     const currentEquipmentInSlot = (slotName) => currentEquipment()[CONSTANTS.equipmentSlot[slotName]];
 
     const isBankFull = () => {
-        return bank.length >= baseBankMax + bankMax;
+        return bank.length >= baseBankMax + currentBankUpgrade;
     };
 
     const unselectItemIfNotInBank = (itemID) => {
