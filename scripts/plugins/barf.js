@@ -26,7 +26,7 @@
         const barf1 = `
         <div id="barf-gui" class="col-12">
             <div class="p-2 text-center">
-                <button id="barfbtn" class="btn btn-dual SEMI-gold" title="${barfTitle}">
+                <button id="barfbtn" class="btn btn-dual text-combat-smoke SEMI-gold" title="${barfTitle}">
                     <small>
                         BARF MY POTION NOW!
                     </small>
