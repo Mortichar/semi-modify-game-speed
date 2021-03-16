@@ -111,7 +111,7 @@
             // Harvest
             let grownId = items[patch.seedID].grownItemID;
             let bankId = SEMIUtils.getBankId(grownId);
-            if (!(bankId !== false || SEMIUtils.isBankFull())) {
+            if (bankId == false && SEMIUtils.isBankFull()) {
                 return;
             }
             harvestSeed(areaId, patchId);
