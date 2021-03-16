@@ -1,6 +1,20 @@
 # SEMI Changelog
 
-## Current Patch
+## v0.5.4
+
+## Melvor @ v0.19!
+
+### Fixes
+
+* Bank fixes and such: prevent Katorone errors (Will Mitchell)
+* AutoSlayerSkip fixed
+* AutoSellGems target stack will maintain a stack of that amount instead of selling all once it hits that stack
+* Disabled drag-menus for the combat & non-combat sections because of major changes that break it for those sections
+* Barf potion button now readable again
+* AutoEquip Best Items: Only equip smithing skillcape if current smithing item requires coal (Shamus Taylor)
+* AutoFarm
+    * Check before attempting to equip max/completion skillcapes (Shamus Taylor)
+    * Logic problems prevented harvest when an item was not in bank; now properly checks if item is not in bank and bank is full
 
 ### New Scripts
 
