@@ -28,10 +28,10 @@
             if (curQty > targetStack && toggleArray[togIndex]) {
                 count++;
                 setTimeout(() => {
-                    SEMIUtils.sellItemWithoutConfirmation(gemId, targetStack);
+                    SEMIUtils.sellItemWithoutConfirmation(gemId, curQty - targetStack);
                     SEMIUtils.customNotify(
                         'assets/media/main/coins.svg',
-                        `Auto Sell Gems just sold ${targetStack} ${items[gemId].name}.`,
+                        `Auto Sell Gems just sold ${curQty - targetStack} ${items[gemId].name}.`,
                         { duration: 5000, lowPriority: true }
                     );
                 }, count * 150);
