@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		Melvor ETA
-// @namespace		http://tampermonkey.net/
-// @version		0.3.5-0.19
+// @namespace	http://tampermonkey.net/
+// @version		0.3.8-0.19
 // @description	Shows xp/h and mastery xp/h, and the time remaining until certain targets are reached. Takes into account Mastery Levels and other bonuses.
 // @description	Please report issues on https://github.com/gmiclotte/Melvor-Time-Remaining/issues or message TinyCoyote#1769 on Discord
 // @description	The last part of the version number is the most recent version of Melvor that was tested with this script. More recent versions might break the script.
@@ -398,10 +398,8 @@
     };
 
     html2Node = (html) => {
-        var template = document.createElement('template');
         html = html.trim(); // Never return a text node of whitespace as the result
-        template.innerHTML = html;
-        return template.content.firstChild;
+        return $(html)[0];
     };
 
     ////////////////
@@ -933,46 +931,77 @@
     }
 
     //Return the preservation for any mastery and pool
-    function masteryPreservation(initial, masteryXp, poolXp) {
+    masteryPreservation = (initial, masteryXp, poolXp) => {
         if (!initial.hasMastery) {
             return 0;
         }
         const masteryLevel = convertXpToLvl(masteryXp);
-        let preservationChance = 0;
+        const poolProgress = (100 * poolXp) / initial.maxPoolXp;
+
+        // modifiers and base rhaelyx
+        let preservationChance = initial.staticPreservation;
+        // skill specific bonuses
         switch (initial.skillID) {
             case CONSTANTS.skill.Cooking:
-                if (poolXp >= initial.poolLim[2]) preservationChance += 10;
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 10;
+                }
                 break;
             case CONSTANTS.skill.Smithing:
-                let smithingMasteryLevel = masteryLevel;
-                if (smithingMasteryLevel >= 99) preservationChance += 30;
-                else if (smithingMasteryLevel >= 80) preservationChance += 20;
-                else if (smithingMasteryLevel >= 60) preservationChance += 15;
-                else if (smithingMasteryLevel >= 40) preservationChance += 10;
-                else if (smithingMasteryLevel >= 20) preservationChance += 5;
-                if (poolXp >= initial.poolLim[1]) preservationChance += 5;
-                if (poolXp >= initial.poolLim[2]) preservationChance += 5;
+                if (masteryLevel >= 99) {
+                    preservationChance += 30;
+                } else if (masteryLevel >= 80) {
+                    preservationChance += 20;
+                } else if (masteryLevel >= 60) {
+                    preservationChance += 15;
+                } else if (masteryLevel >= 40) {
+                    preservationChance += 10;
+                } else if (masteryLevel >= 20) {
+                    preservationChance += 5;
+                }
+                if (poolProgress >= masteryCheckpoints[1]) {
+                    preservationChance += 5;
+                }
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 5;
+                }
                 break;
             case CONSTANTS.skill.Fletching:
                 preservationChance += 0.2 * masteryLevel - 0.2;
-                if (masteryLevel >= 99) preservationChance += 5;
+                if (masteryLevel >= 99) {
+                    preservationChance += 5;
+                }
                 break;
             case CONSTANTS.skill.Crafting:
                 preservationChance += 0.2 * masteryLevel - 0.2;
-                if (masteryLevel >= 99) preservationChance += 5;
-                if (poolXp >= initial.poolLim[1]) preservationChance += 5;
+                if (masteryLevel >= 99) {
+                    preservationChance += 5;
+                }
+                if (poolProgress >= masteryCheckpoints[1]) {
+                    preservationChance += 5;
+                }
                 break;
             case CONSTANTS.skill.Runecrafting:
-                if (poolXp >= initial.poolLim[2]) preservationChance += 10;
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 10;
+                }
                 break;
             case CONSTANTS.skill.Herblore:
                 preservationChance += 0.2 * masteryLevel - 0.2;
                 if (masteryLevel >= 99) preservationChance += 5;
-                if (poolXp >= initial.poolLim[2]) preservationChance += 5;
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 5;
+                }
                 break;
         }
+        // rhaelyx is handled outside of this function
+
+        // cap preservation to 80%
+        if (preservationChance > 80) {
+            preservationChance = 80;
+        }
         return preservationChance;
-    }
+    };
 
     // Adjust interval based on unlocked bonuses
     function intervalAdjustment(initial, poolXp, masteryXp, skillInterval) {
@@ -1221,7 +1250,7 @@
         }
         initial.masteryLimLevel.push(Infinity);
         // static preservation
-        initial.staticPreservation += playerModifiers.increasedGlobalPreservationChance;
+        initial.staticPreservation = playerModifiers.increasedGlobalPreservationChance;
         initial.staticPreservation -= playerModifiers.decreasedGlobalPreservationChance;
         initial.staticPreservation += getTotalFromModifierArray('increasedSkillPreservationChance', skillID);
         initial.staticPreservation -= getTotalFromModifierArray('decreasedSkillPreservationChance', skillID);
@@ -1653,10 +1682,6 @@
 
     function actionsToBreakpoint(initial, current, noResources = false) {
         // Adjustments
-        const totalChanceToUse =
-            1 -
-            initial.staticPreservation / 100 -
-            masteryPreservation(initial, current.actions[0].masteryXp, current.poolXp) / 100;
         const currentIntervals = current.actions.map((x, i) =>
             intervalAdjustment(initial, current.poolXp, x.masteryXp, initial.actions[i].skillInterval)
         );
@@ -1709,6 +1734,8 @@
         }
         // resources
         let resourceSeconds = Infinity;
+        const totalChanceToUse = 1 - masteryPreservation(initial, current.actions[0].masteryXp, current.poolXp) / 100;
+        const totalChanceToUseWithCharges = Math.max(0.2, totalChanceToUse - ETA.rhaelyxChargePreservation);
         // estimate actions remaining with current resources
         if (!noResources) {
             if (initial.actions.length > 1) {
@@ -1718,14 +1745,11 @@
             }
             // estimate amount of actions possible with remaining resources
             // number of actions with rhaelyx charges
-            let resourceActions = Math.min(
-                current.chargeUses,
-                current.resources / (totalChanceToUse - ETA.rhaelyxChargePreservation)
-            );
+            let resourceActions = Math.min(current.chargeUses, current.resources / totalChanceToUseWithCharges);
             // remaining resources
             const resWithoutCharge = Math.max(
                 0,
-                current.resources - current.chargeUses * (totalChanceToUse - ETA.rhaelyxChargePreservation)
+                current.resources - current.chargeUses * totalChanceToUseWithCharges
             );
             // add number of actions without rhaelyx charges
             resourceActions = Math.ceil(resourceActions + resWithoutCharge / totalChanceToUse);
@@ -1761,12 +1785,12 @@
                 let resUsed = 0;
                 if (expectedActions[0] < current.chargeUses) {
                     // won't run out of charges yet
-                    resUsed = expectedActions[0] * Math.max(0, totalChanceToUse - ETA.rhaelyxChargePreservation);
+                    resUsed = expectedActions[0] * totalChanceToUseWithCharges;
                 } else {
                     // first use charges
-                    resUsed = current.chargeUses * Math.max(0, totalChanceToUse - ETA.rhaelyxChargePreservation);
+                    resUsed = current.chargeUses * totalChanceToUseWithCharges;
                     // remaining actions are without charges
-                    resUsed += (expectedActions[0] - current.chargeUses) * Math.max(0, totalChanceToUse);
+                    resUsed += (expectedActions[0] - current.chargeUses) * totalChanceToUse;
                 }
                 current.resources = Math.round(current.resources - resUsed);
             }
