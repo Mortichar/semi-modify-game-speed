@@ -2,7 +2,12 @@ var injectDragMenus = () => {
     const prefix = SEMI.ROOT_ID;
     const getEl = (id) => SEMIUtils.getElement(id);
 
-    const sections = ['combat', 'non', 'other', 'socials'];
+    const sections = [
+        // 'combat',
+        // 'non',
+        'other',
+        'socials',
+    ];
     const configVersion = 3;
 
     const menuConfig = { version: configVersion };
