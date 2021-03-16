@@ -123,21 +123,24 @@ pick one random monster from the monsterSelection array
                 jumpToEnemy(slayerTask[0].monsterID);
                 waitForEnemyLoaded = true;
             } else {
-                if (
-                    SEMI.getValue(id, 'skip') ||
-                    (SEMI.isEnabled('auto-slayer-skip') &&
-                        typeof monsterIDs !== 'undefined' &&
-                        monsterIDs.includes(slayerTask[0].monsterID))
-                ) {
-                    // pick a new slayer task with the same difficulty setting
-                    selectNewSlayerTask(slayerTask[0].tier);
-                } else {
+                {
                     notifyPlayer(
                         CONSTANTS.skill.Slayer,
                         'Missing equipment for slayer task! Manually select new task or enable auto-skip unmet requirements option.'
                     );
                 }
             }
+        }
+
+        //if semi auto-slayer-skip is on, skip them unwanteds
+        if (
+            SEMI.getValue(id, 'skip') ||
+            (SEMI.isEnabled('auto-slayer-skip') &&
+                typeof monsterIDs !== 'undefined' &&
+                monsterIDs.includes(slayerTask[0].monsterID))
+        ) {
+            // pick a new slayer task with the same difficulty setting
+            selectNewSlayerTask(slayerTask[0].tier);
         }
     };
 
