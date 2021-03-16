@@ -4,6 +4,10 @@
 
 ## Melvor @ v0.19!
 
+### Updates
+
+* ETA to latest version
+
 ### Fixes
 
 * Bank fixes and such: prevent Katorone errors (Will Mitchell)
