@@ -26,7 +26,8 @@
     // Variables
     const name = 'ore-in-bank';
     const title = 'Show Ore in Bank';
-    const desc = 'Shows the amount of ore you have in the bank on the Mining page on each of the ore/rock buttons.';
+    const desc =
+        'Shows the amount of ore you have in the bank on the Mining page on each of the ore/rock buttons. WARNING: Redundant with ETA.';
     const imgSrc = 'assets/media/bank/ore_dragonite.svg';
 
     const GUI = {
