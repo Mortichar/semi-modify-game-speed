@@ -43,7 +43,7 @@
         SEMIUtils.customNotify(
             imgSrc,
             `SEMI: Exited Auto Combat @ ${dateTime} because ${username} is out of ${reason}`,
-            15000
+            { duration: 15000 }
         ); //upgrade to jqueryui modal dialog
         console.log(`SEMI: Exited Auto Combat @ ${dateTime} because ${username} is out of ${reason}`);
         if (SEMI.isEnabled('auto-slayer')) {

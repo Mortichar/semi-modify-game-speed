@@ -11,7 +11,9 @@
         bonus.itemID = 0;
         bonus.bonus = [null, null];
         bonus.charges = 0;
-        SEMIUtils.customNotify('assets/media/skills/herblore/potion_empty.svg', 'Your potion has been BARFED!', 5000);
+        SEMIUtils.customNotify('assets/media/skills/herblore/potion_empty.svg', 'Your potion has been BARFED!', {
+            duration: 5000,
+        });
         if (currentPage === 13) {
             updatePlayerStats();
         }
@@ -24,7 +26,7 @@
         const barf1 = `
         <div id="barf-gui" class="col-12">
             <div class="p-2 text-center">
-                <button id="barfbtn" class="btn btn-dual SEMI-gold" title="${barfTitle}">
+                <button id="barfbtn" class="btn btn-dual text-combat-smoke SEMI-gold" title="${barfTitle}">
                     <small>
                         BARF MY POTION NOW!
                     </small>

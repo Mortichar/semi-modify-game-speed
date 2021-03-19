@@ -13100,3 +13100,7 @@ declare function viewMonsterDrops(monsterID: any): any;
  * @param {any} areaID
  */
 declare function viewMonsters(areaType: any, areaID: any): void;
+
+declare function checkCompletionCapeRequirements(): boolean;
+
+declare function checkMaxCapeRequirements(): boolean;

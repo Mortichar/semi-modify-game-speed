@@ -16,7 +16,10 @@
         const ammoQty = SEMI.getValue(id, 'ammoQty');
         if (SEMIUtils.getBankQty(ammoId)) {
             SEMIUtils.equipFromBank(ammoId, ammoQty);
-            SEMIUtils.customNotify(items[ammoId].media, `SEMI just equipped ${ammoQty} ${items[ammoId].name}.`, 5000);
+            SEMIUtils.customNotify(items[ammoId].media, `SEMI just equipped ${ammoQty} ${items[ammoId].name}.`, {
+                duration: 5000,
+                lowPriority: true,
+            });
         }
     };
 
@@ -65,7 +68,7 @@
                     id,
                     'ammoQty'
                 )}<br>and Minimum Ammo Equipped: ${SEMI.getValue(id, 'minimumAmmo')}`,
-                3000
+                { duration: 3000 }
             );
         }
         updateConfig();

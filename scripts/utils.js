@@ -16,12 +16,26 @@ const SEMIUtils = (() => {
      * Custom notifications! Green background with text, custom image and SEMI icon, variable display time.
      * @param {string} imgsrc
      * @param {string} msg
-     * @param {number} n milliseconds that the notification will display
+     * @param {Object} opts
+     * @param {number} opts.duration milliseconds that the notification will display
+     * @param {boolean} opts.lowPriority skip this notification if lessNotification is enabled in SEMI options
      */
-    const customNotify = (imgsrc = '', msg = 'Custom Notifications!', n = 3000) => {
+    const customNotify = (imgsrc = '', msg = 'Custom Notifications!', opts = {}) => {
+        opts = Object.assign(
+            {},
+            {
+                duration: 3000,
+                lowPriority: false,
+            },
+            opts
+        );
+        const lessNotifications = SEMI.getItem('etc-GUI-toggles').lessNotifications;
+        if (lessNotifications && opts.lowPriority) {
+            return;
+        }
         Toastify({
             text: `<div class="text-center"><img class="notification-img" src="${imgsrc}"><img src="${iconSrc}" height="auto" width="auto" style="margin: 4px;"><span class="badge badge-success"> ${msg} </span></div>`,
-            duration: n,
+            duration: opts.duration,
             gravity: 'bottom', // `top` or `bottom`
             position: 'center', // `left`, `center` or `right`
             backgroundColor: 'transparent',
@@ -79,7 +93,7 @@ const SEMIUtils = (() => {
     const currentEquipmentInSlot = (slotName) => currentEquipment()[CONSTANTS.equipmentSlot[slotName]];
 
     const isBankFull = () => {
-        return bank.length >= baseBankMax + bankMax;
+        return bank.length >= baseBankMax + currentBankUpgrade;
     };
 
     const unselectItemIfNotInBank = (itemID) => {

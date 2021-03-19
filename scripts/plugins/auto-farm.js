@@ -111,7 +111,7 @@
             // Harvest
             let grownId = items[patch.seedID].grownItemID;
             let bankId = SEMIUtils.getBankId(grownId);
-            if (!(bankId !== false || currentBankUpgrade + baseBankMax > bank.length)) {
+            if (bankId == false && SEMIUtils.isBankFull()) {
                 return;
             }
             harvestSeed(areaId, patchId);
@@ -200,8 +200,8 @@
         if (swapTo) {
             equipIfNotEquipped(CONSTANTS.item.Bobs_Rake, 'Weapon');
             equipIfNotEquipped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
-            equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape') ||
-                equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape') ||
+            (checkCompletionCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape')) ||
+                (checkMaxCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape')) ||
                 equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
         } else {
             if (SEMIUtils.equipSwapConfig['Weapon'].swapped) {

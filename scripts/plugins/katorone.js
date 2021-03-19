@@ -171,7 +171,7 @@ const setLoadedKatValues = () => {
                 return;
             }
             // Try buying a bank slot
-            if (katBot.buyBankSlots === true && bank.length >= baseBankMax + bankMax) {
+            if (katBot.buyBankSlots === true && SEMIUtils.isBankFull()) {
                 buyBankSlot();
             }
             // Make sure our money reserves are replenished

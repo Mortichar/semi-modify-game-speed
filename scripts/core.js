@@ -9,7 +9,7 @@ var SEMI = (() => {
     // Global Constants
     const ROOT_ID = 'SEMI-menu';
     const LOCAL_SETTINGS_PREFIX = 'SEMI';
-    const SUPPORTED_GAME_VERSION = 'Alpha v0.18.2';
+    const SUPPORTED_GAME_VERSION = 'Alpha v0.19';
 
     // Enums
     /**
@@ -122,7 +122,7 @@ var SEMI = (() => {
         SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs exported to textarea and copied to clipboard!',
-            10000
+            { duration: 10000 }
         );
     };
 
@@ -139,7 +139,7 @@ var SEMI = (() => {
         SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs restored from your import! Refresh to complete the import process.',
-            10000
+            { duration: 10000 }
         );
     };
 
@@ -153,7 +153,7 @@ var SEMI = (() => {
         SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs erased from your local storage! Refresh to complete the reset process.',
-            10000
+            { duration: 10000 }
         );
     };
 
@@ -351,7 +351,7 @@ var SEMI = (() => {
             plugin.onDisable();
             console.log(`${name} Disabled!`);
             if (plugin.imgSrc !== '') {
-                SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Disabled!`, 1000);
+                SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Disabled!`, { duration: 1000 });
             }
             if (plugin.ms !== 0 && plugin.interval) {
                 clearInterval(plugin.interval);
@@ -372,7 +372,7 @@ var SEMI = (() => {
                 SEMIUtils.changePage(plugin.skill);
             }
             if (plugin.imgSrc !== '') {
-                SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, 1000);
+                SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, { duration: 1000 });
             }
             if (plugin.ms !== 0) {
                 plugin.interval = setInterval(plugin.onLoop, plugin.ms);

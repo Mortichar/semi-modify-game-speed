@@ -2,8 +2,13 @@ var injectDragMenus = () => {
     const prefix = SEMI.ROOT_ID;
     const getEl = (id) => SEMIUtils.getElement(id);
 
-    const sections = ['combat', 'skills', 'other', 'socials'];
-    const configVersion = 2;
+    const sections = [
+        // 'combat',
+        // 'non',
+        'other',
+        'socials',
+    ];
+    const configVersion = 3;
 
     const menuConfig = { version: configVersion };
 
@@ -16,6 +21,7 @@ var injectDragMenus = () => {
         menuConfig[section] = { locked: true, order: [] };
     });
 
+    //semi-menu-section-combat-inner no longer encompasses/contains the elements it needs; needs further fixing
     const orderMenu = (section) => {
         const order = menuConfig[section].order;
         if (order.length === 0) {

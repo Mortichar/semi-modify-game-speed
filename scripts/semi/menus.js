@@ -3,6 +3,7 @@ var SEMIetcGUI = {
   xph: true,
   timeRemaining: true,
   masteryEnhancements: true,
+  lessNotifications: false,
 };
 
 var { semiSetMenu } = (() => {
@@ -136,6 +137,12 @@ var { semiSetMenu } = (() => {
               }>
               <label class="custom-control-label" for="SEMI-mastery-enhancements-button-enabled">Mastery Enhancement Script: Adds progress bars for pools to skills in the menu</label>
             </div>
+            <div class="custom-control custom-switch mb-1">
+              <input type="checkbox" class="custom-control-input" id="SEMI-less-notifications-enabled" name="SEMI-less-notifications-enabled" onchange="SEMIetcGUI.lessNotifications = this.checked" ${
+                SEMIetcGUI.lessNotifications ? 'checked' : ''
+              }>
+              <label class="custom-control-label" for="SEMI-less-notifications-enabled">Less notifications: Disables notifications for repetetive actions like auto-sell and auto-bury. Important notifications will still be shown.</label>
+            </div>
             <div class="block-content block-content-full text-right">
               <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">
                 <i class="fa fa-check mr-1"></i>Save Toggles
@@ -221,7 +228,7 @@ var { semiSetMenu } = (() => {
     SEMIUtils.customNotify(
       'assets/media/monsters/dragon_black.svg',
       'Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',
-      5000
+      { duration: 5000 }
     );
   };
 
@@ -256,7 +263,7 @@ var { semiSetMenu } = (() => {
     SEMIUtils.customNotify(
       'assets/media/main/settings_header.svg',
       'Miscellaneous SEMI GUI settings saved! Changes will take place after refreshing the page.',
-      10000
+      { duration: 10000 }
     );
   };
 
@@ -289,15 +296,15 @@ var { semiSetMenu } = (() => {
     if (!tryLoad) {
       return hideSemi('game version incompatibility.');
     }
-    try {
-      setupSEMI();
-      const msg = `SEMI v${SEMI_VERSION} Loaded`;
-      const suffix = wrongVersion ? ', but may experience errors.' : '!';
-      console.log(msg + suffix);
-    } catch (error) {
-      hideSemi('the following error:');
-      console.error(error);
-    }
+    // try {
+    setupSEMI();
+    const msg = `SEMI v${SEMI_VERSION} Loaded`;
+    const suffix = wrongVersion ? ', but may experience errors.' : '!';
+    console.log(msg + suffix);
+    // } catch (error) {
+    // hideSemi('the following error:');
+    // console.error(error);
+    // }
   };
 
   const semiLoader = setInterval(loadSemi, 200);

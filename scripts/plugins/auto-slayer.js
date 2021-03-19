@@ -116,7 +116,6 @@ pick one random monster from the monsterSelection array
                 }
             } else {
                 ready = true;
-                8;
             }
 
             if (ready) {
@@ -124,21 +123,24 @@ pick one random monster from the monsterSelection array
                 jumpToEnemy(slayerTask[0].monsterID);
                 waitForEnemyLoaded = true;
             } else {
-                if (
-                    SEMI.getValue(id, 'skip') ||
-                    (SEMI.isEnabled('auto-slayer-skip') &&
-                        typeof monsterIDs !== 'undefined' &&
-                        monsterIDs.includes(slayerTask[0].monsterID))
-                ) {
-                    // pick a new slayer task with the same difficulty setting
-                    selectNewSlayerTask(slayerTask[0].tier);
-                } else {
+                {
                     notifyPlayer(
                         CONSTANTS.skill.Slayer,
                         'Missing equipment for slayer task! Manually select new task or enable auto-skip unmet requirements option.'
                     );
                 }
             }
+        }
+
+        //if semi auto-slayer-skip is on, skip them unwanteds
+        if (
+            SEMI.getValue(id, 'skip') ||
+            (SEMI.isEnabled('auto-slayer-skip') &&
+                typeof monsterIDs !== 'undefined' &&
+                monsterIDs.includes(slayerTask[0].monsterID))
+        ) {
+            // pick a new slayer task with the same difficulty setting
+            selectNewSlayerTask(slayerTask[0].tier);
         }
     };
 
@@ -167,7 +169,9 @@ pick one random monster from the monsterSelection array
         SEMI.setValue(id, 'skip', skip);
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
 
-        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer`, 3000);
+        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, {
+            duration: 3000,
+        });
 
         updateConfig();
     };

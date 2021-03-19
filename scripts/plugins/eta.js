@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name		Melvor ETA
 // @namespace	http://tampermonkey.net/
-// @version		0.2.0-0.18.2
-// @description Shows xp/h and mastery xp/h, and the time remaining until certain targets are reached. Takes into account Mastery Levels and other bonuses.
-// @description Please report issues on https://github.com/gmiclotte/Melvor-Time-Remaining/issues or message TinyCoyote#1769 on Discord
-// @description The last part of the version number is the most recent version of Melvor that was tested with this script. More recent versions might break the script.
+// @version		0.3.8-0.19
+// @description	Shows xp/h and mastery xp/h, and the time remaining until certain targets are reached. Takes into account Mastery Levels and other bonuses.
+// @description	Please report issues on https://github.com/gmiclotte/Melvor-Time-Remaining/issues or message TinyCoyote#1769 on Discord
+// @description	The last part of the version number is the most recent version of Melvor that was tested with this script. More recent versions might break the script.
 // @description	Forked from Breindahl#2660's Melvor TimeRemaining script v0.6.2.2., originally developed by Breindahl#2660, Xhaf#6478 and Visua#9999
 // @author		GMiclotte
-// @match        https://*.melvoridle.com/*
-// @exclude      https://wiki.melvoridle.com*
+// @match		https://*.melvoridle.com/*
+// @exclude		https://wiki.melvoridle.com*
 // @noframes
 // @grant		none
 // ==/UserScript==
@@ -22,14 +22,16 @@
 
     window.ETASettings = {
         /*
-        toggles
-     */
+            toggles
+         */
         // true for 12h clock (AM/PM), false for 24h clock
         IS_12H_CLOCK: false,
         // true for short clock `xxhxxmxxs`, false for long clock `xx hours, xx minutes and xx seconds`
         IS_SHORT_CLOCK: true,
         // true for alternative main display with xp/h, mastery xp/h and action count
         SHOW_XP_RATE: true,
+        // true to show action times
+        SHOW_ACTION_TIME: false,
         // true to allow final pool percentage > 100%
         UNCAP_POOL: true,
         // true will show the current xp/h and mastery xp/h; false shows average if using all resources
@@ -46,9 +48,11 @@
         DING_LEVEL: true,
         DING_MASTERY: true,
         DING_POOL: true,
+        // change the ding sound level
+        DING_VOLUME: 0.1,
         /*
-        targets
-     */
+            targets
+         */
         // Default global target level / mastery / pool% is 99 / 99 / 100
         GLOBAL_TARGET_LEVEL: 99,
         GLOBAL_TARGET_MASTERY: 99,
@@ -121,8 +125,8 @@
         },
 
         /*
-        methods
-     */
+            methods
+         */
         // save settings to local storage
         save: () => {
             window.localStorage['ETASettings'] = window.JSON.stringify(window.ETASettings);
@@ -181,6 +185,7 @@
             IS_12H_CLOCK: 'Use 12h clock',
             IS_SHORT_CLOCK: 'Use short time format',
             SHOW_XP_RATE: 'Show XP rates',
+            SHOW_ACTION_TIME: 'Show action times',
             UNCAP_POOL: 'Show pool past 100%',
             CURRENT_RATES: 'Show current rates',
             USE_TOKENS: '"Use" Mastery tokens',
@@ -223,6 +228,7 @@
             CONSTANTS.skill.Crafting,
             CONSTANTS.skill.Runecrafting,
             CONSTANTS.skill.Herblore,
+            CONSTANTS.skill.Agility,
             CONSTANTS.skill.Magic,
         ].forEach((i) => {
             const card = ETA.skillTargetCard.addTab(SKILLS[i].name, SKILLS[i].media, '', '150px');
@@ -273,14 +279,14 @@
                 notifyPlayer(last.skillID, currentTime.msg, 'danger');
                 ETA.log(currentTime.msg);
                 let ding = new Audio('https://www.myinstants.com/media/sounds/ding-sound-effect.mp3');
-                ding.volume = 0.1;
+                ding.volume = ETASettings.DING_VOLUME;
                 ding.play();
                 return;
             }
         }
     };
 
-    ETA.time = (ding, target, time, current, msg) => {
+    ETA.time = (ding, target, current, msg) => {
         return { ding: ding, target: target, current: current, msg: msg };
     };
 
@@ -290,7 +296,7 @@
         // set current
         ETA.timeLeftCurrent = {
             skillID: initial.skillID,
-            action: initial.currentAction,
+            action: initial.currentAction.toString(),
             times: times.filter((x) => x.ding),
         };
     };
@@ -300,54 +306,100 @@
     //////////////
 
     const tempContainer = (id) => {
-        return (
+        return html2Node(
             '' +
-            '<div class="font-size-base font-w600 text-center text-muted">' +
-            `	<small id ="${id}" class="mb-2" style="display:block;clear:both;white-space:pre-line" data-toggle="tooltip" data-placement="top" data-html="true" title="" data-original-title="">` +
-            '	</small>' +
-            `	<small id ="${id}" class="mb-2" style="display:block;clear:both;white-space:pre-line">` +
-            `<div id="${id + '-YouHave'}"/>` +
-            '	</small>' +
-            '</div>'
+                '<div class="font-size-base font-w600 text-center text-muted">' +
+                `	<small id ="${id}" class="mb-2" style="display:block;clear:both;white-space:pre-line" data-toggle="tooltip" data-placement="top" data-html="true" title="" data-original-title="">` +
+                '	</small>' +
+                `	<small id ="${id}" class="mb-2" style="display:block;clear:both;white-space:pre-line">` +
+                `<div id="${id + '-YouHave'}"/>` +
+                '	</small>' +
+                '</div>'
         );
     };
 
     ETA.makeProcessingDisplays = function () {
-        $('#smith-item-have').after(tempContainer('timeLeftSmithing'));
-        $('#fletch-item-have').after(tempContainer('timeLeftFletching'));
-        $('#runecraft-item-have').after(tempContainer('timeLeftRunecrafting'));
-        $('#craft-item-have').after(tempContainer('timeLeftCrafting'));
-        $('#herblore-item-have').after(tempContainer('timeLeftHerblore'));
-        $('#skill-cooking-food-selected-qty').parent().parent().parent().after(tempContainer('timeLeftCooking'));
-        $('#skill-fm-logs-selected-qty').parent().parent().parent().after(tempContainer('timeLeftFiremaking'));
-        $('#magic-item-have-and-div').after(tempContainer('timeLeftMagic'));
+        // smithing
+        let node = document.getElementById('smith-item-have');
+        node.parentNode.insertBefore(tempContainer('timeLeftSmithing'), node.nextSibling);
+        // fletching
+        node = document.getElementById('fletch-item-have');
+        node.parentNode.insertBefore(tempContainer('timeLeftFletching'), node.nextSibling);
+        // Runecrafting
+        node = document.getElementById('runecraft-item-have');
+        node.parentNode.insertBefore(tempContainer('timeLeftRunecrafting'), node.nextSibling);
+        // Crafting
+        node = document.getElementById('craft-item-have');
+        node.parentNode.insertBefore(tempContainer('timeLeftCrafting'), node.nextSibling);
+        // Herblore
+        node = document.getElementById('herblore-item-have');
+        node.parentNode.insertBefore(tempContainer('timeLeftHerblore'), node.nextSibling);
+        // Cooking
+        node = document.getElementById('skill-cooking-food-selected-qty');
+        node = node.parentNode.parentNode.parentNode;
+        node.parentNode.insertBefore(tempContainer('timeLeftCooking'), node.nextSibling);
+        // Firemaking
+        node = document.getElementById('skill-fm-logs-selected-qty');
+        node = node.parentNode.parentNode.parentNode;
+        node.parentNode.insertBefore(tempContainer('timeLeftFiremaking'), node.nextSibling);
+        // Alt. Magic
+        node = document.getElementById('magic-item-have-and-div');
+        node.parentNode.insertBefore(tempContainer('timeLeftMagic'), node.nextSibling);
     };
 
     ETA.makeMiningDisplay = function () {
         miningData.forEach((_, i) => {
-            $(`#mining-ore-img-${i}`).before(tempContainer(`timeLeftMining-${i}`));
+            const node = document.getElementById(`mining-ore-img-${i}`);
+            node.parentNode.insertBefore(tempContainer(`timeLeftMining-${i}`), node);
         });
     };
 
     ETA.makeThievingDisplay = function () {
         thievingNPC.forEach((_, i) => {
-            $(`#success-rate-${i}`)
-                .parent()
-                .after(tempContainer(`timeLeftThieving-${i}`));
+            const node = document.getElementById(`success-rate-${i}`).parentNode;
+            node.parentNode.insertBefore(tempContainer(`timeLeftThieving-${i}`), node.nextSibling);
         });
     };
 
     ETA.makeWoodcuttingDisplay = function () {
         trees.forEach((_, i) => {
-            $(`#tree-rates-${i}`).after(tempContainer(`timeLeftWoodcutting-${i}`));
+            const node = document.getElementById(`tree-rates-${i}`);
+            node.parentNode.insertBefore(tempContainer(`timeLeftWoodcutting-${i}`), node.nextSibling);
         });
-        $('#skill-woodcutting-multitree').parent().after(tempContainer('timeLeftWoodcutting-Secondary'));
+        const node = document.getElementById('skill-woodcutting-multitree').parentNode;
+        node.parentNode.insertBefore(tempContainer('timeLeftWoodcutting-Secondary'), node.nextSibling);
     };
 
     ETA.makeFishingDisplay = function () {
         fishingAreas.forEach((_, i) => {
-            $(`#fishing-area-${i}-selected-fish-xp`).after(tempContainer(`timeLeftFishing-${i}`));
+            const node = document.getElementById(`fishing-area-${i}-selected-fish-xp`);
+            node.parentNode.insertBefore(tempContainer(`timeLeftFishing-${i}`), node.nextSibling);
         });
+    };
+
+    ETA.makeAgilityDisplay = function () {
+        chosenAgilityObstacles.forEach((i) => {
+            if (i === -1) {
+                return;
+            }
+            if (document.getElementById(`timeLeftAgility-${i}`)) {
+                // element already exists
+                return;
+            }
+            let node = document.getElementById(`agility-obstacle-${i}`);
+            node = node.children[0].children[0].children[0];
+            node.insertBefore(tempContainer(`timeLeftAgility-${i}`), node.children[3]);
+        });
+        if (document.getElementById('timeLeftAgility-Secondary')) {
+            // element already exists
+            return;
+        }
+        document.getElementById('agility-breakdown-items').appendChild(tempContainer('timeLeftAgility-Secondary'));
+    };
+
+    html2Node = (html) => {
+        html = html.trim(); // Never return a text node of whitespace as the result
+        return $(html)[0];
     };
 
     ////////////////
@@ -356,8 +408,17 @@
 
     ETA.timeRemainingWrapper = function (skillID, checkTaskComplete) {
         // populate the main `time remaining` variables
+        if (isGathering(skillID)) {
+            gatheringWrapper(skillID, checkTaskComplete);
+        } else {
+            productionWrapper(skillID, checkTaskComplete);
+        }
+    };
+
+    function gatheringWrapper(skillID, checkTaskComplete) {
         let data = [];
         let current;
+        // gathering skills
         switch (skillID) {
             case CONSTANTS.skill.Mining:
                 data = miningData;
@@ -378,29 +439,51 @@
                 data = fishingAreas;
                 current = currentFishingArea;
                 break;
-        }
-        if (data.length > 0) {
-            data.forEach((_, i) => {
-                let initial = initialVariables(skillID, checkTaskComplete);
-                if (initial.skillID === CONSTANTS.skill.Fishing) {
-                    initial.fishID = selectedFish[i];
-                    if (initial.fishID === null) {
-                        return;
+
+            case CONSTANTS.skill.Agility:
+                data = [];
+                // only keep active chosen obstacles
+                for (const x of chosenAgilityObstacles) {
+                    if (x >= 0) {
+                        data.push(x);
+                    } else {
+                        break;
                     }
                 }
-                initial.isMainAction = i === current;
-                initial.currentAction = i;
-                asyncTimeRemaining(initial);
-            });
+                current = -1; // never progress bar or ding for single obstacle
+                break;
+        }
+        if (data.length > 0) {
+            if (skillID !== CONSTANTS.skill.Agility) {
+                data.forEach((x, i) => {
+                    if (
+                        skillID === CONSTANTS.skill.Woodcutting &&
+                        currentlyCutting === 2 &&
+                        currentTrees.includes(i)
+                    ) {
+                        return;
+                    }
+                    let initial = initialVariables(skillID, checkTaskComplete);
+                    if (initial.skillID === CONSTANTS.skill.Fishing) {
+                        initial.fishID = selectedFish[i];
+                        if (initial.fishID === null) {
+                            return;
+                        }
+                    }
+                    initial.currentAction = i;
+                    if (initial.skillID === CONSTANTS.skill.Agility) {
+                        initial.currentAction = x;
+                        initial.agilityObstacles = data;
+                    }
+                    asyncTimeRemaining(initial);
+                });
+            }
             if (skillID === CONSTANTS.skill.Woodcutting) {
                 if (currentlyCutting === 2) {
                     // init first tree
                     let initial = initialVariables(skillID, checkTaskComplete);
-                    initial.currentAction = currentTrees[0];
-                    // configure secondary tree
-                    initial.secondary = initialVariables(skillID, checkTaskComplete);
-                    initial.secondary.currentAction = currentTrees[1];
-                    initial.secondary = setupTimeRemaining(initial.secondary);
+                    initial.currentAction = currentTrees;
+                    initial.multiple = ETA.PARALLEL;
                     // run time remaining
                     asyncTimeRemaining(initial);
                 } else {
@@ -408,37 +491,52 @@
                     document.getElementById(`timeLeft${skillName[skillID]}-Secondary`).textContent = '';
                 }
             }
-        } else {
-            let initial = initialVariables(skillID, checkTaskComplete);
-            switch (initial.skillID) {
-                case CONSTANTS.skill.Smithing:
-                    initial.currentAction = selectedSmith;
-                    break;
-                case CONSTANTS.skill.Fletching:
-                    initial.currentAction = selectedFletch;
-                    break;
-                case CONSTANTS.skill.Runecrafting:
-                    initial.currentAction = selectedRunecraft;
-                    break;
-                case CONSTANTS.skill.Crafting:
-                    initial.currentAction = selectedCraft;
-                    break;
-                case CONSTANTS.skill.Herblore:
-                    initial.currentAction = selectedHerblore;
-                    break;
-                case CONSTANTS.skill.Cooking:
-                    initial.currentAction = selectedFood;
-                    break;
-                case CONSTANTS.skill.Firemaking:
-                    initial.currentAction = selectedLog;
-                    break;
-                case CONSTANTS.skill.Magic:
-                    initial.currentAction = selectedAltMagic;
-                    break;
+            if (skillID === CONSTANTS.skill.Agility) {
+                // init first tree
+                let initial = initialVariables(skillID, checkTaskComplete);
+                initial.currentAction = data;
+                initial.agilityObstacles = data;
+                initial.multiple = ETA.PARALLEL;
+                // run time remaining
+                asyncTimeRemaining(initial);
             }
-            asyncTimeRemaining(initial);
         }
-    };
+    }
+
+    function productionWrapper(skillID, checkTaskComplete) {
+        // production skills
+        let initial = initialVariables(skillID, checkTaskComplete);
+        switch (initial.skillID) {
+            case CONSTANTS.skill.Smithing:
+                initial.currentAction = selectedSmith;
+                break;
+            case CONSTANTS.skill.Fletching:
+                initial.currentAction = selectedFletch;
+                break;
+            case CONSTANTS.skill.Runecrafting:
+                initial.currentAction = selectedRunecraft;
+                break;
+            case CONSTANTS.skill.Crafting:
+                initial.currentAction = selectedCraft;
+                break;
+            case CONSTANTS.skill.Herblore:
+                initial.currentAction = selectedHerblore;
+                break;
+            case CONSTANTS.skill.Cooking:
+                initial.currentAction = selectedFood;
+                break;
+            case CONSTANTS.skill.Firemaking:
+                initial.currentAction = selectedLog;
+                break;
+            case CONSTANTS.skill.Magic:
+                initial.currentAction = selectedAltMagic;
+                break;
+        }
+        if (initial.currentAction === undefined || initial.currentAction === null) {
+            return;
+        }
+        asyncTimeRemaining(initial);
+    }
 
     function asyncTimeRemaining(initial) {
         setTimeout(function () {
@@ -452,6 +550,19 @@
     function script() {
         // Loading script
         ETA.log('loading...');
+
+        // constants
+        ETA.SINGLE = 0;
+        ETA.PARALLEL = 1;
+        ETA.SEQUENTIAL = 2;
+
+        // data
+        ETA.insigniaModifier = 1 - items[CONSTANTS.item.Clue_Chasers_Insignia].increasedItemChance / 100;
+        // (25 - 10) / 100 = 0.15
+        ETA.rhaelyxChargePreservation =
+            (items[CONSTANTS.item.Crown_of_Rhaelyx].chanceToPreserve -
+                items[CONSTANTS.item.Crown_of_Rhaelyx].baseChanceToPreserve) /
+            100;
 
         // lvlToXp cache
         ETA.lvlToXp = Array.from({ length: 200 }, (_, i) => exp.level_to_xp(i));
@@ -515,6 +626,7 @@
             ['Woodcutting', 'cutTree'],
             ['Fishing', 'startFishing'],
             ['Fishing', 'selectFish'],
+            ['Agility', 'startAgility'],
         ].forEach((skill) => {
             let skillName = skill[0];
             // wrap the start method
@@ -547,6 +659,8 @@
                 case 14:
                     skillName = 'Thieving';
                     break;
+                case 26:
+                    skillName = 'Agility';
             }
             if (skillName !== undefined) {
                 try {
@@ -564,6 +678,20 @@
         ETA.makeThievingDisplay();
         ETA.makeWoodcuttingDisplay();
         ETA.makeFishingDisplay();
+        ETA.makeAgilityDisplay();
+
+        // remake Agility display after loading the Agility Obstacles
+        ETA.loadAgilityRef = loadAgility;
+        loadAgility = (...args) => {
+            ETA.loadAgilityRef(...args);
+            ETA.log('Remaking Agility display');
+            ETA.makeAgilityDisplay();
+            try {
+                ETA.timeRemainingWrapper(CONSTANTS.skill.Agility, false);
+            } catch (e) {
+                console.error(e);
+            }
+        };
 
         // Mastery Pool progress
         for (let id in SKILLS) {
@@ -636,22 +764,15 @@
     //internal methods//
     ////////////////////
     // Function to get unformatted number for Qty
-    window.bankCache = {};
-
     function getQtyOfItem(itemID) {
-        const cache = window.bankCache[itemID];
-        if (cache !== undefined && bank[cache] !== undefined && bank[cache].id === itemID) {
-            return bank[cache].qty;
+        const bankID = getBankId(itemID);
+        if (bankID === -1) {
+            return 0;
         }
-        for (let i = 0; i < bank.length; i++) {
-            if (bank[i].id === itemID) {
-                window.bankCache[itemID] = i;
-                return bank[i].qty;
-            }
-        }
-        return 0;
+        return bank[bankID].qty;
     }
 
+    // help function for time display
     function appendName(t, name, isShortClock) {
         if (t === 0) {
             return '';
@@ -809,58 +930,125 @@
         }
     }
 
-    //Return the chanceToKeep for any mastery EXp
-    function masteryPreservation(initial, masteryEXp, chanceToRefTable) {
+    //Return the preservation for any mastery and pool
+    masteryPreservation = (initial, masteryXp, poolXp) => {
         if (!initial.hasMastery) {
             return 0;
         }
-        let chanceTo = chanceToRefTable;
-        if (masteryEXp >= initial.masteryLim[0]) {
-            for (let i = 0; i < initial.masteryLim.length; i++) {
-                if (initial.masteryLim[i] <= masteryEXp && masteryEXp < initial.masteryLim[i + 1]) {
-                    return chanceTo[i + 1];
+        const masteryLevel = convertXpToLvl(masteryXp);
+        const poolProgress = (100 * poolXp) / initial.maxPoolXp;
+
+        // modifiers and base rhaelyx
+        let preservationChance = initial.staticPreservation;
+        // skill specific bonuses
+        switch (initial.skillID) {
+            case CONSTANTS.skill.Cooking:
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 10;
                 }
-            }
-        } else {
-            return chanceTo[0];
+                break;
+            case CONSTANTS.skill.Smithing:
+                if (masteryLevel >= 99) {
+                    preservationChance += 30;
+                } else if (masteryLevel >= 80) {
+                    preservationChance += 20;
+                } else if (masteryLevel >= 60) {
+                    preservationChance += 15;
+                } else if (masteryLevel >= 40) {
+                    preservationChance += 10;
+                } else if (masteryLevel >= 20) {
+                    preservationChance += 5;
+                }
+                if (poolProgress >= masteryCheckpoints[1]) {
+                    preservationChance += 5;
+                }
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 5;
+                }
+                break;
+            case CONSTANTS.skill.Fletching:
+                preservationChance += 0.2 * masteryLevel - 0.2;
+                if (masteryLevel >= 99) {
+                    preservationChance += 5;
+                }
+                break;
+            case CONSTANTS.skill.Crafting:
+                preservationChance += 0.2 * masteryLevel - 0.2;
+                if (masteryLevel >= 99) {
+                    preservationChance += 5;
+                }
+                if (poolProgress >= masteryCheckpoints[1]) {
+                    preservationChance += 5;
+                }
+                break;
+            case CONSTANTS.skill.Runecrafting:
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 10;
+                }
+                break;
+            case CONSTANTS.skill.Herblore:
+                preservationChance += 0.2 * masteryLevel - 0.2;
+                if (masteryLevel >= 99) preservationChance += 5;
+                if (poolProgress >= masteryCheckpoints[2]) {
+                    preservationChance += 5;
+                }
+                break;
         }
-    }
+        // rhaelyx is handled outside of this function
+
+        // cap preservation to 80%
+        if (preservationChance > 80) {
+            preservationChance = 80;
+        }
+        return preservationChance;
+    };
 
     // Adjust interval based on unlocked bonuses
-    function intervalAdjustment(initial, poolXp, masteryXp) {
-        let adjustedInterval = initial.skillInterval;
+    function intervalAdjustment(initial, poolXp, masteryXp, skillInterval) {
+        let flatReduction = initial.flatIntervalReduction;
+        let percentReduction = initial.percentIntervalReduction;
+        let adjustedInterval = skillInterval;
+        // compute mastery or pool dependent modifiers
         switch (initial.skillID) {
+            case CONSTANTS.skill.Woodcutting:
+                if (convertXpToLvl(masteryXp) >= 99) {
+                    flatReduction += 200;
+                }
+                break;
             case CONSTANTS.skill.Firemaking:
                 if (poolXp >= initial.poolLim[1]) {
-                    adjustedInterval *= 0.9;
+                    percentReduction += 10;
                 }
-                adjustedInterval *= 1 - convertXpToLvl(masteryXp) * 0.001;
+                percentReduction += convertXpToLvl(masteryXp) * 0.1;
                 break;
-
-            case CONSTANTS.skill.Crafting:
             case CONSTANTS.skill.Mining:
-                // pool bonus speed
+                if (poolXp >= initial.poolLim[2]) {
+                    flatReduction += 200;
+                }
+                break;
+            case CONSTANTS.skill.Crafting:
                 if (poolXp >= initial.poolLim[2]) {
                     adjustedInterval -= 200;
                 }
                 break;
-
             case CONSTANTS.skill.Fletching:
                 if (poolXp >= initial.poolLim[3]) {
                     adjustedInterval -= 200;
                 }
                 break;
-
-            case CONSTANTS.skill.Woodcutting:
-                if (convertXpToLvl(masteryXp) >= 99) {
-                    adjustedInterval -= 200;
-                }
+            case CONSTANTS.skill.Agility:
+                percentReduction += 3 * Math.floor(convertXpToLvl(masteryXp) / 10);
+                break;
         }
-        return adjustedInterval;
+        // apply modifiers
+        adjustedInterval *= 1 - percentReduction / 100;
+        adjustedInterval -= flatReduction;
+        return Math.ceil(adjustedInterval);
     }
 
-    // Adjust interval based on unlocked bonuses
-    function intervalRespawnAdjustment(initial, currentInterval, poolXp, masteryXp) {
+    // Adjust interval based on down time
+    // This only applies to Mining, Thieving and Agility
+    function intervalRespawnAdjustment(initial, currentInterval, poolXp, masteryXp, agiLapTime) {
         let adjustedInterval = currentInterval;
         switch (initial.skillID) {
             case CONSTANTS.skill.Mining:
@@ -918,41 +1106,27 @@
                 // compute average time per action
                 adjustedInterval = adjustedInterval * successRate + stunTime * (1 - successRate);
                 break;
+
+            case CONSTANTS.skill.Agility:
+                adjustedInterval = agiLapTime;
         }
-        return adjustedInterval;
-    }
-
-    // Adjust preservation chance based on unlocked bonuses
-    function poolPreservation(initial, poolXp) {
-        let preservation = 0;
-        switch (initial.skillID) {
-            case CONSTANTS.skill.Smithing:
-                if (poolXp >= initial.poolLim[1]) preservation += 5;
-                if (poolXp >= initial.poolLim[2]) preservation += 5;
-                break;
-
-            case CONSTANTS.skill.Runecrafting:
-                if (poolXp >= initial.poolLim[2]) preservation += 10;
-                break;
-
-            case CONSTANTS.skill.Herblore:
-                if (poolXp >= initial.poolLim[2]) preservation += 5;
-                break;
-
-            case CONSTANTS.skill.Cooking:
-                if (poolXp >= initial.poolLim[2]) preservation += 10;
-                break;
-        }
-        return preservation / 100;
+        return Math.ceil(adjustedInterval);
     }
 
     // Adjust skill Xp based on unlocked bonuses
-    function skillXpAdjustment(initial, poolXp, masteryXp) {
-        let itemXp = initial.itemXp;
+    function skillXpAdjustment(initial, itemXp, itemID, poolXp, masteryXp) {
+        let staticXpBonus = initial.staticXpBonus;
+        switch (initial.skillID) {
+            case CONSTANTS.skill.Herblore:
+                if (poolXp >= initial.poolLim[1]) {
+                    staticXpBonus += 0.03;
+                }
+                break;
+        }
         let xpMultiplier = 1;
         switch (initial.skillID) {
             case CONSTANTS.skill.Runecrafting:
-                if (poolXp >= initial.poolLim[1] && items[initial.itemID].type === 'Rune') {
+                if (poolXp >= initial.poolLim[1] && items[itemID].type === 'Rune') {
                     xpMultiplier += 1.5;
                 }
                 break;
@@ -978,8 +1152,8 @@
 
             case CONSTANTS.skill.Smithing: {
                 if (
-                    glovesTracker[CONSTANTS.shop.gloves.Smithing].isActive &&
-                    glovesTracker[CONSTANTS.shop.gloves.Smithing].remainingActions > 0 && // TODO: handle charge use
+                    glovesTracker[CONSTANTS.shop.gloves.Smithing_Gloves].isActive &&
+                    glovesTracker[CONSTANTS.shop.gloves.Smithing_Gloves].remainingActions > 0 && // TODO: handle charge use
                     equippedItems[CONSTANTS.equipmentSlot.Gloves] === CONSTANTS.item.Smithing_Gloves
                 ) {
                     xpMultiplier += 0.5;
@@ -987,7 +1161,7 @@
                 break;
             }
         }
-        return itemXp * xpMultiplier;
+        return itemXp * staticXpBonus * xpMultiplier;
     }
 
     // Calculate total number of unlocked items for skill based on current skill level
@@ -1005,7 +1179,7 @@
     function actionsPerToken(skillID, skillXp, masteryXp) {
         let actions = 20000 / calcTotalUnlockedItems(skillID, skillXp);
         if (equippedItems.includes(CONSTANTS.item.Clue_Chasers_Insignia)) {
-            actions *= 0.9;
+            actions *= ETA.insigniaModifier;
         }
         if (skillID === CONSTANTS.skill.Cooking) {
             actions /= 1 - calcBurnChance(masteryXp);
@@ -1013,24 +1187,29 @@
         return actions;
     }
 
+    function isGathering(skillID) {
+        return [
+            CONSTANTS.skill.Woodcutting,
+            CONSTANTS.skill.Fishing,
+            CONSTANTS.skill.Mining,
+            CONSTANTS.skill.Thieving,
+            CONSTANTS.skill.Agility,
+        ].includes(skillID);
+    }
+
     function initialVariables(skillID, checkTaskComplete) {
         let initial = {
             skillID: skillID,
             checkTaskComplete: checkTaskComplete,
-            itemID: undefined,
-            itemXp: 0,
-            skillInterval: 0,
-            masteryID: 0,
+            staticXpBonus: 1,
+            flatIntervalReduction: 0,
+            percentIntervalReduction: 0,
             skillReq: [], // Needed items for craft and their quantities
             recordCraft: Infinity, // Amount of craftable items for limiting resource
             hasMastery: skillID !== CONSTANTS.skill.Magic, // magic has no mastery, so we often check this
-            isMainAction: true,
+            multiple: ETA.SINGLE,
             // gathering skills are treated differently, so we often check this
-            isGathering:
-                skillID === CONSTANTS.skill.Woodcutting ||
-                skillID === CONSTANTS.skill.Fishing ||
-                skillID === CONSTANTS.skill.Mining ||
-                skillID === CONSTANTS.skill.Thieving,
+            isGathering: isGathering(skillID),
             // Generate default values for script
             // skill
             skillXp: skillXP[skillID],
@@ -1038,9 +1217,6 @@
             skillLim: [], // Xp needed to reach next level
             skillLimLevel: [],
             // mastery
-            masteryXp: 0,
-            targetMastery: 0,
-            targetMasteryXp: 0,
             masteryLim: [], // Xp needed to reach next level
             masteryLimLevel: [0],
             totalMasteryLevel: 0,
@@ -1049,10 +1225,18 @@
             targetPool: 0,
             targetPoolXp: 0,
             poolLim: [], // Xp need to reach next pool checkpoint
-            chanceToKeep: [],
+            staticPreservation: 0,
             maxPoolXp: 0,
             tokens: 0,
             poolLimCheckpoints: [10, 25, 50, 95, 100, Infinity], //Breakpoints for mastery pool bonuses followed by Infinity
+            //////////////
+            //DEPRECATED//
+            //////////////
+            masteryID: 0,
+            masteryXp: 0,
+            skillInterval: 0,
+            itemID: undefined,
+            itemXp: 0,
         };
         // skill
         initial.targetXp = convertLvlToXp(initial.targetLevel);
@@ -1065,10 +1249,13 @@
             initial.masteryLimLevel = Array.from({ length: 98 }, (_, i) => i + 2);
         }
         initial.masteryLimLevel.push(Infinity);
-        // Chance to keep at breakpoints - default 0.2% per level
-        if (initial.hasMastery) {
-            initial.chanceToKeep = Array.from({ length: 99 }, (_, i) => i * 0.002);
-            initial.chanceToKeep[98] += 0.05; // Level 99 Bonus
+        // static preservation
+        initial.staticPreservation = playerModifiers.increasedGlobalPreservationChance;
+        initial.staticPreservation -= playerModifiers.decreasedGlobalPreservationChance;
+        initial.staticPreservation += getTotalFromModifierArray('increasedSkillPreservationChance', skillID);
+        initial.staticPreservation -= getTotalFromModifierArray('decreasedSkillPreservationChance', skillID);
+        if (equippedItems.includes(CONSTANTS.item.Crown_of_Rhaelyx) && initial.hasMastery && !initial.isGathering) {
+            initial.staticPreservation += items[CONSTANTS.item.Crown_of_Rhaelyx].baseChanceToPreserve; // Add base 10% chance
         }
         return initial;
     }
@@ -1085,7 +1272,6 @@
         initial.itemID = smithingItems[initial.currentAction].itemID;
         initial.itemXp = items[initial.itemID].smithingXP;
         initial.skillInterval = 2000;
-        if (godUpgrade[3]) initial.skillInterval *= 0.8;
         for (let i of items[initial.itemID].smithReq) {
             const req = { ...i };
             if (req.id === CONSTANTS.item.Coal_Ore && skillCapeEquipped(CONSTANTS.item.Smithing_Skillcape)) {
@@ -1094,8 +1280,6 @@
             initial.skillReq.push(req);
         }
         initial.masteryLimLevel = [20, 40, 60, 80, 99, Infinity]; // Smithing Mastery Limits
-        initial.chanceToKeep = [0, 0.05, 0.1, 0.15, 0.2, 0.3]; //Smithing Mastery bonus percentages
-        if (petUnlocked[5]) initial.chanceToKeep = initial.chanceToKeep.map((n) => n + PETS[5].chance / 100); // Add Pet Bonus
         return initial;
     }
 
@@ -1103,8 +1287,6 @@
         initial.itemID = fletchingItems[initial.currentAction].itemID;
         initial.itemXp = items[initial.itemID].fletchingXP;
         initial.skillInterval = 2000;
-        if (godUpgrade[0]) initial.skillInterval *= 0.8;
-        if (petUnlocked[8]) initial.skillInterval -= 200;
         for (let i of items[initial.itemID].fletchReq) {
             initial.skillReq.push(i);
         }
@@ -1122,17 +1304,10 @@
         initial.itemID = runecraftingItems[initial.currentAction].itemID;
         initial.itemXp = items[initial.itemID].runecraftingXP;
         initial.skillInterval = 2000;
-        if (godUpgrade[1]) initial.skillInterval *= 0.8;
         for (let i of items[initial.itemID].runecraftReq) {
             initial.skillReq.push(i);
         }
         initial.masteryLimLevel = [99, Infinity]; // Runecrafting has no Mastery bonus
-        initial.chanceToKeep = [0, 0]; //Thus no chance to keep
-        if (skillCapeEquipped(CONSTANTS.item.Runecrafting_Skillcape)) {
-            initial.chanceToKeep[0] += 0.35;
-        }
-        if (petUnlocked[10]) initial.chanceToKeep[0] += PETS[10].chance / 100;
-        initial.chanceToKeep[1] = initial.chanceToKeep[0];
         return initial;
     }
 
@@ -1140,11 +1315,6 @@
         initial.itemID = craftingItems[initial.currentAction].itemID;
         initial.itemXp = items[initial.itemID].craftingXP;
         initial.skillInterval = 3000;
-        if (godUpgrade[0]) initial.skillInterval *= 0.8;
-        if (skillCapeEquipped(CONSTANTS.item.Crafting_Skillcape)) {
-            initial.skillInterval -= 500;
-        }
-        if (petUnlocked[9]) initial.skillInterval -= 200;
         items[initial.itemID].craftReq.forEach((i) => initial.skillReq.push(i));
         return initial;
     }
@@ -1153,7 +1323,6 @@
         initial.itemID = herbloreItemData[initial.currentAction].itemID[getHerbloreTier(initial.currentAction)];
         initial.itemXp = herbloreItemData[initial.currentAction].herbloreXP;
         initial.skillInterval = 2000;
-        if (godUpgrade[1]) initial.skillInterval *= 0.8;
         for (let i of items[initial.itemID].herbloreReq) {
             initial.skillReq.push(i);
         }
@@ -1163,14 +1332,9 @@
     function configureCooking(initial) {
         initial.itemID = initial.currentAction;
         initial.itemXp = items[initial.itemID].cookingXP;
-        if (currentCookingFire > 0) {
-            initial.itemXp *= 1 + cookingFireData[currentCookingFire - 1].bonusXP / 100;
-        }
         initial.skillInterval = 3000;
-        if (godUpgrade[3]) initial.skillInterval *= 0.8;
         initial.skillReq = [{ id: initial.itemID, qty: 1 }];
         initial.masteryLimLevel = [99, Infinity]; //Cooking has no Mastery bonus
-        initial.chanceToKeep = [0, 0]; //Thus no chance to keep
         initial.itemID = items[initial.itemID].cookedItemID;
         return initial;
     }
@@ -1179,9 +1343,7 @@
         initial.itemID = initial.currentAction;
         initial.itemXp = logsData[initial.currentAction].xp * (1 + bonfireBonus / 100);
         initial.skillInterval = logsData[initial.currentAction].interval;
-        if (godUpgrade[3]) initial.skillInterval *= 0.8;
         initial.skillReq = [{ id: initial.itemID, qty: 1 }];
-        initial.chanceToKeep.fill(0); // Firemaking Mastery does not provide preservation chance
         return initial;
     }
 
@@ -1243,14 +1405,12 @@
             }
         }
         initial.masteryLimLevel = [Infinity]; //AltMagic has no Mastery bonus
-        initial.chanceToKeep = [0]; //Thus no chance to keep
         initial.itemXp = ALTMAGIC[initial.currentAction].magicXP;
         return initial;
     }
 
     function configureGathering(initial) {
         initial.skillReq = [];
-        initial.chanceToKeep = initial.chanceToKeep.map((_) => 0); // No chance to keep for gathering
         initial.recordCraft = 0;
         initial.masteryID = initial.currentAction;
         return initial;
@@ -1260,8 +1420,6 @@
         initial.itemID = miningData[initial.currentAction].ore;
         initial.itemXp = items[initial.itemID].miningXP;
         initial.skillInterval = 3000;
-        if (godUpgrade[2]) initial.skillInterval *= 0.8;
-        initial.skillInterval *= 1 - pickaxeBonusSpeed[currentPickaxe] / 100;
         return configureGathering(initial);
     }
 
@@ -1269,22 +1427,22 @@
         initial.itemID = undefined;
         initial.itemXp = thievingNPC[initial.currentAction].xp;
         initial.skillInterval = 3000;
-        if (skillCapeEquipped(CONSTANTS.item.Thieving_Skillcape)) {
-            initial.skillInterval -= 500;
-        }
         return configureGathering(initial);
     }
 
     function configureWoodcutting(initial) {
-        initial.itemID = initial.currentAction;
-        initial.itemXp = trees[initial.itemID].xp;
-        initial.skillInterval = trees[initial.itemID].interval;
-        if (godUpgrade[2]) {
-            initial.skillInterval *= 0.8;
-        }
-        initial.skillInterval *= 1 - axeBonusSpeed[currentAxe] / 100;
-        if (skillCapeEquipped(CONSTANTS.item.Woodcutting_Skillcape)) {
-            initial.skillInterval /= 2;
+        const wcAction = (x) => {
+            return {
+                itemID: x,
+                itemXp: trees[x].xp,
+                skillInterval: trees[x].interval,
+                masteryID: x,
+            };
+        };
+        if (!isNaN(initial.currentAction)) {
+            initial.actions = [wcAction(initial.currentAction)];
+        } else {
+            initial.actions = initial.currentAction.map((x) => wcAction(x));
         }
         return configureGathering(initial);
     }
@@ -1302,68 +1460,59 @@
         if (equippedItems.includes(CONSTANTS.item.Amulet_of_Fishing)) {
             fishingAmuletBonus = 1 - items[CONSTANTS.item.Amulet_of_Fishing].fishingSpeedBonus / 100;
         }
-        initial.skillInterval = Math.floor(
-            initial.skillInterval * fishingAmuletBonus * (1 - rodBonusSpeed[currentRod] / 100)
-        );
         initial = configureGathering(initial);
         // correctly set masteryID
         initial.masteryID = fishingAreas[initial.currentAction].fish[initial.fishID];
         return initial;
     }
 
-    // Calculate mastery xp based on unlocked bonuses
-    function calcMasteryXpToAdd(initial, current, timePerAction) {
-        switch (initial.skillID) {
-            case CONSTANTS.skill.Firemaking:
-                timePerAction = logsData[initial.itemID].interval * 0.6;
-                break;
-            case CONSTANTS.skill.Cooking:
-                timePerAction = 2400;
-                break;
-            case CONSTANTS.skill.Smithing:
-                timePerAction = 1600;
-                break;
-            case CONSTANTS.skill.Fletching:
-                timePerAction = 1200;
-                break;
-            case CONSTANTS.skill.Crafting:
-                timePerAction = 1500;
-                break;
-            case CONSTANTS.skill.Runecrafting:
-                timePerAction = 1600;
-                break;
-            case CONSTANTS.skill.Herblore:
-                timePerAction = 1600;
-                break;
+    function configureAgility(initial) {
+        const agiAction = (x) => {
+            return {
+                itemXp: agilityObstacles[x].completionBonuses.xp,
+                skillInterval: agilityObstacles[x].interval,
+                masteryID: x,
+            };
+        };
+        if (!isNaN(initial.currentAction)) {
+            initial.actions = [agiAction(initial.currentAction)];
+        } else {
+            initial.actions = initial.currentAction.map((x) => agiAction(x));
         }
-        let xpModifier = 1;
+        return configureGathering(initial);
+    }
+
+    // Calculate mastery xp based on unlocked bonuses
+    function calcMasteryXpToAdd(initial, totalMasteryLevel, skillXp, masteryXp, poolXp, timePerAction, itemID) {
+        const modifiedTimePerAction = getTimePerActionModifierMastery(initial.skillID, timePerAction, itemID);
+        let xpModifier = initial.staticMXpBonus;
         // General Mastery Xp formula
         let xpToAdd =
-            (((calcTotalUnlockedItems(initial.skillID, current.skillXp) * current.totalMasteryLevel) /
+            (((calcTotalUnlockedItems(initial.skillID, skillXp) * totalMasteryLevel) /
                 getTotalMasteryLevelForSkill(initial.skillID) +
-                convertXpToLvl(current.masteryXp) * (getTotalItemsInSkill(initial.skillID) / 10)) *
-                (timePerAction / 1000)) /
+                convertXpToLvl(masteryXp) * (getTotalItemsInSkill(initial.skillID) / 10)) *
+                (modifiedTimePerAction / 1000)) /
             2;
         // Skill specific mastery pool modifier
-        if (current.poolXp >= initial.poolLim[0]) {
+        if (poolXp >= initial.poolLim[0]) {
             xpModifier += 0.05;
         }
         // Firemaking pool and log modifiers
         if (initial.skillID === CONSTANTS.skill.Firemaking) {
             // If current skill is Firemaking, we need to apply mastery progression from actions and use updated poolXp values
-            if (current.poolXp >= initial.poolLim[3]) {
+            if (poolXp >= initial.poolLim[3]) {
                 xpModifier += 0.05;
             }
             for (let i = 0; i < MASTERY[CONSTANTS.skill.Firemaking].xp.length; i++) {
                 // The logs you are not burning
-                if (initial.masteryID !== i) {
+                if (initial.actions[0].masteryID !== i) {
                     if (getMasteryLevel(CONSTANTS.skill.Firemaking, i) >= 99) {
                         xpModifier += 0.0025;
                     }
                 }
             }
             // The log you are burning
-            if (convertXpToLvl(current.masteryXp) >= 99) {
+            if (convertXpToLvl(masteryXp) >= 99) {
                 xpModifier += 0.0025;
             }
         } else {
@@ -1377,14 +1526,6 @@
                 }
             }
         }
-        // Ty modifier
-        if (petUnlocked[21]) {
-            xpModifier += 0.03;
-        }
-        // AROM modifier
-        if (equippedItems.includes(CONSTANTS.item.Ancient_Ring_Of_Mastery)) {
-            xpModifier += items[CONSTANTS.item.Ancient_Ring_Of_Mastery].bonusMasteryXP;
-        }
         // Combine base and modifiers
         xpToAdd *= xpModifier;
         // minimum 1 mastery xp per action
@@ -1393,12 +1534,12 @@
         }
         // BurnChance affects average mastery Xp
         if (initial.skillID === CONSTANTS.skill.Cooking) {
-            let burnChance = calcBurnChance(current.masteryXp);
+            let burnChance = calcBurnChance(masteryXp);
             xpToAdd *= 1 - burnChance;
         }
         // Fishing junk gives no mastery xp
         if (initial.skillID === CONSTANTS.skill.Fishing) {
-            let junkChance = calcJunkChance(initial, current.masteryXp, current.poolXp);
+            let junkChance = calcJunkChance(initial, masteryXp, poolXp);
             xpToAdd *= 1 - junkChance;
         }
         // return average mastery xp per action
@@ -1452,19 +1593,28 @@
         return junkChance / 100;
     }
 
+    function perAction(masteryXp, targetMasteryXp) {
+        return {
+            // mastery
+            masteryXp: masteryXp,
+            targetMasteryReached: masteryXp >= targetMasteryXp,
+            targetMasteryTime: 0,
+            targetMasteryResources: 0,
+            // estimated number of actions taken so far
+            actions: 0,
+        };
+    }
+
     function currentVariables(initial, resources) {
         let current = {
+            actionCount: 0,
+            activeTotalTime: 0,
             sumTotalTime: 0,
             // skill
             skillXp: initial.skillXp,
             targetSkillReached: initial.skillXp >= initial.targetXp,
             targetSkillTime: 0,
             targetSkillResources: 0,
-            // mastery
-            masteryXp: initial.masteryXp,
-            targetMasteryReached: initial.masteryXp >= initial.targetMasteryXp,
-            targetMasteryTime: 0,
-            targetMasteryResources: 0,
             // pool
             poolXp: initial.poolXp,
             targetPoolReached: initial.poolXp >= initial.targetPoolXp,
@@ -1472,272 +1622,345 @@
             targetPoolResources: 0,
             totalMasteryLevel: initial.totalMasteryLevel,
             // items
-            resources: resources,
             chargeUses: 0, // estimated remaining charge uses
             tokens: initial.tokens,
-            // estimated number of actions taken so far
-            actions: 0,
+            // stats per action
+            actions: initial.actions.map((x) => perAction(x.masteryXp, x.targetMasteryXp)),
+            // available resources
+            resources: resources,
         };
-        // set secondary if it exists
-        if (initial.secondary !== undefined) {
-            current.secondary = currentVariables(initial.secondary, initial.secondary.recordCraft);
-        }
         // Check for Crown of Rhaelyx
         if (equippedItems.includes(CONSTANTS.item.Crown_of_Rhaelyx) && initial.hasMastery && !initial.isGathering) {
-            for (let i = 0; i < initial.masteryLimLevel.length; i++) {
-                initial.chanceToKeep[i] += 0.1; // Add base 10% chance
-            }
             let rhaelyxCharge = getQtyOfItem(CONSTANTS.item.Charge_Stone_of_Rhaelyx);
             current.chargeUses = rhaelyxCharge * 1000; // average crafts per Rhaelyx Charge Stone
         }
         return current;
     }
 
-    function gainPerAction(initial, current, currentInterval) {
-        const gains = {
-            xpPerAction: skillXpAdjustment(initial, current.poolXp, current.masteryXp),
-            masteryXpPerAction: 0,
-            poolXpPerAction: 0,
-            tokensPerAction: 0,
-            tokenXpPerAction: 0,
-        };
-        if (initial.hasMastery) {
-            gains.masteryXpPerAction = calcMasteryXpToAdd(initial, current, currentInterval);
-            gains.poolXpPerAction = calcPoolXpToAdd(current.skillXp, gains.masteryXpPerAction);
-            gains.tokensPerAction = 1 / actionsPerToken(initial.skillID, current.skillXp, current.masteryXp);
-            gains.tokenXpPerAction = (initial.maxPoolXp / 1000) * gains.tokensPerAction;
-        }
-        return gains;
+    function gainPerAction(initial, current, averageActionTime) {
+        return current.actions.map((x, i) => {
+            const gain = {
+                xpPerAction: skillXpAdjustment(
+                    initial,
+                    initial.actions[i].itemXp,
+                    initial.actions[i].itemID,
+                    current.poolXp,
+                    x.masteryXp
+                ),
+                masteryXpPerAction: 0,
+                poolXpPerAction: 0,
+                tokensPerAction: 0,
+                tokenXpPerAction: 0,
+            };
+
+            if (initial.hasMastery) {
+                gain.masteryXpPerAction = calcMasteryXpToAdd(
+                    initial,
+                    current.totalMasteryLevel,
+                    current.skillXp,
+                    x.masteryXp,
+                    current.poolXp,
+                    averageActionTime[i],
+                    initial.actions[i].itemID
+                );
+                gain.poolXpPerAction = calcPoolXpToAdd(current.skillXp, gain.masteryXpPerAction);
+                gain.tokensPerAction = 1 / actionsPerToken(initial.skillID, current.skillXp, x.masteryXp);
+                gain.tokenXpPerAction = (initial.maxPoolXp / 1000) * gain.tokensPerAction;
+            }
+            return gain;
+        });
     }
 
-    function syncSecondary(current) {
-        current.secondary.skillXp = current.skillXp;
-        current.secondary.poolXp = current.poolXp;
-        current.secondary.totalMasteryLevel = current.totalMasteryLevel;
-        return current;
+    // Actions until limit
+    function getLim(lims, xp, max) {
+        const lim = lims.find((element) => element > xp);
+        if (xp < max && max < lim) {
+            return Math.ceil(max);
+        }
+        return Math.ceil(lim);
     }
 
     function actionsToBreakpoint(initial, current, noResources = false) {
-        const rhaelyxChargePreservation = 0.15;
-
         // Adjustments
-        const totalChanceToUse =
-            1 -
-            masteryPreservation(initial, current.masteryXp, initial.chanceToKeep) -
-            poolPreservation(initial, current.poolXp);
-        const currentInterval = intervalAdjustment(initial, current.poolXp, current.masteryXp);
-        const averageActionTime = intervalRespawnAdjustment(
-            initial,
-            currentInterval,
-            current.poolXp,
-            current.masteryXp
+        const currentIntervals = current.actions.map((x, i) =>
+            intervalAdjustment(initial, current.poolXp, x.masteryXp, initial.actions[i].skillInterval)
         );
-
+        if (initial.skillID === CONSTANTS.skill.Agility) {
+            current.agiLapTime = currentIntervals.reduce((a, b) => a + b, 0);
+        }
+        const averageActionTimes = current.actions.map((x, i) =>
+            intervalRespawnAdjustment(initial, currentIntervals[i], current.poolXp, x.masteryXp, current.agiLapTime)
+        );
         // Current Xp
-        let gains = gainPerAction(initial, current, currentInterval);
-        if (initial.secondary !== undefined) {
-            // sync xp, pool and total mastery
-            current = syncSecondary(current);
-            // compute gains per secondary action
-            const secondaryInterval = intervalAdjustment(initial.secondary, current.poolXp, current.masteryXp);
-            const secondaryGains = gainPerAction(initial.secondary, current.secondary, secondaryInterval);
-            // add average secondary gains to primary gains
-            ['xpPerAction', 'poolXpPerAction', 'tokensPerAction', 'tokenXpPerAction'].forEach((x) => {
-                gains[x] += (secondaryGains[x] / secondaryInterval) * currentInterval;
-            });
-            gains.secondaryMasteryXpPerPrimaryAction =
-                (secondaryGains.masteryXpPerAction / secondaryInterval) * currentInterval;
-        }
-        if (ETASettings.USE_TOKENS) {
-            gains.poolXpPerAction += gains.tokenXpPerAction;
-        }
+        let gains = gainPerAction(initial, current, currentIntervals);
 
-        // Actions until limit
-        getLim = (lims, xp, max) => {
-            const lim = lims.find((element) => element > xp);
-            if (xp < max && max < lim) {
-                return Math.ceil(max);
-            }
-            return Math.ceil(lim);
-        };
+        // average gains
+        const avgXpPerS = gains
+            .map((x, i) => (x.xpPerAction / averageActionTimes[i]) * 1000)
+            .reduce((a, b) => a + b, 0);
+        let avgPoolPerS = gains
+            .map((x, i) => (x.poolXpPerAction / averageActionTimes[i]) * 1000)
+            .reduce((a, b) => a + b, 0);
+        const masteryPerS = gains.map((x, i) => (x.masteryXpPerAction / averageActionTimes[i]) * 1000);
+        const avgTokenXpPerS = gains
+            .map((x, i) => (x.tokenXpPerAction / averageActionTimes[i]) * 1000)
+            .reduce((a, b) => a + b, 0);
+        const avgTokensPerS = gains
+            .map((x, i) => (x.tokensPerAction / averageActionTimes[i]) * 1000)
+            .reduce((a, b) => a + b, 0);
+        // TODO rescale sequential gains ?
+
+        // get time to next breakpoint
         // skill
         const skillXpToLimit = getLim(initial.skillLim, current.skillXp, initial.targetXp) - current.skillXp;
-        const skillXpActions = skillXpToLimit / gains.xpPerAction;
-        // mastery variables
-        let masteryXpActions = Infinity;
-        let secondaryMasteryXpPrimaryActions = Infinity;
-        let poolXpActions = Infinity;
+        const skillXpSeconds = skillXpToLimit / avgXpPerS;
+        // mastery
+        let masteryXpSeconds = Infinity;
+        const allMasteryXpSeconds = [];
         if (initial.hasMastery) {
-            // mastery
-            const masteryXpToLimit =
-                getLim(initial.skillLim, current.masteryXp, initial.targetMasteryXp) - current.masteryXp;
-            masteryXpActions = masteryXpToLimit / gains.masteryXpPerAction;
-            if (initial.secondary !== undefined) {
-                const secondaryMasteryXpToLimit =
-                    getLim(
-                        initial.secondary.skillLim,
-                        current.secondary.masteryXp,
-                        initial.secondary.targetMasteryXp
-                    ) - current.secondary.masteryXp;
-                secondaryMasteryXpPrimaryActions =
-                    secondaryMasteryXpToLimit / gains.secondaryMasteryXpPerPrimaryAction;
-            }
-            // pool
-            const poolXpToLimit = getLim(initial.poolLim, current.poolXp, initial.targetPoolXp) - current.poolXp;
-            poolXpActions = poolXpToLimit / gains.poolXpPerAction;
+            initial.actions.forEach((x, i) => {
+                const masteryXpToLimit =
+                    getLim(initial.skillLim, current.actions[i].masteryXp, x.targetMasteryXp) -
+                    current.actions[i].masteryXp;
+                allMasteryXpSeconds.push(masteryXpToLimit / masteryPerS[i]);
+            });
+            masteryXpSeconds = Math.min(...allMasteryXpSeconds);
         }
-
-        // Minimum actions based on limits
-        let expectedActions = Math.ceil(
-            Math.min(skillXpActions, masteryXpActions, secondaryMasteryXpPrimaryActions, poolXpActions)
-        );
-
+        // pool
+        let poolXpSeconds = Infinity;
+        if (initial.hasMastery) {
+            const poolXpToLimit = getLim(initial.poolLim, current.poolXp, initial.targetPoolXp) - current.poolXp;
+            poolXpSeconds = poolXpToLimit / avgPoolPerS;
+        }
+        // resources
+        let resourceSeconds = Infinity;
+        const totalChanceToUse = 1 - masteryPreservation(initial, current.actions[0].masteryXp, current.poolXp) / 100;
+        const totalChanceToUseWithCharges = Math.max(0.2, totalChanceToUse - ETA.rhaelyxChargePreservation);
         // estimate actions remaining with current resources
-        let resourceActions = 0;
         if (!noResources) {
+            if (initial.actions.length > 1) {
+                ETA.log(
+                    'Attempting to simulate multiple different production actions at once, this is not implemented!'
+                );
+            }
             // estimate amount of actions possible with remaining resources
             // number of actions with rhaelyx charges
-            resourceActions = Math.min(
-                current.chargeUses,
-                current.resources / (totalChanceToUse - rhaelyxChargePreservation)
-            );
+            let resourceActions = Math.min(current.chargeUses, current.resources / totalChanceToUseWithCharges);
             // remaining resources
             const resWithoutCharge = Math.max(
                 0,
-                current.resources - current.chargeUses * (totalChanceToUse - rhaelyxChargePreservation)
+                current.resources - current.chargeUses * totalChanceToUseWithCharges
             );
             // add number of actions without rhaelyx charges
             resourceActions = Math.ceil(resourceActions + resWithoutCharge / totalChanceToUse);
-            expectedActions = Math.min(expectedActions, resourceActions);
-            // estimate total remaining actions
-            current.actions += expectedActions;
+            resourceSeconds = (resourceActions * averageActionTimes[0]) / 1000;
         }
+
+        // Minimum actions based on limits
+        const rawExpectedS = Math.min(skillXpSeconds, masteryXpSeconds, poolXpSeconds, resourceSeconds);
+        const expectedMS = Math.ceil(1000 * rawExpectedS);
+        const expectedS = expectedMS / 1000;
+        const expectedActions = averageActionTimes.map((x) => expectedMS / x);
+        // estimate total remaining actions
+        if (!noResources) {
+            current.actionCount += expectedActions[0];
+        }
+
+        // add token xp to pool xp if desired
+        if (ETASettings.USE_TOKENS) {
+            avgPoolPerS += avgTokenXpPerS;
+        }
+
         // Take away resources based on expectedActions
         if (!initial.isGathering) {
             // Update remaining Rhaelyx Charge uses
-            current.chargeUses -= expectedActions;
+            current.chargeUses -= expectedActions[0];
             if (current.chargeUses < 0) {
                 current.chargeUses = 0;
             }
             // Update remaining resources
-            if (expectedActions === resourceActions) {
+            if (rawExpectedS === resourceSeconds) {
                 current.resources = 0; // No more limits
             } else {
                 let resUsed = 0;
-                if (expectedActions < current.chargeUses) {
+                if (expectedActions[0] < current.chargeUses) {
                     // won't run out of charges yet
-                    resUsed = expectedActions * (totalChanceToUse - rhaelyxChargePreservation);
+                    resUsed = expectedActions[0] * totalChanceToUseWithCharges;
                 } else {
                     // first use charges
-                    resUsed = current.chargeUses * (totalChanceToUse - rhaelyxChargePreservation);
+                    resUsed = current.chargeUses * totalChanceToUseWithCharges;
                     // remaining actions are without charges
-                    resUsed += (expectedActions - current.chargeUses) * totalChanceToUse;
+                    resUsed += (expectedActions[0] - current.chargeUses) * totalChanceToUse;
                 }
                 current.resources = Math.round(current.resources - resUsed);
             }
         }
 
         // time for current loop
-        const timeToAdd = expectedActions * averageActionTime;
         // gain tokens, unless we're using them
         if (!ETASettings.USE_TOKENS) {
-            current.tokens += expectedActions * gains.tokensPerAction;
+            current.tokens += avgTokensPerS * expectedS;
         }
         // Update time and Xp
-        current.sumTotalTime += timeToAdd;
-        current.skillXp += gains.xpPerAction * expectedActions;
-        current.masteryXp += gains.masteryXpPerAction * expectedActions;
-        if (initial.secondary !== undefined) {
-            current.secondary.masteryXp += gains.secondaryMasteryXpPerPrimaryAction * expectedActions;
+        switch (initial.multiple) {
+            case ETA.SINGLE:
+                current.activeTotalTime += (expectedMS / averageActionTimes[0]) * currentIntervals[0];
+                break;
+
+            case ETA.PARALLEL:
+                current.activeTotalTime +=
+                    (expectedMS / averageActionTimes.reduce((a, b) => a + b, 0)) *
+                    currentIntervals.reduce((a, b) => a + b, 0);
+                break;
+
+            case ETA.SEQUENTIAL:
+                const loopTime = averageActionTimes.reduce((a, b) => a + b, 0) / currentIntervals.length;
+                const activeTime = currentIntervals.reduce((a, b) => a + b, 0);
+                current.activeTotalTime += (expectedMS / loopTime) * activeTime;
+                break;
         }
-        current.poolXp += gains.poolXpPerAction * expectedActions;
+        current.sumTotalTime += expectedMS;
+        current.skillXp += avgXpPerS * expectedS;
+        current.actions.forEach(
+            (x, i) => (current.actions[i].masteryXp += gains[i].masteryXpPerAction * expectedActions[i])
+        );
+        current.poolXp += avgPoolPerS * expectedS;
         // Time for target skill level, 99 mastery, and 100% pool
         if (!current.targetSkillReached && initial.targetXp <= current.skillXp) {
             current.targetSkillTime = current.sumTotalTime;
             current.targetSkillReached = true;
             current.targetSkillResources = initial.recordCraft - current.resources;
         }
-        if (!current.targetMasteryReached && initial.targetMasteryXp <= current.masteryXp) {
-            current.targetMasteryTime = current.sumTotalTime;
-            current.targetMasteryReached = true;
-            current.targetMasteryResources = initial.recordCraft - current.resources;
-        }
-        if (initial.secondary !== undefined) {
-            if (!current.secondary.targetMasteryReached && initial.targetMasteryXp <= current.secondary.masteryXp) {
-                current.secondary.targetMasteryTime = current.secondary.sumTotalTime;
-                current.secondary.targetMasteryReached = true;
-                current.secondary.targetMasteryResources = initial.recordCraft - current.secondary.resources;
+        current.actions.forEach((x, i) => {
+            if (!x.targetMasteryReached && initial.actions[i].targetMasteryXp <= x.masteryXp) {
+                x.targetMasteryTime = current.sumTotalTime;
+                x.targetMasteryReached = true;
+                x.targetMasteryResources = initial.recordCraft - current.resources;
             }
-        }
+        });
         if (!current.targetPoolReached && initial.targetPoolXp <= current.poolXp) {
             current.targetPoolTime = current.sumTotalTime;
             current.targetPoolReached = true;
             current.targetPoolResources = initial.recordCraft - current.resources;
         }
-        // Level up mastery if hitting Mastery limit
-        if (expectedActions === masteryXpActions) {
-            current.totalMasteryLevel++;
-        }
-        if (expectedActions === secondaryMasteryXpPrimaryActions) {
-            current.totalMasteryLevel++;
-        }
+        // Update total mastery level
+        current.totalMasteryLevel = initial.totalMasteryLevel;
+        initial.actions.forEach((x, i) => {
+            const y = current.actions[i];
+            const masteryLevel = convertXpToLvl(y.masteryXp);
+            if (x.masteryLevel !== masteryLevel) {
+                // increase total mastery
+                current.totalMasteryLevel += masteryLevel - x.masteryLevel;
+                if (masteryLevel === 99 && x.lastMasteryLevel !== 99) {
+                    halveAgilityMasteryDebuffs(initial, initial.actions[i].masteryID);
+                }
+                x.lastMasteryLevel = masteryLevel;
+            }
+        });
         // return updated values
         return current;
     }
 
-    function currentXpRates(initial) {
-        let rates = {};
-        const initialInterval = intervalAdjustment(initial, initial.poolXp, initial.masteryXp);
-        const initialAverageActionTime = intervalRespawnAdjustment(
-            initial,
-            initialInterval,
-            initial.poolXp,
-            initial.masteryXp
-        );
-        rates.xpH =
-            (skillXpAdjustment(initial, initial.poolXp, initial.masteryXp) / initialAverageActionTime) * 1000 * 3600;
-        if (initial.hasMastery) {
-            // compute current mastery xp / h using the getMasteryXpToAdd from the game or the method from this script
-            // const masteryXpPerAction = getMasteryXpToAdd(initial.skillID, initial.masteryID, initialInterval);
-            const masteryXpPerAction = calcMasteryXpToAdd(initial, initial, initialInterval);
-            rates.masteryXpH = (masteryXpPerAction / initialAverageActionTime) * 1000 * 3600;
-            // pool percentage per hour
-            rates.poolH =
-                ((calcPoolXpToAdd(initial.skillXp, masteryXpPerAction) / initialAverageActionTime) * 1000 * 3600) /
-                initial.maxPoolXp;
-            rates.tokensH =
-                (3600 * 1000) /
-                initialAverageActionTime /
-                actionsPerToken(initial.skillID, initial.skillXp, initial.masteryXp);
+    function halveAgilityMasteryDebuffs(initial, id) {
+        if (initial.skillID !== CONSTANTS.skill.Agility) {
+            return;
         }
+        // check if we need to halve one of the debuffs
+        const m = agilityObstacles[id].modifiers;
+        // xp
+        initial.staticXpBonus += getBuff(m, 'decreasedGlobalSkillXP', 'decreasedSkillXP') / 100 / 2;
+        // mxp
+        initial.staticMXpBonus += getBuff(m, 'decreasedGlobalMasteryXP', 'decreasedMasteryXP') / 100 / 2;
+        // interval
+        initial.percentIntervalReduction += getBuff(m, 'increasedSkillIntervalPercent') / 2;
+        initial.flatIntervalReduction += getBuff(m, 'increasedSkillInterval') / 2;
+    }
+
+    function getBuff(modifier, global, specific) {
+        let change = 0;
+        if (global && modifier[global]) {
+            change += modifier[global];
+        }
+        if (specific && modifier[specific]) {
+            modifier[specific].forEach((x) => {
+                if (x[0] === CONSTANTS.skill.Agility) {
+                    change += x[1];
+                }
+            });
+        }
+        return change;
+    }
+
+    function currentXpRates(initial) {
+        let rates = {
+            xpH: 0,
+            masteryXpH: 0,
+            poolH: 0,
+            tokensH: 0,
+            actionTime: 0,
+        };
+        initial.actions.forEach((x, i) => {
+            const initialInterval = intervalAdjustment(initial, initial.poolXp, x.masteryXp, x.skillInterval);
+            const initialAverageActionTime = intervalRespawnAdjustment(
+                initial,
+                initialInterval,
+                initial.poolXp,
+                x.masteryXp,
+                initial.agiLapTime
+            );
+            rates.xpH +=
+                (skillXpAdjustment(initial, x.itemXp, x.itemID, initial.poolXp, x.masteryXp) /
+                    initialAverageActionTime) *
+                1000 *
+                3600;
+            if (initial.hasMastery) {
+                // compute current mastery xp / h using the getMasteryXpToAdd from the game or the method from this script
+                // const masteryXpPerAction = getMasteryXpToAdd(initial.skillID, initial.masteryID, initialInterval);
+                const masteryXpPerAction = calcMasteryXpToAdd(
+                    initial,
+                    initial.totalMasteryLevel,
+                    initial.skillXp,
+                    x.masteryXp,
+                    initial.poolXp,
+                    initialInterval,
+                    x.itemID
+                );
+                rates.masteryXpH += (masteryXpPerAction / initialAverageActionTime) * 1000 * 3600;
+                // pool percentage per hour
+                rates.poolH +=
+                    ((calcPoolXpToAdd(initial.skillXp, masteryXpPerAction) / initialAverageActionTime) *
+                        1000 *
+                        3600) /
+                    initial.maxPoolXp;
+                rates.tokensH +=
+                    (3600 * 1000) /
+                    initialAverageActionTime /
+                    actionsPerToken(initial.skillID, initial.skillXp, x.masteryXp);
+            }
+            rates.actionTime += initialInterval;
+            rates.timePerAction = initialAverageActionTime;
+        });
         return rates;
     }
 
     function getXpRates(initial, current) {
         // compute exp rates, either current or average until resources run out
         let rates = {};
-        if (ETASettings.CURRENT_RATES || initial.isGathering || initial.recordCraft === 0) {
+        if (ETASettings.CURRENT_RATES || initial.recordCraft === 0) {
             // compute current rates
             rates = currentXpRates(initial);
-            if (initial.secondary !== undefined) {
-                const secondaryRates = currentXpRates(initial.secondary);
-                Object.getOwnPropertyNames(rates).forEach((x) => {
-                    rates[x] += secondaryRates[x];
-                });
-            }
         } else {
             // compute average rates until resources run out
             rates.xpH = ((current.skillXp - initial.skillXp) * 3600 * 1000) / current.sumTotalTime;
-            rates.masteryXpH = ((current.masteryXp - initial.masteryXp) * 3600 * 1000) / current.sumTotalTime;
-            if (initial.secondary !== undefined) {
-                rates.masteryXpH +=
-                    ((current.secondary.masteryXp - initial.secondary.masteryXp) * 3600 * 1000) /
-                    current.sumTotalTime;
-            }
+            rates.masteryXpH = initial.actions.map(
+                (x, i) => ((current.actions[i].masteryXp - x.masteryXp) * 3600 * 1000) / current.sumTotalTime
+            );
             // average pool percentage per hour
             rates.poolH =
                 ((current.poolXp - initial.poolXp) * 3600 * 1000) / current.sumTotalTime / initial.maxPoolXp;
             rates.tokensH = ((current.tokens - initial.tokens) * 3600 * 1000) / current.sumTotalTime;
+            rates.actionTime = current.activeTotalTime / current.actionCount;
+            rates.timePerAction = current.sumTotalTime / current.actionCount;
         }
         // each token contributes one thousandth of the pool and then convert to percentage
         rates.poolH = (rates.poolH + rates.tokensH / 1000) * 100;
@@ -1747,7 +1970,7 @@
     // Calculates expected time, taking into account Mastery Level advancements during the craft
     function calcExpectedTime(initial) {
         // initialize the expected time variables
-        let current = currentVariables(initial, initial.recordCraft);
+        let current = currentVariables(initial, initial.recordCraft, initial.actions);
 
         // loop until out of resources
         while (current.resources > 0) {
@@ -1760,13 +1983,13 @@
         // create result object
         let expectedTime = {
             timeLeft: Math.round(current.sumTotalTime),
-            actions: current.actions,
+            actionCount: Math.floor(current.actionCount),
             finalSkillXp: current.skillXp,
-            finalMasteryXp: current.masteryXp,
+            finalMasteryXp: current.actions.map((x) => x.masteryXp),
             finalPoolXp: current.poolXp,
             finalPoolPercentage: poolXpToPercentage(current.poolXp),
             targetPoolTime: current.targetPoolTime,
-            targetMasteryTime: current.targetMasteryTime,
+            targetMasteryTime: current.actions.map((x) => x.targetMasteryTime),
             targetSkillTime: current.targetSkillTime,
             rates: getXpRates(initial, current),
             tokens: current.tokens,
@@ -1774,21 +1997,23 @@
         // continue calculations until time to all targets is found
         while (
             !current.targetSkillReached ||
-            (initial.hasMastery && (!current.targetMasteryReached || !current.targetPoolReached))
+            (initial.hasMastery &&
+                (!current.actions.map((x) => x.targetMasteryReached).reduce((a, b) => a && b, true) ||
+                    !current.targetPoolReached))
         ) {
             current = actionsToBreakpoint(initial, current, true);
         }
         // if it is a gathering skill, then set final values to the values when reaching the final target
         if (initial.isGathering) {
             expectedTime.finalSkillXp = current.skillXp;
-            expectedTime.finalMasteryXp = current.masteryXp;
+            expectedTime.finalMasteryXp = current.actions.map((x) => x.masteryXp);
             expectedTime.finalPoolXp = current.poolXp;
             expectedTime.finalPoolPercentage = poolXpToPercentage(current.poolXp);
             expectedTime.tokens = current.tokens;
         }
         // set time to targets
         expectedTime.targetSkillTime = current.targetSkillTime;
-        expectedTime.targetMasteryTime = current.targetMasteryTime;
+        expectedTime.targetMasteryTime = current.actions.map((x) => x.targetMasteryTime);
         expectedTime.targetPoolTime = current.targetPoolTime;
         // return the resulting data object
         expectedTime.current = current;
@@ -1834,17 +2059,41 @@
             case CONSTANTS.skill.Fishing:
                 initial = configureFishing(initial);
                 break;
+            case CONSTANTS.skill.Agility:
+                initial = configureAgility(initial);
+                break;
+        }
+        // configure interval reductions
+        initial.percentIntervalReduction += getTotalFromModifierArray(
+            'decreasedSkillIntervalPercent',
+            initial.skillID
+        );
+        initial.percentIntervalReduction -= getTotalFromModifierArray(
+            'increasedSkillIntervalPercent',
+            initial.skillID
+        );
+        initial.flatIntervalReduction += getTotalFromModifierArray('decreasedSkillInterval', initial.skillID);
+        initial.flatIntervalReduction -= getTotalFromModifierArray('increasedSkillInterval', initial.skillID);
+        if (initial.skillID === CONSTANTS.skill.Agility) {
+            // add agility potion effect
+            if (herbloreBonuses[26].bonus[0] === 0 && herbloreBonuses[26].charges > 0) {
+                initial.percentIntervalReduction += herbloreBonuses[26].bonus[1];
+            }
+            // set initial lap time
+            initial.agiLapTime = 0;
+            if (initial.skillID === CONSTANTS.skill.Agility) {
+                const poolXp = MASTERY[initial.skillID].pool;
+                initial.agilityObstacles.forEach((x) => {
+                    const masteryXp = MASTERY[initial.skillID].xp[x];
+                    const interval = agilityObstacles[x].interval;
+                    initial.agiLapTime += intervalAdjustment(initial, poolXp, masteryXp, interval);
+                });
+            }
         }
         // Configure initial mastery values for all skills with masteries
         if (initial.hasMastery) {
             // mastery
             initial.totalMasteryLevel = getCurrentTotalMasteryLevelForSkill(initial.skillID);
-            if (!initial.isGathering) {
-                initial.masteryID = items[initial.itemID].masteryID[1];
-            }
-            initial.masteryXp = MASTERY[initial.skillID].xp[initial.masteryID];
-            initial.targetMastery = ETASettings.getTargetMastery(initial.skillID, convertXpToLvl(initial.masteryXp));
-            initial.targetMasteryXp = convertLvlToXp(initial.targetMastery);
             // pool
             initial.poolXp = MASTERY[initial.skillID].pool;
             initial.maxPoolXp = getMasteryPoolTotalXP(initial.skillID);
@@ -1859,8 +2108,36 @@
             initial.tokens = getQtyOfItem(CONSTANTS.item['Mastery_Token_' + skillName[initial.skillID]]);
         }
 
-        // Apply itemXp Bonuses from gear and pets
-        initial.itemXp = addXPBonuses(initial.skillID, initial.itemXp, true);
+        // convert single action skills to `actions` format
+        // TODO: put it in this format straight away and remove the duplication
+        if (initial.actions === undefined) {
+            initial.actions = [
+                {
+                    itemID: initial.itemID,
+                    itemXp: initial.itemXp,
+                    skillInterval: initial.skillInterval,
+                    masteryID: initial.masteryID, // this might still be undefined at this point
+                },
+            ];
+        }
+
+        // further configure the `actions`
+        initial.actions.forEach((x) => {
+            if (initial.hasMastery) {
+                if (!initial.isGathering) {
+                    x.masteryID = items[x.itemID].masteryID[1];
+                }
+                x.masteryXp = MASTERY[initial.skillID].xp[x.masteryID];
+                x.masteryLevel = convertXpToLvl(x.masteryXp);
+                x.lastMasteryLevel = x.masteryLevel;
+                x.targetMastery = ETASettings.getTargetMastery(initial.skillID, convertXpToLvl(x.masteryXp));
+                x.targetMasteryXp = convertLvlToXp(x.targetMastery);
+            }
+        });
+
+        // Get itemXp Bonuses from gear and pets
+        initial.staticXpBonus = getStaticXPBonuses(initial.skillID);
+        initial.staticMXpBonus = getStaticMXPBonuses(initial.skillID);
 
         // Populate masteryLim from masteryLimLevel
         for (let i = 0; i < initial.masteryLimLevel.length; i++) {
@@ -1890,6 +2167,22 @@
         return initial;
     }
 
+    function getStaticXPBonuses(skill) {
+        let xpMultiplier = 1;
+        xpMultiplier += getTotalFromModifierArray('increasedSkillXP', skill) / 100;
+        xpMultiplier -= getTotalFromModifierArray('decreasedSkillXP', skill) / 100;
+        xpMultiplier += (playerModifiers.increasedGlobalSkillXP - playerModifiers.decreasedGlobalSkillXP) / 100;
+        return xpMultiplier;
+    }
+
+    function getStaticMXPBonuses(skill) {
+        let xpMultiplier = 1;
+        xpMultiplier += getTotalFromModifierArray('increasedMasteryXP', skill) / 100;
+        xpMultiplier -= getTotalFromModifierArray('decreasedMasteryXP', skill) / 100;
+        xpMultiplier += (playerModifiers.increasedGlobalMasteryXP - playerModifiers.decreasedGlobalMasteryXP) / 100;
+        return xpMultiplier;
+    }
+
     // Main function
     function timeRemaining(initial) {
         initial = setupTimeRemaining(initial);
@@ -1904,40 +2197,75 @@
         //Inject timeLeft HTML
         const now = new Date();
         const timeLeftElement = injectHTML(initial, results, ms.resources, now);
-        generateTooltips(initial, ms, results, timeLeftElement, now);
+        if (timeLeftElement !== null) {
+            generateTooltips(initial, ms, results, timeLeftElement, now, { noMastery: initial.actions.length > 1 });
+        }
+        if (initial.actions.length > 1) {
+            const actions = [...initial.actions];
+            const currentActions = [...initial.currentAction];
+            actions.forEach((a, i) => {
+                initial.actions = [a];
+                initial.currentAction = currentActions[i];
+                const singleTimeLeftElement = injectHTML(
+                    initial,
+                    { rates: currentXpRates(initial) },
+                    ms.resources,
+                    now,
+                    false
+                );
+                if (singleTimeLeftElement !== null) {
+                    const aux = {
+                        finalMasteryXp: [results.finalMasteryXp[i]],
+                        current: { actions: [{ targetMasteryResources: 0 }] },
+                    };
+                    generateTooltips(
+                        initial,
+                        { mastery: results.current.actions[i].targetMasteryTime },
+                        aux,
+                        singleTimeLeftElement,
+                        now,
+                        {
+                            noSkill: true,
+                            noPool: true,
+                        }
+                    );
+                }
+            });
+            //reset
+            initial.actions = actions;
+            initial.currentAction = currentActions;
+        }
 
-        if (initial.isMainAction) {
+        // TODO fix this for woodcutting and agility
+        if (initial.actions.length === 1) {
             // Set global variables to track completion
             let times = [];
             if (!initial.isGathering) {
-                times.push(
-                    ETA.time(ETASettings.DING_RESOURCES, 0, ms.resources, -ms.resources, 'Processing finished.')
-                );
+                times.push(ETA.time(ETASettings.DING_RESOURCES, 0, -ms.resources, 'Processing finished.'));
             }
             times.push(
                 ETA.time(
                     ETASettings.DING_LEVEL,
                     initial.targetLevel,
-                    ms.skill,
                     convertXpToLvl(initial.skillXp),
                     'Target level reached.'
                 )
             );
             if (initial.hasMastery) {
-                times.push(
-                    ETA.time(
-                        ETASettings.DING_MASTERY,
-                        initial.targetMastery,
-                        ms.mastery,
-                        convertXpToLvl(initial.masteryXp),
-                        'Target mastery reached.'
+                initial.actions.forEach((x, i) =>
+                    times.push(
+                        ETA.time(
+                            ETASettings.DING_MASTERY,
+                            x.targetMastery,
+                            convertXpToLvl(x.masteryXp),
+                            'Target mastery reached.'
+                        )
                     )
                 );
                 times.push(
                     ETA.time(
                         ETASettings.DING_POOL,
                         initial.targetPool,
-                        ms.pool,
                         (100 * initial.poolXp) / initial.maxPoolXp,
                         'Target pool reached.'
                     )
@@ -1948,67 +2276,86 @@
                 ETA.taskComplete();
             }
             if (!initial.isGathering) {
-                generateProgressBars(initial, results);
+                generateProgressBars(
+                    initial,
+                    results,
+                    0 /*TODO add proper action index here, usually it's 0 though*/
+                );
             }
         }
     }
 
-    function injectHTML(initial, results, msLeft, now) {
+    function injectHTML(initial, results, msLeft, now, initialRun = true) {
         let timeLeftElementId = `timeLeft${skillName[initial.skillID]}`;
-        if (initial.secondary !== undefined) {
+        if (initial.actions.length > 1) {
             timeLeftElementId += '-Secondary';
         } else if (initial.isGathering) {
             timeLeftElementId += '-' + initial.currentAction;
         }
-        if (initial.skillID === CONSTANTS.skill.Thieving && document.getElementById(timeLeftElementId) === null) {
-            ETA.makeThievingDisplay();
-        }
         const timeLeftElement = document.getElementById(timeLeftElementId);
-        if (timeLeftElement !== null) {
-            let finishedTime = addMSToDate(now, msLeft);
-            timeLeftElement.textContent = '';
-            if (ETASettings.SHOW_XP_RATE) {
-                timeLeftElement.textContent = 'Xp/h: ' + formatNumber(Math.floor(results.rates.xpH));
-                if (initial.hasMastery) {
-                    timeLeftElement.textContent +=
-                        '\r\nMXp/h: ' +
-                        formatNumber(Math.floor(results.rates.masteryXpH)) +
-                        `\r\nPool/h: ${results.rates.poolH.toFixed(2)}%`;
-                }
+        if (timeLeftElement === null) {
+            switch (initial.skillID) {
+                case CONSTANTS.skill.Thieving:
+                    ETA.makeThievingDisplay();
+                    break;
+                case CONSTANTS.skill.Agility:
+                    ETA.makeAgilityDisplay();
+                    break;
             }
-            if (!initial.isGathering) {
-                if (msLeft === 0) {
-                    timeLeftElement.textContent += '\r\nNo resources!';
-                } else {
-                    timeLeftElement.textContent +=
-                        '\r\nActions: ' +
-                        formatNumber(results.actions) +
-                        '\r\nTime: ' +
-                        msToHms(msLeft) +
-                        '\r\nETA: ' +
-                        dateFormat(now, finishedTime);
-                }
+            if (initialRun) {
+                // try running the method again
+                return injectHTML(initial, results, msLeft, now, false);
             }
-            if (
-                (initial.isGathering || initial.skillID === CONSTANTS.skill.Cooking) &&
-                initial.itemID !== undefined &&
-                initial.secondary === undefined
-            ) {
+            return null;
+        }
+        let finishedTime = addMSToDate(now, msLeft);
+        timeLeftElement.textContent = '';
+        if (ETASettings.SHOW_XP_RATE) {
+            timeLeftElement.textContent = 'Xp/h: ' + formatNumber(Math.floor(results.rates.xpH));
+            if (initial.hasMastery) {
+                timeLeftElement.textContent +=
+                    '\r\nMXp/h: ' +
+                    formatNumber(Math.floor(results.rates.masteryXpH)) +
+                    `\r\nPool/h: ${results.rates.poolH.toFixed(2)}%`;
+            }
+        }
+        if (ETASettings.SHOW_ACTION_TIME) {
+            timeLeftElement.textContent +=
+                '\r\nAction time: ' + formatNumber(Math.ceil(results.rates.actionTime) / 1000) + 's';
+            timeLeftElement.textContent +=
+                '\r\nActions/h: ' +
+                formatNumber(Math.round((100 * 3600 * 1000) / Math.floor(results.rates.timePerAction)) / 100);
+        }
+        if (!initial.isGathering) {
+            if (msLeft === 0) {
+                timeLeftElement.textContent += '\r\nNo resources!';
+            } else {
+                timeLeftElement.textContent +=
+                    '\r\nActions: ' +
+                    formatNumber(results.actionCount) +
+                    '\r\nTime: ' +
+                    msToHms(msLeft) +
+                    '\r\nETA: ' +
+                    dateFormat(now, finishedTime);
+            }
+        }
+        initial.actions.map((x) => {
+            if ((initial.isGathering || initial.skillID === CONSTANTS.skill.Cooking) && x.itemID !== undefined) {
                 const youHaveElementId = timeLeftElementId + '-YouHave';
                 $('#' + youHaveElementId).replaceWith(
                     '' +
                         `<small id="${youHaveElementId}">` +
-                        `<span>You have: ${formatNumber(getQtyOfItem(initial.itemID))}</span>` +
-                        `<img class="skill-icon-xs mr-2" src="${items[initial.itemID].media}">` +
+                        `<span>You have: ${formatNumber(getQtyOfItem(x.itemID))}</span>` +
+                        `<img class="skill-icon-xs mr-2" src="${items[x.itemID].media}">` +
                         '</small>'
                 );
             }
-            timeLeftElement.style.display = 'block';
-        }
+        });
+        timeLeftElement.style.display = 'block';
         return timeLeftElement;
     }
 
-    function generateTooltips(initial, ms, results, timeLeftElement, now) {
+    function generateTooltips(initial, ms, results, timeLeftElement, now, flags = {}) {
         // Generate progression Tooltips
         if (!timeLeftElement._tippy) {
             tippy(timeLeftElement, {
@@ -2017,29 +2364,36 @@
                 animation: false,
             });
         }
+        let tooltip = '';
         // level tooltip
-        const finalLevel = convertXpToLvl(results.finalSkillXp, true);
-        const levelProgress = getPercentageInLevel(results.finalSkillXp, results.finalSkillXp, 'skill');
-        let tooltip =
-            finalLevelElement('Final Level', formatLevel(finalLevel, levelProgress) + ' / 99', 'success') +
-            tooltipSection(initial, now, ms.skill, initial.targetLevel, results.current.targetSkillResources);
+        if (!flags.noSkill) {
+            const finalLevel = convertXpToLvl(results.finalSkillXp, true);
+            const levelProgress = getPercentageInLevel(results.finalSkillXp, results.finalSkillXp, 'skill');
+            tooltip +=
+                finalLevelElement('Final Level', formatLevel(finalLevel, levelProgress) + ' / 99', 'success') +
+                tooltipSection(initial, now, ms.skill, initial.targetLevel, results.current.targetSkillResources);
+        }
         // mastery tooltip
-        if (initial.hasMastery && initial.secondary === undefined) {
+        if (!flags.noMastery && initial.hasMastery) {
             // don't show mastery target when combining multiple actions
-            const finalMastery = convertXpToLvl(results.finalMasteryXp);
-            const masteryProgress = getPercentageInLevel(results.finalMasteryXp, results.finalMasteryXp, 'mastery');
+            const finalMastery = convertXpToLvl(results.finalMasteryXp[0]);
+            const masteryProgress = getPercentageInLevel(
+                results.finalMasteryXp[0],
+                results.finalMasteryXp[0],
+                'mastery'
+            );
             tooltip +=
                 finalLevelElement('Final Mastery', formatLevel(finalMastery, masteryProgress) + ' / 99', 'info') +
                 tooltipSection(
                     initial,
                     now,
                     ms.mastery,
-                    initial.targetMastery,
-                    results.current.targetMasteryResources
+                    initial.actions[0].targetMastery,
+                    results.current.actions.map((x) => x.targetMasteryResources)
                 );
         }
         // pool tooltip
-        if (initial.hasMastery) {
+        if (!flags.noPool && initial.hasMastery) {
             tooltip += finalLevelElement('Final Pool XP', results.finalPoolPercentage + '%', 'warning');
             let prepend = '';
             const tokens = Math.round(results.tokens);
@@ -2137,13 +2491,18 @@
         return level;
     };
 
-    function generateProgressBars(initial, results) {
+    function generateProgressBars(initial, results, idx) {
         // skill
         const skillProgress = getPercentageInLevel(initial.skillXp, results.finalSkillXp, 'skill', true);
         $(`#skill-progress-bar-end-${initial.skillID}`).css('width', skillProgress + '%');
         // mastery
         if (initial.hasMastery) {
-            const masteryProgress = getPercentageInLevel(initial.masteryXp, results.finalMasteryXp, 'mastery', true);
+            const masteryProgress = getPercentageInLevel(
+                initial.actions[idx].masteryXp,
+                results.finalMasteryXp[idx],
+                'mastery',
+                true
+            );
             $(`#${initial.skillID}-mastery-pool-progress-end`).css('width', masteryProgress + '%');
             // pool
             const poolProgress =

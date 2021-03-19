@@ -55,7 +55,8 @@
                 SEMIUtils.openItemWithoutConfirmation(itemID, qty);
                 SEMIUtils.customNotify(
                     items[itemID].media,
-                    `Opening ${numberWithCommas(qty)} of ${items[itemID].name}`
+                    `Opening ${numberWithCommas(qty)} of ${items[itemID].name}`,
+                    { lowPriority: true }
                 );
             }
         }
