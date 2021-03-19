@@ -113,6 +113,7 @@
         'bonfire',
         'cook',
         'mine',
+        'runecraft',
         'sell-gems',
         'master',
         'smith',
