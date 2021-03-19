@@ -448,6 +448,8 @@ const SEMIUtils = (() => {
                 return startSmithing(true);
             case 'Hitpoints':
                 return stopCombat(false, true, true);
+            case 'Runecrafting':
+                return selectRunecraft(0);
         }
     };
 
