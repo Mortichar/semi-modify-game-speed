@@ -2,12 +2,10 @@
 
 ## Broken/needs fixing
 
-* TimeRemaining -> that other script
-* Deeper testing
 * Repo CI/CD stuff
 * Add wiki to help new devs/users
 * Find a way to poll users to see what they want
-    * Migrate to Github?
+* Migrate to Github?
 
 ## TODO overflow
 
