@@ -1,5 +1,16 @@
 # SEMI Changelog
 
+## v0.5.5
+
+## Melvor @ v0.19.1
+
+### Fixes
+
+* Fix to bank full logic (madasi)
+  * Fixes AutoOpen not opening items
+  * AutoFarm not harvesting if you don't already have the harvested item in your bank
+  * Katorone buying bank slots when it doesn't need to
+
 ## v0.5.4
 
 ## Melvor @ v0.19!
