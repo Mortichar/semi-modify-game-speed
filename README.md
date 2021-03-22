@@ -11,12 +11,17 @@ Please note when a new update is released, the Mozilla add-on database verifies 
 
 ### Contributors
 
-Huge thanks to DanielRX, Visua, Breindahl, AuroraKy, Zeldo, Parataku, Alex Mauney, Shamus Taylor, and more for helping with the project!
+Huge thanks to DanielRX, Visua, Breindahl, AuroraKy, Zeldo, Parataku, Alex Mauney, Shamus Taylor, TheAlpacalypse, and more for helping with the project!
 
 ## What can SEMI do?
 
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
+
+* New **Beta** script: AutoRunecraft by TheAlpacalypse!
+    * AutoRunecraft will automatically create runes based on the ratios set up by you.
+    * Will mine Rune Essence if you run out
+    * Will integrate with a future plugin to automatically set up ratios based on current spell setup
 * ### Melvor v0.18 has broken these scripts
     * These scripts are unavailable in the latest version until fixes can be implemented:
     * AutoEat & AutoRun (need better MaxHit calculation)
