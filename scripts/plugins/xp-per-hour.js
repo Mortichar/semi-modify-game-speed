@@ -283,12 +283,12 @@ var injectXPHGUI = (() => {
         SEMI will display your XP per hour in a dialog below the button.<br>
         If you're in combat, a custom XPH script will run for all combat skills simultaneously and display in the Combat Page's Skill Progress table.<br><br>
         </span>
-        <button id="xphBtn" class="btn btn-sm btn-dual">Toggle XPH Display</button>
+        <button id="xphBtn" class="btn btn-info">Toggle XPH Display</button>
         <br><br>
         <div class="text-muted m-1">
             SEMI has a specific button and separate script for Farming XPH. [NOTE: Only even remotely accurate after calculating for a few hours. Pairs well with AutoReplant.]
         </div>
-        <button id="xphBtnF" class="btn btn-sm btn-dual">Toggle XPH for Farming</button>
+        <button id="xphBtnF" class="btn btn-info">Toggle XPH for Farming</button>
     </div>`;
 
     //XPH GUI

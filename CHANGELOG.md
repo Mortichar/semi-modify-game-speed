@@ -4,13 +4,14 @@
 
 ## Melvor @ v0.19.1
 
-### Fixes
+### Fixes (Developer in parenthesis)
 
 * Fix to bank full logic (madasi)
     * Fixes AutoOpen not opening items
     * AutoFarm not harvesting if you don't already have the harvested item in your bank
     * Katorone buying bank slots when it doesn't need to
 * Add Agility to AutoMaster (Klz)
+* Fix XPH button visibility (Klz)
 
 ### New!
 
