@@ -7,9 +7,14 @@
 ### Fixes
 
 * Fix to bank full logic (madasi)
-  * Fixes AutoOpen not opening items
-  * AutoFarm not harvesting if you don't already have the harvested item in your bank
-  * Katorone buying bank slots when it doesn't need to
+    * Fixes AutoOpen not opening items
+    * AutoFarm not harvesting if you don't already have the harvested item in your bank
+    * Katorone buying bank slots when it doesn't need to
+* Add Agility to AutoMaster (Klz)
+
+### New!
+
+* AutoRunecraft by TheAlpacalypse
 
 ## v0.5.4
 

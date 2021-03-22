@@ -6,7 +6,7 @@
 
     //AutoMaster: will spend down mastery pool
     const autoMaster = () => {
-        var skillList = [0, 1, 2, 3, 4, 5, 10, 11, 13, 14, 15, 19];
+        var skillList = [0, 1, 2, 3, 4, 5, 10, 11, 13, 14, 15, 19, 20];
 
         for (const skillId of skillList) {
             const poolSize = getMasteryPoolTotalXP(skillId);
