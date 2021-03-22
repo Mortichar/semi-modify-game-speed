@@ -93,7 +93,7 @@ const SEMIUtils = (() => {
     const currentEquipmentInSlot = (slotName) => currentEquipment()[CONSTANTS.equipmentSlot[slotName]];
 
     const isBankFull = () => {
-        return bank.length >= baseBankMax + currentBankUpgrade;
+        return bank.length >= getMaxBankSpace();
     };
 
     const unselectItemIfNotInBank = (itemID) => {
@@ -448,6 +448,8 @@ const SEMIUtils = (() => {
                 return startSmithing(true);
             case 'Hitpoints':
                 return stopCombat(false, true, true);
+            case 'Runecrafting':
+                return selectRunecraft(0);
         }
     };
 
