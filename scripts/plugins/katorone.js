@@ -153,6 +153,10 @@ const setLoadedKatValues = () => {
 
         const mediumLoop = setInterval(mediumF, 1000);
 
+        const upgradeBank = confirmed => {
+            return buyShopItem('General', CONSTANTS.shop.general.Extra_Bank_Slot, confirmed);
+        }
+
         const buyBankSlot = () => {
             let cost = Math.min(newNewBankUpgradeCost.level_to_gp(currentBankUpgrade + 1), 4000000);
             // Buy if we have enough gold above reserve.
