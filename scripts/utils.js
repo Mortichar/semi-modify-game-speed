@@ -515,6 +515,11 @@ const SEMIUtils = (() => {
         if (htmlAttack === ' Speed') {
             incomingAttack = 'Attack';
             incomingDamage = combatData.enemy.maximumStrengthRoll;
+        }
+        // In the case that you stun them the scrimpt needs to not freeze
+        else if (htmlAttack === 'd') {
+            incomingAttack = 'Attack';
+            incomingDamage = 0;
         } else {
             incomingAttack = enemySpecialAttacks.find((o) => o.name === htmlAttack);
             incomingDamage = incomingAttack.setDamage
@@ -619,6 +624,11 @@ const SEMIUtils = (() => {
         return currentCharacter;
     };
 
+    // Adds checks to scripts in adventure mode so that scripts do not attempt to do stuff they cannot feasibly do
+    const isSkillUnlocked = (skillName) => {
+        return currentGamemode !== CONSTANTS.gamemode.Adventure || skillsUnlocked[CONSTANTS.skill[skillName]];
+    };
+
     let _utilsReady = false;
     const utilsReady = () => {
         return _utilsReady;
@@ -648,6 +658,7 @@ const SEMIUtils = (() => {
         stopSkill,
         currentSkillName,
         currentSkillId,
+        isSkillUnlocked,
         currentEquipment,
         currentXP,
         currentEquipmentInSlot,

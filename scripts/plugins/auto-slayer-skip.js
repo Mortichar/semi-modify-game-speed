@@ -4,7 +4,7 @@
     const id = `auto-${pluginKind}`;
     const title = 'AS AutoSkip';
     const desc =
-        'This script option for AutoSlayer will skip all monsters selected in this menu. Since v0.18 it will select a new slayer task in the same tier.';
+        'This script option for AutoSlayer will skip all monsters selected in this menu provided that the related option is enabled in AutoSlayer. Since v0.18 it will select a new slayer task in the same tier.';
     const imgSrc = 'assets/media/monsters/m13.svg';
 
     let showHiddenMonsters = false;
@@ -40,6 +40,7 @@
 
     const doAll = () => {
         monsterIDs = autoEnabled.flatMap((enabled, i) => (enabled ? i : []));
+        SEMI.setItem('ASS-monsterIDs', monsterIDs);
     };
 
     const setupContainer = () => {

@@ -64,6 +64,10 @@
         return false;
     }
 
+    function buyCompost(confirmed) {
+        buyShopItem('Materials', CONSTANTS.shop.materials.Compost, confirmed)
+    }
+
     function findNextSeed(patch, patchId) {
         // Find next seed in bank according to priority
         const patchType = toPatchType[patch.type];

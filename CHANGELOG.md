@@ -1,5 +1,24 @@
 # SEMI Changelog
 
+## v0.5.6
+
+## Various Fixes & Updates
+
+* Katorone auto-buy glove charges now properly fixed with hard-coded values for now
+
+### These merge requests were reviewed & merged:
+
+[tooltip-changes] Converts the plugin hover tooltips to use tippy
+[auto-eat-fix] Fixes the console errors that crash the tab when the player stuns the target enemy
+[adventure-mode-fixes] - Adds a check for adventure mode if you don't have a script's skill unlocked
+Define `upgradeBank` using `buyShopItem` to fix Katorone bank upgrade
+Define `buyCompost` using `buyShopItem` to fix AutoFarm
+[eta] Eta fishing fix
+[katorone] Fixes gem gloves again
+[AutoSlayer] Fixes the issues with AutoSlayerSkip
+
+Thanks to TheAlpacalypse and Elad Shahar!
+
 ## v0.5.5
 
 ## Melvor @ v0.19.1

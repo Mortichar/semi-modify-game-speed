@@ -100,21 +100,20 @@ const setLoadedKatValues = () => {
             return;
         }
         // How many uses left?
-        let uses_left = glovesTracker[CONSTANTS.shop.gloves.Gems].remainingActions;
+        // let uses_left = glovesTracker[CONSTANTS.shop.gloves.Gem_Gloves].remainingActions;
+        let uses_left = glovesTracker[4].remainingActions;
         let to_buy = Math.ceil((katBot.gemGloveUses - uses_left) / 2000);
         // Quit if we don't need more gloves.
         if (to_buy <= 0) {
             return;
         }
-        let price = glovesCost[CONSTANTS.shop.gloves.Gems];
+        // let price = glovesCost[CONSTANTS.shop.gloves.Gem_Gloves];
+        let price = glovesCost[4];
         // Buy one if we can afford it
         if (gp - price >= katBot.reserveGold) {
-            //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
-
             //prevent ridiculous spending
             updateBuyQty(1);
-            buyGloves(CONSTANTS.shop.gloves.Gems, true);
-            //aw: adding notifications
+            buyShopItem('Gloves', 4, true); //temp fix, v0.19.1 still has broken item shop constants for gloves, 4 is hard coded for now, as well as uses_left and price
             const notification = 'Katorone Automation just bought Gem Glove charges.';
             notifyPlayer(4, notification);
             console.log(notification);
@@ -122,7 +121,7 @@ const setLoadedKatValues = () => {
         }
         // Do we need to sell gems?
         if (gp < katBot.reserveGold + price) {
-            sellGems(price + katBot.reserveGold - gp); //0.2.3.1 hotfix: added katBot.reserveGold to this.
+            sellGems(price + katBot.reserveGold - gp);
         }
     };
 
@@ -152,6 +151,10 @@ const setLoadedKatValues = () => {
         };
 
         const mediumLoop = setInterval(mediumF, 1000);
+
+        const upgradeBank = (confirmed) => {
+            return buyShopItem('General', CONSTANTS.shop.general.Extra_Bank_Slot, confirmed);
+        };
 
         const buyBankSlot = () => {
             let cost = Math.min(newNewBankUpgradeCost.level_to_gp(currentBankUpgrade + 1), 4000000);
