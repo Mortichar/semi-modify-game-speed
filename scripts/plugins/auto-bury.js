@@ -146,7 +146,7 @@
         }
     };
 
-    SEMI.add(id, { onLoop: autoBury, onEnable, onDisable, title, desc, skill: 'Prayer' });
+    SEMI.add(id, { onLoop: autoBury, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI });
     SEMIUtils.mergeOnto(SEMI, { refreshBoneLog });
 })();
