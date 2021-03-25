@@ -22,9 +22,6 @@ This add-on/extension helps you automate certain aspects of the game, and adds c
     * AutoRunecraft will automatically create runes based on the ratios set up by you.
     * Will mine Rune Essence if you run out
     * Will integrate with a future plugin to automatically set up ratios based on current spell setup
-* ### Melvor v0.18 has broken these scripts
-    * These scripts are unavailable in the latest version until fixes can be implemented:
-    * AutoEat & AutoRun (need better MaxHit calculation)
 * New: AutoLute by Ugh!
     * AutoLute monitors your combat opponent's health and switches to Lute for the final kill of a dungeon, or the killing blow for normal combat, for the 5x GP reward.
 * Updated script: ETA replaces TimeRemaining
