@@ -515,6 +515,11 @@ const SEMIUtils = (() => {
         if (htmlAttack === ' Speed') {
             incomingAttack = 'Attack';
             incomingDamage = combatData.enemy.maximumStrengthRoll;
+        }
+        // In the case that you stun them the scrimpt needs to not freeze
+        else if (htmlAttack === 'd') {
+            incomingAttack = 'Attack';
+            incomingDamage = 0;
         } else {
             incomingAttack = enemySpecialAttacks.find((o) => o.name === htmlAttack);
             incomingDamage = incomingAttack.setDamage
