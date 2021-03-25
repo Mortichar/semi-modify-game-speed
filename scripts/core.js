@@ -199,6 +199,11 @@ var SEMI = (() => {
     ) => {
         const imgEl = createElement('img', { src: imgSrc, id: `${name}-img`, class: 'nav-img' });
         const textEl = createElement('span', { innerHTML: title, class: 'nav-main-link-name' });
+        tippy(textEl, {
+            content: desc,
+            arrow: true,
+            placement: 'auto',
+        });
         const statusEl = createElement('i', {
             id: `${name}-status`,
             class: 'fas fa-times text-danger',
@@ -243,7 +248,7 @@ var SEMI = (() => {
             );
             const mainEl = createElement(
                 'li',
-                { title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button` },
+                { id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button` },
                 [buttonEl]
             );
             return mainEl;
@@ -260,7 +265,7 @@ var SEMI = (() => {
             );
             const mainEl = createElement(
                 'li',
-                { title: desc, id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button` },
+                { id: rootId + '-skill-' + name, class: `nav-main-item ${ROOT_ID}-button` },
                 [buttonEl]
             );
             return mainEl;
