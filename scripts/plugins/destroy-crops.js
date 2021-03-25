@@ -48,5 +48,6 @@
         imgSrc,
         onEnable: injectDestroyCropsGUI,
         onDisable: removeGUI,
+        skill: 'Farming',
     });
 })();

@@ -207,6 +207,6 @@ pick one random monster from the monsterSelection array
         saveConfig,
         updateConfig,
         onLoop: loop,
-        skill: 'Combat',
+        skill: 'Slayer',
     });
 })();

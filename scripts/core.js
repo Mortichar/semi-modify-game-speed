@@ -390,7 +390,7 @@ var SEMI = (() => {
             const plugin = plugins[name];
 
             // Adds an initial check here on enabling to prevent enabling scripts that we cannot use
-            if (!SEMIUtils.isSkillUnlocked(plugin.skill)) {
+            if (plugin.skill && !SEMIUtils.isSkillUnlocked(plugin.skill)) {
                 SEMIUtils.customNotify(
                     plugin.imgSrc,
                     `${plugin.title} cannot be toggled, as the core skill is not unlocked!`,

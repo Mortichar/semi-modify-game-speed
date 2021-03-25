@@ -91,5 +91,6 @@
         desc,
         imgSrc,
         pluginType: SEMI.PLUGIN_TYPE.TWEAK,
+        skill: 'Mining',
     });
 })();
