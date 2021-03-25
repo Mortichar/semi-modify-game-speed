@@ -374,7 +374,10 @@ var SEMI = (() => {
             }
             console.log(`${name} Enabled!`);
             if (plugin.skill !== '') {
-                SEMIUtils.changePage(plugin.skill);
+                if (plugin.skill !== 'Slayer' && plugin.skill !== 'Prayer') {
+                    console.log(plugin.skill);
+                    SEMIUtils.changePage(plugin.skill);
+                }
             }
             if (plugin.imgSrc !== '') {
                 SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, { duration: 1000 });
