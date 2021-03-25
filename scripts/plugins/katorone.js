@@ -100,20 +100,20 @@ const setLoadedKatValues = () => {
             return;
         }
         // How many uses left?
-        let uses_left = glovesTracker[CONSTANTS.shop.gloves.Gems].remainingActions;
+        let uses_left = glovesTracker[CONSTANTS.shop.gloves.Gem_Gloves].remainingActions;
         let to_buy = Math.ceil((katBot.gemGloveUses - uses_left) / 2000);
         // Quit if we don't need more gloves.
         if (to_buy <= 0) {
             return;
         }
-        let price = glovesCost[CONSTANTS.shop.gloves.Gems];
+        let price = glovesCost[CONSTANTS.shop.gloves.Gem_Gloves];
         // Buy one if we can afford it
         if (gp - price >= katBot.reserveGold) {
             //suggestion by rebelEpik: prevent from buying gem charges if you have a minimum set
 
             //prevent ridiculous spending
             updateBuyQty(1);
-            buyGloves(CONSTANTS.shop.gloves.Gems, true);
+            buyGloves(CONSTANTS.shop.gloves.Gem_Gloves, true);
             //aw: adding notifications
             const notification = 'Katorone Automation just bought Gem Glove charges.';
             notifyPlayer(4, notification);
