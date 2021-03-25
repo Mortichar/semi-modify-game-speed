@@ -48,9 +48,34 @@ pick one random monster from the monsterSelection array
             return;
         }
 
+        const isSlayerTaskDisabled = () => {
+            return (
+                SEMI.isEnabled('auto-slayer-skip') &&
+                typeof SEMI.getItem('ASS-monsterIDS') !== 'undefined' &&
+                SEMI.getItem('ASS-monsterIDs').includes(slayerTask[0].monsterID)
+            );
+        };
+
+        const stopCombat = () => {
+            if (SEMIUtils.isCurrentSkill('Hitpoints')) {
+                SEMIUtils.stopSkill('Hitpoints');
+            }
+        };
+
         // disable melvor's own auto-slayer as it makes no sense in combination with this plugin
         if (autoSlayer === true) {
             toggleSetting(32);
+        }
+
+        //if semi auto-slayer-skip is on, skip them unwanteds
+        if (isSlayerTaskDisabled()) {
+            // If we are currently in combat, we need to exit immediately and ensure we aren't one-shot
+            stopCombat();
+            // pick a new slayer task with the same difficulty setting
+            selectNewSlayerTask(slayerTask[0].tier);
+
+            // Exit so we can recheck the assignment upon loop
+            return;
         }
 
         // auto-extend
@@ -71,15 +96,13 @@ pick one random monster from the monsterSelection array
 
         //If you are fighting an enemy that isn't your current task, stop combat and switch to the task monster
         if (forcedEnemy !== slayerTask[0].monsterID || !SEMIUtils.isCurrentSkill('Hitpoints')) {
-            if (SEMIUtils.isCurrentSkill('Hitpoints')) {
-                SEMIUtils.stopSkill('Hitpoints');
-            }
+            stopCombat();
 
             waitForEnemyLoaded = false;
 
             let targetArea = findEnemyArea(slayerTask[0].monsterID, false);
             let requiredItem = slayerAreas[targetArea[1]].slayerItem;
-            let requiredItemType = items[requiredItem].type;
+            let requiredItemType = items[requiredItem].equipmentSlot;
             let ready = false;
 
             // re-equip original item, there is an edgecase where the same item is required again but it will simply reequip it
@@ -131,17 +154,6 @@ pick one random monster from the monsterSelection array
                 }
             }
         }
-
-        //if semi auto-slayer-skip is on, skip them unwanteds
-        if (
-            SEMI.getValue(id, 'skip') ||
-            (SEMI.isEnabled('auto-slayer-skip') &&
-                typeof monsterIDs !== 'undefined' &&
-                monsterIDs.includes(slayerTask[0].monsterID))
-        ) {
-            // pick a new slayer task with the same difficulty setting
-            selectNewSlayerTask(slayerTask[0].tier);
-        }
     };
 
     //Config menu
@@ -155,18 +167,20 @@ pick one random monster from the monsterSelection array
         </div>
         <br/>
         <b>Auto-Skip Unmet Requirements</b><br/>
-        <span>Enable this option to auto-skip all slayer tasks if the required equipment is not available.</span>
+        <span>Enable this option to auto-skip all slayer tasks if the required equipment is not available.
+        <br/>
+        <b>THIS SCRIPT IS BROKEN IN V0.19 AND DOES NOTHING</b></span>
         <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="${id}-config-skip" name="${id}-config-skip">
-            <label class="custom-control-label" for="${id}-config-skip">Enabled</label>
+            <input type="checkbox" class="custom-control-input" id="${id}-config-unmet" name="${id}-config-unmet">
+            <label class="custom-control-label" for="${id}-config-unmet">Enabled</label>
         </div>
     </div>`;
 
     const saveConfig = () => {
         let extend = Number(document.getElementById(`${id}-config-extend`).checked);
-        let skip = Number(document.getElementById(`${id}-config-skip`).checked);
+        // let skip = Number(document.getElementById(`${id}-config-skip`).checked);
         SEMI.setValue(id, 'extend', extend);
-        SEMI.setValue(id, 'skip', skip);
+        // SEMI.setValue(id, 'skip', skip);
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
 
         SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, {
@@ -178,7 +192,7 @@ pick one random monster from the monsterSelection array
 
     const updateConfig = () => {
         document.getElementById(`${id}-config-extend`).checked = SEMI.getValue(id, 'extend');
-        document.getElementById(`${id}-config-skip`).checked = SEMI.getValue(id, 'skip');
+        // document.getElementById(`${id}-config-skip`).checked = SEMI.getValue(id, 'skip');
     };
 
     SEMI.add(id, {
