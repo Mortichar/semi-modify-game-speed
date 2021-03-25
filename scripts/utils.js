@@ -619,6 +619,11 @@ const SEMIUtils = (() => {
         return currentCharacter;
     };
 
+    // Adds checks to scripts in adventure mode so that scripts do not attempt to do stuff they cannot feasibly do
+    const isSkillUnlocked = (skillName) => {
+        return currentGamemode !== CONSTANTS.gamemode.Adventure || skillsUnlocked[CONSTANTS.skill[skillName]];
+    };
+
     let _utilsReady = false;
     const utilsReady = () => {
         return _utilsReady;
@@ -648,6 +653,7 @@ const SEMIUtils = (() => {
         stopSkill,
         currentSkillName,
         currentSkillId,
+        isSkillUnlocked,
         currentEquipment,
         currentXP,
         currentEquipmentInSlot,
