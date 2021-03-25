@@ -374,7 +374,10 @@ var SEMI = (() => {
             }
             console.log(`${name} Enabled!`);
             if (plugin.skill !== '') {
-                SEMIUtils.changePage(plugin.skill);
+                if (plugin.skill !== 'Slayer' && plugin.skill !== 'Prayer') {
+                    console.log(plugin.skill);
+                    SEMIUtils.changePage(plugin.skill);
+                }
             }
             if (plugin.imgSrc !== '') {
                 SEMIUtils.customNotify(plugin.imgSrc, `${plugin.title} Enabled!`, { duration: 1000 });
@@ -390,7 +393,7 @@ var SEMI = (() => {
             const plugin = plugins[name];
 
             // Adds an initial check here on enabling to prevent enabling scripts that we cannot use
-            if (!SEMIUtils.isSkillUnlocked(plugin.skill)) {
+            if (plugin.skill && !SEMIUtils.isSkillUnlocked(plugin.skill)) {
                 SEMIUtils.customNotify(
                     plugin.imgSrc,
                     `${plugin.title} cannot be toggled, as the core skill is not unlocked!`,
