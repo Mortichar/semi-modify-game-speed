@@ -18,6 +18,8 @@ Huge thanks to DanielRX, Visua, Breindahl, AuroraKy, Zeldo, Parataku, Alex Maune
 This add-on/extension helps you automate certain aspects of the game, and adds certain useful features, combining many scripts into one. Toggle each one on and off individually from inside the game. Hovering over the SEMI sidebar buttons will give tooltips including hints, explanations, and tips for most scripts.
 
 
+* New **Beta** script: Save On Close by TheAlpacalypse!
+    * Prompts you to save your game to cloud when you leave the page.
 * New **Beta** script: AutoRunecraft by TheAlpacalypse!
     * AutoRunecraft will automatically create runes based on the ratios set up by you.
     * Will mine Rune Essence if you run out

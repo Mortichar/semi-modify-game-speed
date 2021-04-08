@@ -141,6 +141,7 @@
         'katorone',
         'thief-calc',
         'xp-per-hour',
+        'save-on-close',
     ];
     const libNames = ['fold-menus', 'drag-menus', 'menus'];
     const preloadedNames = ['event-bus', 'settings-migrator', 'injections'];
