@@ -134,6 +134,7 @@
         ...autoNames.map((name) => `auto-${name}`),
         'mastery-enhancements',
         'eta',
+        'drop-chances',
         'ore-in-bank',
         'barf',
         'calc-to-level',

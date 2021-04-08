@@ -4,6 +4,7 @@ var SEMIetcGUI = {
   timeRemaining: true,
   masteryEnhancements: true,
   lessNotifications: false,
+  dropChances: true,
 };
 
 var { semiSetMenu } = (() => {
@@ -142,6 +143,12 @@ var { semiSetMenu } = (() => {
                 SEMIetcGUI.lessNotifications ? 'checked' : ''
               }>
               <label class="custom-control-label" for="SEMI-less-notifications-enabled">Less notifications: Disables notifications for repetetive actions like auto-sell and auto-bury. Important notifications will still be shown.</label>
+            </div>
+            <div class="custom-control custom-switch mb-1">
+              <input type="checkbox" class="custom-control-input" id="SEMI-drop-chances-enabled" name="SEMI-drop-chances-enabled" onchange="SEMIetcGUI.dropChances = this.checked" ${
+                SEMIetcGUI.dropChances ? 'checked' : ''
+              }>
+              <label class="custom-control-label" for="SEMI-drop-chances-enabled">Drop Chances: Displays drop chance percentages on the monster/chest drops modal down to three sig figs.</label>
             </div>
             <div class="block-content block-content-full text-right">
               <button type="button" id="${SEMI.ROOT_ID}-etc-toggles-apply-save" class="btn btn-sm btn-primary">
