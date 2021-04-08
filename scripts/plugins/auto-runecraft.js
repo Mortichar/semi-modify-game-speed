@@ -1,8 +1,7 @@
 (() => {
     const id = 'auto-runecraft';
     const title = 'AutoRunecraft';
-    const desc =
-        "AutoRunecraft will runecraft the highest XP rune automatically. SEMI's version will not switch runes until runecrafting action is complete.";
+    const desc = 'AutoRunecraft will runecraft runes based on the rune use ratios you select.';
 
     const imgSrc = 'assets/media/bank/rune_chaos.svg';
     const skill = 'Runecrafting';
@@ -122,7 +121,7 @@
             </div>`;
         };
 
-        const runeOptions = `<div class="custom-control-inline">Base Rune Count:<input type="text" class="form-control form-control-small" id="aRCBaseRuneCount" placeholder="10000"></input></div><div>${RUNE_NAMES.map(
+        const runeOptions = `<div class="custom-control-inline">Cast Count:<input type="text" class="form-control form-control-small" id="aRCBaseRuneCount" placeholder="10000"></input></div><div>${RUNE_NAMES.map(
             (_, i) => createRuneButton(i)
         ).join('')}</div>`;
 
@@ -130,7 +129,7 @@
                 <div class="col-md-12">
                     <div class="block block-rounded block-link-pop border-top border-mining border-4x" style="padding-bottom: 12px; display: flex; flex-direction: column">
                         <div class="block-header text-center"><h3 class="block-title">AutoRunecraft Rune Selection</h3></div>
-                        <div class="block-content text-center font-w400 font-size-sm" style="padding-top: 4px;">Craft by ratios of your selection. Choose your factor and overall base rune count to craft. Will begin mining rune essence if you rune out.</div>
+                        <div class="block-content text-center font-w400 font-size-sm" style="padding-top: 4px;">Craft by ratios of your selection. Choose the base spell cast count you wish to craft for, then calculate your rune use for each cast and put it into the rune boxes. Will begin mining rune essence if you rune out.</div>
                         <div class="block-content text-center" style="padding-top: 12px; margin-top: auto;">${runeOptions}</div>
                     </div>
                 </div>`;
@@ -194,51 +193,55 @@
         $(`#aRCLeft${runeName}`).text('Left: ' + runesLeft(runeName));
     };
 
+    const totalRunesLeft = () => {
+        return RUNE_NAMES.reduce((acc, curr, ind) => ((acc += runesLeft(curr)), 0));
+    };
+
+    const getSelectedRune = () => {
+        return $('#runecraft-item-name').text().split(' ')[0].toLowerCase();
+    };
+
+    const isCraftingRune = (rune) => {
+        return rune === getSelectedRune();
+    };
+
     const autoRunecraft = () => {
         // Set the standard rune menu as the current menu
         runecraftingCategory(0);
 
-        let iterationLeftCount = 0;
-        let runeEssenceCount = SEMIUtils.getBankQty(388);
+        // Assure the counts are correct before each loop
+        for (const rune of RUNE_NAMES) {
+            updateRuneCounts(rune);
+        }
+
+        let runeEssenceCount = SEMIUtils.getBankQty(CONSTANTS.item.Rune_Essence);
         // Check if we even have enough rune essence
         if (runeEssenceCount === 0) {
             mineRock(10);
         } else {
             // Iterate through our "need" categories
-            $.each(RUNE_NAMES, function (index, value) {
-                // Assure the counts are correct before each loop
-                updateRuneCounts(value);
-
+            for (const rune of RUNE_NAMES) {
                 // Store the value of runes left to go, and add the value to our iteration tracker
-                let runeCountLeft = runesLeft(value);
-                iterationLeftCount += runeCountLeft;
+                let runeCountLeft = runesLeft(rune);
 
                 // If the runes needed is >0, start crafting that rune
-                if (runeCountLeft > 0 && !currentlyCrafting(value)) {
+                if (runeCountLeft > 0 && !isCraftingRune(rune)) {
                     // Craft the Rune
-                    craftRune(value);
-
-                    console.log('AutoRunecraft begin crafting');
-
-                    // Save the current craft to value so we can avoid unecessary looping
-                    currCraft = value;
+                    craftRune(rune);
+                    console.log('AutoRunecraft begin crafting ' + rune + ' runes');
 
                     // Exit to prevent from swapping runes to make infinitely
                     return false;
-                }
-                // Catches the case that still have runes to craft but are currently crafting this rune.
-                // We return here to avoid just jumping to the next rune.
-                else if (runeCountLeft > 0) {
+                } else if (!SEMIUtils.isCurrentSkill(skill)) {
+                    craftRune(rune);
+                    return false;
+                } else if (runeCountLeft) {
                     return false;
                 }
-                // Default case. Progress to the next rune.
-                else {
-                    return true;
-                }
-            });
+            }
 
             // Are we all done? If all left counts are at 0, stop crafting
-            if (iterationLeftCount === 0) {
+            if (totalRunesLeft() === 0) {
                 SEMIUtils.stopSkill(skill);
             }
         }
