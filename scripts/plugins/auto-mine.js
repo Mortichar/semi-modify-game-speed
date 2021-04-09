@@ -263,12 +263,11 @@
 
     /** @param {number[]} rocks */
     const autoMine = (rocks = mineArray) => {
-        let swingRatio = 0;
-        if (SEMIUtils.isCurrentSkill(skill)) {
-            swingRatio = Number(
-                document.getElementById(`mining-rock-progress-${currentRock}`).style.width.split('%')[0]
-            );
-        }
+        if (!SEMIUtils.isCurrentSkill(skill)) return;
+
+        const swingRatio = Number(
+            document.getElementById(`mining-rock-progress-${currentRock}`).style.width.split('%')[0]
+        );
         if (AMselection !== 9 && AMselection !== -1) {
             let resourceRatios = [];
             for (const rock of rocks) {
