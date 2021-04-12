@@ -6,7 +6,11 @@ var autoSellShow = (() => {
     const desc = 'AutoSell is a script for selling items you no longer want.';
     const imgSrc = 'assets/media/main/gp.svg';
 
+    const faceOpacity = 0.25;
+    const hiddenOpacity = 0;
+
     let isItemEnabledToSell = {};
+    let isItemMatchFilter = {};
 
     const fadeAll = () => {
         for (let i = 0; i < itemStats.length; i++) {
@@ -15,12 +19,26 @@ var autoSellShow = (() => {
                 continue;
             }
             const shouldBeFaded = !isItemEnabledToSell[i];
+            const shouldBeHidden = Object.keys(isItemMatchFilter).length === 0 ? false : !isItemMatchFilter[i];
             const currentState = typeof x.css('opacity') === 'undefined' ? '1' : x.css('opacity');
-            const isFaded = currentState === '0.25';
-            const isCorrect = isFaded === shouldBeFaded;
-            const neededOpacity = shouldBeFaded ? 0.25 : 1;
-            if (!isCorrect) {
-                x.fadeTo(500, neededOpacity);
+            const isFaded = currentState === faceOpacity + '';
+            const isHidden = currentState === hiddenOpacity + '';
+
+            if (!shouldBeHidden) {
+                x.css('pointer-events', '');
+            }
+
+            if (shouldBeHidden) {
+                if (!isHidden) {
+                    x.css('pointer-events', 'none');
+                    x.fadeTo(500, hiddenOpacity);
+                }
+            } else if (shouldBeFaded) {
+                if (!isFaded) {
+                    x.fadeTo(500, faceOpacity);
+                }
+            } else if (isFaded || isHidden) {
+                x.fadeTo(500, 1);
             }
         }
     };
@@ -111,11 +129,46 @@ var autoSellShow = (() => {
         const y = $(`#modal-${id}`).children().children().children().children('.font-size-sm');
         y.children().children().attr('id', `${id}-container`);
 
-        const enableAutoButton = $(
-            `<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>`
-        );
+        const controlSection = $(`
+        <div class="col-12">
+            <div class="block block-rounded">
+                <div class="row row-deck gutters-tiny">
+                <div class="col-2 col-md-4">
+                    <button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>
+                </div>
+                <div class="col-10 col-md-8">
+                    <input class="form-control" type="text" id="${id}-filter" placeholder="Search for items ... (text | regex)">
+                </div>
+                </div>
+            </div>
+        </div>
+        `);
+
+        y.before(controlSection);
+
+
+        const enableAutoButton = $(`button#${id}-status`);
+        const searchInput = $(`input#${id}-filter`);
+
         enableAutoButton.on('click', () => SEMI.toggle(`${id}`));
-        y.before(enableAutoButton);
+        searchInput.on('change', (event) => {
+            const value = event.currentTarget.value;
+            if (!value || value.length === 0) {
+                isItemMatchFilter = {};
+                fadeAll();
+                return;
+            }
+
+            const _value = RegExp(value.replace(/^\/|\/$/g, ''), 'i');
+            isItemMatchFilter = {};
+            for (let i = 0; i < itemStats.length; i++) {
+                const { name } = items[i];
+                if (name.match(_value)) {
+                    isItemMatchFilter[i] = true;
+                }
+            }
+            fadeAll();
+        })
 
         const refreshLogBtn = $(`<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
             <i class="fas fa-redo text-muted" title="Refresh this log page to reflect your current item log."></i>

@@ -19,6 +19,14 @@ Define `buyCompost` using `buyShopItem` to fix AutoFarm
 
 Thanks to TheAlpacalypse and Elad Shahar!
 
+## v0.5.7
+
+## Melvor @ v0.19.1
+
+### UI Changes
+
+* Add search for items in AutoSell
+
 ## v0.5.5
 
 ## Melvor @ v0.19.1
