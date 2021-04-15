@@ -473,6 +473,30 @@ SEMI.AutoEquipBestItems = (() => {
         return true;
     };
 
+    const isCurrentTaskMaxMastery = () => {
+        const currentSkillId = SEMIUtils.currentSkillId();
+        if (currentSkillId === -1) {
+            return false;
+        }
+
+        const isMaxMastery = (masteryId) => {
+            return getMasteryLevel(currentSkillId, masteryId) >= 99;
+        };
+
+        switch (SEMIUtils.currentSkillName()) {
+            case 'Woodcutting':
+                return currentTrees.every((t) => isMaxMastery(t));
+            case 'Fishing':
+                return isMaxMastery(
+                    fishingItems[fishingAreas[currentFishingArea].fish[selectedFish[currentFishingArea]]].fishingID
+                );
+            case 'Mining':
+                return isMaxMastery(currentRock);
+            // Remaining skills to be implemented
+        }
+        return false;
+    };
+
     const canEquipRing = (currentSkill, itemId, isSkillMaxLevel) => {
         if (!checkBankForItem(itemId) && !equippedItems.includes(itemId)) {
             return false;
@@ -483,6 +507,8 @@ SEMI.AutoEquipBestItems = (() => {
                 return !isSkillMaxLevel && currentSkill == CONSTANTS.skill.Fishing;
             case CONSTANTS.item.Ancient_Ring_Of_Skills:
                 return !isInCombat && !isSkillMaxLevel;
+            case CONSTANTS.item.Ancient_Ring_Of_Mastery:
+                return !isInCombat && !isCurrentTaskMaxMastery();
         }
 
         return true;
