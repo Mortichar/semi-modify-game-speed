@@ -20,30 +20,33 @@ SEMIEventBus = (() => {
         _skillChangeHandlers.push(handler);
     };
 
-    // While we can hook a ton of functions to catch skill changes instantly this is
-    // cumbersome and a lot of maintenance. Instead we run the main loop
-    // so that all scripts can use the data without their own loops.
     let _currentSkill = -1;
     let _isMagic = false;
-    const checkIfSkillChanged = () => {
-        if (SEMIUtils.currentSkillId() != _currentSkill || isMagic != _isMagic) {
-            const _prevSkill = _currentSkill;
-            _currentSkill = SEMIUtils.currentSkillId();
-            _isMagic = isMagic;
-
-            for (var handler of _skillChangeHandlers) {
-                try {
-                    if (handler.HandleSkillChange) {
-                        handler.HandleSkillChange(_prevSkill, _currentSkill);
-                    }
-                } catch (e) {
-                    console.error(`SEMI: SkillChangeHandler Failed.`);
-                    console.error(e);
+    const TriggerSkillChanged = () => {
+        const _prevSkill = _currentSkill;
+        _currentSkill = SEMIUtils.currentSkillId();
+        _isMagic = isMagic;
+        for (var handler of _skillChangeHandlers) {
+            try {
+                if (handler.HandleSkillChange) {
+                    handler.HandleSkillChange(_prevSkill, _currentSkill);
                 }
+            } catch (e) {
+                console.error(`SEMI: SkillChangeHandler Failed.`);
+                console.error(e);
             }
         }
     };
 
+    const checkIfSkillChanged = () => {
+        if (SEMIUtils.currentSkillId() != _currentSkill || isMagic != _isMagic) {
+            TriggerSkillChanged();
+        }
+    };
+
+    // While we can hook a ton of functions to catch skill changes instantly this is
+    // cumbersome and a lot of maintenance. Instead we run the main loop
+    // so that all scripts can use the data without their own loops.
     const startEventBusTimers = () => {
         if (typeof SEMIUtils === 'undefined' || !SEMIUtils.utilsReady()) {
             return;
@@ -84,5 +87,11 @@ SEMIEventBus = (() => {
         }
     };
 
-    return { AddItemToBankPost, AddItemToBankPre, RegisterAddItemToBankHandler, RegisterSkillChangeHandler };
+    return {
+        AddItemToBankPost,
+        AddItemToBankPre,
+        RegisterAddItemToBankHandler,
+        RegisterSkillChangeHandler,
+        TriggerSkillChanged,
+    };
 })();
