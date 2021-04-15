@@ -372,6 +372,8 @@ SEMI.AutoEquipBestItems = (() => {
             return false;
         }
 
+        const RUNE_ESSENCE = 10;
+
         switch (itemId) {
             case CONSTANTS.item.Cooking_Gloves:
                 return currentSkillId == CONSTANTS.skill.Cooking;
@@ -382,7 +384,7 @@ SEMI.AutoEquipBestItems = (() => {
             case CONSTANTS.item.Thieving_Gloves:
                 return currentSkillId == CONSTANTS.skill.Thieving;
             case CONSTANTS.item.Gem_Gloves:
-                return currentSkillId == CONSTANTS.skill.Mining;
+                return currentSkillId == CONSTANTS.skill.Mining && currentRock !== RUNE_ESSENCE;
         }
 
         if (item.magicLevelRequired) {
