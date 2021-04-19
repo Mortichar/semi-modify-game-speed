@@ -146,7 +146,6 @@ var autoSellShow = (() => {
 
         y.before(controlSection);
 
-
         const enableAutoButton = $(`button#${id}-status`);
         const searchInput = $(`input#${id}-filter`);
 
@@ -168,7 +167,7 @@ var autoSellShow = (() => {
                 }
             }
             fadeAll();
-        })
+        });
 
         const refreshLogBtn = $(`<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
             <i class="fas fa-redo text-muted" title="Refresh this log page to reflect your current item log."></i>
@@ -217,7 +216,7 @@ var autoSellShow = (() => {
         }
     };
 
-    SEMIEventBus.RegisterAddItemToBankHandler({ HandleAddItemToBankPre: ItemEventHandler });
+    SEMIEventBus.RegisterAddItemToBankHandler({ HandleAddItemToBankPost: ItemEventHandler });
 
     SEMI.add(id, { ms: 0, onEnable, onDisable, title, desc });
     SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI });
