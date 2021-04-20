@@ -13,7 +13,8 @@
         const hpfood = numberMultiplier * items[currentFood.itemID].healsFor; // numberMultiplier = 10, adjusts hp math
         const adjustedMaxHit = SEMIUtils.adjustedMaxHit();
         const maxHitEatingCase = hp <= adjustedMaxHit && isInCombat;
-        const generalEatingCase = (hpdeficit > hpfood || hp <= 50) && !isInCombat;
+        const thievingMaxHit = Math.max(...thievingNPC.map(npc => getNumberMultiplierValue(npc.maxHit)));
+        const generalEatingCase = (hpdeficit > hpfood || hp <= thievingMaxHit) && !isInCombat;
         const eatingCase = maxHitEatingCase || generalEatingCase;
         if (eatingCase) {
             eatFood();

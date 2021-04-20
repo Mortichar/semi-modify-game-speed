@@ -134,6 +134,14 @@
         }, 1000);
     };
 
-    SEMI.add(id, { onLoop: doAll, onEnable, onDisable, title, desc, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT });
+    SEMI.add(id, {
+        onLoop: doAll,
+        onEnable,
+        onDisable,
+        title,
+        desc,
+        pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT,
+        skill: 'Slayer',
+    });
     SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT });
 })();

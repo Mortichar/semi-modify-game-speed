@@ -65,7 +65,7 @@
     }
 
     function buyCompost(confirmed) {
-        buyShopItem('Materials', CONSTANTS.shop.materials.Compost, confirmed)
+        buyShopItem('Materials', CONSTANTS.shop.materials.Compost, confirmed);
     }
 
     function findNextSeed(patch, patchId) {
@@ -590,6 +590,15 @@
         $(`.${id}-seed-selector`).remove();
     }
 
-    SEMI.add(id, { ms: 15000, onLoop: autoFarm, onEnable: injectGUI, onDisable: removeGUI, desc, title, imgSrc });
+    SEMI.add(id, {
+        ms: 15000,
+        onLoop: autoFarm,
+        onEnable: injectGUI,
+        onDisable: removeGUI,
+        desc,
+        title,
+        imgSrc,
+        skill: 'Farming',
+    });
     if (SEMI.getItem('auto-replant-status') !== null) SEMI.removeItem('auto-replant-status');
 })();

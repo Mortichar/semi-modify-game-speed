@@ -1,5 +1,40 @@
 # SEMI Changelog
 
+## v0.6.0
+[auto-mine] 
+* Doesn't yank control away from the user after selecting automine
+[auto-equip-best-items]
+* Ignores mastery ring if the current skill is at max mastery
+* Doesn't put on gem gloves if you are currently mining rune essence
+[auto-sell]
+* Doesn't skip the bank anymore when selling items. This will make it such that you no longer miss out on completion log stuff when auto-selling.
+* Adds item searching
+[auto-eat]
+* Works better with Thieving, and all non-normal game modes. This will now operate properly regardless of what HP scaling happens.
+* Mostly fixed the issues with stuns, however there are still issues with ITM. USE AT YOUR OWN PERIL. THIS MIGHT CRASH YOUR BROWSER.
+[drop-chances]
+* New toggle in settings. Displays drop chances for items on the "View Monster Drops" modal
+[save-on-exit]
+* New tweak. When the user leaves the page, a confirmation message will pop up asking the user to confirm the exit, while the game automatically saves in the background. The delay *should* be enough time for the cloud save to fire.
+[eta]
+* Merged fixes from upstream userscript to SEMI
+[auto-rc]
+* Changed "Base Rune Count" to "Cast Count" to clarify the function
+* Fixed the onChange triggers to make this work better
+* Fixed the counts not updating properly.
+* Fixed AutoRC allowing you to stop runecrafting
+* Made AutoRC work off of bank quantities
+[auto-skills]
+* Fixed most of the compatibility issues with adventure mode
+
+### Changes to SEMI going forward
+* SEMI will now use proper semver notation for future patches.
+* Bug fixes will be more frequent. I will be adding a new branch in the future, bug-fix, which will be rolled into main more frequently to ensure browser extension users are not left by the wayside.
+
+Credits to Luna, Shamus, Elad Shahar, Duc Bui, and TheAlpacalypse for the changes!
+
+## Melvor @ v0.19.2
+
 ## v0.5.6
 
 ## Various Fixes & Updates
@@ -18,6 +53,8 @@ Define `buyCompost` using `buyShopItem` to fix AutoFarm
 [AutoSlayer] Fixes the issues with AutoSlayerSkip
 
 Thanks to TheAlpacalypse and Elad Shahar!
+
+## Melvor @ v0.19.1
 
 ## v0.5.5
 

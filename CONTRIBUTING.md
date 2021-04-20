@@ -2,7 +2,7 @@
 
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or discord with the owners of this repository before making a change.
-Lately, the main active developer is Aldous Watts.
+Lately, the main active developer is TheAlpacalypse.
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
