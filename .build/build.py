@@ -51,13 +51,13 @@ def main():
         os.makedirs(rootDir+"/.build/outputs")
 
     # Remove previous outputs
-    if os.path.exists(rootDir+"/.build/outputs/SEMI-Master-Build-v"+version+".zip"):
-        print("Removing previous SEMI-Master-Build-v"+version+".zip...")
-        os.remove(rootDir+"/.build/outputs/SEMI-Master-Build-v"+version+".zip")
+    if os.path.exists(rootDir+"/.build/outputs/SEMI-Build-v"+version+".zip"):
+        print("Removing previous SEMI-Build-v"+version+".zip...")
+        os.remove(rootDir+"/.build/outputs/SEMI-Build-v"+version+".zip")
 
-    # Move the master build to ./.build/outputs/
-    print("Moving SEMI.zip to ./.build/outputs/SEMI-Master-Build-v"+version+".zip")
-    os.rename(rootDir+"/SEMI.zip", rootDir+"/.build/outputs/SEMI-Master-Build-v"+version+".zip")
+    # Move the build to ./.build/outputs/
+    print("Moving SEMI.zip to ./.build/outputs/SEMI-Build-v"+version+".zip")
+    os.rename(rootDir+"/SEMI.zip", rootDir+"/.build/outputs/SEMI-Build-v"+version+".zip")
 
     print("SEMI build script completed!")
 
