@@ -413,7 +413,12 @@ var SEMI = (() => {
 
         const updateStatus = () => {
             setItem(`${name}-status`, plugins[name].enabled);
-            const alternateStatusPlugins = ['auto-sell', 'auto-open', 'auto-bury', 'auto-slayer-skip'];
+            const alternateStatusPlugins = [
+                'auto-sell',
+                'auto-open',
+                'auto-bury',
+                // 'auto-slayer-skip'
+            ];
             if (alternateStatusPlugins.includes(name)) {
                 const updater = () => {
                     $(`#${name}-status`).text(plugins[name].enabled ? 'Enabled' : 'Disabled');
