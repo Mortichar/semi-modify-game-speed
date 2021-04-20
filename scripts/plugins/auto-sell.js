@@ -205,7 +205,7 @@ var autoSellShow = (() => {
     const ItemEventHandler = (itemID, qty, found, showNotification) => {
         if (isItemEnabledToSell[itemID] && SEMI.isEnabled(id)) {
             const gpBefore = gp;
-            SEMIUtils.processItemSaleWithoutBank(itemID, qty);
+            SEMIUtils.sellItemWithoutConfirmation(itemID, qty);
             SEMIUtils.customNotify(
                 items[itemID].media,
                 `Selling ${numberWithCommas(qty)} of ${items[itemID].name} for ${numberWithCommas(gp - gpBefore)} GP`,
