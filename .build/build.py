@@ -28,7 +28,7 @@ def main():
     # Get version
     with open('manifest.json', 'r') as manifest:
         lines = manifest.readlines()
-        versionline = lines[4]
+        versionline = lines[3]
         version = versionline.split('"')[3]
 
     # Create output zip
