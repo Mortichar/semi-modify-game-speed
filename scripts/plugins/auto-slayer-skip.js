@@ -72,13 +72,11 @@
     };
 
     const onDisable = () => {
-        $(`#${id}-status`).addClass('btn-danger');
-        $(`#${id}-status`).removeClass('btn-success');
+        $(`#${id}-menu-status`).attr('class', 'fas fa-times text-danger');
     };
 
     const onEnable = () => {
-        $(`#${id}-status`).addClass('btn-success');
-        $(`#${id}-status`).removeClass('btn-danger');
+        $(`#${id}-menu-status`).attr('class', 'fas fa-check text-success');
     };
 
     const autoShow = () => {
@@ -98,11 +96,11 @@
         const y = modal.children().children().children().children('.font-size-sm');
         y.children().children().attr('id', `${id}-container`);
 
-        const enableAutoButton = $(
-            `<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-status">Disabled</button>`
-        );
-        enableAutoButton.on('click', () => SEMI.toggle(id));
-        y.before(enableAutoButton);
+        // const enableAutoButton = $(
+        //     `<button class="btn btn-md btn-danger SEMI-modal-btn" id="${id}-menu-status">Disabled</button>`
+        // );
+        // enableAutoButton.on('click', () => SEMI.toggle(id));
+        // y.before(enableAutoButton);
 
         const toggleHiddenMonsters = $(
             `<button type="button" class="btn-block-option"><i class="far fa-eye" title="Show hidden monsters"></i></button>`
@@ -143,5 +141,11 @@
         pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT,
         skill: 'Slayer',
     });
-    SEMI.add(id + '-menu', { title, desc, imgSrc, injectGUI, pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT });
+    SEMI.add(id + '-menu', {
+        title: title + ' Menu',
+        desc,
+        imgSrc,
+        injectGUI,
+        pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT,
+    });
 })();
