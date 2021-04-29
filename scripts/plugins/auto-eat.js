@@ -7,13 +7,13 @@
 
     const autoEat = () => {
         const hp = SEMIUtils.currentHP(); // this number is already multiplied
-        const hpmax = SEMIUtils.currentLevel('Hitpoints') * numberMultiplier; // same here
+        const hpmax = SEMIUtils.maxHP();
         const hpdeficit = hpmax - hp;
         const currentFood = equippedFood[currentCombatFood];
         const hpfood = numberMultiplier * items[currentFood.itemID].healsFor; // numberMultiplier = 10, adjusts hp math
         const adjustedMaxHit = SEMIUtils.adjustedMaxHit();
         const maxHitEatingCase = hp <= adjustedMaxHit && isInCombat;
-        const thievingMaxHit = Math.max(...thievingNPC.map(npc => getNumberMultiplierValue(npc.maxHit)));
+        const thievingMaxHit = Math.max(...thievingNPC.map((npc) => getNumberMultiplierValue(npc.maxHit)));
         const generalEatingCase = (hpdeficit > hpfood || hp <= thievingMaxHit) && !isInCombat;
         const eatingCase = maxHitEatingCase || generalEatingCase;
         if (eatingCase) {
@@ -36,7 +36,7 @@
     };
 
     const onEnable = () => {
-        const hpmax = SEMIUtils.currentLevel('Hitpoints') * numberMultiplier; // same here
+        const hpmax = SEMIUtils.maxHP();
         const adjustedMaxHit = SEMIUtils.adjustedMaxHit();
         if (hpmax <= adjustedMaxHit) {
             SEMIUtils.customNotify(

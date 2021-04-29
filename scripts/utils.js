@@ -530,7 +530,7 @@ const SEMIUtils = (() => {
     };
 
     const maxHP = () => {
-        return SEMIUtils.currentLevel('Hitpoints') * numberMultiplier;
+        return maxHitpoints;
     };
     const currentHP = () => {
         return combatData.player.hitpoints;
