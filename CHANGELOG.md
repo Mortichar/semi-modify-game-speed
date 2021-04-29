@@ -1,5 +1,8 @@
 # SEMI Changelog
 
+## v0.6.2
+[auto-eat]
+* Fixed browser crashes on Into the Mist. Thank you to Visua for the help!
 ## v0.6.1
 [auto-sell]
 * Fixed items not being deleted from bank after sales
