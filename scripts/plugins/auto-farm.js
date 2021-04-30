@@ -55,12 +55,6 @@
         }
         const cost = n * items[CONSTANTS.item.Compost].buysFor;
         const balanceAfter = gp - cost;
-        if (!katoroneOn || katBot.reserveGold === 0) {
-            return balanceAfter > 0;
-        }
-        if (katBot.reserveGold > 0 && balanceAfter > katBot.reserveGold) {
-            return true;
-        }
         return false;
     }
 
