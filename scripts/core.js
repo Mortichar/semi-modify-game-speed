@@ -135,7 +135,6 @@ var SEMI = (() => {
                 localStorage.setItem(storageKey, JSON.stringify(restoredConfig[storageKey]));
             }
         }
-        loadKatSets();
         SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs restored from your import! Refresh to complete the import process.',
@@ -149,7 +148,6 @@ var SEMI = (() => {
                 localStorage.removeItem(key);
             }
         }
-        katoroneOn = false;
         SEMIUtils.customNotify(
             'assets/media/main/settings_header.svg',
             'SEMI configs erased from your local storage! Refresh to complete the reset process.',
@@ -451,7 +449,7 @@ var SEMI = (() => {
         const useSaved = Boolean(getItem('remember-state'));
         const wasEnabled = Boolean(getItem(`${name}-status`));
         const enabled = wasEnabled && useSaved;
-        if (enabled && name !== 'katorone') {
+        if (enabled) {
             if (name == 'auto-cook') {
                 setTimeout(enable, 5000);
             } else {

@@ -139,7 +139,6 @@
         'barf',
         'calc-to-level',
         'destroy-crops',
-        'katorone',
         'thief-calc',
         'xp-per-hour',
         'save-on-close',

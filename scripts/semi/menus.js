@@ -37,7 +37,6 @@ var { semiSetMenu } = (() => {
   <li><a href="https://pastebin.com/wq641Nhx" target="_blank">XPH by Breakit</a></li>
   <li>Thieving Calculator from <a href="https://github.com/RedSparr0w/Melvor-Idle-Helper" target="_blank">Melvor Idle Helper by RedSparr0w</a></li>
   <li><a href="https://discordapp.com/channels/625838709203271680/664637399028072470/681397160465661992" target="_blank">AutoCook by Unicue</a></li>
-  <li><a href="https://github.com/Katorone/AutoMelvorIdle/blob/master/melvor.user.js" target="_blank" title="">Katorone's automation script</a></li>
   </ul>`;
   const creditsText = `
   <ul>
@@ -237,11 +236,6 @@ var { semiSetMenu } = (() => {
       'Scripting Engine for Melvor Idle is now loaded and running! Check the bottom of the sidebar.',
       { duration: 5000 }
     );
-  };
-
-  //show SEMI katorone automation settings modal called by nav button
-  const semiSetMenu = () => {
-    SEMIUtils.getElement('kat-modal').modal(open);
   };
 
   //show SEMI info modal function called by nav button
