@@ -1,14 +1,22 @@
 # SEMI Changelog
 
 ## v0.6.2
+Another community update via TheAlpacalypse & co, reviewed by AW!
 [auto-eat]
 * Fixed browser crashes on Into the Mist. Thank you to Visua for the help!
+[auto-slayer]
+* Some fixes & config updates
+[auto-farm]
+* config menu & fixes
+[katorone]
+* taken out back and sent to script heaven (or other places depending on your feelings on the plugin)
+
 ## v0.6.1
 [auto-sell]
 * Fixed items not being deleted from bank after sales
 
 ## v0.6.0
-[auto-mine] 
+[auto-mine]
 * Doesn't yank control away from the user after selecting automine
 [auto-equip-best-items]
 * Ignores mastery ring if the current skill is at max mastery
