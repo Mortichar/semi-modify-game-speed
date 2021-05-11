@@ -249,7 +249,7 @@ var injectXPHGUI = (() => {
         );
         $('#combat-skill-progress-menu tr:not(:first)').append(
             $(
-                `<td class="font-w600 xphc xphcl d-none" style="text-align: right;"><span>...</span> to <input type="number" id="xphc-lvl-in" name="xphc-lvl" min="2" style="width: 50px; margin-left: 0.25em;"></td>`
+                `<td class="font-w600 xphc xphcl d-none" style="text-align: right;"><span>...</span> to <input type="number" id="xphc-lvl-in" name="xphc-lvl" min="2" style="width: 60px; margin-left: 0.25em;"></td>`
             )
         ); //add level selector
         for (let i = 0; i < COMBAT_LEVELS; i++) {
