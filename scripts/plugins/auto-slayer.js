@@ -184,9 +184,7 @@ pick one random monster from the monsterSelection array
 
             if (ready) {
                 // jumpToEnemy instead of selectMonster because selectMonster does not check for equipment requirements
-                if (!newEnemyLoading) {
-                    jumpToEnemy(slayerTask[0].monsterID);
-                }
+                jumpToEnemy(slayerTask[0].monsterID);
                 waitForEnemyLoaded = true;
             } else {
                 if (SEMI.getValue(id, 'unmet')) {
