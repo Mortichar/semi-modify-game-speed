@@ -10,16 +10,11 @@
 [auto-equip-best-item]
 * Adds mastery checks
 * Adds functionality for cooking
+
 ## v0.6.2
 Another community update via TheAlpacalypse & co, reviewed by AW!
 [auto-eat]
 * Fixed browser crashes on Into the Mist. Thank you to Visua for the help!
-[auto-slayer]
-* Some fixes & config updates
-[auto-farm]
-* config menu & fixes
-[katorone]
-* taken out back and sent to script heaven (or other places depending on your feelings on the plugin)
 
 ## v0.6.1
 [auto-sell]
