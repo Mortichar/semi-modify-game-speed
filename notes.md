@@ -35,3 +35,5 @@ for(e in w=this){for(j=20;j--;){try{e[h='includes']`pgr`&&w[e](j,1)}catch{}e[h]`
 petUnlocked.fill(1);
 updateWindow()
 ```
+
+remove in-game auto-eat: edit save and reset autoEat values as well as remove ["General", 1] 2 and 3 from shopItemsPurchased array.
