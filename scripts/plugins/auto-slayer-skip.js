@@ -10,9 +10,10 @@
     let showHiddenMonsters = false;
     let autoEnabled = [];
 
+    // Disabled monsters are dulled
     /** @param {number} monsterId */
     const getNeededOpacity = (monsterId) => {
-        return autoEnabled[monsterId] ? 1 : 0.25;
+        return autoEnabled[monsterId] ? 0.25 : 1;
     };
 
     /** @param {number} monsterId */
@@ -124,9 +125,6 @@
         setupContainer();
 
         setTimeout(() => {
-            // $(`#${id}-menu-status`)[0].innerHTML = '';
-            // $(`#${id}-menu-status`).remove();
-            // $(`#${id}-menu-button`).css('padding-left', '20px');
             $(`#${id}-menu-button`).on('click', autoShow);
             $(`#${id}-menu-button`).attr('href', null);
         }, 1000);
@@ -141,6 +139,7 @@
         pluginType: SEMI.PLUGIN_TYPE.AUTO_COMBAT,
         skill: 'Slayer',
     });
+
     SEMI.add(id + '-menu', {
         title: title + ' Menu',
         desc,

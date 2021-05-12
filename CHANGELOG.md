@@ -1,5 +1,15 @@
 # SEMI Changelog
 
+## v0.6.3
+[auto-slayer]
+* No longer broken (we think). Please continue to test this script!
+[auto-farm-equip]
+* Lets users select which pieces to equip rather than a full set
+[katorone]
+* Strips out this script, as it was extremely behind
+[auto-equip-best-item]
+* Adds mastery checks
+* Adds functionality for cooking
 ## v0.6.2
 Another community update via TheAlpacalypse & co, reviewed by AW!
 [auto-eat]

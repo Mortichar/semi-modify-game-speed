@@ -41,13 +41,13 @@ pick one random monster from the monsterSelection array
         CONSTANTS.item.Cape_of_Completion,
     ];
     let waitForEnemyLoaded = false;
-    
+
     // create equipment slot lookup
     let equipmentSlotNames = [];
-    Object.keys(CONSTANTS.equipmentSlot).forEach(key => {
+    Object.keys(CONSTANTS.equipmentSlot).forEach((key) => {
         equipmentSlotNames[CONSTANTS.equipmentSlot[key]] = key;
     });
-    
+
     // just simple hook to log when new task starts
     //const _getSlayerTask = getSlayerTask;
     //getSlayerTask = (...args) => {
@@ -79,7 +79,7 @@ pick one random monster from the monsterSelection array
         // in-game auto-slayer checks for equipment before deciding on the slayer target
         // keeping it enabled can let the user avoid certain areas without requiring spending tokens
         // by just not equipping gear for areas they don't wish to go to.
-        if(SEMI.getValue(id, 'autodisable')) {
+        if (SEMI.getValue(id, 'autodisable')) {
             if (autoSlayer === true) {
                 toggleSetting(32);
             }
@@ -117,17 +117,17 @@ pick one random monster from the monsterSelection array
             stopCombat();
 
             waitForEnemyLoaded = false;
-            
+
             let targetArea = findEnemyArea(slayerTask[0].monsterID, false);
             let requiredItem = -1;
             let requiredItemType = -1;
             let ready = false;
-            
+
             // some enemies like wandering bard don't have an area, causes undefined error when getting item
             // also make sure we're in a slayer area before checking if we need a slayer item
-            if(targetArea[0] === 1) {
+            if (targetArea[0] === 1) {
                 requiredItem = slayerAreas[targetArea[1]].slayerItem;
-                if(requiredItem > 0) {
+                if (requiredItem > 0) {
                     requiredItemType = equipmentSlotNames[items[requiredItem].equipmentSlot]; // equipmentSlot is a number, but `SEMIUtils.currentEquipmentInSlot()` expects a string
                 }
             }
@@ -138,11 +138,11 @@ pick one random monster from the monsterSelection array
                 SEMIUtils.equipFromBank(originalItem);
                 originalItem = 0;
             }
-            
+
             // equip required item
             if (requiredItem > 0) {
                 debugLog(`Required Item: ${items[requiredItem].name} [${requiredItem}] [${requiredItemType}]`);
-                
+
                 // there is no need to switch any items if the required item, a slayer, max or completion cape is equipped
                 if (
                     capePriority.includes(SEMIUtils.currentEquipmentInSlot('Cape')) ||
@@ -169,20 +169,22 @@ pick one random monster from the monsterSelection array
                 }
 
                 if (!ready && SEMIUtils.getBankId(requiredItem)) {
-                    originalItem = SEMIUtils.currentEquipmentInSlot(equipmentSlotNames[items[requiredItem].equipmentSlot]);
+                    originalItem = SEMIUtils.currentEquipmentInSlot(
+                        equipmentSlotNames[items[requiredItem].equipmentSlot]
+                    );
                     ready = SEMIUtils.equipFromBank(requiredItem);
-                    debugLog(`Storing equipped item to equip slayer item: ${items[originalItem].name} [${originalItem}]`);
+                    debugLog(
+                        `Storing equipped item to equip slayer item: ${items[originalItem].name} [${originalItem}]`
+                    );
                 }
             } else {
                 debugLog(`Nothing special required, is ready.`);
                 ready = true;
             }
-            
+
             if (ready) {
                 // jumpToEnemy instead of selectMonster because selectMonster does not check for equipment requirements
-                if(!newEnemyLoading) {
-                    jumpToEnemy(slayerTask[0].monsterID);
-                }
+                jumpToEnemy(slayerTask[0].monsterID);
                 waitForEnemyLoaded = true;
             } else {
                 if (SEMI.getValue(id, 'unmet')) {
@@ -246,7 +248,7 @@ pick one random monster from the monsterSelection array
         document.getElementById(`${id}-config-extend`).checked = SEMI.getValue(id, 'extend');
         document.getElementById(`${id}-config-unmet`).checked = SEMI.getValue(id, 'unmet');
     };
-    
+
     const debugLog = (msg) => {
         //console.debug(`[${title}] ${msg}`);
     };
