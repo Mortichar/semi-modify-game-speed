@@ -4,7 +4,61 @@
     const title = 'AutoFarmEquip';
     const desc = `If not in combat, equips Farming Cape, Bob's Rake and Signet Ring if you have them before harvesting and replanting. Be careful enabling this option with a full bank, can cause a loop where equipment gets continually swapped until bank space is opened up.`;
     const imgSrc = 'assets/media/bank/skillcape_farming.svg';
-    SEMI.add(id, { ms: 0, title, desc, imgSrc });
+
+    const saveConfig = () => {
+        [
+            CONSTANTS.item.Bobs_Rake,
+            CONSTANTS.item.Farming_Skillcape,
+            CONSTANTS.item.Aorpheats_Signet_Ring,
+        ].forEach((equipConfigItem) => {
+            const toggled = $(`#${id}-${equipConfigItem}`).prop('checked');
+            SEMI.setValue(id, `${id}-${equipConfigItem}`, toggled);
+        });
+
+        SEMI.setItem(`${id}-config`, SEMI.getValues(id));
+        SEMIUtils.customNotify(imgSrc, `${title} config saved!`);
+    };
+    const updateConfig = () => {
+        [
+            CONSTANTS.item.Bobs_Rake,
+            CONSTANTS.item.Farming_Skillcape,
+            CONSTANTS.item.Aorpheats_Signet_Ring,
+        ].forEach((equipConfigItem) => {
+            $(`#${id}-${equipConfigItem}`).prop('checked', SEMI.getValue(id, `${id}-${equipConfigItem}`));
+        });
+    };
+
+    const configMenu = `<div class="form-group">
+    <div class="custom-control custom-switch mb-1">
+        <input type="checkbox" class="custom-control-input" id="${id}-${CONSTANTS.item.Farming_Skillcape}" name="${id}-${CONSTANTS.item.Farming_Skillcape}">
+        <label class="custom-control-label" for="${id}-${CONSTANTS.item.Farming_Skillcape}">
+            Cape
+        </label>
+    </div>
+    <div class="custom-control custom-switch mb-1">
+        <input type="checkbox" class="custom-control-input" id="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}}" name="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}">
+        <label class="custom-control-label" for="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}">
+            Aorpheats Signet Ring
+        </label>
+    </div>
+    <div class="custom-control custom-switch mb-1">
+        <input type="checkbox" class="custom-control-input" id="${id}-${CONSTANTS.item.Bobs_Rake}}" name="${id}-${CONSTANTS.item.Bobs_Rake}">
+        <label class="custom-control-label" for="${id}-${CONSTANTS.item.Bobs_Rake}">
+            Bobs Rake
+        </label>
+    </div>
+</div>`;
+
+    SEMI.add(id, {
+        ms: 0,
+        title,
+        desc,
+        imgSrc,
+        configMenu,
+        hasConfig: true,
+        saveConfig,
+        updateConfig,
+    });
 })();
 
 (() => {
@@ -55,12 +109,6 @@
         }
         const cost = n * items[CONSTANTS.item.Compost].buysFor;
         const balanceAfter = gp - cost;
-        if (!katoroneOn || katBot.reserveGold === 0) {
-            return balanceAfter > 0;
-        }
-        if (katBot.reserveGold > 0 && balanceAfter > katBot.reserveGold) {
-            return true;
-        }
         return false;
     }
 
@@ -201,12 +249,23 @@
         if (!SEMI.isEnabled('auto-farm-equip')) {
             return;
         }
+
+        const equipConfigs = SEMI.getValues('auto-farm-equip');
+
         if (swapTo) {
-            equipIfNotEquipped(CONSTANTS.item.Bobs_Rake, 'Weapon');
-            equipIfNotEquipped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
-            (checkCompletionCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape')) ||
-                (checkMaxCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape')) ||
-                equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
+            if (equipConfigs[`auto-farm-equip-${CONSTANTS.item.Bobs_Rake}`]) {
+                equipIfNotEquipped(CONSTANTS.item.Bobs_Rake, 'Weapon');
+            }
+
+            if (equipConfigs[`auto-farm-equip-${CONSTANTS.item.Aorpheats_Signet_Ring}`]) {
+                equipIfNotEquipped(CONSTANTS.item.Aorpheats_Signet_Ring, 'Ring');
+            }
+
+            if (equipConfigs[`auto-farm-equip-${CONSTANTS.item.Farming_Skillcape}`]) {
+                (checkCompletionCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape')) ||
+                    (checkMaxCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape')) ||
+                    equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
+            }
         } else {
             if (SEMIUtils.equipSwapConfig['Weapon'].swapped) {
                 SEMIUtils.equipSwap(0, 'Weapon');

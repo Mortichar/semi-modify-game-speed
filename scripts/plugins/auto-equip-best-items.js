@@ -492,6 +492,8 @@ SEMI.AutoEquipBestItems = (() => {
                 );
             case 'Mining':
                 return isMaxMastery(currentRock);
+            case 'Cooking':
+                return isMaxMastery(items[selectedFood].masteryID[1]);
             // Remaining skills to be implemented
         }
         return false;

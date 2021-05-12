@@ -24,15 +24,16 @@ pick one random monster from the monsterSelection array
 (() => {
     const id = 'auto-slayer';
     const title = 'AutoSlayer';
-    const desc = `Fixed AutoSlayer, will turn off Melvor's auto-slayer setting. If using AutoSlayerSkip, it will select a new slayer task within the same tier. Using the Skip option in the AutoSlayer menu will allow you to cycle to a new slayer task in the same tier if you don't have the proper equipment for a currently assigned task. Leave it off if you want to manually select a new tier when complete. Extend option will attempt to extend your current task if you have the coins.`;
+    const desc = `If using AutoSlayerSkip, it will select a new slayer task within the same tier. Using the Skip option in the AutoSlayer menu will allow you to cycle to a new slayer task in the same tier if you don't have the proper equipment for a currently assigned task. Leave it off if you want to manually select a new tier when complete. Extend option will attempt to extend your current task if you have the coins.`;
     const imgSrc = SEMIUtils.skillImg('slayer');
 
     const config = {
+        autodisable: false,
         extend: false,
-        skip: false,
+        unmet: false,
     };
 
-    // holds value for uneqipped equipment
+    // holds value for unequipped equipment
     let originalItem = 0;
     let capePriority = [
         CONSTANTS.item.Slayer_Skillcape,
@@ -40,6 +41,19 @@ pick one random monster from the monsterSelection array
         CONSTANTS.item.Cape_of_Completion,
     ];
     let waitForEnemyLoaded = false;
+
+    // create equipment slot lookup
+    let equipmentSlotNames = [];
+    Object.keys(CONSTANTS.equipmentSlot).forEach((key) => {
+        equipmentSlotNames[CONSTANTS.equipmentSlot[key]] = key;
+    });
+
+    // just simple hook to log when new task starts
+    //const _getSlayerTask = getSlayerTask;
+    //getSlayerTask = (...args) => {
+    //    _getSlayerTask(...args);
+    //    debugLog(`New Slayer Task: ${MONSTERS[slayerTask[0].monsterID].name} [${slayerTask[0].monsterID}] x ${slayerTask[0].count}`);
+    //}
 
     const loop = () => {
         // on a character that has never accepted a slayer task
@@ -62,9 +76,13 @@ pick one random monster from the monsterSelection array
             }
         };
 
-        // disable melvor's own auto-slayer as it makes no sense in combination with this plugin
-        if (autoSlayer === true) {
-            toggleSetting(32);
+        // in-game auto-slayer checks for equipment before deciding on the slayer target
+        // keeping it enabled can let the user avoid certain areas without requiring spending tokens
+        // by just not equipping gear for areas they don't wish to go to.
+        if (SEMI.getValue(id, 'autodisable')) {
+            if (autoSlayer === true) {
+                toggleSetting(32);
+            }
         }
 
         //if semi auto-slayer-skip is on, skip them unwanteds
@@ -101,20 +119,36 @@ pick one random monster from the monsterSelection array
             waitForEnemyLoaded = false;
 
             let targetArea = findEnemyArea(slayerTask[0].monsterID, false);
-            let requiredItem = slayerAreas[targetArea[1]].slayerItem;
-            let requiredItemType = items[requiredItem].equipmentSlot;
+            let requiredItem = -1;
+            let requiredItemType = -1;
             let ready = false;
+
+            // some enemies like wandering bard don't have an area, causes undefined error when getting item
+            // also make sure we're in a slayer area before checking if we need a slayer item
+            if (targetArea[0] === 1) {
+                requiredItem = slayerAreas[targetArea[1]].slayerItem;
+                if (requiredItem > 0) {
+                    requiredItemType = equipmentSlotNames[items[requiredItem].equipmentSlot]; // equipmentSlot is a number, but `SEMIUtils.currentEquipmentInSlot()` expects a string
+                }
+            }
 
             // re-equip original item, there is an edgecase where the same item is required again but it will simply reequip it
             if (originalItem > 0) {
+                debugLog(`Re-equipped Item: ${items[originalItem].name} [${originalItem}] [${requiredItemType}]`);
                 SEMIUtils.equipFromBank(originalItem);
                 originalItem = 0;
-            } else if (requiredItem > 0) {
+            }
+
+            // equip required item
+            if (requiredItem > 0) {
+                debugLog(`Required Item: ${items[requiredItem].name} [${requiredItem}] [${requiredItemType}]`);
+
                 // there is no need to switch any items if the required item, a slayer, max or completion cape is equipped
                 if (
                     capePriority.includes(SEMIUtils.currentEquipmentInSlot('Cape')) ||
                     requiredItem === SEMIUtils.currentEquipmentInSlot(requiredItemType)
                 ) {
+                    debugLog(`Required item is already equipped.`);
                     ready = true;
                 }
                 // overwrite required item with cape if available in bank
@@ -128,16 +162,23 @@ pick one random monster from the monsterSelection array
                             ) {
                                 requiredItem = item;
                                 requiredItemType = 'Cape';
+                                debugLog(`Using ${items[requiredItem].name} as Slayer Item Requirement.`);
                             }
                         }
                     });
                 }
 
                 if (!ready && SEMIUtils.getBankId(requiredItem)) {
-                    originalItem = SEMIUtils.currentEquipmentInSlot(items[requiredItem].type);
+                    originalItem = SEMIUtils.currentEquipmentInSlot(
+                        equipmentSlotNames[items[requiredItem].equipmentSlot]
+                    );
                     ready = SEMIUtils.equipFromBank(requiredItem);
+                    debugLog(
+                        `Storing equipped item to equip slayer item: ${items[originalItem].name} [${originalItem}]`
+                    );
                 }
             } else {
+                debugLog(`Nothing special required, is ready.`);
                 ready = true;
             }
 
@@ -146,10 +187,15 @@ pick one random monster from the monsterSelection array
                 jumpToEnemy(slayerTask[0].monsterID);
                 waitForEnemyLoaded = true;
             } else {
-                {
+                if (SEMI.getValue(id, 'unmet')) {
+                    // pick a new slayer task with the same difficulty setting
+                    debugLog(`Required item not found, getting a new task.`);
+                    selectNewSlayerTask(slayerTask[0].tier);
+                } else {
+                    debugLog(`Missing equipment "${items[requiredItem].name}"`);
                     notifyPlayer(
                         CONSTANTS.skill.Slayer,
-                        'Missing equipment for slayer task! Manually select new task or enable auto-skip unmet requirements option.'
+                        `Missing equipment "${items[requiredItem].name}" for slayer task! Manually select new task or enable auto-skip unmet requirements option.`
                     );
                 }
             }
@@ -159,6 +205,13 @@ pick one random monster from the monsterSelection array
     //Config menu
     const hasConfig = true;
     const configMenu = `<div class="form-group" style="max-width: 300px;">
+        <b>Disable In-Game Auto-Slayer</b><br/>
+        <span>Enable this option to disable the in-game auto slayer if enabled.</span>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="${id}-config-disable-auto" name="${id}-config-disable-auto">
+            <label class="custom-control-label" for="${id}-config-disable-auto">Enabled</label>
+        </div>
+        <br/>
         <b>Auto-Extend</b><br/>
         <span>Enable this option to auto-extend all slayer tasks. This will check periodicaly if enough slayer coins are available and extend if possible.</span>
         <div class="custom-control custom-switch">
@@ -167,9 +220,7 @@ pick one random monster from the monsterSelection array
         </div>
         <br/>
         <b>Auto-Skip Unmet Requirements</b><br/>
-        <span>Enable this option to auto-skip all slayer tasks if the required equipment is not available.
-        <br/>
-        <b>THIS SCRIPT IS BROKEN IN V0.19 AND DOES NOTHING</b></span>
+        <span>Enable this option to auto-skip all slayer tasks if the required equipment is not available.</span>
         <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="${id}-config-unmet" name="${id}-config-unmet">
             <label class="custom-control-label" for="${id}-config-unmet">Enabled</label>
@@ -177,13 +228,15 @@ pick one random monster from the monsterSelection array
     </div>`;
 
     const saveConfig = () => {
+        let autodisable = Number(document.getElementById(`${id}-config-disable-auto`).checked);
         let extend = Number(document.getElementById(`${id}-config-extend`).checked);
-        // let skip = Number(document.getElementById(`${id}-config-skip`).checked);
+        let unmet = Number(document.getElementById(`${id}-config-unmet`).checked);
+        SEMI.setValue(id, 'autodisable', autodisable);
         SEMI.setValue(id, 'extend', extend);
-        // SEMI.setValue(id, 'skip', skip);
+        SEMI.setValue(id, 'unmet', unmet);
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
 
-        SEMIUtils.customNotify(imgSrc, `Saved AutoSlayer Task Tier: ${SEMI.getValue(id, 'taskTier')}`, {
+        SEMIUtils.customNotify(imgSrc, `Saved ${title} Config`, {
             duration: 3000,
         });
 
@@ -191,8 +244,13 @@ pick one random monster from the monsterSelection array
     };
 
     const updateConfig = () => {
+        document.getElementById(`${id}-config-disable-auto`).checked = SEMI.getValue(id, 'autodisable');
         document.getElementById(`${id}-config-extend`).checked = SEMI.getValue(id, 'extend');
-        // document.getElementById(`${id}-config-skip`).checked = SEMI.getValue(id, 'skip');
+        document.getElementById(`${id}-config-unmet`).checked = SEMI.getValue(id, 'unmet');
+    };
+
+    const debugLog = (msg) => {
+        //console.debug(`[${title}] ${msg}`);
     };
 
     SEMI.add(id, {
