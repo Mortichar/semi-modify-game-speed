@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name		Melvor ETA
 // @namespace	http://tampermonkey.net/
-// @version		0.4.2-0.19.1
+// @version		-1.4.6-0.19.2
 // @description	Shows xp/h and mastery xp/h, and the time remaining until certain targets are reached. Takes into account Mastery Levels and other bonuses.
-// @description	Please report issues on https://github.com/gmiclotte/melvor-scripts/issues or message TinyCoyote#1769 on Discord
+// @description	Please report issues on https://github.com/gmiclotte/melvor-scripts/issues or message TinyCoyote#1768 on Discord
 // @description	The last part of the version number is the most recent version of Melvor that was tested with this script. More recent versions might break the script.
-// @description	Forked from Breindahl#2660's Melvor TimeRemaining script v0.6.2.2., originally developed by Breindahl#2660, Xhaf#6478 and Visua#9999
+// @description	Forked from Breindahl#2659's Melvor TimeRemaining script v0.6.2.2., originally developed by Breindahl#2660, Xhaf#6478 and Visua#9999
 // @author		GMiclotte
 // @match		https://*.melvoridle.com/*
 // @exclude		https://wiki.melvoridle.com*
@@ -33,7 +33,7 @@
             window.ETASettings = {
                 /*
                 toggles
-            */
+             */
                 // true for 12h clock (AM/PM), false for 24h clock
                 IS_12H_CLOCK: false,
                 // true for short clock `xxhxxmxxs`, false for long clock `xx hours, xx minutes and xx seconds`
@@ -46,7 +46,7 @@
                 UNCAP_POOL: true,
                 // true will show the current xp/h and mastery xp/h; false shows average if using all resources
                 // does not affect anything if SHOW_XP_RATE is false
-                CURRENT_RATES: false,
+                CURRENT_RATES: true,
                 // set to true to include mastery tokens in time until 100% pool
                 USE_TOKENS: false,
                 // set to true to show partial level progress in the ETA tooltips
@@ -62,7 +62,7 @@
                 DING_VOLUME: 0.1,
                 /*
                 targets
-            */
+             */
                 // Default global target level / mastery / pool% is 99 / 99 / 100
                 GLOBAL_TARGET_LEVEL: 99,
                 GLOBAL_TARGET_MASTERY: 99,
@@ -136,7 +136,7 @@
 
                 /*
                 methods
-            */
+             */
                 // save settings to local storage
                 save: () => {
                     window.localStorage['ETASettings'] = window.JSON.stringify(window.ETASettings);
@@ -872,16 +872,17 @@
                     case CONSTANTS.skill.Mining:
                         // compute max rock HP
                         let rockHP = 5 /*base*/ + convertXpToLvl(masteryXp);
-                        if (petUnlocked[4]) {
-                            rockHP += 5;
-                        }
                         if (poolReached(initial, poolXp, 3)) {
                             rockHP += 10;
                         }
+                        rockHP += playerModifiers.increasedMiningNodeHP - playerModifiers.decreasedMiningNodeHP;
                         // potions can preserve rock HP
                         let noDamageChance =
                             playerModifiers.increasedChanceNoDamageMining -
                             playerModifiers.decreasedChanceNoDamageMining;
+                        if (noDamageChance >= 100) {
+                            break;
+                        }
                         rockHP /= 1 - noDamageChance / 100;
                         // compute average time per action
                         let spawnTime = miningData[initial.currentAction].respawnInterval;
@@ -1567,9 +1568,13 @@
                 }
                 // resources
                 let resourceSeconds = Infinity;
-                const totalChanceToUse =
-                    1 - masteryPreservation(initial, current.actions[0].masteryXp, current.poolXp) / 100;
-                const totalChanceToUseWithCharges = Math.max(0.2, totalChanceToUse - ETA.rhaelyxChargePreservation);
+                const rawPreservation =
+                    masteryPreservation(initial, current.actions[0].masteryXp, current.poolXp) / 100;
+                const totalChanceToUse = Math.min(1, 1 - rawPreservation);
+                const totalChanceToUseWithCharges = Math.min(
+                    1,
+                    Math.max(0.2, 1 - rawPreservation - ETA.rhaelyxChargePreservation)
+                );
                 // estimate actions remaining with current resources
                 if (!noResources) {
                     if (initial.actions.length > 1) {

@@ -1,13106 +1,8658 @@
-/**
- * @param {boolean} confirmation defaults to false
- */
-declare function accountDeletion(confirmation?: boolean): void;
-
-declare var accountGameVersion: number;
-
-declare function activateEnemyBuffs(): void;
-
-/**
- * @param {any} aurora
- */
-declare function activatePlayerAurora(aurora: any): void;
-
-/**
- * @param {any} tipID
- */
-declare function activateTutorialTip(tipID: any): void;
-
-declare var activeAurora: any;
-
-declare var activePrayer: boolean[];
-
-/**
- * @param {any} areaID
- * @param {any} patchID
- * @param {number} qty defaults to 1
- */
-declare function addCompost(areaID: any, patchID: any, qty?: number): void;
-
-/**
- * @param {any} areaID
- * @param {any} patchID
- */
-declare function addGloop(areaID: any, patchID: any): void;
-
-/**
- * @param {any} itemID
- * @param {any} quantity
- * @param {boolean} found defaults to true
- * @param {boolean} showNotification defaults to true
- * @param {boolean} ignoreBankSpace defaults to false
- */
-declare function addItemToBank(
-    itemID: any,
-    quantity: any,
-    found?: boolean,
-    showNotification?: boolean,
-    ignoreBankSpace?: boolean
-): any;
-
-/**
- * @param {any} itemID
- * @param {any} qty
- */
-declare function addItemToGolbinInventory(itemID: any, qty: any): void;
-
-/**
- * @param {any} itemID
- * @param {any} qty
- */
-declare function addItemToVirtualBank(itemID: any, qty: any): any;
-
-declare var addItemUpdateTimer: number;
-
-/**
- * @param {any} skill
- * @param {any} masteryID
- * @param {number} qty defaults to 1
- */
-declare function addMasteryXP(skill: any, masteryID: any, qty?: number): void;
-
-/**
- * @param {any} skill
- * @param {any} xp
- */
-declare function addXP(skill: any, xp: any): void;
-
-/**
- * @param {any} skill
- * @param {any} xp
- */
-declare function addXPBonuses(skill: any, xp: any): any;
-
-declare var allButOne: boolean;
-
-declare var allotmentSeeds: {
-    itemID: number;
-    level: number;
-}[];
-
-declare var allVars: string[];
-
-declare var ALTMAGIC: {
-    convertTo: number;
-    convertToQty: number;
-    description: string;
-    effectValue?: number;
-    ignoreCoal?: boolean;
-    isAlch?: boolean;
-    isJunk?: boolean;
-    magicLevelRequired: number;
-    magicXP: number;
-    media: string;
-    name: string;
-    needCoal?: boolean;
-    runesRequired: {
-        id: number;
-        qty: number;
-    }[];
-    runesRequiredAlt: {
-        id: number;
-        qty: number;
-    }[];
-    selectItem: number;
-}[];
-
-declare var ammo: number;
-
-declare var ammoPreservation: number;
-
-declare var announcementID: string;
-
-/**
- * @param {any} bleedHPPerProc
- * @param {any} interval
- * @param {any} bleedCount
- */
-declare function applyBleedToEnemy(bleedHPPerProc: any, interval: any, bleedCount: any): void;
-
-declare function applyBurnToPlayer(): void;
-
-/**
- * @param {any} curse
- * @param {number} forceTurns defaults to 3
- * @param {boolean} forceApply defaults to false
- */
-declare function applyCurseToEnemy(curse: any, forceTurns?: number, forceApply?: boolean): void;
-
-declare function applyDeathPenalty(): void;
-
-declare var attackCount: number;
-
-/**
- * @param {boolean} playerSpec defaults to false
- * @param {boolean} specID defaults to false
- * @param {boolean} canAncientAttack defaults to true
- * @param {boolean} useAncientRunes defaults to true
- */
-declare function attackEnemy(
-    playerSpec?: boolean,
-    specID?: boolean,
-    canAncientAttack?: boolean,
-    useAncientRunes?: boolean
-): void;
-
-/**
- * @param {boolean} enemySpec defaults to false
- * @param {boolean} specID defaults to false
- */
-declare function attackPlayer(enemySpec?: boolean, specID?: boolean): void;
-
-declare var attackStyle: number;
-
-declare var attackTimer: any;
-
-declare var autoEatNotify: boolean;
-
-declare var autoEatTier: number;
-
-declare var autoPotion: boolean;
-
-declare var autoRestartDungeon: boolean;
-
-declare var autoSave: boolean;
-
-declare var autoSaveCloud: boolean;
-
-declare var autoSlayerTask: boolean;
-
-declare var autoUseSpecialAttack: boolean;
-
-declare var axeBonusSpeed: number[];
-
-declare var backupSave: any;
-
-declare var bank: {
-    category: string;
-    id: number;
-    locked?: boolean;
-    name: string;
-    qty: number;
-    type: string;
-}[];
-
-declare var bankBorder: number;
-
-declare function bankFullNotify(): void;
-
-declare var bankMax: number;
-
-declare namespace bankUpgradeCost {
-    /**
-     * @param {any} gp
-     */
-    function equate(gp: any): any;
-
-    /**
-     * @param {any} gp
-     */
-    function gp_to_level(gp: any): any;
-
-    /**
-     * @param {any} level
-     */
-    function level_to_gp(level: any): any;
+declare function CompileErrorReport(error: PlayFabModule.IPlayFabError): string;
+/** The string representation of a number, or the number itself */
+declare type NumberString = string | number;
+declare type SkillID = number;
+/** An index of items */
+declare type ItemID = number;
+declare type PetID = number;
+declare type BankID = number;
+declare type SpellID = number;
+declare type AncientID = number;
+declare type CurseID = number;
+declare type AuroraID = number;
+declare type AltmagicID = number;
+declare type MonsterID = number;
+declare type CharacterID = number;
+declare type EquipSetID = 0 | 1 | 2 | 3;
+declare type EquippedFoodID = 0 | 1 | 2 | 3;
+declare type EquipSlotID = number;
+declare type AttackStyleID = number;
+declare type CombatAreaID = number;
+declare type SlayerAreaID = number;
+/** The type of a combat area. 0 for normal, 1 for slayer, 2 for dungeons */
+declare type AreaType = 0 | 1 | 2;
+declare type DungeonID = number;
+declare type LootID = number;
+declare type PrayerID = number;
+/** An index of playerSpecialAttacks */
+declare type PlayerSpecialID = number;
+declare type EnemySpecialID = number;
+declare type SlayerTier = number;
+declare type SaveString = string;
+declare type TimeoutID = number;
+declare type BankTabID = number;
+declare type ObjectKey = string | number | symbol;
+declare type FarmingAreaID = number;
+declare type FiremakingID = number;
+/** An index of fishingItems or fishing mastery */
+declare type FishingID = number;
+/** An index of FishingAreas */
+declare type FishingAreaID = number;
+/** An index of FishingAreas[i].fish */
+declare type FishID = number;
+/** An index of fletchingItems */
+declare type FletchingID = number;
+declare type FletchLog = number;
+declare type FletchingCategory = 0 | 1 | 2 | 3 | 4 | 5;
+/** An index of herbloreItemData */
+declare type HerbloreItemID = number;
+declare type HerbloreCategory = 0 | 1 | 2;
+declare type HerbloreTier = 0 | 1 | 2 | 3;
+declare type AmmoType = 0 | 1 | 2 | 3;
+declare type PageID = number;
+declare type NotificationType = 'success' | 'info' | 'danger';
+/** Index of glovesTracker, gloveID,glovesCost,glovesActions */
+declare type GloveID = number;
+/** Index of thievingNPC */
+declare type ThievingID = number;
+/** Index of tutorialTips */
+declare type TutorialtipID = number;
+/** Index of agilityObstacles */
+declare type ObstacleID = number;
+/** Index of passive pillars */
+declare type PillarID = number;
+/** Categories of agility obstacles */
+declare type ObstacleCategories = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+/** Current gamemode, 0 is normal, 1 is hardcore, 2 is adventure, 3 is CHAOS */
+declare type GameMode = 0 | 1 | 2 | 3;
+/** Index of rockData,oreTypes */
+declare type MiningID = number;
+interface ReqCheck {
+    reqID: number;
+    bankID: number;
+    check: number;
 }
-
-declare function barbarianAreaCheck(): void;
-
-declare var baseBankMax: number;
-
-declare var baseMaxHit: number;
-
-declare var baseThievingInterval: number;
-
-declare function begParentsForMBucksBecauseImBrokeAndCantAffordToBuyItInTheP2WShopEvenThoughIShouldProbablyMakeDragonJavsForMoneyOhWaitLol(): void;
-
-declare var birthday: boolean;
-
-declare var bleedMultiplier: number;
-
-declare var bonfireBonus: number;
-
-declare function buildGolbinItemSelection(): void;
-
-declare var burnInterval: any;
-
-/**
- * @param {boolean} ignore defaults to true
- */
-declare function burnLog(ignore?: boolean): any;
-
-/**
- * @param {any} bankID
- * @param {any} itemID
- * @param {any} qty
- */
-declare function buryItem(bankID: any, itemID: any, qty: any): void;
-
-/**
- * @param {boolean} confirmed defaults to false
- */
-declare function buyBowstring(confirmed?: boolean): void;
-
-/**
- * @param {boolean} confirmed defaults to false
- */
-declare function buyCompost(confirmed?: boolean): void;
-
-/**
- * @param {any} dhide
- * @param {boolean} confirmed defaults to false
- */
-declare function buyDhide(dhide: any, confirmed?: boolean): void;
-
-/**
- * @param {boolean} confirmed defaults to false
- */
-declare function buyFeathers(confirmed?: boolean): void;
-
-/**
- * @param {any} gloves
- * @param {boolean} confirmed defaults to false
- */
-declare function buyGloves(gloves: any, confirmed?: boolean): void;
-
-/**
- * @param {any} id
- * @param {boolean} confirmed defaults to false
- */
-declare function buyGodUpgrade(id: any, confirmed?: boolean): void;
-
-/**
- * @param {any} itemID
- * @param {boolean} confirmed defaults to false
- */
-declare function buyItem(itemID: any, confirmed?: boolean): void;
-
-/**
- * @param {boolean} confirmed defaults to false
- */
-declare function buyLeather(confirmed?: boolean): void;
-
-/**
- * @param {any} qty
- */
-declare function buyMbucks(qty: any): void;
-
-/**
- * @param {boolean} confirmed defaults to false
- */
-declare function buyPartyHat(confirmed?: boolean): void;
-
-declare var buyQty: number;
-
-/**
- * @param {any} cape
- * @param {boolean} confirmed defaults to false
- */
-declare function buySkillcape(cape: any, confirmed?: boolean): void;
-
-/**
- * @param {any} itemID
- * @param {boolean} confirmed defaults to false
- */
-declare function buySlayerItem(itemID: any, confirmed?: boolean): void;
-
-/**
- * @param {string} enemy defaults to enemyInCombat
- */
-declare function calculateEnemyAccuracy(enemy?: string): void;
-
-/**
- * @param {string} enemy defaults to enemyInCombat
- */
-declare function calculateEnemyDefence(enemy?: string): void;
-
-/**
- * @param {string} enemy defaults to enemyInCombat
- */
-declare function calculateEnemyStrength(enemy?: string): void;
-
-declare function canMineDragonite(): any;
-
-declare var caseInventory: any[];
-
-/**
- * @param {boolean} clicked defaults to false
- */
-declare function castMagic(clicked?: boolean): void;
-
-declare var chanceToDoubleLoot: number;
-
-/**
- * @param {any} menu
- */
-declare function changeCombatMenu(menu: any): void;
-
-declare function changeName(): void;
-
-/**
- * @param {any} page
- * @param {boolean} gameLoading defaults to false
- * @param {boolean} toggleSidebar defaults to true
- */
-declare function changePage(page: any, gameLoading?: boolean, toggleSidebar?: boolean): void;
-
-/**
- * @param {any} setting
- * @param {any} value
- * @param {boolean} ignore defaults to false
- */
-declare function changeSetting(setting: any, value: any, ignore?: boolean): void;
-
-declare var characterLoading: boolean;
-
-declare var characterSelected: boolean;
-
-/**
- * @param {any} itemID
- */
-declare function checkBankForItem(itemID: any): any;
-
-/**
- * @param {any} check
- */
-declare function checkCombatStatus(check: any): any;
-
-declare function checkConnectionToCloud(): void;
-
-/**
- * @param {any} itemID
- */
-declare function checkCraftingReq(itemID: any): any;
-
-/**
- * @param {any} itemID
- * @param {number} fletchLog defaults to 0
- * @param {boolean} offline defaults to false
- */
-declare function checkFletchingReq(itemID: any, fletchLog?: number, offline?: boolean): any;
-
-/**
- * @param {any} food
- */
-declare function checkFoodExists(food: any): any;
-
-declare function checkGameVersion(): void;
-
-/**
- * @param {any} itemID
- */
-declare function checkHerbloreReq(itemID: any): any;
-
-/**
- * @param {any} log
- */
-declare function checkLogExists(log: any): any;
-
-declare function checkPatreon(): void;
-
-declare function checkReadyToHarvest(): void;
-
-declare function checkRhaelyx(): any;
-
-/**
- * @param {any} spellbook
- * @param {any} spell
- * @param {boolean} useRunes defaults to true
- */
-declare function checkRuneCount(spellbook: any, spell: any, useRunes?: boolean): any;
-
-/**
- * @param {any} itemID
- */
-declare function checkRunecraftingReq(itemID: any): any;
-
-/**
- * @param {any} save
- */
-declare function checkSaveBackupVersion(save: any): any;
-
-/**
- * @param {any} itemID
- * @param {boolean} ignoreCoal defaults to false
- */
-declare function checkSmithingReq(itemID: any, ignoreCoal?: boolean): any;
-
-declare function checkTestAccess(): void;
-
-declare function checkTestAccessPatreon(): any;
-
-/**
- * @param {any} bankID
- * @param {any} itemID
- */
-declare function claimBankToken(bankID: any, itemID: any): void;
-
-declare function claimBirthdayToken(): void;
-
-/**
- * @param {any} bankID
- * @param {any} itemID
- * @param {boolean} all defaults to false
- */
-declare function claimToken(bankID: any, itemID: any, all?: boolean): void;
-
-declare function clearBankSearch(): void;
-
-declare function clearItemInView(): void;
-
-declare function clearLoot(): void;
-
-declare function clearOffline(): void;
-
-declare var cloudCheck: boolean;
-
-declare var cloudSave: any;
-
-declare var cloudSaveTimer: any;
-
-declare var cloudSync: any;
-
-declare var clueHuntStarted: boolean;
-
-declare var clueProgress: number[];
-
-declare var cluesCompleted: boolean[];
-
-/**
- * @param {boolean} offline defaults to false
- */
-declare function collectGem(offline?: boolean): any;
-
-/**
- * @param {any} lootID
- * @param {any} itemID
- * @param {any} qty
- */
-declare function collectLoot(lootID: any, itemID: any, qty: any): void;
-
-declare var combatAreas: {
-    areaName: string;
-    difficulty: number[];
-    media: string;
-    monsters: number[];
-    slayerItem: number;
+interface QtyReqCheck extends ReqCheck {
+    qty: number;
+    itemID?: ItemID;
+}
+/** Generic Interface for storing itemID quantity pairs */
+interface ItemQuantity {
+    id: ItemID;
+    qty: number;
+}
+interface BankItem {
+    id: ItemID;
+    qty: number;
+    tab: BankTabID;
+    sellsFor: number;
+    stackValue?: number;
+    locked?: boolean;
+}
+interface BankDefaultItem {
+    itemID: ItemID;
+    tab: BankTabID;
+}
+interface BankSearch {
+    id: ItemID;
+    qty: number;
+    name: string;
+    category: string;
     type: string;
-}[];
-
-declare var combatData: {
-    enemy: {
-        activeBuffs: boolean;
-        attackBonus: number;
-        attackLevel: number;
-        attackSpeed: number;
-        attackSpeedDebuff: number;
-        attackSpeedDebuffTurns: number;
-        attackType: number;
-        baseAttackSpeed: number;
-        buffTurns: number;
-        curseTurnsLeft: number;
-        damageReduction: number;
-        decreasedRangedEvasion: number;
-        defenceBonus: number;
-        defenceBonusMagic: number;
-        defenceBonusRanged: number;
-        defenceLevel: number;
-        effectiveAttackLevel: number;
-        effectiveDefenceLevel: number;
-        effectiveMagicDefenceLevel: number;
-        effectiveRangedDefenceLevel: number;
-        effectiveStrengthLevel: number;
-        extraDamageMultiplier: number;
-        hasSpecialAttack: boolean;
-        hitpoints: number;
-        id: number;
-        increasedMagicEvasion: any;
-        increasedMeleeEvasion: any;
-        increasedRangedEvasion: any;
-        isBleeding: boolean;
-        isCursed: boolean;
-        magicLevel: number;
-        maxHitpoints: number;
-        maximumAttackRoll: number;
-        maximumDefenceRoll: number;
-        maximumMagicDefenceRoll: number;
-        maximumRangedDefenceRoll: number;
-        maximumStrengthRoll: number;
-        rangedLevel: number;
-        reflectMagic: any;
-        reflectMelee: any;
-        reflectRanged: any;
-        specialAttackChances: any[];
-        specialAttackID: any;
-        strengthBonus: number;
-        strengthLevel: number;
-        stunTurns: number;
-        stunned: boolean;
-    };
-    player: {
-        attackSpeedDebuff: number;
-        attackSpeedDebuffTurns: number;
-        baseAttackSpeed: number;
-        burnDebuff: number;
-        hitpoints: number;
-        increasedDamageReduction: number;
-        isBurning: boolean;
-        stunTurns: number;
-        stunned: boolean;
-    };
+    tab: BankTabID;
+}
+interface EnemySpecialAttack {
+    /** Index of enemySpecialAttacks */
+    id: number;
+    /** Displayed name */
+    name: string;
+    /** Displayed description */
+    description: string;
+    /** Base chance of attack to trigger in % */
+    chance: number;
+    /** Number of attacks to perform */
+    attackCount: number;
+    /** Time between attacks in ms */
+    attackInterval: number;
+    /** Attack always hits */
+    forceHit: boolean;
+    /** Attack deals damage equal to this multiplied by numberMultiplier */
+    setDamage: null | number;
+    /** Unused */
+    setDOTDamage: null | number;
+    /** Attack heals this % of enemy max HP */
+    setDOTHeal?: null | number;
+    /** Equivalent to attackInterval when setDOTDamage or setDOTHeal are present */
+    DOTInterval: null | number;
+    /** Equivalent to attackCount when  setDOTDamage or setDOTHeal are present*/
+    DOTMaxProcs: null | number;
+    /** Attack can apply stun to player on a hit */
+    canStun: boolean;
+    /** Number of turns attack stuns player for */
+    stunTurns: null | number;
+    /** Attack can apply active buffs to enemy */
+    activeBuffs?: boolean;
+    /** Number of enemy turns active buffs last */
+    activeBuffTurns?: number;
+    /** % Increase to enemy Melee evasion from active buff*/
+    increasedMeleeEvasion?: number | null;
+    /** % Increase to enemy Ranged evasion from active buff*/
+    increasedRangedEvasion?: number | null;
+    /** % Increase to enemy Magic evasion from active buff*/
+    increasedMagicEvasion?: number | null;
+    /** Flat increase to damage reduction from active buff */
+    increasedDamageReduction?: null | number;
+    /** Damage dealt to player equal to this times numberMultiplier on a player hit, from active buff*/
+    reflectMelee?: number | null;
+    /** Unused/No Effect */
+    reflectRanged?: null;
+    /** Unused/No Effect */
+    reflectMagic?: null;
+    /** Decrease to enemy attack interval in % from active buff */
+    increasedAttackSpeed?: number;
+    /** Unused */
+    attackSpeedSlow?: null;
+    /** Unused */
+    attackSpeedSlowTurns?: null;
+    /** Player attack interval is decreased by this % */
+    attackSpeedDebuff?: number;
+    /** Number of turns player attack interval is decreased for */
+    attackSpeedDebuffTurns?: number | null;
+    /** Attack applies burn debuff dealing this % of player max HP every 500ms */
+    burnDebuff?: number;
+    /** Attack can apply sleep to player on a hit */
+    canSleep?: boolean;
+    /** Number of turns attack sleeps player for */
+    sleepTurns?: number;
+    /** Attack damage is multiplied by this if the player is sleeping */
+    sleepDamageMultiplier?: number;
+    /** Attack deals damage equal to this % of the current enemy hitpoints */
+    setHPDamage?: number;
+    /** Attack heals the enemy based on damage dealt */
+    lifesteal?: boolean;
+    /** Enemy heals equal to damage dealt multiplied by this */
+    lifestealMultiplier?: number;
+    /** Attack can apply debuffs to player */
+    applyDebuffs?: boolean;
+    /** Number of player turns debuffs are applied for */
+    applyDebuffTurns?: number;
+    /** Player melee evasion is decreased by this % while debuffed */
+    meleeEvasionDebuff?: null | number;
+    /** Player ranged evasion is decreased by this % while debuffed */
+    rangedEvasionDebuff?: null | number;
+    /** Player magic evasion is decreased by this % while debuffed */
+    magicEvasionDebuff?: number;
+    /** Attack deals damage equal to this % of the players max hit */
+    customDamageModifier?: number;
+    /** Attack applies markOfDeath to player */
+    markOfDeath?: boolean;
+    /** Attack permanently decreases player accuracy by this % */
+    decreasePlayerAccuracy?: number;
+    /** Decrease in player accuracy can stack multiple times */
+    decreasePlayerAccuracyStack?: boolean;
+    /** Maximum % attack can decrease player accuracy by */
+    decreasePlayerAccuracyLimit?: number;
+    /** Attack temporarily increases enemy damage reduction by 10% per attack, while attacking */
+    intoTheMist?: boolean;
+    modifiers?: ModifierData;
+}
+interface PlayerSpecialAttack {
+    /** Index of playerSpecialAttacks */
+    id: number;
+    /** Display name */
+    name: string;
+    /** Display description */
+    description: string;
+    /** Chance this attack happens in % */
+    chance: number;
+    /** Number of times this attack hits */
+    attackCount: number;
+    /** Interval between multiple hits */
+    attackInterval: number;
+    /** Special attack always hits, if ancient spell also requires accuracy above 20k */
+    forceHit: boolean;
+    /** Attack deals random damage based on current hitpoints */
+    setHPDamage?: number;
+    /** New Prop for Sandstorm Ring? */
+    setHPDamageMinimum?: number;
+    /** Attack deals this % of max hit */
+    customDamageModifier?: number;
+    /** Attack deals this amount of damage * numberMultiplier */
+    setDamage?: number | null;
+    extraDamage?: number;
+    /** Attack deals fixed damage based on magic level */
+    stormsnap?: boolean;
+    /** Attack has this % chance to stun enemy on hit */
+    stunChance?: number;
+    /** Attack always stuns enemy on hit */
+    canStun?: boolean;
+    /** Number of turns the attack stuns the enemy for */
+    stunTurns?: number | null;
+    /** Attack deals fixed damage equal to play maxHit */
+    maxHit?: boolean;
+    /** Attack can apply bleed */
+    canBleed?: boolean;
+    /** Chance to apply bleed on hit in %, if not present defaults to 100% */
+    bleedChance?: number;
+    /** Interval between bleed procs in [ms] */
+    bleedInterval?: number;
+    /** Total number of bleed procs */
+    bleedCount?: number;
+    /** Total bleed damage is totalBleedHP*attackDamage */
+    totalBleedHP?: number;
+    /** Total bleed damage is this % of enemy max HP */
+    totalBleedHPPercent?: number;
+    /** Total bleed damage is instead random between [0,totalBleedHP*attackDamage) */
+    totalBleedHPCustom?: 1;
+    /** Adds value*numberMultiplier to total bleed damage */
+    extraBleedDmg?: number;
+    /** Enemy sleeps on hit */
+    canSleep?: boolean;
+    /** Number of turns enemy sleeps for */
+    sleepTurns?: number;
+    /** Attack permanently decreases enemy ranged evasion by %*/
+    decreasedRangedEvasion?: number;
+    /** Attack permanently decreases enemy melee evasion by %*/
+    decreasedMeleeEvasion?: number;
+    /** Attack permanently decreases enemy magic evasion by %*/
+    decreasedMagicEvasion?: number;
+    /** Attack permanently decreases enemy accuracy by %*/
+    decreasedAccuracy?: number;
+    /** Damage is always multiplied by this */
+    damageMultiplier: number;
+    /** Fraction of damage dealt this attack heals player for */
+    healsFor?: number;
+    /** On hit, decreased enemy attack speed by this % */
+    attackSpeedDebuff?: number;
+    /** Turns attackSpeedDebuff lasts */
+    attackSpeedDebuffTurns?: number;
+    /** Unused */
+    setDOTDamage?: null;
+    /** Unused */
+    DOTInterval?: null;
+    /** Unused */
+    DOTMaxProcs?: null;
+    /** Unused */
+    activeBuffs?: boolean;
+    /** Unused */
+    burnDebuff?: number;
+    modifiers?: ModifierData;
+}
+interface PlayerEnemyObject<Player, Enemy> {
+    player: Player;
+    enemy: Enemy;
+}
+declare type CombatData = PlayerEnemyObject<PlayerCombatData, EnemyCombatData>;
+declare type SpecialAttackData = {
+    isActive?: boolean;
+    turnsLeft?: number;
 };
-
-declare var combatLevel: number;
-
-declare var combatMenu: boolean;
-
-declare function compostAll(): void;
-
-declare var confirmationOnClose: boolean;
-
-declare function confirmLoadLocalSave(): void;
-
-/**
- * @param {any} itemID
- * @param {any} upgradeItemID
- * @param {number} qty defaults to 1
- */
-declare function confirmUpgradeItem(itemID: any, upgradeItemID: any, qty?: number): void;
-
-/**
- * @param {any} itemID
- * @param {any} upgradeItemID
- */
-declare function confirmUpgradeItemAll(itemID: any, upgradeItemID: any): void;
-
-declare var connectedToCloud: boolean;
-
-declare var connectedToPlayFab: boolean;
-
-declare var CONSTANTS: {
-    attackStyle: {
-        Accurate: number;
-        Block: number;
-        Defensive: number;
-        Longrange: number;
-        Magic: number;
-        Rapid: number;
-        Slash: number;
-        Stab: number;
-    };
-    attackType: {
-        Magic: number;
-        Melee: number;
-        Ranged: number;
-    };
-    aurora: {
-        Charged_I: number;
-        Charged_II: number;
-        Charged_III: number;
-        Fervor_I: number;
-        Fervor_II: number;
-        Fervor_III: number;
-        Fury_I: number;
-        Fury_II: number;
-        Fury_III: number;
-        Surge_I: number;
-        Surge_II: number;
-        Surge_III: number;
-    };
-    axe: {
-        Adamant: number;
-        Black: number;
-        Bronze: number;
-        Dragon: number;
-        Iron: number;
-        Mithril: number;
-        Rune: number;
-        Steel: number;
-    };
-    bones: {
-        Bones: number;
-        Dragon_Bones: number;
-        Magic_Bones: number;
-    };
-    combatArea: {
-        Bandit_Hideout: number;
-        Castle_of_Kings: number;
-        Dragon_Valley: number;
-        Farmlands: number;
-        Giant_Dungeon: number;
-        Goblin_Village: number;
-        Graveyard: number;
-        Icy_Hills: number;
-        Sandy_Shores: number;
-        Wet_Forest: number;
-        Wizard_Tower: number;
-    };
-    curse: {
-        Anguish_I: number;
-        Anguish_II: number;
-        Anguish_III: number;
-        Blinding_I: number;
-        Blinding_II: number;
-        Blinding_III: number;
-        Confusion: number;
-        Decay: number;
-        Soul_Split_I: number;
-        Soul_Split_II: number;
-        Soul_Split_III: number;
-        Weakening_I: number;
-        Weakening_II: number;
-        Weakening_III: number;
-    };
-    dungeon: {
-        Air_God_Dungeon: number;
-        Bandit_Base: number;
-        Chicken_Coop: number;
-        Deep_Sea_Ship: number;
-        Dragons_Den: number;
-        Earth_God_Dungeon: number;
-        Fire_God_Dungeon: number;
-        Frozen_Cove: number;
-        Hall_of_Wizards: number;
-        Spider_Forest: number;
-        Trial_of_Destiny: number;
-        Undead_Graveyard: number;
-        Volcanic_Cave: number;
-        Water_God_Dungeon: number;
-    };
-    equipmentSlot: {
-        Amulet: number;
-        Boots: number;
-        Cape: number;
-        Gloves: number;
-        Helmet: number;
-        Platebody: number;
-        Platelegs: number;
-        Quiver: number;
-        Ring: number;
-        Shield: number;
-        Weapon: number;
-    };
-    fishingRod: {
-        Adamant: number;
-        Black: number;
-        Bronze: number;
-        Dragon: number;
-        Iron: number;
-        Mithril: number;
-        Rune: number;
-        Steel: number;
-    };
-    item: {
-        Adamant_2H_Sword: number;
-        Adamant_Arrows: number;
-        Adamant_Arrowtips: number;
-        Adamant_Battleaxe: number;
-        Adamant_Boots: number;
-        Adamant_Boots_T_G: number;
-        Adamant_Boots_T_S: number;
-        Adamant_Crossbow: number;
-        Adamant_Crossbow_Head: number;
-        Adamant_Dagger: number;
-        Adamant_Gloves: number;
-        Adamant_Helmet: number;
-        Adamant_Helmet_T_G: number;
-        Adamant_Helmet_T_S: number;
-        Adamant_Javelin: number;
-        Adamant_Javelin_Heads: number;
-        Adamant_Platebody: number;
-        Adamant_Platebody_T_G: number;
-        Adamant_Platebody_T_S: number;
-        Adamant_Platelegs: number;
-        Adamant_Platelegs_T_G: number;
-        Adamant_Platelegs_T_S: number;
-        Adamant_Scimitar: number;
-        Adamant_Shield: number;
-        Adamant_Shield_T_G: number;
-        Adamant_Shield_T_S: number;
-        Adamant_Sword: number;
-        Adamant_Throwing_Knife: number;
-        Adamantite_Bar: number;
-        Adamantite_Ore: number;
-        Aeris_God_Boots: number;
-        Aeris_God_Gloves: number;
-        Aeris_God_Helmet: number;
-        Aeris_God_Platebody: number;
-        Aeris_God_Platelegs: number;
-        Aeris_Godsword: number;
-        Air_Acolyte_Wizard_Boots: number;
-        Air_Acolyte_Wizard_Bottoms: number;
-        Air_Acolyte_Wizard_Hat: number;
-        Air_Acolyte_Wizard_Robes: number;
-        Air_Adept_Wizard_Boots: number;
-        Air_Adept_Wizard_Bottoms: number;
-        Air_Adept_Wizard_Hat: number;
-        Air_Adept_Wizard_Robes: number;
-        Air_Battlestaff: number;
-        Air_Chest: number;
-        Air_Expert_Wizard_Boots: number;
-        Air_Expert_Wizard_Bottoms: number;
-        Air_Expert_Wizard_Hat: number;
-        Air_Expert_Wizard_Robes: number;
-        Air_Imbued_Wand: number;
-        Air_Rune: number;
-        Air_Shard: number;
-        Amulet_of_Accuracy: number;
-        Amulet_of_Calculated_Promotion: number;
-        Amulet_of_Defence: number;
-        Amulet_of_Fishing: number;
-        Amulet_of_Fury: number;
-        Amulet_of_Glory: number;
-        Amulet_of_Looting: number;
-        Amulet_of_Magic: number;
-        Amulet_of_Ranged: number;
-        Amulet_of_Strength: number;
-        Amulet_of_Torture: number;
-        Ancient_2H_Sword: number;
-        Ancient_Arrow: number;
-        Ancient_Claw: number;
-        Ancient_Claw_Fragment: number;
-        Ancient_Crossbow: number;
-        Ancient_Dhide_Body: number;
-        Ancient_Dhide_Body_U: number;
-        Ancient_Dhide_Chaps: number;
-        Ancient_Dhide_Chaps_U: number;
-        Ancient_Dhide_Shield: number;
-        Ancient_Dhide_Shield_U: number;
-        Ancient_Dhide_Vambraces: number;
-        Ancient_Dhide_Vambraces_U: number;
-        Ancient_Helmet: number;
-        Ancient_Helmet_T_G: number;
-        Ancient_Helmet_T_S: number;
-        Ancient_Javelin: number;
-        Ancient_Longbow: number;
-        Ancient_Platebody: number;
-        Ancient_Platebody_T_G: number;
-        Ancient_Platebody_T_S: number;
-        Ancient_Platelegs: number;
-        Ancient_Platelegs_T_G: number;
-        Ancient_Platelegs_T_S: number;
-        Ancient_Ring_Of_Skills: number;
-        Ancient_Rune: number;
-        Ancient_Shield: number;
-        Ancient_Shield_T_G: number;
-        Ancient_Shield_T_S: number;
-        Ancient_Sword: number;
-        Ancient_Throwing_Knife: number;
-        Ancient_Wizard_Boots: number;
-        Ancient_Wizard_Bottoms: number;
-        Ancient_Wizard_Hat: number;
-        Ancient_Wizard_Robes: number;
-        Anglerfish: number;
-        Aorpheats_Signet_Ring: number;
-        Arrow_Shafts: number;
-        Attack_Skillcape: number;
-        Bandit_Chest: number;
-        Bank_Slot_Token: number;
-        Barbarian_Gloves: number;
-        Barrentoe_Herb: number;
-        Barrentoe_Seed: number;
-        Big_Bones: number;
-        Big_Ron: number;
-        Bird_Nest: number;
-        Bird_Nest_Potion_I: number;
-        Bird_Nest_Potion_II: number;
-        Bird_Nest_Potion_III: number;
-        Bird_Nest_Potion_IV: number;
-        Birthday_Cake: number;
-        Birthday_Token: number;
-        Black_2H_Sword: number;
-        Black_Battleaxe: number;
-        Black_Boots: number;
-        Black_Boots_T_G: number;
-        Black_Boots_T_S: number;
-        Black_Dagger: number;
-        Black_Dhide_Body: number;
-        Black_Dhide_Body_U: number;
-        Black_Dhide_Chaps: number;
-        Black_Dhide_Chaps_U: number;
-        Black_Dhide_Shield: number;
-        Black_Dhide_Shield_U: number;
-        Black_Dhide_Vambraces: number;
-        Black_Dhide_Vambraces_U: number;
-        Black_Dragonhide: number;
-        Black_Helmet: number;
-        Black_Helmet_T_G: number;
-        Black_Helmet_T_S: number;
-        Black_Platebody: number;
-        Black_Platebody_T_G: number;
-        Black_Platebody_T_S: number;
-        Black_Platelegs: number;
-        Black_Platelegs_T_G: number;
-        Black_Platelegs_T_S: number;
-        Black_Scimitar: number;
-        Black_Shield: number;
-        Black_Shield_T_G: number;
-        Black_Shield_T_S: number;
-        Black_Sword: number;
-        Black_Wizard_Boots: number;
-        Black_Wizard_Bottoms: number;
-        Black_Wizard_Hat: number;
-        Black_Wizard_Robes: number;
-        Blazing_Lantern: number;
-        Blood_Rune: number;
-        Blue_Dhide_Body: number;
-        Blue_Dhide_Body_U: number;
-        Blue_Dhide_Chaps: number;
-        Blue_Dhide_Chaps_U: number;
-        Blue_Dhide_Shield: number;
-        Blue_Dhide_Shield_U: number;
-        Blue_Dhide_Vambraces: number;
-        Blue_Dhide_Vambraces_U: number;
-        Blue_Dragonhide: number;
-        Blue_Wizard_Boots: number;
-        Blue_Wizard_Bottoms: number;
-        Blue_Wizard_Hat: number;
-        Blue_Wizard_Robes: number;
-        Bobbys_Pocket: number;
-        Bobs_Rake: number;
-        Body_Rune: number;
-        Bone_Necklace: number;
-        Bones: number;
-        Book_of_Eli: number;
-        Bowstring: number;
-        Bronze_2H_Sword: number;
-        Bronze_Arrows: number;
-        Bronze_Arrowtips: number;
-        Bronze_Bar: number;
-        Bronze_Battleaxe: number;
-        Bronze_Boots: number;
-        Bronze_Boots_T_G: number;
-        Bronze_Boots_T_S: number;
-        Bronze_Crossbow: number;
-        Bronze_Crossbow_Head: number;
-        Bronze_Dagger: number;
-        Bronze_Gloves: number;
-        Bronze_Helmet: number;
-        Bronze_Helmet_T_G: number;
-        Bronze_Helmet_T_S: number;
-        Bronze_Javelin: number;
-        Bronze_Javelin_Heads: number;
-        Bronze_Platebody: number;
-        Bronze_Platebody_T_G: number;
-        Bronze_Platebody_T_S: number;
-        Bronze_Platelegs: number;
-        Bronze_Platelegs_T_G: number;
-        Bronze_Platelegs_T_S: number;
-        Bronze_Scimitar: number;
-        Bronze_Shield: number;
-        Bronze_Shield_T_G: number;
-        Bronze_Shield_T_S: number;
-        Bronze_Sword: number;
-        Bronze_Throwing_Knife: number;
-        Burnt_Anglerfish: number;
-        Burnt_Carp: number;
-        Burnt_Cave_Fish: number;
-        Burnt_Crab: number;
-        Burnt_Fanfish: number;
-        Burnt_Herring: number;
-        Burnt_Lobster: number;
-        Burnt_Manta_Ray: number;
-        Burnt_Salmon: number;
-        Burnt_Sardine: number;
-        Burnt_Seahorse: number;
-        Burnt_Shark: number;
-        Burnt_Shrimp: number;
-        Burnt_Swordfish: number;
-        Burnt_Trout: number;
-        Burnt_Whale: number;
-        Cabbage: number;
-        Cabbage_Seed: number;
-        Cake_Base: number;
-        Candle: number;
-        Cape_Of_Prat: number;
-        Cape_of_Arrow_Preservation: number;
-        Carp: number;
-        Carrot: number;
-        Carrot_Seeds: number;
-        Cave_Fish: number;
-        Chaos_Rune: number;
-        Chapeau_Noir: number;
-        Charge_Stone_of_Rhaelyx: number;
-        Chest_of_Witwix: number;
-        Circlet_of_Rhaelyx: number;
-        Climbing_Boots: number;
-        Cloudburst_Staff: number;
-        Clue_Chasers_Insignia: number;
-        Coal_Ore: number;
-        Compost: number;
-        Confetti_Crossbow: number;
-        Controlled_Heat_Potion_I: number;
-        Controlled_Heat_Potion_II: number;
-        Controlled_Heat_Potion_III: number;
-        Controlled_Heat_Potion_IV: number;
-        Cooking_Gloves: number;
-        Cooking_Skillcape: number;
-        Copper_Ore: number;
-        Crab: number;
-        Crafting_Potion_I: number;
-        Crafting_Potion_II: number;
-        Crafting_Potion_III: number;
-        Crafting_Potion_IV: number;
-        Crafting_Skillcape: number;
-        Crown_of_Rhaelyx: number;
-        Damage_Reduction_Potion_I: number;
-        Damage_Reduction_Potion_II: number;
-        Damage_Reduction_Potion_III: number;
-        Damage_Reduction_Potion_IV: number;
-        Deadeye_Amulet: number;
-        Deadeye_Ring: number;
-        Death_Rune: number;
-        Defence_Skillcape: number;
-        Desert_Hat: number;
-        Diamond: number;
-        Diamond_Bolts: number;
-        Diamond_Luck_Potion_I: number;
-        Diamond_Luck_Potion_II: number;
-        Diamond_Luck_Potion_III: number;
-        Diamond_Luck_Potion_IV: number;
-        Divine_Potion_I: number;
-        Divine_Potion_II: number;
-        Divine_Potion_III: number;
-        Divine_Potion_IV: number;
-        Dragon_2H_Sword: number;
-        Dragon_Arrows: number;
-        Dragon_Arrowtips: number;
-        Dragon_Battleaxe: number;
-        Dragon_Bones: number;
-        Dragon_Boots: number;
-        Dragon_Boots_T_G: number;
-        Dragon_Boots_T_S: number;
-        Dragon_Claw: number;
-        Dragon_Claw_Fragment: number;
-        Dragon_Crossbow: number;
-        Dragon_Crossbow_Head: number;
-        Dragon_Dagger: number;
-        Dragon_Gloves: number;
-        Dragon_Helmet: number;
-        Dragon_Helmet_T_G: number;
-        Dragon_Helmet_T_S: number;
-        Dragon_Javelin: number;
-        Dragon_Javelin_Heads: number;
-        Dragon_Platebody: number;
-        Dragon_Platebody_T_G: number;
-        Dragon_Platebody_T_S: number;
-        Dragon_Platelegs: number;
-        Dragon_Platelegs_T_G: number;
-        Dragon_Platelegs_T_S: number;
-        Dragon_Scimitar: number;
-        Dragon_Shield: number;
-        Dragon_Shield_T_G: number;
-        Dragon_Shield_T_S: number;
-        Dragon_Sword: number;
-        Dragon_Throwing_Knife: number;
-        Dragonfire_Shield: number;
-        Dragonite_Bar: number;
-        Dragonite_Ore: number;
-        Dust_Rune: number;
-        Earth_Acolyte_Wizard_Boots: number;
-        Earth_Acolyte_Wizard_Bottoms: number;
-        Earth_Acolyte_Wizard_Hat: number;
-        Earth_Acolyte_Wizard_Robes: number;
-        Earth_Adept_Wizard_Boots: number;
-        Earth_Adept_Wizard_Bottoms: number;
-        Earth_Adept_Wizard_Hat: number;
-        Earth_Adept_Wizard_Robes: number;
-        Earth_Battlestaff: number;
-        Earth_Chest: number;
-        Earth_Expert_Wizard_Boots: number;
-        Earth_Expert_Wizard_Bottoms: number;
-        Earth_Expert_Wizard_Hat: number;
-        Earth_Expert_Wizard_Robes: number;
-        Earth_Imbued_Wand: number;
-        Earth_Layered_Shield: number;
-        Earth_Rune: number;
-        Earth_Shard: number;
-        Egg_Chest: number;
-        Eight: number;
-        Elder_Chest: number;
-        Elder_Dragonhide: number;
-        Elemental_Potion_I: number;
-        Elemental_Potion_II: number;
-        Elemental_Potion_III: number;
-        Elemental_Potion_IV: number;
-        Elite_Amulet_of_Accuracy: number;
-        Elite_Amulet_of_Defence: number;
-        Elite_Amulet_of_Glory: number;
-        Elite_Amulet_of_Magic: number;
-        Elite_Amulet_of_Ranged: number;
-        Elite_Amulet_of_Strength: number;
-        Elite_Chest: number;
-        Emerald: number;
-        Emerald_Bolts: number;
-        Enchanted_Cape: number;
-        Enchanted_Shield: number;
-        Event_Clue_1: number;
-        Event_Clue_2: number;
-        Event_Clue_3: number;
-        Event_Clue_4: number;
-        Eyeball: number;
-        Fanfish: number;
-        Farming_Potion_I: number;
-        Farming_Potion_II: number;
-        Farming_Potion_III: number;
-        Farming_Potion_IV: number;
-        Farming_Skillcape: number;
-        Feathers: number;
-        Fighter_Amulet: number;
-        Fighter_Ring: number;
-        Fire_Acolyte_Wizard_Boots: number;
-        Fire_Acolyte_Wizard_Bottoms: number;
-        Fire_Acolyte_Wizard_Hat: number;
-        Fire_Acolyte_Wizard_Robes: number;
-        Fire_Adept_Wizard_Boots: number;
-        Fire_Adept_Wizard_Bottoms: number;
-        Fire_Adept_Wizard_Hat: number;
-        Fire_Adept_Wizard_Robes: number;
-        Fire_Battlestaff: number;
-        Fire_Cape: number;
-        Fire_Chest: number;
-        Fire_Expert_Wizard_Boots: number;
-        Fire_Expert_Wizard_Bottoms: number;
-        Fire_Expert_Wizard_Hat: number;
-        Fire_Expert_Wizard_Robes: number;
-        Fire_Imbued_Wand: number;
-        Fire_Rune: number;
-        Fire_Shard: number;
-        Firemaking_Skillcape: number;
-        Fishermans_Potion_I: number;
-        Fishermans_Potion_II: number;
-        Fishermans_Potion_III: number;
-        Fishermans_Potion_IV: number;
-        Fishing_Skillcape: number;
-        Fletching_Potion_I: number;
-        Fletching_Potion_II: number;
-        Fletching_Potion_III: number;
-        Fletching_Potion_IV: number;
-        Fletching_Skillcape: number;
-        Frozen_Chest: number;
-        Fury_of_the_Elemental_Zodiac: number;
-        Garum_Herb: number;
-        Garum_Seed: number;
-        Gem_Gloves: number;
-        Generous_Cook_Potion_I: number;
-        Generous_Cook_Potion_II: number;
-        Generous_Cook_Potion_III: number;
-        Generous_Cook_Potion_IV: number;
-        Gentle_Hands_Potion_I: number;
-        Gentle_Hands_Potion_II: number;
-        Gentle_Hands_Potion_III: number;
-        Gentle_Hands_Potion_IV: number;
-        Glacia_God_Boots: number;
-        Glacia_God_Gloves: number;
-        Glacia_God_Helmet: number;
-        Glacia_God_Platebody: number;
-        Glacia_God_Platelegs: number;
-        Glacia_Godsword: number;
-        Glass_Bottle: number;
-        Gold_Bar: number;
-        Gold_Diamond_Necklace: number;
-        Gold_Diamond_Ring: number;
-        Gold_Emerald_Necklace: number;
-        Gold_Emerald_Ring: number;
-        Gold_Ore: number;
-        Gold_Ruby_Necklace: number;
-        Gold_Ruby_Ring: number;
-        Gold_Sapphire_Necklace: number;
-        Gold_Sapphire_Ring: number;
-        Gold_Topaz_Necklace: number;
-        Gold_Topaz_Ring: number;
-        Green_Dhide_Body: number;
-        Green_Dhide_Body_U: number;
-        Green_Dhide_Chaps: number;
-        Green_Dhide_Chaps_U: number;
-        Green_Dhide_Shield: number;
-        Green_Dhide_Shield_U: number;
-        Green_Dhide_Vambraces: number;
-        Green_Dhide_Vambraces_U: number;
-        Green_Dragonhide: number;
-        Green_Wizard_Boots: number;
-        Green_Wizard_Bottoms: number;
-        Green_Wizard_Hat: number;
-        Green_Wizard_Robes: number;
-        Guardian_Amulet: number;
-        Guardian_Ring: number;
-        Hard_Leather_Body: number;
-        Hard_Leather_Boots: number;
-        Hard_Leather_Chaps: number;
-        Hard_Leather_Cowl: number;
-        Hard_Leather_Gloves: number;
-        Hard_Leather_Vambraces: number;
-        Havoc_Rune: number;
-        Headless_Arrows: number;
-        Headless_Bolts: number;
-        Herb_Sack: number;
-        Herblore_Potion_I: number;
-        Herblore_Potion_II: number;
-        Herblore_Potion_III: number;
-        Herblore_Potion_IV: number;
-        Herblore_Skillcape: number;
-        Herring: number;
-        Hitpoints_Skillcape: number;
-        Holy_Dust: number;
-        Ice_2h_Sword: number;
-        Ice_Arrows: number;
-        Ice_Battleaxe: number;
-        Ice_Boots: number;
-        Ice_Dagger: number;
-        Ice_Helmet: number;
-        Ice_Longbow: number;
-        Ice_Platebody: number;
-        Ice_Platelegs: number;
-        Ice_Shield: number;
-        Ice_Shortbow: number;
-        Ice_Sword: number;
-        Iron_2H_Sword: number;
-        Iron_Arrows: number;
-        Iron_Arrowtips: number;
-        Iron_Bar: number;
-        Iron_Battleaxe: number;
-        Iron_Boots: number;
-        Iron_Boots_T_G: number;
-        Iron_Boots_T_S: number;
-        Iron_Crossbow: number;
-        Iron_Crossbow_Head: number;
-        Iron_Dagger: number;
-        Iron_Gloves: number;
-        Iron_Helmet: number;
-        Iron_Helmet_T_G: number;
-        Iron_Helmet_T_S: number;
-        Iron_Javelin: number;
-        Iron_Javelin_Heads: number;
-        Iron_Ore: number;
-        Iron_Platebody: number;
-        Iron_Platebody_T_G: number;
-        Iron_Platebody_T_S: number;
-        Iron_Platelegs: number;
-        Iron_Platelegs_T_G: number;
-        Iron_Platelegs_T_S: number;
-        Iron_Scimitar: number;
-        Iron_Shield: number;
-        Iron_Shield_T_G: number;
-        Iron_Shield_T_S: number;
-        Iron_Sword: number;
-        Iron_Throwing_Knife: number;
-        Jewel_of_Rhaelyx: number;
-        Large_Horn: number;
-        Lava_Rune: number;
-        Leaping_Broad_Fish: number;
-        Leaping_Salmon: number;
-        Leaping_Trout: number;
-        Leather: number;
-        Leather_Body: number;
-        Leather_Boots: number;
-        Leather_Chaps: number;
-        Leather_Cowl: number;
-        Leather_Gloves: number;
-        Leather_Vambraces: number;
-        Lemon: number;
-        Lemonade: number;
-        Lemons: number;
-        Lemontyle_Herb: number;
-        Lemontyle_Seed: number;
-        Light_Rune: number;
-        Lobster: number;
-        Lucky_Herb_Potion_I: number;
-        Lucky_Herb_Potion_II: number;
-        Lucky_Herb_Potion_III: number;
-        Lucky_Herb_Potion_IV: number;
-        Magic_Assistance_Potion_I: number;
-        Magic_Assistance_Potion_II: number;
-        Magic_Assistance_Potion_III: number;
-        Magic_Assistance_Potion_IV: number;
-        Magic_Bones: number;
-        Magic_Chest: number;
-        Magic_Damage_Potion_I: number;
-        Magic_Damage_Potion_II: number;
-        Magic_Damage_Potion_III: number;
-        Magic_Damage_Potion_IV: number;
-        Magic_Logs: number;
-        Magic_Longbow: number;
-        Magic_Longbow_U: number;
-        Magic_Shortbow: number;
-        Magic_Shortbow_U: number;
-        Magic_Skillcape: number;
-        Magic_Tree_Seed: number;
-        Magic_Wand_Basic: number;
-        Magic_Wand_Elite: number;
-        Magic_Wand_Powerful: number;
-        Magical_Flavouring: number;
-        Magical_Icing: number;
-        Magical_Ring: number;
-        Mahogany_Logs: number;
-        Manta_Ray: number;
-        Mantalyme_Herb: number;
-        Mantalyme_Seed: number;
-        Maple_Logs: number;
-        Maple_Longbow: number;
-        Maple_Longbow_U: number;
-        Maple_Shortbow: number;
-        Maple_Shortbow_U: number;
-        Maple_Tree_Seed: number;
-        Mastery_Token_Cooking: number;
-        Mastery_Token_Crafting: number;
-        Mastery_Token_Farming: number;
-        Mastery_Token_Firemaking: number;
-        Mastery_Token_Fishing: number;
-        Mastery_Token_Fletching: number;
-        Mastery_Token_Herblore: number;
-        Mastery_Token_Mining: number;
-        Mastery_Token_Runecrafting: number;
-        Mastery_Token_Smithing: number;
-        Mastery_Token_Thieving: number;
-        Mastery_Token_Woodcutting: number;
-        Max_Skillcape: number;
-        Melee_Accuracy_Potion_I: number;
-        Melee_Accuracy_Potion_II: number;
-        Melee_Accuracy_Potion_III: number;
-        Melee_Accuracy_Potion_IV: number;
-        Melee_Evasion_Potion_I: number;
-        Melee_Evasion_Potion_II: number;
-        Melee_Evasion_Potion_III: number;
-        Melee_Evasion_Potion_IV: number;
-        Melee_Strength_Potion_I: number;
-        Melee_Strength_Potion_II: number;
-        Melee_Strength_Potion_III: number;
-        Melee_Strength_Potion_IV: number;
-        Message_In_A_Bottle: number;
-        Mind_Rune: number;
-        Mining_Gloves: number;
-        Mining_Skillcape: number;
-        Mirror_Shield: number;
-        Mist_Rune: number;
-        Mithril_2H_Sword: number;
-        Mithril_Arrows: number;
-        Mithril_Arrowtips: number;
-        Mithril_Bar: number;
-        Mithril_Battleaxe: number;
-        Mithril_Boots: number;
-        Mithril_Boots_T_G: number;
-        Mithril_Boots_T_S: number;
-        Mithril_Crossbow: number;
-        Mithril_Crossbow_Head: number;
-        Mithril_Dagger: number;
-        Mithril_Gloves: number;
-        Mithril_Helmet: number;
-        Mithril_Helmet_T_G: number;
-        Mithril_Helmet_T_S: number;
-        Mithril_Javelin: number;
-        Mithril_Javelin_Heads: number;
-        Mithril_Ore: number;
-        Mithril_Platebody: number;
-        Mithril_Platebody_T_G: number;
-        Mithril_Platebody_T_S: number;
-        Mithril_Platelegs: number;
-        Mithril_Platelegs_T_G: number;
-        Mithril_Platelegs_T_S: number;
-        Mithril_Scimitar: number;
-        Mithril_Shield: number;
-        Mithril_Shield_T_G: number;
-        Mithril_Shield_T_S: number;
-        Mithril_Sword: number;
-        Mithril_Throwing_Knife: number;
-        Mud_Rune: number;
-        Mysterious_Stone: number;
-        Mystic_Air_Staff: number;
-        Mystic_Earth_Staff: number;
-        Mystic_Fire_Staff: number;
-        Mystic_Water_Staff: number;
-        Nature_Rune: number;
-        Normal_Logs: number;
-        Normal_Longbow: number;
-        Normal_Longbow_U: number;
-        Normal_Shortbow: number;
-        Normal_Shortbow_U: number;
-        Oak_Logs: number;
-        Oak_Longbow: number;
-        Oak_Longbow_U: number;
-        Oak_Shortbow: number;
-        Oak_Shortbow_U: number;
-        Oak_Tree_Seed: number;
-        Obsidian_Cape: number;
-        Old_Boot: number;
-        Old_Hat: number;
-        Onion_Seed: number;
-        Onions: number;
-        Oxilyme_Herb: number;
-        Oxilyme_Seed: number;
-        Perfect_Swing_Potion_I: number;
-        Perfect_Swing_Potion_II: number;
-        Perfect_Swing_Potion_III: number;
-        Perfect_Swing_Potion_IV: number;
-        Pigtayle_Herb: number;
-        Pigtayle_Seed: number;
-        Pirate_Booty: number;
-        Pirates_Lost_Ring: number;
-        Poraxx_Herb: number;
-        Poraxx_Seed: number;
-        Potato_Seed: number;
-        Potatoes: number;
-        Prayer_Skillcape: number;
-        Purple_Party_Hat: number;
-        Ragnar_God_Boots: number;
-        Ragnar_God_Gloves: number;
-        Ragnar_God_Helmet: number;
-        Ragnar_God_Platebody: number;
-        Ragnar_God_Platelegs: number;
-        Ragnar_Godsword: number;
-        Ranged_Assistance_Potion_I: number;
-        Ranged_Assistance_Potion_II: number;
-        Ranged_Assistance_Potion_III: number;
-        Ranged_Assistance_Potion_IV: number;
-        Ranged_Skillcape: number;
-        Ranged_Strength_Potion_I: number;
-        Ranged_Strength_Potion_II: number;
-        Ranged_Strength_Potion_III: number;
-        Ranged_Strength_Potion_IV: number;
-        Ranger_Boots: number;
-        Rangers_Hat: number;
-        Raw_Anglerfish: number;
-        Raw_Blowfish: number;
-        Raw_Carp: number;
-        Raw_Cave_Fish: number;
-        Raw_Crab: number;
-        Raw_Fanfish: number;
-        Raw_Herring: number;
-        Raw_Lobster: number;
-        Raw_Magic_Fish: number;
-        Raw_Manta_Ray: number;
-        Raw_Poison_Fish: number;
-        Raw_Salmon: number;
-        Raw_Sardine: number;
-        Raw_Seahorse: number;
-        Raw_Shark: number;
-        Raw_Shrimp: number;
-        Raw_Skeleton_Fish: number;
-        Raw_Swordfish: number;
-        Raw_Trout: number;
-        Raw_Whale: number;
-        Red_Dhide_Body: number;
-        Red_Dhide_Body_U: number;
-        Red_Dhide_Chaps: number;
-        Red_Dhide_Chaps_U: number;
-        Red_Dhide_Shield: number;
-        Red_Dhide_Shield_U: number;
-        Red_Dhide_Vambraces: number;
-        Red_Dhide_Vambraces_U: number;
-        Red_Dragonhide: number;
-        Red_Party_Hat: number;
-        Red_Wizard_Boots: number;
-        Red_Wizard_Bottoms: number;
-        Red_Wizard_Hat: number;
-        Red_Wizard_Robes: number;
-        Redwood_Logs: number;
-        Redwood_Longbow: number;
-        Redwood_Longbow_U: number;
-        Redwood_Shortbow: number;
-        Redwood_Shortbow_U: number;
-        Regeneration_Potion_I: number;
-        Regeneration_Potion_II: number;
-        Regeneration_Potion_III: number;
-        Regeneration_Potion_IV: number;
-        Rope: number;
-        Rubber_Ducky: number;
-        Ruby: number;
-        Ruby_Bolts: number;
-        Rune_2H_Sword: number;
-        Rune_Arrows: number;
-        Rune_Arrowtips: number;
-        Rune_Battleaxe: number;
-        Rune_Boots: number;
-        Rune_Boots_T_G: number;
-        Rune_Boots_T_S: number;
-        Rune_Crossbow: number;
-        Rune_Crossbow_Head: number;
-        Rune_Dagger: number;
-        Rune_Essence: number;
-        Rune_Gloves: number;
-        Rune_Helmet: number;
-        Rune_Helmet_T_G: number;
-        Rune_Helmet_T_S: number;
-        Rune_Javelin: number;
-        Rune_Javelin_Heads: number;
-        Rune_Platebody: number;
-        Rune_Platebody_T_G: number;
-        Rune_Platebody_T_S: number;
-        Rune_Platelegs: number;
-        Rune_Platelegs_T_G: number;
-        Rune_Platelegs_T_S: number;
-        Rune_Scimitar: number;
-        Rune_Shield: number;
-        Rune_Shield_T_G: number;
-        Rune_Shield_T_S: number;
-        Rune_Sword: number;
-        Rune_Throwing_Knife: number;
-        Runecrafting_Skillcape: number;
-        Runite_Bar: number;
-        Runite_Ore: number;
-        Rusty_Key: number;
-        Salmon: number;
-        Sapphire: number;
-        Sapphire_Bolts: number;
-        Sardine: number;
-        Scroll_of_Aeris: number;
-        Scroll_of_Glacia: number;
-        Scroll_of_Ragnar: number;
-        Scroll_of_Terran: number;
-        Seahorse: number;
-        Seaweed: number;
-        Seeing_Gold_Potion_I: number;
-        Seeing_Gold_Potion_II: number;
-        Seeing_Gold_Potion_III: number;
-        Seeing_Gold_Potion_IV: number;
-        Shark: number;
-        Shell: number;
-        Shrimp: number;
-        Signet_Ring_Half_A: number;
-        Signet_Ring_Half_B: number;
-        Silver_Bar: number;
-        Silver_Diamond_Necklace: number;
-        Silver_Diamond_Ring: number;
-        Silver_Emerald_Necklace: number;
-        Silver_Emerald_Ring: number;
-        Silver_Ore: number;
-        Silver_Ruby_Necklace: number;
-        Silver_Ruby_Ring: number;
-        Silver_Sapphire_Necklace: number;
-        Silver_Sapphire_Ring: number;
-        Silver_Topaz_Necklace: number;
-        Silver_Topaz_Ring: number;
-        Skull_Cape: number;
-        Slayer_Cowl_Basic: number;
-        Slayer_Cowl_Elite: number;
-        Slayer_Cowl_Strong: number;
-        Slayer_Crossbow: number;
-        Slayer_Crossbow_Head: number;
-        Slayer_Helmet_Basic: number;
-        Slayer_Helmet_Elite: number;
-        Slayer_Helmet_Strong: number;
-        Slayer_Leather_Body_Basic: number;
-        Slayer_Leather_Body_Elite: number;
-        Slayer_Leather_Body_Strong: number;
-        Slayer_Platebody_Basic: number;
-        Slayer_Platebody_Elite: number;
-        Slayer_Platebody_Strong: number;
-        Slayer_Skillcape: number;
-        Slayer_Wizard_Hat_Basic: number;
-        Slayer_Wizard_Hat_Elite: number;
-        Slayer_Wizard_Hat_Strong: number;
-        Slayer_Wizard_Robes_Basic: number;
-        Slayer_Wizard_Robes_Elite: number;
-        Slayer_Wizard_Robes_Strong: number;
-        Smithing_Gloves: number;
-        Smithing_Skillcape: number;
-        Smoke_Rune: number;
-        Snape_Grass: number;
-        Snape_Grass_Seed: number;
-        Sourweed_Herb: number;
-        Sourweed_Seed: number;
-        Spider_Chest: number;
-        Spirit_Rune: number;
-        Staff_of_Air: number;
-        Staff_of_Earth: number;
-        Staff_of_Fire: number;
-        Staff_of_Water: number;
-        Standard_Chest: number;
-        Steam_Rune: number;
-        Steel_2H_Sword: number;
-        Steel_Arrows: number;
-        Steel_Arrowtips: number;
-        Steel_Bar: number;
-        Steel_Battleaxe: number;
-        Steel_Boots: number;
-        Steel_Boots_T_G: number;
-        Steel_Boots_T_S: number;
-        Steel_Crossbow: number;
-        Steel_Crossbow_Head: number;
-        Steel_Dagger: number;
-        Steel_Gloves: number;
-        Steel_Helmet: number;
-        Steel_Helmet_T_G: number;
-        Steel_Helmet_T_S: number;
-        Steel_Javelin: number;
-        Steel_Javelin_Heads: number;
-        Steel_Platebody: number;
-        Steel_Platebody_T_G: number;
-        Steel_Platebody_T_S: number;
-        Steel_Platelegs: number;
-        Steel_Platelegs_T_G: number;
-        Steel_Platelegs_T_S: number;
-        Steel_Scimitar: number;
-        Steel_Shield: number;
-        Steel_Shield_T_G: number;
-        Steel_Shield_T_S: number;
-        Steel_Sword: number;
-        Steel_Throwing_Knife: number;
-        Stormsnap: number;
-        Strawberries: number;
-        Strawberry_Seed: number;
-        Strength_Skillcape: number;
-        Sunset_Rapier: number;
-        Sweetcorn: number;
-        Sweetcorn_Seed: number;
-        Swordfish: number;
-        Teak_Logs: number;
-        Terran_God_Boots: number;
-        Terran_God_Gloves: number;
-        Terran_God_Helmet: number;
-        Terran_God_Platebody: number;
-        Terran_God_Platelegs: number;
-        Terran_Godsword: number;
-        Thieving_Gloves: number;
-        Thieving_Skillcape: number;
-        Tin_Ore: number;
-        Tomato_Seed: number;
-        Tomatoes: number;
-        Topaz: number;
-        Topaz_Bolts: number;
-        Treasure_Chest: number;
-        Trout: number;
-        Twin_Exiles: number;
-        Warlock_Amulet: number;
-        Warlock_Ring: number;
-        Water_Acolyte_Wizard_Boots: number;
-        Water_Acolyte_Wizard_Bottoms: number;
-        Water_Acolyte_Wizard_Hat: number;
-        Water_Acolyte_Wizard_Robes: number;
-        Water_Adept_Wizard_Boots: number;
-        Water_Adept_Wizard_Bottoms: number;
-        Water_Adept_Wizard_Hat: number;
-        Water_Adept_Wizard_Robes: number;
-        Water_Battlestaff: number;
-        Water_Chest: number;
-        Water_Expert_Wizard_Boots: number;
-        Water_Expert_Wizard_Bottoms: number;
-        Water_Expert_Wizard_Hat: number;
-        Water_Expert_Wizard_Robes: number;
-        Water_Imbued_Wand: number;
-        Water_Rune: number;
-        Water_Shard: number;
-        Watermelon: number;
-        Watermelon_Seed: number;
-        Weird_Gloop: number;
-        Whale: number;
-        Willow_Logs: number;
-        Willow_Longbow: number;
-        Willow_Longbow_U: number;
-        Willow_Shortbow: number;
-        Willow_Shortbow_U: number;
-        Willow_Tree_Seed: number;
-        Woodcutting_Skillcape: number;
-        Yew_Logs: number;
-        Yew_Longbow: number;
-        Yew_Longbow_U: number;
-        Yew_Shortbow: number;
-        Yew_Shortbow_U: number;
-        Yew_Tree_Seed: number;
-    };
-    mastery: {
-        Smithing: {
-            '0': string;
-            '1': string;
-            '2': string;
-            '3': string;
-            '4': string;
-            '5': string;
-            '6': string;
-            '7': string;
-            '8': string;
-        };
-    };
-    pickaxe: {
-        Adamant: number;
-        Black: number;
-        Bronze: number;
-        Dragon: number;
-        Iron: number;
-        Mithril: number;
-        Rune: number;
-        Steel: number;
-    };
-    prayer: {
-        Augury: number;
-        Burst_of_Strength: number;
-        Chivalry: number;
-        Clarity_of_Thought: number;
-        Eagle_Eye: number;
-        Hawk_Eye: number;
-        Improved_Reflexes: number;
-        Incredible_Reflexes: number;
-        Mystic_Lore: number;
-        Mystic_Might: number;
-        Mystic_Will: number;
-        Piety: number;
-        Protect_Item: number;
-        Protect_from_Magic: number;
-        Protect_from_Melee: number;
-        Protect_from_Ranged: number;
-        Rapid_Heal: number;
-        Redemption: number;
-        Rigour: number;
-        Rock_Skin: number;
-        Sharp_Eye: number;
-        Steel_Skin: number;
-        Superhuman_Strength: number;
-        Thick_Skin: number;
-        Ultimate_Strength: number;
-    };
-    shop: {
-        gloves: {
-            Cooking: number;
-            Gems: number;
-            Mining: number;
-            Smithing: number;
-            Thieving: number;
-        };
-    };
-    skill: {
-        Attack: number;
-        Cooking: number;
-        Crafting: number;
-        Defence: number;
-        Farming: number;
-        Firemaking: number;
-        Fishing: number;
-        Fletching: number;
-        Herblore: number;
-        Hitpoints: number;
-        Magic: number;
-        Mining: number;
-        Prayer: number;
-        Ranged: number;
-        Runecrafting: number;
-        Slayer: number;
-        Smithing: number;
-        Strength: number;
-        Thieving: number;
-        Woodcutting: number;
-    };
-    slayerArea: {
-        Desolate_Plains: number;
-        Forest_of_Goo: number;
-        High_Lands: number;
-        Holy_Isles: number;
-        Penumbra: number;
-        Strange_Cave: number;
-    };
-    specialEvent: {
-        aprilFools2020: number;
-        easter2020: number;
-    };
-    spell: {
-        Earth_Blast: number;
-        Earth_Bolt: number;
-        Earth_Strike: number;
-        Earth_Surge: number;
-        Earth_Wave: number;
-        Fire_Blast: number;
-        Fire_Bolt: number;
-        Fire_Strike: number;
-        Fire_Surge: number;
-        Fire_Wave: number;
-        Water_Blast: number;
-        Water_Bolt: number;
-        Water_Strike: number;
-        Water_Surge: number;
-        Water_Wave: number;
-        Wind_Blast: number;
-        Wind_Bolt: number;
-        Wind_Strike: number;
-        Wind_Surge: number;
-        Wind_Wave: number;
-    };
-    spellType: {
-        Air: number;
-        Earth: number;
-        Fire: number;
-        Water: number;
-    };
+interface EnemyCombatData extends EnemyModifierData {
+    /** 1: LEMONG GANG 2: Some carrot people or whatever */
+    gang?: number;
+    /** Monster ID */
+    id: null | MonsterID;
+    /** Current HP of enemy */
+    hitpoints: number;
+    /** Maximum HP of enemy */
+    maxHitpoints?: number;
+    /** Attack Skill Level */
+    attackLevel?: number;
+    /** Strength Skill Level */
+    strengthLevel?: number;
+    /** Defence Skill Level */
+    defenceLevel?: number;
+    /** Ranged Skill Level */
+    rangedLevel?: number;
+    /** Magic Skill Level */
+    magicLevel?: number;
+    /** Level used to calculate Accuracy Rating */
+    effectiveAttackLevel: number;
+    /** Melee Attack Bonus (used to calculate Accuracy) */
+    attackBonus?: number;
+    /** Ranged Attack Bonus (used to Calculate Accuracy) */
+    attackBonusRanged?: number;
+    /** Magic Attack Bonus (used to Calculate Accuracy) */
+    attackBonusMagic?: number;
+    /** Current Accuracy Rating of enemy */
+    maximumAttackRoll: number;
+    /** Level used to calculate enemy max hit */
+    effectiveStrengthLevel: number;
+    /** Melee Strength Bonus (used to calculate Max Hit for Melee) */
+    strengthBonus?: number;
+    /** Ranged Strength Bonus (used to calcualte Max Hit for Ranged) */
+    strengthBonusRanged?: number;
+    /** Magic % Damage Bonus (used to calculate Max Hit for Magic) */
+    damageBonusMagic?: number;
+    /** Magic Strength Bonus (Golbin Raid Exclusive, used to calculate Max Hit) */
+    magicStrengthBonus?: number;
+    /** Current Max Hit of enemy */
+    maximumStrengthRoll: number;
+    /** Level used to calculate melee evasion */
+    effectiveDefenceLevel: number;
+    /** Level used to calculate ranged evasion */
+    effectiveRangedDefenceLevel?: number;
+    /** Level used to calculate magic evasion */
+    effectiveMagicDefenceLevel?: number;
+    /** Melee Defence Bonus (used to calculate melee evasion) */
+    defenceBonus?: number;
+    /** Ranged Defence Bonus (used to calculate ranged evasion) */
+    defenceBonusRanged?: number;
+    /** Magic Defence Bonus (used to calculate magic evasion) */
+    defenceBonusMagic?: number;
+    /** Current Melee Evasion */
+    maximumDefenceRoll: number;
+    /** Current Ranged Evasion */
+    maximumRangedDefenceRoll?: number;
+    /** Current Magic Evasion */
+    maximumMagicDefenceRoll?: number;
+    /** Base attack speed of enemy before any modifiers [ms] */
+    baseAttackSpeed?: number;
+    /** Current Attack Interval of Enemy [ms] */
+    attackSpeed?: number;
+    /** If enemy has special attack */
+    hasSpecialAttack?: boolean;
+    /** Indices of enemySpecialAttacks */
+    specialAttackID?: number[];
+    /** % Chance for each specialAttackID */
+    specialAttackChances?: number[];
+    /** Base damage reduction of enemy before any modifiers [%]*/
+    baseDamageReduction?: number;
+    /** Current damage reduction of enemy [%] */
+    damageReduction?: number;
+    /** If Enemy has buffs from special attack active */
+    activeBuffs: boolean;
+    /** enemyTimers Left until buffs run out */
+    buffTurns: number;
+    /** Enemy reflects this amount*numberMultiplier damage upon being hit */
+    reflectMelee: null | number;
+    /** @deprecated Unused property (has no effect) */
+    reflectRanged: null | number;
+    /** @deprecated Unused property (has no effect) */
+    reflectMagic: null | number;
+    /** enemyTimers left until slow runs out */
+    attackSpeedDebuffTurns: number;
+    /** Enemy is afflicted by player curse */
+    isCursed: boolean;
+    /** Index of CURSES enemy is afflicted by */
+    curseID?: CurseID;
+    /** enemyTimers left until curse runs out */
+    curseTurnsLeft: number;
+    /** Damage multplier from Anguish Curse (additive with other % damage bonuses) */
+    extraDamageMultiplier: number;
+    /** % decrease to maximumAttackRoll from player special attacks (multiplicative) */
+    decreasedAccuracy?: number;
+    /** Enemy is under the effect of a bleed DOT */
+    isBleeding?: boolean;
+    /** Interval between bleed ticks [ms] */
+    bleedInterval?: number;
+    /** Number of bleed ticks before removing DOT*/
+    bleedCount?: number;
+    /** Property used to calculate bleedHPPerProc */
+    totalBleedHP?: number;
+    /** Enemy is under the stun effect */
+    stunned?: boolean;
+    /** enemyTimers left until stun wears off */
+    stunTurns?: number;
+    /** Enemy is under the sleep effect */
+    sleep?: boolean;
+    /** enemyTimers left until sleep wears off */
+    sleepTurns?: number;
+    /** Enemy has one or more passive modifiers active */
+    hasPassive?: boolean;
+    /** Indices of combatPassive to apply to enemy stats */
+    passiveID?: number[];
+    /** Enemy is using the Into the Mist special attack */
+    intoTheMist?: boolean;
+    /** Enemy attack type
+     * 0: Melee
+     * 1: Ranged
+     * 2: Magic
+     */
+    attackType?: number;
+    /** Enemy is dead */
+    isDead?: boolean;
+    /** @deprecated Unused property (has no effect) */
+    lifesteal?: number;
+    burnDebuff?: number;
+    isBurning?: boolean;
+}
+interface PlayerCombatData {
+    /** Current HP of player */
+    hitpoints: number;
+    /** Player is stunned and can't attack */
+    stunned: boolean;
+    /** Number of playerTimers left till stun wears off*/
+    stunTurns: number;
+    /** Base attack speed of player [ms] before attackSpeedDebuff/attackSpeedBuff */
+    baseAttackSpeed: number;
+    /** % decrease to baseAttackSpeed (multiplicative with other speed bonuses) */
+    attackSpeedDebuff: number;
+    /** Number of playerTimers left until slow wears off */
+    attackSpeedDebuffTurns: number;
+    /** @deprecated Unused Property */
+    increasedDamageReduction: number;
+    /** Player is sleeping and can't attack */
+    sleep?: boolean;
+    /** Number of playerTimers left till sleep wears off */
+    sleepTurns?: number;
+    /** Player has burn debuff active */
+    isBurning?: boolean;
+    /** Total % of player maxHitpoints that burn debuff takes */
+    burnDebuff?: number;
+    /** Player is under the effects of an enemy special stat debuff */
+    activeDebuffs?: boolean;
+    /** Number of enemyTimers left till attack debuff wears off */
+    debuffTurns?: number;
+    /** % decrease to player melee evasion from enemy spec (multiplicative with other decreases) */
+    meleeEvasionDebuff?: number;
+    /** % decrease to player ranged evasion from enemy spec (multiplicative with other decreases) */
+    rangedEvasionDebuff?: number;
+    /** % decrease to player magic evasion from enemy spec (multiplicative with other decreases) */
+    magicEvasionDebuff?: number;
+    /** % decrease to maximumAttackRoll from enemy spec (additive with other decreases) */
+    decreasedAccuracy?: number;
+    /** Number of affliction debuffs stacked on player */
+    afflictedStacks?: number;
+    /** Player has special attack */
+    hasSpecialAttack?: boolean;
+    /** Array of special attack IDs the player has */
+    specialAttackID?: PlayerSpecialID[];
+    /** Increased minimum hit from Charged Aurora */
+    increasedMinHit?: number;
+    /** Player has Mark of Death debuff active removePlayerMarkOfDeath, applyMarkOfDeathToPlayer are relevant*/
+    markOfDeath?: boolean;
+    /** Number of Mark of Death debuff stacks player has. */
+    markOfDeathStacks?: number;
+    /** @deprecated This seems to not actually do anything */
+    markOfDeathTurns?: number;
+    /** % Healing from damage from Fervor Aurora (additive with other increases) */
+    lifesteal?: number;
+    /** decrease to playerAttackSpeed in [ms] from Surge Aurora (applies after all other bonuses) */
+    attackSpeedBuff?: number;
+    /** % increase to maximumRangedDefenceRoll from Surge Aurora (multiplicative with other increases) */
+    rangedEvasionBuff?: number;
+    /** Flat increase to baseMaxHit from Fury Aurora (applies before bonuses from modifiers) */
+    increasedMaxHit?: number;
+    /** % increase to Magic Evasion from Fury Aurora (multiplicative with other increases) */
+    magicEvasionBuff?: number;
+    /** % increase to Melee Evasion from Fervor Aurora (multiplicative with other increases) */
+    meleeEvasionBuff?: number;
+    /** @deprecated Unused property, use playerModifiers instead */
+    slayerAreaEffectNegationPercent?: number;
+    /** @deprecated Unused property, use playerModifiers instead */
+    slayerAreaEffectNegationFlat?: number;
+    /**
+     * Combat levels used to compute player stats
+     * 0: Attack
+     * 1: Strength
+     * 2: Defence
+     * 3: Hitpoints
+     * 4: Ranged
+     * 5: Magic
+     * 6: Prayer
+     */
+    combatLevels?: number[];
+    /** Stats from players Equipment */
+    baseStats?: PlayerBaseStats;
+    /**
+     * Bonuses from combat potions
+     * 0: Melee Accuracy
+     * 1: Melee Evasion
+     * 2: Melee Max Hit
+     * 3: Ranged Evasion, Ranged Accuracy
+     * 4: Ranged Max Hit
+     * 5: Magic Evasion, Magic Accuracy
+     * 6: Magic Max Hit
+     * 7: Regeneration (but this value isn't used)
+     * 8: Damage Reduction
+     */
+    herbloreBonus?: number[];
+    /** Free skill levels used to compute maximumAttackRoll from combat style */
+    attackStyleBonusAccuracy?: number;
+    /** Free skill levels used to compute baseMaxHit from combat style */
+    attackStyleBonusStrength?: number;
+    maximumDefenceRoll?: number;
+    maximumRangedDefenceRoll?: number;
+    maximumMagicDefenceRoll?: number;
+}
+declare type PlayerBaseStats = {
+    /** Melee Attack Bonus [stab,slash,defend] */
+    attackBonus: [number, number, number];
+    /** Melee Defence Bonus */
+    defenceBonus: number;
+    /** Melee Strength Bonus */
+    strengthBonus: number;
+    /** % Damage Reduction */
+    damageReduction: number;
+    /** Ranged Attack Bonus */
+    attackBonusRanged: number;
+    /** Ranged Defence Bonus */
+    defenceBonusRanged: number;
+    /** Ranged Strength Bonus */
+    strengthBonusRanged: number;
+    /** Magic Attack Bonus */
+    attackBonusMagic: number;
+    /** Magic Defence Bonus */
+    defenceBonusMagic: number;
+    /** % Bonus to Magic Max Hit */
+    damageBonusMagic: number;
 };
-
-declare function continueGolbinRaid(): void;
-
-declare var continueThievingOnStun: boolean;
-
-/**
- * @param {any} currentGP
- */
-declare function convertGP(currentGP: any): any;
-
-declare var cookCount: number;
-
-declare var cookingCache: any;
-
-declare var cookingCount: any;
-
-declare var cookingFireActive: boolean;
-
-declare var cookingFireHandler: any;
-
-declare var cookingItems: {
+interface EquipmentSet {
+    equipment: number[];
+    ammo: number;
+    summonAmmo: [number, number];
+}
+interface ItemQuantity2 {
+    itemID: ItemID;
+    qty: number;
+}
+interface MonsterStat {
+    monsterID: MonsterID;
+    stats: number[];
+}
+interface SlayerTask {
+    monsterID: MonsterID;
+    count: number;
+    tier: SlayerTier;
+    extended: boolean;
+}
+interface CookingItem {
+    itemID: ItemID;
     cookingID: number;
     cookingLevel: number;
-    itemID: number;
-}[];
-
-declare var cookingMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var cookingRangeCost: number;
-
-/**
- * @param {any} cat
- */
-declare function craftCategory(cat: any): void;
-
-declare var craftingItems: {
-    craftingID: number;
+}
+interface LogsForFire {
+    itemID: ItemID;
+    firemakingID: number;
+}
+interface CraftingItem {
+    itemID: ItemID;
     craftingLevel: number;
-    itemID: number;
-}[];
-
-declare var craftingMastery: {
+    craftingID: number;
+}
+interface Seed {
+    itemID: ItemID;
+    level: number;
+}
+interface FarmingPatch {
+    type: string;
+    seedID: ItemID;
+    compost: number;
+    timePlanted: number;
+    setInterval: number;
+    timeout: null | TimeoutID;
+    hasGrown: boolean;
+    unlocked: boolean;
+    gloop: boolean;
+    level: number;
+    cost: number;
+}
+interface FarmingArea {
+    id: number;
+    areaName: string;
+    patches: FarmingPatch[];
+}
+interface FishingItem {
+    itemID: ItemID;
+    fishingLevel: number;
+    fishingID: FishingID;
+}
+declare type Loot = [ItemID, number];
+declare type LootTable = Loot[];
+interface FletchingItem {
+    itemID: ItemID;
+    fletchingLevel: number;
+    fletchingID: FletchingID;
+    fletchingCategory: FletchingCategory;
+}
+interface RaidHistory {
+    skillLevels: number[];
+    equipment: number[];
+    ammo: number;
+    inventory: ItemQuantity[];
+    food: ItemQuantity2;
+    wave: number;
+    kills: number;
+    timestamp: number;
+    raidCoinsEarned: number;
+}
+interface HerbloreItem {
+    id: HerbloreItemID;
+    name: string;
+    itemID: ItemID[];
+    category: HerbloreCategory;
+    herbloreLevel: number;
+    herbloreXP: number;
+}
+interface HerbloreBonus {
+    itemID: ItemID;
+    bonus: [null | PotionBonusID, null | number];
+    charges: number;
+}
+declare type HerbloreBonuses = NumberDictionary<HerbloreBonus>;
+declare type PotionBonusID = number;
+interface BaseSpell {
+    name: string;
+    media: string;
+    magicLevelRequired: number;
+    runesRequired: ItemQuantity[];
+    runesRequiredAlt?: ItemQuantity[];
+}
+interface Spell extends BaseSpell {
+    maxHit: number;
+    spellType: number;
+}
+interface Curse extends BaseSpell {
+    description: string;
+    chance: number;
+    effectValue: number | number[];
+}
+interface BaseAurora extends BaseSpell {
+    description: string;
+    effectValue: number | number[];
+    requiredItem: ItemID | -1;
+}
+interface Ancient extends BaseSpell {
+    description: string;
+    specID: PlayerSpecialID;
+    maxHit: number;
+    requiredDungeonCompletion: [DungeonID, number];
+}
+interface Altmagic extends BaseSpell {
+    description: string;
+    /**
+     * -1: Do not need to select item
+     * 0: Need to select a Bar item
+     * 1: Need to select an item from the bank (may be a subset)
+     */
+    selectItem: number;
+    /** If present, spell produces this item */
+    convertTo?: ItemID;
+    /** If present, spell produces this quantity of item */
+    convertToQty?: number;
+    magicXP: number;
+    /** If present, spell ignores coal costs */
+    ignoreCoal?: boolean;
+    /** Alchemy value multiplier */
+    effectValue?: number;
+    /** Spell is item alchemy */
+    isAlch?: boolean;
+    /** Spell converts junk*/
+    isJunk?: boolean;
+    /** Spell converts coal */
+    needCoal?: boolean;
+}
+interface ItemStat {
+    /**
+     * 0: timesFound
+     * 1: timesSold
+     * 2: gpFromSale
+     * 3: deathCount
+     * 4: damageTaken
+     * 5: damageDealt
+     * 6: missedAttacks
+     * 7: timesEaten
+     * 8: healedFor
+     * 9: totalAttacks
+     * 10: amountUsedInCombat
+     * 11: timeWaited
+     * 12: timesDied
+     * 13: timesGrown
+     * 14: harvestAmount
+     * 15: enemiesKilled
+     * 16: timesOpened
+     */
+    stats: number[];
+    itemID: ItemID;
+}
+interface OfflineBase {
+    skill: SkillID;
+    timestamp: number;
+}
+/** Used for woodcutting */
+interface OfflineWoodcut extends OfflineBase {
+    action: number[];
+}
+/** Used for woodcutting */
+interface OfflineMagic extends OfflineBase {
+    action: [number, [number, number, number]];
+}
+interface OfflineUnset {
+    skill: null;
+    action: null;
+    timestamp: null;
+}
+/** Used for all other skills */
+interface OfflineSkill extends OfflineBase {
+    action: number;
+}
+/** Used for fishing, fletching, alt magic */
+interface OfflineTuple extends OfflineBase {
+    action: [number, number];
+}
+declare type Offline = OfflineWoodcut | OfflineTuple | OfflineUnset | OfflineSkill | OfflineMagic;
+declare type TippyTooltip = import("tippy.js").Instance<import("tippy.js").Props>;
+declare type TooltipInstances = {
+    bank: TippyTooltip[];
+    spellbook: TippyTooltip[];
+    equipment: TippyTooltip[];
+    minibar: TippyTooltip[];
+    combatInfo: TippyTooltip[];
+    specialAttack: TippyTooltip[];
+    equipmentSets: TippyTooltip[];
+    masteryModal: TippyTooltip[];
+    combatXP: TippyTooltip[];
+    autoEat: TippyTooltip[];
+    fletching?: TippyTooltip[];
+    herblore?: TippyTooltip[];
+    smithing?: TippyTooltip[];
+    enemyAttackType?: TippyTooltip[];
+    loot?: TippyTooltip[];
+    crafting?: TippyTooltip[];
+    prayerMenu?: TippyTooltip[];
+    craftingRecipe?: TippyTooltip[];
+    herbloreRecipe?: TippyTooltip[];
+    selectMagic?: TippyTooltip[];
+    selectItemForMagic?: TippyTooltip[];
+    runecrafting?: TippyTooltip[];
+    runecraftingRecipe?: TippyTooltip[];
+    fletchingRecipe?: TippyTooltip[];
+    smithingRecipe?: TippyTooltip[];
+    itemLog?: TippyTooltip[];
+    monsterLog?: TippyTooltip[];
+    petLog?: TippyTooltip[];
+    agilityItemCosts?: TippyTooltip[];
+    summoningSynergy?: TippyTooltip[];
+    summoningRecipe?: TippyTooltip[];
+    summoning?: TippyTooltip[];
+};
+declare type SumFunction = (arr: number[]) => number;
+declare type OldMasteryArray = {
     mastery: number;
     masteryXP: number;
 }[];
-
-declare var craftingReqCheck: any[];
-
-declare var craftingTimeout: any;
-
-declare var craftInterval: number;
-
-declare var craftReqCheck: any[];
-
+declare type MasteryCheckPoint = number;
+declare type Mastery = NumberDictionary<MasteryData>;
+interface MasteryData {
+    pool: number;
+    xp: number[];
+}
+interface Monster {
+    id?: MonsterID;
+    name: string;
+    hitpoints: number;
+    attackLevel: number;
+    strengthLevel: number;
+    defenceLevel: number;
+    rangedLevel: number;
+    magicLevel: number;
+    attackBonus: number;
+    attackBonusRanged?: number;
+    strengthBonus: number;
+    defenceBonus: number;
+    defenceBonusRanged: number;
+    defenceBonusMagic: number;
+    attackSpeed: number;
+    attackType: number;
+    dropCoins: [number, number];
+    lootTable?: [ItemID, number, number][];
+    lootChance?: number;
+    media: string;
+    bones?: number | null;
+    canSlayer?: boolean;
+    strengthBonusRanged?: number;
+    slayerXP?: number;
+    attackBonusMagic?: number;
+    damageBonusMagic?: number;
+    selectedSpell?: SpellID;
+    lootQty?: [number];
+    foundIn?: 1;
+    description?: string;
+    isBoss?: boolean;
+    hasSpecialAttack?: boolean;
+    specialAttackID?: number[];
+    setMaxHit?: number | null;
+    boneQty?: number;
+    overrideSpecialChances?: number[];
+    hasPassive?: boolean;
+    passiveID?: number[];
+    damageReduction?: number;
+    ignoreCompletion?: boolean;
+    hasAnimation?: boolean;
+    mediaAnimation?: string;
+}
+interface Pet {
+    name: string;
+    description: string;
+    media: string;
+    acquiredBy: string;
+    skill: SkillID;
+    chance?: number;
+    killCount?: number;
+    ignoreCompletion?: boolean;
+    modifiers?: ModifierData;
+    obtained?: {
+        dungeonCompletion: [DungeonID, number][];
+    };
+    activeInRaid: boolean;
+}
+interface RockData {
+    maxHP: number;
+    damage: number;
+    depleted: boolean;
+    respawnTimer: null | TimeoutID;
+}
+/** Mastery ID for runecrafting */
+declare type RunecraftingID = number;
+declare type RunecraftingCategory = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+interface RunecraftingItem {
+    itemID: ItemID;
+    runecraftingLevel: number;
+    runecraftingID: RunecraftingID;
+    runecraftingCategory: RunecraftingCategory;
+}
+interface SaveGame {
+    firstTime: typeof firstTime;
+    username: typeof username;
+    nameChanges: typeof nameChanges;
+    gp: typeof gp;
+    currentBankUpgrade: typeof currentBankUpgrade;
+    skillXP: typeof skillXP;
+    /** Redundant, can be reproduced on load */
+    skillLevel: typeof skillLevel;
+    /** Redundant, can be reproduced on load */
+    nextLevelProgress: typeof nextLevelProgress;
+    treeMasteryData: typeof treeMasteryData;
+    currentAxe: typeof currentAxe;
+    treeCutLimit: typeof treeCutLimit;
+    /** Contains redundant data, can be reduced in size */
+    bank: typeof bank;
+    bankMax: typeof bankMax;
+    ignoreBankFull: typeof ignoreBankFull;
+    /** Contains redundant data, can be reduced in size */
+    statsGeneral: typeof statsGeneral;
+    /** Contains redundant data, can be reduced in size */
+    statsWoodcutting: typeof statsWoodcutting;
+    logsMastery: typeof logsMastery;
+    /** Contains redundant data, can be reduced in size */
+    statsFiremaking: typeof statsFiremaking;
+    fishMastery: typeof fishMastery;
+    currentRod: typeof currentRod;
+    /** Contains redundant data, can be reduced in size */
+    statsFishing: typeof statsFishing;
+    cookingMastery: typeof cookingMastery;
+    upgradedToRange: typeof upgradedToRange;
+    /** Contains redundant data, can be reduced in size */
+    statsCooking: typeof statsCooking;
+    defaultPageOnLoad: typeof defaultPageOnLoad;
+    miningOreMastery: typeof miningOreMastery;
+    /** Contains redundant data, can be reduced in size */
+    statsMining: typeof statsMining;
+    currentPickaxe: typeof currentPickaxe;
+    /** Contains redundant data, can be reduced in size */
+    statsSmithing: typeof statsSmithing;
+    levelUpScreen: typeof levelUpScreen;
+    gameUpdateNotification: typeof gameUpdateNotification;
+    /** Redundant, can be reproduced on load */
+    equippedItems: typeof equippedItems;
+    attackStyle: typeof attackStyle;
+    /** Contains redundant data, can be reduced in size */
+    combatData: typeof combatData;
+    currentCombatFood: typeof currentCombatFood;
+    /** Can be reduced in size by changing to array */
+    equippedFood: typeof equippedFood;
+    smithingMastery: typeof smithingMastery;
+    /** Contains redundant data, can be reduced in size */
+    statsCombat: typeof statsCombat;
+    continueThievingOnStun: typeof continueThievingOnStun;
+    thievingMastery: typeof thievingMastery;
+    farmingMastery: typeof farmingMastery;
+    showItemNotify: typeof showItemNotify;
+    /** Contains redundant data, can be reduced in size */
+    glovesTracker: typeof glovesTracker;
+    currentCookingFire: typeof currentCookingFire;
+    /** Contains redundant data, can be reduced in size */
+    rockData: typeof rockData;
+    fletchingMastery: typeof fletchingMastery;
+    craftingMastery: typeof craftingMastery;
+    /** Redundant, can be reproduced on load*/
+    ammo: typeof ammo;
+    myBankVersion: typeof myBankVersion;
+    /** Contains redundant data, can be reduced in size */
+    statsThieving: typeof statsThieving;
+    /** Contains redundant data, can be reduced in size */
+    statsFarming: typeof statsFarming;
+    /** Contains redundant data, can be reduced in size */
+    statsFletching: typeof statsFletching;
+    /** Contains redundant data, can be reduced in size */
+    statsCrafting: typeof statsCrafting;
+    autoRestartDungeon: typeof autoRestartDungeon;
+    autoSaveCloud: typeof autoSaveCloud;
+    selectedSpell: typeof selectedSpell;
+    runecraftingMastery: typeof runecraftingMastery;
+    darkMode: typeof darkMode;
+    buyQty: typeof buyQty;
+    itemLog: typeof itemLog;
+    dungeonCompleteCount: typeof dungeonCompleteCount;
+    sellQty: typeof sellQty;
+    /** Contains redundant data, can be reduced in size */
+    statsRunecrafting: typeof statsRunecrafting;
+    showGPNotify: typeof showGPNotify;
+    enableAccessibility: typeof enableAccessibility;
+    /** Old save variable that can be deleted */
+    showSkillNav: boolean;
+    accountGameVersion: typeof accountGameVersion;
+    prayerPoints: typeof prayerPoints;
+    slayerCoins: typeof slayerCoins;
+    /** Can be serialized to reduce size */
+    slayerTask: typeof slayerTask;
+    showEnemySkillLevels: typeof showEnemySkillLevels;
+    monsterStats: typeof monsterStats;
+    itemStats: typeof itemStats;
+    confirmationOnClose: typeof confirmationOnClose;
+    herbloreMastery: typeof herbloreMastery;
+    /** Contains redundant data, can be reduced in size */
+    newFarmingAreas: typeof newFarmingAreas;
+    equipmentSets: typeof equipmentSets;
+    selectedEquipmentSet: typeof selectedEquipmentSet;
+    currentAutoEat: typeof currentAutoEat;
+    equipmentSetsPurchased: typeof equipmentSetsPurchased;
+    /** Contains redundant data, can be reduced in size */
+    herbloreBonuses: typeof herbloreBonuses;
+    autoPotion: typeof autoPotion;
+    autoUseSpecialAttack: typeof autoUseSpecialAttack;
+    showHPNotify: typeof showHPNotify;
+    /** Contains redundant data, can be reduced in size */
+    statsHerblore: typeof statsHerblore;
+    offline: typeof offline;
+    selectedAttackStyle: typeof selectedAttackStyle;
+    showCommas: typeof showCommas;
+    showVirtualLevels: typeof showVirtualLevels;
+    formatNumberSetting: typeof formatNumberSetting;
+    /** Can be converted to array to reduce size */
+    tutorialTips: typeof tutorialTips;
+    saveTimestamp: typeof saveTimestamp;
+    secretAreaUnlocked: typeof secretAreaUnlocked;
+    equipmentSwapPurchased: typeof equipmentSwapPurchased;
+    godUpgrade: typeof godUpgrade;
+    lockedItems: typeof lockedItems;
+    showSaleNotifications: typeof showSaleNotifications;
+    showShopNotifications: typeof showShopNotifications;
+    pauseOfflineActions: typeof pauseOfflineActions;
+    showCombatMinibar: typeof showCombatMinibar;
+    showCombatMinibarCombat: typeof showCombatMinibarCombat;
+    activeAurora: typeof activeAurora;
+    currentGamemode: typeof currentGamemode;
+    petUnlocked: typeof petUnlocked;
+    showSkillMinibar: typeof showSkillMinibar;
+    saveStateBeforeRaid: typeof saveStateBeforeRaid;
+    golbinRaidHistory: typeof golbinRaidHistory;
+    golbinRaidStats: typeof golbinRaidStats;
+    raidCoins: typeof raidCoins;
+    disableAds: typeof disableAds;
+    /** Can be serialized to reduce size */
+    SETTINGS: typeof SETTINGS;
+    /** Can be serialized to reduce size */
+    MASTERY: typeof MASTERY;
+    useCombinationRunes: typeof useCombinationRunes;
+    firstTimeLoad: typeof firstTimeLoad;
+    slayerTaskCompletion: typeof slayerTaskCompletion;
+    autoSlayerUnlocked: typeof autoSlayerUnlocked;
+    autoSlayer: typeof autoSlayer;
+    /** Redundant, can be reproduced on load */
+    itemsAlreadyFound: typeof itemsAlreadyFound;
+    xmasPresents: number;
+    /** Can be massively reduced in size */
+    shopItemsPurchased: typeof shopItemsPurchased;
+    titleNewsID: typeof titleNewsID;
+    chosenAgilityObstacles: typeof chosenAgilityObstacles;
+    skillsUnlocked: typeof skillsUnlocked;
+    agilityObstacleBuildCount: typeof agilityObstacleBuildCount;
+    agilityPassivePillarActive: typeof agilityPassivePillarActive;
+    scheduledPushNotifications: typeof scheduledPushNotifications;
+    randomModifiers: typeof randomModifiers;
+    summoningData: typeof summoningData;
+}
+declare type SaveKey = keyof SaveGame;
+interface SmithingItem {
+    itemID: ItemID;
+    smithingLevel: number;
+    smithingID: number;
+    name: string;
+    category: SmithingCategory;
+}
+/** Index of smithingItems */
+declare type SmithingID = number;
+declare type SmithingCategory = number;
+interface GameStat {
+    stat: string;
+    id: string;
+    count: number;
+}
+/** Index of trees */
+declare type WoodcuttingID = number;
+interface BankSearchOpts {
+    shouldSort: true;
+    tokenize: true;
+    matchAllTokens: true;
+    findAllMatches: true;
+    threshold: 0.1;
+    location: 0;
+    distance: 100;
+    maxPatternLength: 32;
+    minMatchCharLength: 1;
+    keys: ['name', 'category', 'id', 'type'];
+}
+interface StandardModifierObject<Standard> {
+    /** Increases maximumAttackRoll by %: Implemented */
+    increasedGlobalAccuracy: Standard;
+    /** Decreases maximumAttackRoll by %: Implemented */
+    decreasedGlobalAccuracy: Standard;
+    /** Increases maximumAttackRoll by % when using Melee: Implemented */
+    increasedMeleeAccuracyBonus: Standard;
+    /** Decreases maximumAttackRoll by % when using Melee: Implemented */
+    decreasedMeleeAccuracyBonus: Standard;
+    /** Increases baseMaxHit by % when using Melee: Implemented */
+    increasedMeleeStrengthBonus: Standard;
+    /** Decreases baseMaxHit by % when using Melee: Implemented */
+    decreasedMeleeStrengthBonus: Standard;
+    /** Increases maximumDefenceRoll by %: Implemented */
+    increasedMeleeEvasion: Standard;
+    /** Decreases maximumDefenceRoll by %: Implemented */
+    decreasedMeleeEvasion: Standard;
+    /** Increases maximumAttackRoll by % when using Ranged: Implemented */
+    increasedRangedAccuracyBonus: Standard;
+    /** Decreases maximumAttackRoll by % when using Ranged: Implemented */
+    decreasedRangedAccuracyBonus: Standard;
+    /** Increases baseMaxHit by % when using Ranged: Implemented */
+    increasedRangedStrengthBonus: Standard;
+    /** Decreases baseMaxHit by % when using Ranged: Implemented */
+    decreasedRangedStrengthBonus: Standard;
+    /** Increases maximumRangedDefenceRoll by %: Implemented */
+    increasedRangedEvasion: Standard;
+    /** Decreases maximumRangedDefenceRoll by %: Implemented */
+    decreasedRangedEvasion: Standard;
+    /** Increases maximumAttackRoll by % when using Magic: Implemented */
+    increasedMagicAccuracyBonus: Standard;
+    /** Decreases maximumAttackRoll by % when using Magic: Implemented */
+    decreasedMagicAccuracyBonus: Standard;
+    /** Increases baseMaxHit by % when using Magic: Implemented */
+    increasedMagicDamageBonus: Standard;
+    /** Decreases baseMaxHit by % when using Magic: Implemented */
+    decreasedMagicDamageBonus: Standard;
+    /** Increases maximumMagicDefenceRoll by %: Implemented */
+    increasedMagicEvasion: Standard;
+    /** Decreases maximumMagicDefenceRoll by %: Implemented */
+    decreasedMagicEvasion: Standard;
+    /** Increases baseMaxHit by value*numberMultiplier after other bonuses: Implemented */
+    increasedMaxHitFlat: Standard;
+    /** Decreases baseMaxHit by value*numberMultiplier after other bonuses: Implemented */
+    decreasedMaxHitFlat: Standard;
+    /** Increases baseMaxHit by %: Implemnted */
+    increasedMaxHitPercent: Standard;
+    /** Decreases baseMaxHit by %: Implemented */
+    decreasedMaxHitPercent: Standard;
+    /** Increases damageReduction by value: Implemented */
+    increasedDamageReduction: Standard;
+    /** Decreases damageReduction by value: Implemented */
+    decreasedDamageReduction: Standard;
+    /** Increases chance to double bones and item drops by value: Implemented
+     * Appears to be referenced in calculateChanceToDouble but it is never used in the context of combat */
+    increasedChanceToDoubleLootCombat: Standard;
+    /** Decreases chance to double bones and item drops by value: Implemented */
+    decreasedChanceToDoubleLootCombat: Standard;
+    /** Increases slayer coin gains by %: Implemented */
+    increasedSlayerCoins: Standard;
+    /** Decreases slayer coin gains by %: Implemented */
+    decreasedSlayerCoins: Standard;
+    /** Increases base HP regen by value*numberMultiplier: Implemented */
+    increasedHPRegenFlat: Standard;
+    /** Decreases base HP regen by value*numberMultiplier: Implemented */
+    decreasedHPRegenFlat: Standard;
+    /** Increases GP gain by % from all sources except selling items: Implemented  */
+    increasedGPGlobal: Standard;
+    /** Decreases GP gain by % from all sources except selling items: Implemented  */
+    decreasedGPGlobal: Standard;
+    /** Increases GP gain by % from monster drops and confetti crossbow: Implemented */
+    increasedGPFromMonsters: Standard;
+    /** Decreases GP gain by % from monster drops and confetti crossbow: Implemented */
+    decreasedGPFromMonsters: Standard;
+    /** Increases GP gain by value from monster drops before % bonuses: Implemented */
+    increasedGPFromMonstersFlat: Standard;
+    /** Decreases GP gain by value from monster drops before % bonuses: Implemented */
+    decreasedGPFromMonstersFlat: Standard;
+    /** Increases GP gain by % from thieving: Implemented */
+    increasedGPFromThieving: Standard;
+    /** Decreases GP gain by % from thieving: Implemented */
+    decreasedGPFromThieving: Standard;
+    /** Increases GP gain by value from thieving before % bonuses: Implemented */
+    increasedGPFromThievingFlat: Standard;
+    /** Decreases GP gain by value from thieving before % bonuses: Implemented */
+    decreasedGPFromThievingFlat: Standard;
+    /** Increases damage dealt to boss monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    increasedDamageToBosses: Standard;
+    /** Decreases damage dealt to boss monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    decreasedDamageToBosses: Standard;
+    /** Increases damage dealt to slayer task monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    increasedDamageToSlayerTasks: Standard;
+    /** Decreases damage dealt to slayer task monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    decreasedDamageToSlayerTasks: Standard;
+    /** Increases damage dealt to slayer area monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    increasedDamageToSlayerAreaMonsters: Standard;
+    /** Decreases damage dealt to slayer area monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    decreasedDamageToSlayerAreaMonsters: Standard;
+    /** Increases damage dealt to combat area monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    increasedDamageToCombatAreaMonsters: Standard;
+    /** Decreases damage dealt to combat area monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    decreasedDamageToCombatAreaMonsters: Standard;
+    /** Increases damage dealt to dungeon monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    increasedDamageToDungeonMonsters: Standard;
+    /** Decreases damage dealt to dungeon monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    decreasedDamageToDungeonMonsters: Standard;
+    /** Increases damage dealt to monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    increasedDamageToAllMonsters: Standard;
+    /** Decreases damage dealt to monsters by %: Implemented (only on attack damage, excludes ancient magicks) */
+    decreasedDamageToAllMonsters: Standard;
+    /** Increases the % efficiency of auto-eat by value: Implemented */
+    increasedAutoEatEfficiency: Standard;
+    /** Decreases the % efficiency of auto-eat by value: Implemented */
+    decreasedAutoEatEfficiency: Standard;
+    /** Increases the threshold % of maxHitpoints that will trigger auto-eat by value: Implemented */
+    increasedAutoEatThreshold: Standard;
+    /** Decreases the threshold % of maxHitpoints that will trigger auto-eat by value: Implemented */
+    decreasedAutoEatThreshold: Standard;
+    /** Increases the % of maxHitpoints that auto-eat heals to by value: Implemented */
+    increasedAutoEatHPLimit: Standard;
+    /** Decreases the % of maxHitpoints that auto-eat heals to by value: Implemented */
+    decreasedAutoEatHPLimit: Standard;
+    /** Increases the base healing value of food by %: Implemented */
+    increasedFoodHealingValue: Standard;
+    /** Decreases the base healing value of food by %: Implemented */
+    decreasedFoodHealingValue: Standard;
+    /** Increases the % chance to preserve prayerpoints by value: Implemented */
+    increasedChanceToPreservePrayerPoints: Standard;
+    /** Decreases the % chance to preserve prayerpoints by value: Implemented */
+    decreasedChanceToPreservePrayerPoints: Standard;
+    /** Decreases the quantity of prayerpoints consumed by a prayer by value: Implemented */
+    increasedFlatPrayerCostReduction: Standard;
+    /** Increases the quantity of prayerpoints consumed by a prayer by value: Implemented */
+    decreasedFlatPrayerCostReduction: Standard;
+    /** Increases minHitIncrease by value*numberMultiplier when using Air spells: Implemented */
+    increasedMinAirSpellDmg: Standard;
+    /** Decreases minHitIncrease by value*numberMultiplier when using Air spells: Implemented */
+    decreasedMinAirSpellDmg: Standard;
+    /** Increases minHitIncrease by value*numberMultiplier when using Water spells: Implemented */
+    increasedMinWaterSpellDmg: Standard;
+    /** Decreases minHitIncrease by value*numberMultiplier when using Water spells: Implemented */
+    decreasedMinWaterSpellDmg: Standard;
+    /** Increases minHitIncrease by value*numberMultiplier when using Earth spells: Implemented */
+    increasedMinEarthSpellDmg: Standard;
+    /** Decreases minHitIncrease by value*numberMultiplier when using Earth spells: Implemented */
+    decreasedMinEarthSpellDmg: Standard;
+    /** Increases minHitIncrease by value*numberMultiplier when using Fire spells: Implemented */
+    increasedMinFireSpellDmg: Standard;
+    /** Decreases minHitIncrease by value*numberMultiplier when using Fire spells: Implemented */
+    decreasedMinFireSpellDmg: Standard;
+    /** Increases the % chance to preserve ranged ammo by value: Implemented */
+    increasedAmmoPreservation: Standard;
+    /** Decreases the % chance to preserve ranged ammo by value: Implemented */
+    decreasedAmmoPreservation: Standard;
+    /** Increases the % chance to preserve runes by value: Implemented, but is messy */
+    increasedRunePreservation: Standard;
+    /** Decreases the % chance to preserve runes by value: Implemented, but is messy */
+    decreasedRunePreservation: Standard;
+    /** Decreases playerAttackSpeed by value [ms] before % bonuses: Implemented */
+    decreasedPlayerAttackSpeed: Standard;
+    /** Increases playerAttackSpeed by value [ms] before % bonuses: Implemented */
+    increasedPlayerAttackSpeed: Standard;
+    /** Decreases playerAttackSpeed by %: Implemented */
+    decreasedPlayerAttackSpeedPercent: Standard;
+    /** Increases playerAttackSpeed by %: Implemented */
+    increasedPlayerAttackSpeedPercent: Standard;
+    /** Increases slayer area effect % values by value: Implemented */
+    increasedSlayerAreaEffectNegationFlat: Standard;
+    /** Decreases slayer area effect % values by value: Implemented */
+    decreasedSlayerAreaEffectNegationFlat: Standard;
+    /** Decreases enemySpawnTimer by value [ms]: Implemented */
+    decreasedMonsterRespawnTimer: Standard;
+    /** Increases enemySpawnTimer by value [ms]: Implemented */
+    increasedMonsterRespawnTimer: Standard;
+    /** Increases the GP gained from item sales by %: Implemented, but not used. */
+    increasedGPFromSales: Standard;
+    /** Decreases the GP gained from item sales by %: Implemented, but not used. */
+    decreasedGPFromSales: Standard;
+    /** Increases maximum bank space by value: Implemented */
+    increasedBankSpace: Standard;
+    /** Decreases maximum bank space by value: Implemented */
+    decreasedBankSpace: Standard;
+    /** Increases maximum bank space by value, and increases bank upgrade cost via getBankUpgradeCost: Implemented */
+    increasedBankSpaceShop: Standard;
+    /** Decreases maximum bank space by value, and decreases bank upgrade cost via getBankUpgradeCost: Implemented */
+    decreasedBankSpaceShop: Standard;
+    /** Increases % chance to preserve potion charges by value: Implemented */
+    increasedChanceToPreservePotionCharge: Standard;
+    /** Decreases % chance to preserve potion charges by value: Implemented */
+    decreasedChanceToPreservePotionCharge: Standard;
+    /** Not implemented, Not Used
+     * @deprecated Use increasedChanceToDoubleItemsSkill instead
+     */
+    increasedChanceToDoubleLootThieving: Standard;
+    /** Not implemented, Not Used.
+     * @deprecated Use decreasedChanceToDoubleItemsSkill instead
+     */
+    decreasedChanceToDoubleLootThieving: Standard;
+    /** Increases % chance to preserve resources in all skills by value: Implemented via calculateSkillPreservationChance*/
+    increasedGlobalPreservationChance: Standard;
+    /** Decreases % chance to preserve resources in all skills by value: Implemented via calculateSkillPreservationChance*/
+    decreasedGlobalPreservationChance: Standard;
+    /** @deprecated Unimplemented and Used. Holdover from when agility had stamina */
+    increasedStaminaPreservationChance: Standard;
+    /** @deprecated Unimplemented and Used. Holdover from when agility had stamina */
+    decreasedStaminaPreservationChance: Standard;
+    /** Increases mastery xp earned from all skills by %: Implemented in getMasteryXpToAdd */
+    increasedGlobalMasteryXP: Standard;
+    /** Decreases mastery xp earned from all skills by %: Implemented in getMasteryXpToAdd */
+    decreasedGlobalMasteryXP: Standard;
+    /** Increases xp earned from all skills by %: Implemented in addXPBonuses */
+    increasedGlobalSkillXP: Standard;
+    /** Decreases xp earned from all skills by %: Implemented in addXPBonuses */
+    decreasedGlobalSkillXP: Standard;
+    /** @deprecated Unimplemented and Unused. Holdover from when agility had stamina */
+    increasedMaxStamina: Standard;
+    /** @deprecated Unimplemented and Unused. Holdover from when agility had stamina */
+    decreasedMaxStamina: Standard;
+    /** Increases maxRockHP by value: Implemented*/
+    increasedMiningNodeHP: Standard;
+    /** Decreases maxRockHP by value: Implemented*/
+    decreasedMiningNodeHP: Standard;
+    /** Allows swapping equipment/equipment sets/food in dungeons: Implemented */
+    dungeonEquipmentSwapping: Standard;
+    /** Increases available equipment sets by value: Implemented */
+    increasedEquipmentSets: Standard;
+    /** Allows usage of autoslayer: Implemented */
+    autoSlayerUnlocked: Standard;
+    /** Increases the number of trees that can be cut by value: Implemented */
+    increasedTreeCutLimit: Standard;
+    /** Increases the % chance to double items from all skills by value: Implemented */
+    increasedChanceToDoubleItemsGlobal: Standard;
+    /** Decreases the % chance to double items from all skills by value: Implemented */
+    decreasedChanceToDoubleItemsGlobal: Standard;
+    /** Increases the harvest quantity of farming by %: Implemented */
+    increasedFarmingYield: Standard;
+    /** Decreases the harvest quantity of farming by %: Implemented */
+    decreasedFarmingYield: Standard;
+    /** Increases maxHitpoints by value*numberMultiplier: Implemented */
+    increasedMaxHitpoints: Standard;
+    /** Decreases maxHitpoints by value*numberMultiplier: Implemented */
+    decreasedMaxHitpoints: Standard;
+    /** @deprecated Unused and Unimplented, Holdover from when agility had stamina */
+    increasedStaminaPerObstacle: Standard;
+    /** @deprecated Unused and Unimplented, Holdover from when agility had stamina */
+    decreasedStaminaPerObstacle: Standard;
+    /** Increases slayer task length by %: Implemented */
+    increasedSlayerTaskLength: Standard;
+    /** Decreases slayer task length by %: Implemented */
+    decreasedSlayerTaskLength: Standard;
+    /** @deprecated Unused and Unimplented, Holdover from when agility had stamina */
+    increasedStaminaCost: Standard;
+    /** @deprecated Unused and Unimplented, Holdover from when agility had stamina */
+    decreasedStaminaCost: Standard;
+    /** Increases the % of attack damage the player is healed for by value: Implemented */
+    increasedLifesteal: Standard;
+    /** Decreases the % of attack damage the player is healed for by value: Implemented */
+    decreasedLifesteal: Standard;
+    /** Unused and Unimplemented */
+    increasedReflectDamage: Standard;
+    /** Unused and Unimplemented */
+    decreasedReflectDamage: Standard;
+    /** Increases the GP from agility by %: Implemented in getAgilityGPMultiplier */
+    increasedGPFromAgility: Standard;
+    /** Decreases the GP from agility by %: Implemented in getAgilityGPMultiplier */
+    decreasedGPFromAgility: Standard;
+    /** Increases the % chance to double Ores from mining by value: Implemented */
+    increasedChanceToDoubleOres: Standard;
+    /** Decreases the % chance to double Ores from mining by value: Implemented */
+    decreasedChanceToDoubleOres: Standard;
+    /** Increases HP regeneration by %: Implemented */
+    increasedHitpointRegeneration: Standard;
+    /** Decreases HP regeneration by %: Implemented */
+    decreasedHitpointRegeneration: Standard;
+    /** Decreases golbin raid skip cost by %: Implemented */
+    golbinRaidWaveSkipCostReduction: Standard;
+    /** Increase the quantity of food from golbin raid by value: Implemented, possibly bugged as it just increases the amount, not just the min */
+    golbinRaidIncreasedMinimumFood: Standard;
+    /** Increases the maximum ammo quantity from goblin raid by %: Implemented */
+    golbinRaidIncreasedMaximumAmmo: Standard;
+    /** Increases the maximum rune quantity from goblin raid by %: Implemented */
+    golbinRaidIncreasedMaximumRunes: Standard;
+    /** Unlocks prayer in golbin raid: Implemented */
+    golbinRaidPrayerUnlocked: Standard;
+    /** Increases the prayer level in golbin raid by value: Implemented, I don't think this one displays anywhere though */
+    golbinRaidIncreasedPrayerLevel: Standard;
+    /** Increases the quantity of prayer points started with in golbin raid by value: Implemented */
+    golbinRaidIncreasedPrayerPointsStart: Standard;
+    /** Increases the quantity of prayer points recieved per wave in golbin raid by value: Implemented. Golbin raid could have issues with the PP being effected by other modifiers though */
+    golbinRaidIncreasedPrayerPointsWave: Standard;
+    /** Unlocks passive slot selection on tenth wave of golbin raid: Implemented */
+    golbinRaidPassiveSlotUnlocked: Standard;
+    /** Increases the quantity of runes started with in golbin raid by value: Implemented */
+    golbinRaidIncreasedStartingRuneCount: Standard;
+    /** Changes the itemID of the starting weapon in golbin raid to value: Implemented */
+    golbinRaidStartingWeapon: Standard;
+    /** Increases minHitIncrease by floor(baseMaxHit*value/100): Implemented */
+    increasedMinHitBasedOnMaxHit: Standard;
+    /** Decreases minHitIncrease by floor(baseMaxHit*value/100): Implemented */
+    decreasedMinHitBasedOnMaxHit: Standard;
+    /** Increases the charges of potions by value: Implemented */
+    increasedPotionChargesFlat: Standard;
+    /** Decreases the charges of potions by value: Implemented */
+    decreasedPotionChargesFlat: Standard;
+    /** Increases the % chance to recieve bird's nests from Woodcutting by value: Implemented*/
+    increasedBirdNestDropRate: Standard;
+    /** Decreases the % chance to recieve bird's nests from Woodcutting by value: Implemented*/
+    decreasedBirdNestDropRate: Standard;
+    /** Increases the % chance to not use rockHP when mining by value: Implemented */
+    increasedChanceNoDamageMining: Standard;
+    /** Decreases the % chance to not use rockHP when mining by value: Implemented */
+    decreasedChanceNoDamageMining: Standard;
+    /** Increases the % chance to recieve a gold bar when smelting silver bars by value: Implemented */
+    increasedSeeingGoldChance: Standard;
+    /** Decreases the % chance to recieve a gold bar when smelting silver bars by value: Implemented */
+    decreasedSeeingGoldChance: Standard;
+    /** Increases the % chance to double crops from farming by value: Implemented via calculateChanceToDouble*/
+    increasedChanceDoubleHarvest: Standard;
+    /** Decreases the % chance to double crops from farming by value: Implemented via calculateChanceToDouble*/
+    decreasedChanceDoubleHarvest: Standard;
+    /** Increases the % chance to recieve bonus elemental runes from runecrafting by value: Implemented */
+    increasedChanceForElementalRune: Standard;
+    /** Decreases the % chance to recieve bonus elemental runes from runecrafting by value: Implemented */
+    decreasedChanceForElementalRune: Standard;
+    /** Increases the quantity of bonus elemental runes from runecrafting by value: Implemented */
+    increasedElementalRuneGain: Standard;
+    /** Decreases the quantity of bonus elemental runes from runecrafting by value: Implemented */
+    decreasedElementalRuneGain: Standard;
+    /** Increases the % chance that a random tier of potion is recieved from herblore by value: Implemented */
+    increasedChanceRandomPotionHerblore: Standard;
+    /** Decreases the % chance that a random tier of potion is recieved from herblore by value: Implemented */
+    decreasedChanceRandomPotionHerblore: Standard;
+    /** Increases the number of times the player rolls to hit an enemy by value: Implemented */
+    increasedAttackRolls: Standard;
+    /** Decreases the number of times the player rolls to hit an enemy by value: Implemented */
+    decreasedAttackRolls: Standard;
+    /** Effect of Bonfire Potions: Implemented */
+    freeBonfires: Standard;
+    /** Increases the Magic XP gained from alt magic by %: Implemented */
+    increasedAltMagicSkillXP: Standard;
+    /** Decreases the Magic XP gained from alt magic by %: Implemented */
+    decreasedAltMagicSkillXP: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsIncreasedMovementSpeed: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsDecreasedMovementSpeed: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsIncreasedTeleportCost: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsDecreasedTeleportCost: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsIncreasedUpdateDelay: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsDecreasedUpdateDelay: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsIncreasedLemonGang: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsDecreasedLemonGang: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsIncreasedCarrotGang: Standard;
+    /** ??? It's a Mystery ??? */
+    aprilFoolsDecreasedCarrotGang: Standard;
+    increasedGPOnEnemyHit: Standard;
+    decreasedGPOnEnemyHit: Standard;
+    decreasedEnemyMeleeEvasion: Standard;
+    increasedEnemyMeleeEvasion: Standard;
+    decreasedEnemyRangedEvasion: Standard;
+    increasedEnemyRangedEvasion: Standard;
+    decreasedEnemyMagicEvasion: Standard;
+    increasedEnemyMagicEvasion: Standard;
+    decreasedEnemyAccuracy: Standard;
+    increasedEnemyAccuracy: Standard;
+    increasedAdditionalRunecraftCountRunes: Standard;
+    decreasedAdditionalRunecraftCountRunes: Standard;
+    summoningSynergy_0_1: Standard;
+    summoningSynergy_0_6: Standard;
+    summoningSynergy_0_7: Standard;
+    summoningSynergy_0_8: Standard;
+    summoningSynergy_0_12: Standard;
+    summoningSynergy_0_13: Standard;
+    summoningSynergy_0_14: Standard;
+    summoningSynergy_0_15: Standard;
+    summoningSynergy_1_2: Standard;
+    summoningSynergy_1_8: Standard;
+    summoningSynergy_1_12: Standard;
+    summoningSynergy_1_13: Standard;
+    summoningSynergy_1_14: Standard;
+    summoningSynergy_1_15: Standard;
+    summoningSynergy_2_6: Standard;
+    summoningSynergy_2_7: Standard;
+    summoningSynergy_2_8: Standard;
+    summoningSynergy_2_12: Standard;
+    summoningSynergy_2_13: Standard;
+    summoningSynergy_2_14: Standard;
+    summoningSynergy_2_15: Standard;
+    summoningSynergy_3_4: Standard;
+    summoningSynergy_3_5: Standard;
+    summoningSynergy_3_9: Standard;
+    summoningSynergy_3_10: Standard;
+    summoningSynergy_3_11: Standard;
+    summoningSynergy_3_16: Standard;
+    summoningSynergy_3_17: Standard;
+    summoningSynergy_3_18: Standard;
+    summoningSynergy_3_19: Standard;
+    summoningSynergy_4_5: Standard;
+    summoningSynergy_4_9: Standard;
+    summoningSynergy_4_10: Standard;
+    summoningSynergy_4_11: Standard;
+    summoningSynergy_4_16: Standard;
+    summoningSynergy_4_17: Standard;
+    summoningSynergy_4_18: Standard;
+    summoningSynergy_4_19: Standard;
+    summoningSynergy_5_9: Standard;
+    summoningSynergy_5_10: Standard;
+    summoningSynergy_5_11: Standard;
+    summoningSynergy_5_16: Standard;
+    summoningSynergy_5_17: Standard;
+    summoningSynergy_5_18: Standard;
+    summoningSynergy_6_7: Standard;
+    summoningSynergy_6_8: Standard;
+    summoningSynergy_6_12: Standard;
+    summoningSynergy_6_13: Standard;
+    summoningSynergy_6_14: Standard;
+    summoningSynergy_6_15: Standard;
+    summoningSynergy_7_8: Standard;
+    summoningSynergy_7_12: Standard;
+    summoningSynergy_7_13: Standard;
+    summoningSynergy_7_14: Standard;
+    summoningSynergy_7_15: Standard;
+    summoningSynergy_8_12: Standard;
+    summoningSynergy_8_13: Standard;
+    summoningSynergy_8_14: Standard;
+    summoningSynergy_9_10: Standard;
+    summoningSynergy_9_11: Standard;
+    summoningSynergy_9_16: Standard;
+    summoningSynergy_9_17: Standard;
+    summoningSynergy_9_18: Standard;
+    summoningSynergy_9_19: Standard;
+    summoningSynergy_10_11: Standard;
+    summoningSynergy_10_16: Standard;
+    summoningSynergy_10_18: Standard;
+    summoningSynergy_10_19: Standard;
+    summoningSynergy_11_16: Standard;
+    summoningSynergy_11_17: Standard;
+    summoningSynergy_11_18: Standard;
+    summoningSynergy_11_19: Standard;
+    summoningSynergy_12_13: Standard;
+    summoningSynergy_12_14: Standard;
+    summoningSynergy_12_15: Standard;
+    summoningSynergy_13_14: Standard;
+    summoningSynergy_13_15: Standard;
+    summoningSynergy_14_15: Standard;
+    summoningSynergy_16_17: Standard;
+    summoningSynergy_16_18: Standard;
+    summoningSynergy_16_19: Standard;
+    summoningSynergy_17_18: Standard;
+    summoningSynergy_17_19: Standard;
+    summoningSynergy_18_19: Standard;
+    increasedSummoningChargePreservation: Standard;
+    decreasedSummoningChargePreservation: Standard;
+    increasedSummoningCreationCharges: Standard;
+    decreasedSummoningCreationCharges: Standard;
+    increasedChanceToApplyBurn: Standard;
+    decreasedChanceToApplyBurn: Standard;
+    decreasedSummoningShardCost: Standard;
+    increasedSummoningShardCost: Standard;
+}
+interface SkillModifierObject<Skill> {
+    /** Increases the skill level used to compute combat stats by value: Implemented */
+    increasedHiddenSkillLevel: Skill;
+    /** Decreases the skill level used to compute combat stats by value: Implemented */
+    decreasedHiddenSkillLevel: Skill;
+    /** Decreases skill interval by value [ms] before % bonuses: Implemented via getTotalFromModifierArray in calculateSkillInterval */
+    decreasedSkillInterval: Skill;
+    /** Increases skill interval by value [ms] before % bonuses: Implemented via getTotalFromModifierArray in calculateSkillInterval */
+    increasedSkillInterval: Skill;
+    /** Decreases skill interval by %: Implemented via getTotalFromModifierArray in calculateSkillInterval */
+    decreasedSkillIntervalPercent: Skill;
+    /** Increases skill interval by %: Implemented via getTotalFromModifierArray in calculateSkillInterval */
+    increasedSkillIntervalPercent: Skill;
+    /** Increases % chance to preserve resources in skill by value: Implemented via getTotalFromModifierArray in calculateSkillPreservationChance */
+    increasedSkillPreservationChance: Skill;
+    /** Decreases % chance to preserve resources in skill by value: Implemented via getTotalFromModifierArray in calculateSkillPreservationChance */
+    decreasedSkillPreservationChance: Skill;
+    /** Increases mastery xp earned for skill by %: Implemented via getTotalFromModifierArray in getMasteryXpToAdd */
+    increasedMasteryXP: Skill;
+    /** Decreases mastery xp earned for skill by %: Implemented via getTotalFromModifierArray in getMasteryXpToAdd */
+    decreasedMasteryXP: Skill;
+    /** Increases xp earned from skill by %: Implemented via getTotalFromModifierArray in addXPBonuses */
+    increasedSkillXP: Skill;
+    /** Decreases xp earned from skill by %: Implemented via getTotalFromModifierArray in addXPBonuses */
+    decreasedSkillXP: Skill;
+    /** Increases the % chance to double items from a skill by value: Partially Implemented. */
+    increasedChanceToDoubleItemsSkill: Skill;
+    /** Decreases the % chance to double items from a skill by value: Partially Implemented. */
+    decreasedChanceToDoubleItemsSkill: Skill;
+    increasedChanceAdditionalSkillResource: Skill;
+    decreasedChanceAdditionalSkillResource: Skill;
+}
+declare type ModifierObject<Skill, Standard> = StandardModifierObject<Standard> & SkillModifierObject<Skill>;
+declare type SkillModifierData = [SkillID, number];
+declare type SkillModifierActive = {
+    id: SkillID;
+    value: number;
+};
+declare type ModifierData = Partial<ModifierObject<SkillModifierData[], number>>;
+declare type ModifierActive = Partial<ModifierObject<SkillModifierActive[], number>>;
+declare type ModifierKeys = keyof ModifierObject<any, any>;
+declare type SkillModifierKeys = keyof SkillModifierObject<any>;
+declare type StandardModifierKeys = keyof StandardModifierObject<any>;
+declare type SkillEntry<T> = [SkillModifierKeys, T];
+declare type StandardEntry<T> = [StandardModifierKeys, T];
+declare type ModifierEntry<Skill, Standard> = SkillEntry<Skill> | StandardEntry<Standard>;
+declare type ModifierDataEntry = ModifierEntry<SkillModifierData[], number>;
+declare type ModifierActiveEntry = ModifierEntry<SkillModifierActive[], number>;
+/** Generic base for all item like arrays */
+interface GenericItem extends BaseItem {
+    /** Item has an animated image */
+    hasAnimation?: boolean;
+    /** Link to animate image source */
+    mediaAnimation?: string;
+    /** Item can be upgraded */
+    canUpgrade?: boolean;
+    /** Item to upgrade to */
+    trimmedItemID?: number;
+    /** Items required to upgrade */
+    itemsRequired?: number[][];
+    /** GP cost to upgrades */
+    trimmedGPCost?: number;
+    /** Multiple of the item can be upgraded at once */
+    canMultiUpgrade?: boolean;
+    /** Item can be opened (e.g. is a chest) */
+    canOpen?: boolean;
+    /** ItemIDs and weights of drops */
+    dropTable?: LootTable;
+    /** Quantities of drops */
+    dropQty?: number[];
+    /** Used to create SHOP variable, but otherwise do not use */
+    buysFor?: number;
+    /** @deprecated Data is stored in SHOP */
+    buysForLeather?: number;
+    /** @deprecated Data is now stored in SHOP*/
+    slayerCost?: number;
+    /** @deprecated Data is now stored in SHOP*/
+    slayerTaskRequirement?: [SlayerTier, number];
+    /** @deprecated Data is now stored in SHOP */
+    buysForItems?: [ItemID, number][];
+    /** Unused flag for bones, game uses prayerPoints prop instead */
+    isBones?: boolean;
+    /** Designates item as bone. Value is base pp given on burying */
+    prayerPoints?: number;
+    /** Designates item as food */
+    canEat?: boolean;
+    /** value*numberMultiplier is base hp of food. */
+    healsFor?: number;
+    /** Item can be read from bank */
+    canRead?: boolean;
+    /** When read, sets title of Swal */
+    readTitle?: string;
+    /** When read, sets html of Swal */
+    readText?: string;
+    /** @deprecated ID for birthday event cluescrolls. No longer in use. */
+    clueID?: 0 | 1 | 2 | 3;
+    /** Item can be claimed as token in bank */
+    isToken?: boolean;
+    /** Flags token as mastery token, and is the Skill to give masteryxp to */
+    skill?: SkillID;
+    /** Flags token as bank token */
+    isBankToken?: boolean;
+    /** [SkillID,MasteryID] of producing the item*/
+    masteryID?: [SkillID, number];
+    /** MasteryID for item for Firemaking */
+    firemakingID?: number;
+    /** @deprecated Unused category for cooking */
+    cookingCategory?: number;
+    /** Identifies item as able to be cooked. Also MasteryID for cooking */
+    cookingID?: number;
+    /** Cooking level required to cook item */
+    cookingLevel?: number;
+    /** Cooking xp for cooking item */
+    cookingXP?: number;
+    /** ItemID to give when item cooked */
+    cookedItemID?: ItemID;
+    /** ItemID to give when item burned */
+    burntItemID?: ItemID;
+    /** Identifies item as fish, should also be identical to MasteryID for it */
+    fishingID?: number;
+    /** Fishing level required to catch item */
+    fishingLevel?: number;
+    /** Fishing XP for catching item */
+    fishingXP?: number;
+    /** Min interval [ms] to catch item */
+    minFishingInterval?: number;
+    /** Max interval [ms] to catch item */
+    maxFishingInterval?: number;
+    /** If present fish gives strength xp when caught */
+    strengthXP?: number;
+    /** Identifies item as specialItems and indicates weight in loot-table */
+    fishingCatchWeight?: number;
+    /** @deprecated Unused property */
+    miningID?: number;
+    /** @deprecated Unused property */
+    miningLevel?: number;
+    /** Experience earned for Mining item */
+    miningXP?: number;
+    /** @deprecated Unused property */
+    miningRespawnInterval?: number;
+    /** @deprecated Unused property */
+    maxMiningRespawnInterval?: number;
+    /** @deprecated Unused property */
+    smithingID?: number;
+    /** Smithing level required to make item */
+    smithingLevel?: number;
+    /** Smithing xp for making item */
+    smithingXP?: number;
+    /** Items required to smith item */
+    smithReq?: ItemQuantity[];
+    /** For seeds, identifies crop type. For smithing identifies metal. */
+    tier?: string;
+    /** If present, sets smithed quantity to value, else it is 1 */
+    smithingQty?: number;
+    /** Farming level required to grow seed */
+    farmingLevel?: number;
+    /** Farming XP given when planting, and xp per harvest qty when harvesting */
+    farmingXP?: number;
+    /** Quantity of seeds required to plant */
+    seedsRequired?: number;
+    /** Time to grow seed in [s] */
+    timeToGrow?: number;
+    /** ItemID given when harvesting seed */
+    grownItemID?: ItemID;
+    /** @deprecated Unused property */
+    farmingMasteryID?: number;
+    /** @deprecated Unused property */
+    fletchingID?: FletchingID;
+    /** Items required to fletch item */
+    fletchReq?: ItemQuantity[];
+    /** Base quantity given when fletched */
+    fletchQty?: number;
+    /** Fletching level required to fletch */
+    fletchingLevel?: number;
+    /** Base Fletching xp given when fletched */
+    fletchingXP?: number;
+    /** Tab of fletching page:
+     * 0: Arrows
+     * 1: Shortbows
+     * 2: Longbows
+     * 3: Gem-Tipped Bolts
+     * 4: Crossbows
+     * 5: Javelins
+     */
+    fletchingCategory?: FletchingCategory;
+    /** @deprecated Unused property */
+    craftingID?: number;
+    /** Items required to craft */
+    craftReq?: ItemQuantity[];
+    /** Base quantity made when crafting */
+    craftQty?: number;
+    /** Crafting level required to make */
+    craftingLevel?: number;
+    /** Base Crafting XP per craft  */
+    craftingXP?: number;
+    /** Runecrafting level required to make */
+    runecraftingLevel?: number;
+    /** Base Runecrafting xp per runecraft */
+    runecraftingXP?: number;
+    /** Items required to runecraft */
+    runecraftReq?: ItemQuantity[];
+    /** Base quantity made when runecrafting */
+    runecraftQty?: number;
+    /** Runecrafting MasteryID of item */
+    runecraftingID?: number;
+    /** Tab of Runecrafting page:
+     * 0: Standard Runes
+     * 1: Combination Runes
+     * 2: Staves & Wands
+     * 3: Air Magic Gear
+     * 4: Water Magic Gear
+     * 5: Earth Magic Gear
+     * 6: Fire Magic Gear
+     */
+    runecraftingCategory?: RunecraftingCategory;
+    /** Item has stats that are viewable from Runecrafting page */
+    hasStats?: boolean;
+    /** @deprecated Unused property */
+    herbloreMasteryID?: HerbloreItemID;
+    /** Items required to brew potion */
+    herbloreReq?: ItemQuantity[];
+    /** Flags item as potion */
+    isPotion?: boolean;
+    /** Skill that potion applies to, used for herblore display */
+    potionSkill?: SkillID;
+    /** Value of potion's effect */
+    potionBonus?: number;
+    /** ID used to distinguish the effects of combat potions */
+    potionBonusID?: PotionBonusID;
+    /** Base charges of potion */
+    potionCharges?: number;
+    /** Page potion can be used on */
+    potionPage?: PageID;
+    /** Tier of potion */
+    potionTier?: HerbloreTier;
+    /** @deprecated Unused property */
+    canEquip?: boolean;
+    /** Flags item as equipment, and determines slot it equips to */
+    equipmentSlot?: EquipSlotID;
+    /** Melee attack bonuses [stab,slash,defend]*/
+    attackBonus?: [number, number, number];
+    /** Melee strength bonus */
+    strengthBonus?: number;
+    /** Melee defence bonus */
+    defenceBonus?: number;
+    /** Attack level required to equip item */
+    attackLevelRequired?: number;
+    /** Defence level required to equip item */
+    defenceLevelRequired?: number;
+    /** Ranged attack bonus */
+    rangedAttackBonus?: number;
+    /** Magic attack bonus */
+    magicAttackBonus?: number;
+    /** Ranged defence bonus */
+    rangedDefenceBonus?: number;
+    /** Magic defence bonus */
+    magicDefenceBonus?: number;
+    /** Damage reduction [%] */
+    damageReduction?: number;
+    /** Ranged strength bonus */
+    rangedStrengthBonus?: number;
+    /** Ranged level required to equip item */
+    rangedLevelRequired?: number;
+    /** @deprecated Unused property */
+    prayerBonus?: number;
+    /** @deprecated Unused property, used modifiers instead */
+    ammoPreservation?: number;
+    /** Magic level required to equip item */
+    magicLevelRequired?: number;
+    /** % bonus to magic maxHit */
+    magicDamageBonus?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    increasedMinAirSpellDmg?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    increasedMinWaterSpellDmg?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    increasedMinEarthSpellDmg?: number;
+    /** @deprecated Unused property, used modifiers instead */
+    increasedMinFireSpellDmg?: number;
+    /** @deprecated Unused property, slayer level requirements are baked into SHOP now */
+    slayerLevelRequired?: number;
+    /** @deprecated Will display when viewing item stats, but actual value is in modifiers */
+    slayerBonusXP?: number;
+    /** @deprecated Game still calculates this value, but actual value is in modifiers */
+    slayerAreaEffectNegationPercent?: number;
+    /** @deprecated Use modifiers instead */
+    chanceToDoubleLoot?: number;
+    /** @deprecated Use modifiers instead */
+    increasedMaxHitpoints?: number;
+    /** @deprecated Use modifiers instead */
+    decreasedAttackSpeed?: number;
+    /** @deprecated Game still calculates this value, but actual value is in modifiers */
+    slayerAreaEffectNegationFlat?: number;
+    /** Unused flag for ranged weapons */
+    isRanged?: boolean;
+    /** Flags item as skill glove, and identifies index in data arrays */
+    gloveID?: GloveID;
+    /** Ammunition type:
+     * 0: Arrows
+     * 1: Bolts
+     * 2: Javelins
+     * 3: Throwing Knives
+     */
+    ammoType?: AmmoType;
+    /** Flags item as Javelin or Throwing knife */
+    isAmmo?: boolean;
+    /** Flags item as equipable in passive slot */
+    isPassiveItem?: boolean;
+    /** Allows non-magic weapons to use curses and auroras */
+    canUseMagic?: boolean;
+    /** Attack speed of weapon in [ms] */
+    attackSpeed?: number;
+    /** Weapon blocks the use of shield slot */
+    isTwoHanded?: boolean;
+    /** Weapon allows the use of spells */
+    isMagic?: boolean;
+    /** Ammunition type required to use ranged weapon:
+     * 0: Arrows
+     * 1: Bolts
+     * 2: Javelins
+     * 3: Throwing Knives
+     */
+    ammoTypeRequired?: AmmoType;
+    /** Item has special attack */
+    hasSpecialAttack?: true;
+    /** Index of playerSpecialAttacks that weapon has */
+    specialAttackID?: PlayerSpecialID;
+    /** Item provides free runes for spells */
+    providesRune?: ItemID[];
+    /** Quantity of runes set by providesRune */
+    providesRuneQty?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    increasedGP?: number;
+    /** Increased thieving successrate of Gloves of Silence */
+    increasedSuccessRate?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    increasedHPRegen?: number;
+    /** Lifesteal % of Elder crown */
+    lifesteal?: number;
+    /** Reflect damage % of Recoil Shield */
+    reflectDamage?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    increasedAutoEat?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    decreasedAutoEatEfficiency?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    prayerCostReduction?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    bonusMasteryXP?: number;
+    /** Drop rate of Mysterious Stone */
+    dropRate?: number;
+    /** Melee strength bonus multiplier of Big Ol Ron */
+    bossStrengthMultiplier?: number;
+    /** Maximum GP multiplier of Confetti Crossbow */
+    gpMultiplierCap?: number;
+    /** Minimum GP multiplier of Confetti Crossbow */
+    gpMultiplierMin?: number;
+    /** Ranged strength bonus multiplier of Slayer Crossbow */
+    slayerStrengthMultiplier?: number;
+    /** Max Hit bonus of Cloudburst Staff */
+    increasedWaterSpellDamage?: number;
+    /** Base drop rate of Crown of Rhaelyx components */
+    baseDropRate?: number;
+    /** Max drop rate of Crown of Rhaelyx components */
+    maxDropRate?: number;
+    /** Resource preservation chance of Crown of Rhaelyx when charges in bank */
+    chanceToPreserve?: number;
+    /** Resource preservation chance of Crown of Rhaelyx when no charges in bank */
+    baseChanceToPreserve?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    bonusSkillXP?: number;
+    /** % increase to Off Items of Clue Chaser's Insignia */
+    increasedItemChance?: number;
+    /** % chance to crit with Deadeye amulet */
+    chanceToCrit?: number;
+    /** Multiplier to damage on crit with Deadeye amulet */
+    critDamage?: number;
+    /** % lifesteal for magic provided by Warlock Amulet */
+    spellHeal?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    hpRegenBonus?: number;
+    /** @deprecated Unused property, use modifiers instead */
+    fishingSpeedBonus?: number;
+    /** increasedFarmingYield for Weird Gloop */
+    harvestBonus?: number;
+    /** @deprecated Unused property */
+    isStreamer?: boolean;
+    /** @deprecated Unused property, use modifiers instead */
+    gpMultiplier?: number;
+    /** @deprecated Unused propery, use modifiers instead */
+    chanceToDoubleResources?: number;
+    /** Modifiers provided when item is equipped. Also contains modifiers for potions that are WIP */
+    modifiers?: ModifierData;
+    smithingBar?: ItemID;
+    summoningDescription?: string;
+    summoningID?: number;
+    summoningReq?: ItemQuantity[][];
+    summoningQty?: number;
+    summoningLevel?: number;
+    summoningXP?: number;
+    summoningTier?: number;
+    summoningSkills?: SkillID[];
+    summoningMaxHit?: number;
+    summoningCategory?: number;
+}
+interface FindEnemyAreaFcn {
+    (enemy: MonsterID, name?: true): string;
+    (enemy: MonsterID, name: false): [number, number];
+}
+/** Item with universal Properties */
+interface BaseItem {
+    /** Categorization tag */
+    category: string;
+    /** Second Categorization tag */
+    type: string;
+    /** Display name of item. May contain html portions that must be replaced/filtered*/
+    name: string;
+    /** Base sale price of item */
+    sellsFor: number;
+    /** Local path to item image */
+    media: string;
+    /** @deprecated Unused variable that references the item index */
+    id?: ItemID;
+    /** Optional description of item */
+    description?: string;
+    /** Optional flag that indicates item should not count for Item Completion % */
+    ignoreCompletion?: boolean;
+}
+declare type Shop = typeof SHOP;
+interface Array<T> {
+    sum: (prop: keyof T) => number;
+}
+declare type AgilityPillar = {
+    name: string;
+    description: string;
+    cost: ObstacleCost;
+    modifiers: ModifierData;
+};
+interface AgilityObstacle extends AgilityPillar {
+    media: string;
+    category: ObstacleCategories;
+    interval: number;
+    requirements: UnlockRequirement;
+    completionBonuses: {
+        stamina: number;
+        xp: number;
+        gp: number;
+        slayerCoins: number;
+        items: number[][];
+    };
+}
+declare type ObstacleCost = {
+    gp: number;
+    slayerCoins: number;
+    items: number[][];
+};
+declare type BankCache = NumberDictionary<number>;
+declare type MasteryCache = NumberDictionary<NumberDictionary<number>>;
+declare type MasteryLevelCache = NumberDictionary<{
+    levels: number[];
+}>;
+interface PlayFabEventBody {
+    [key: string]: any;
+}
+interface StringDictionary<T> {
+    [index: string]: T;
+}
+interface NumberDictionary<T> {
+    [index: number]: T;
+}
+declare type SweetAlertOptions = import("sweetalert2").SweetAlertOptions<*>;
+declare type ShopCategory = 'General' | 'SkillUpgrades' | 'Slayer' | 'Gloves' | 'Skillcapes' | 'Materials' | 'GolbinRaid';
+declare type ShopCostTypes = 'gp' | 'slayerCoins' | 'items' | 'raidCoins';
+declare type ShopCategoryData = {
+    name: string;
+    description: string;
+    media: string;
+    contains: {
+        modifiers?: ModifierData;
+        items?: [ItemID, number][];
+        pet?: PetID;
+    };
+    cost: {
+        gp: number;
+        slayerCoins: number;
+        items: [ItemID, number][];
+        raidCoins?: number;
+    };
+    hasQty?: boolean;
+    charges?: number;
+    unlockRequirements: UnlockRequirement;
+    buyLimit: [number, number, number, number];
+    showBuyLimit?: boolean;
+};
+declare type UnlockRequirement = {
+    customDescription?: string;
+    shopItemPurchased?: [ShopCategory, number][];
+    skillLevel?: [SkillID, number][];
+    slayerTaskCompletion?: [SlayerTier, number][];
+    dungeonCompletion?: [DungeonID, number][];
+    completionPercentage?: number;
+};
+declare type SpellCost = {
+    id: number;
+    qty: number;
+    hasRune: boolean;
+    bankID: number | null;
+};
+declare type Prayer = {
+    name: string;
+    description: string;
+    prayerLevel: number;
+    media: string;
+    pointsPerPlayer: number;
+    pointsPerEnemy: number;
+    pointsPerRegen: number;
+    modifiers: Partial<StandardModifierObject<number>>;
+    vars?: string[];
+    values?: number[];
+};
+/** Base for Dungeons, slayer areas, and combat areas */
+interface BaseArea {
+    /** URL to display image */
+    media: string;
+    /** @deprecated Old property for old area display system */
+    type?: string;
+    /** Monsters contained in area */
+    monsters: MonsterID[];
+    /**
+     * 0: Very Easy
+     * 1: Easy
+     * 2: Medium
+     * 3: Hard:
+     * 4: Very Hard
+     */
+    difficulty: number[];
+    /** If not 0, Item required to do damage to monsters in area */
+    slayerItem: ItemID;
+}
+interface CombatArea extends BaseArea {
+    /** Display name HTML */
+    areaName: string;
+}
+interface SlayerArea extends BaseArea {
+    /** Display name HTML */
+    areaName: string;
+    /** Slayer level required to enter area */
+    slayerLevel: number;
+    /** Dungeon required to complete to enter area */
+    dungeonCompleted: DungeonID;
+    /** Area has modifiers to apply to player */
+    areaEffect?: true;
+    /** Description of modifiers */
+    areaEffectDescription?: string;
+    /** Value of modifier to apply to player */
+    areaEffectValue?: number;
+}
+interface Dungeon extends BaseArea {
+    /** Display name HTML */
+    name: string;
+    /** @deprecated Old property for old dungeon display system */
+    recommendedStats?: [number, number, number];
+    /** @deprecated Unused property */
+    rewardCount: number;
+    /** @deprecated Old property for old dungeon display system */
+    rewards: ItemID[];
+    /** ID of boss pet rolled on completion of dungeon */
+    petID: PetID;
+    /** Dungeon required to enter dungeon */
+    requiresCompletion?: DungeonID;
+    /** Number of times requiresCompletion must be finished to enter (if not present once) */
+    requiresCompletionCount?: number;
+    /** Slayer level required to enter dungeon */
+    slayerLevel?: number;
+}
+declare type SlayerTaskData = {
+    /** Display name of task difficulty */
+    display: string;
+    /** Cost to reroll/change to task */
+    cost: number;
+    /** Minimum combat level of monster for task */
+    minLevel: number;
+    /** Maximum combat level of monster for task (-1 is uncapped (6969 lol)) */
+    maxLevel: number;
+    /** Slayer level required to recieve task */
+    slayerLevel: number;
+};
+declare type Slayer = {
+    task: {
+        Easy: SlayerTaskData;
+        Normal: SlayerTaskData;
+        Hard: SlayerTaskData;
+        Elite: SlayerTaskData;
+        Master: SlayerTaskData;
+    };
+};
+/** These are applied to combatData.enemy as properties */
+interface EnemyModifierObject<T> {
+    /** % Increase to Melee Evasion */
+    increasedMeleeEvasion: T;
+    /** % Decrease to Melee Evasion */
+    decreasedMeleeEvasion: T;
+    /** % Increase to Ranged Evasion */
+    increasedRangedEvasion: T;
+    /** % Decrease to Ranged Evasion */
+    decreasedRangedEvasion: T;
+    /** % Increase to Magic Evasion */
+    increasedMagicEvasion: T;
+    /** % Decrease to Magic Evasion */
+    decreasedMagicEvasion: T;
+    /** % Increase to Max Hit */
+    increasedMaxHitPercent: T;
+    /** % Decrease to Max Hit */
+    decreasedMaxHitPercent: T;
+    /** % Increase to Max HP */
+    increasedMaxHitpointsPercent: T;
+    /** % Decrease to Max HP */
+    decreasedMaxHitpointsPercent: T;
+    /** % Increase to Accuracy Rating */
+    increasedGlobalAccuracy: T;
+    /** % Decrease to Accuracy Rating */
+    decreasedGlobalAccuracy: T;
+    /** % Decrease to attack interval */
+    increasedAttackSpeed: T;
+    /** % Increase to attack interval */
+    attackSpeedDebuff: T;
+    /** % of damage taken to reflect to player */
+    increasedReflectDamagePercent: T;
+    /** Flat increase to damageReduction */
+    increasedDamageReduction: T;
+    /** % of HP to heal every 10 seconds */
+    increasedHitpointRegeneration: T;
+    /** % of all damage to player to heal from */
+    increasedLifesteal: T;
+    /** Cannot be stunned */
+    stunImmunity: T;
+    /** Cannot be stunned */
+    freezeImmunity: T;
+}
+declare type EnemyModifierData = Partial<EnemyModifierObject<number>>;
+declare type EnemyModiferKey = keyof EnemyModifierObject<any>;
+declare type CombatPassive = {
+    /** Index of passive in combatPassive */
+    id: number;
+    /** Display name of passive */
+    name: string;
+    /** Description of passive */
+    description: string;
+    /** Chance for passive to occur */
+    chance: number;
+    /** Modifiers to apply to monster */
+    modifiers?: EnemyModifierData;
+};
+declare type SkillData = {
+    /** Display name of skill */
+    name: string;
+    /** Image URL of skill icon */
+    media: string;
+    /** Skill has mastery levels */
+    hasMastery: boolean;
+    /** Unused: Maximum level of skill */
+    maxLevel: number;
+    masteryTokenID?: ItemID;
+};
+declare type MasteryMedia = {
+    /** Image URL of mastery item */
+    media: string;
+};
+declare type MasteryUnlock = {
+    /** Mastery level for unlock */
+    level: number;
+    /** Description of unlock */
+    unlock: string;
+};
+declare type MasteryPoolBonus = {
+    /** Description of pool bonus */
+    bonuses: string[];
+};
+interface SkillObject<T> {
+    Woodcutting: T;
+    Fishing: T;
+    Firemaking: T;
+    Cooking: T;
+    Mining: T;
+    Smithing: T;
+    Attack: T;
+    Strength: T;
+    Defence: T;
+    Hitpoints: T;
+    Thieving: T;
+    Farming: T;
+    Ranged: T;
+    Fletching: T;
+    Crafting: T;
+    Runecrafting: T;
+    Magic: T;
+    Prayer: T;
+    Slayer: T;
+    Herblore: T;
+    Agility: T;
+    Summoning: T;
+}
+declare type SkillName = keyof SkillObject<any>;
+declare type Milestone = {
+    /** Unlock level of milestone */
+    level: number;
+    /** Display name of milestone */
+    name: string;
+    /** URL of milestone image */
+    media: string;
+    /** @deprecated Unused property */
+    alwaysShow?: boolean;
+};
+interface NumberSaveGame {
+    firstTime: number;
+    nameChanges: number;
+    gp: number;
+    defaultPageOnLoad: number;
+    levelUpScreen: number;
+    attackStyle: number;
+    currentCombatFood: number;
+    showItemNotify: number;
+    myBankVersion: number;
+    selectedSpell: number;
+    buyQty: number;
+    sellQty: number;
+    accountGameVersion: number;
+    prayerPoints: number;
+    slayerCoins: number;
+    selectedEquipmentSet: number;
+    formatNumberSetting: number;
+    saveTimestamp: number;
+    activeAurora: number;
+    currentGamemode: number;
+    raidCoins: number;
+    agilityPassivePillarActive: number;
+}
+declare type NumberKey = keyof NumberSaveGame;
+interface BoolSaveGame {
+    ignoreBankFull: boolean;
+    continueThievingOnStun: boolean;
+    autoRestartDungeon: boolean;
+    autoSaveCloud: boolean;
+    darkMode: boolean;
+    showGPNotify: boolean;
+    enableAccessibility: boolean;
+    showEnemySkillLevels: boolean;
+    confirmationOnClose: boolean;
+    autoPotion: boolean;
+    showCommas: boolean;
+    showVirtualLevels: boolean;
+    secretAreaUnlocked: boolean;
+    showSaleNotifications: boolean;
+    showShopNotifications: boolean;
+    pauseOfflineActions: boolean;
+    showCombatMinibar: boolean;
+    showCombatMinibarCombat: boolean;
+    showSkillMinibar: boolean;
+    disableAds: boolean;
+    useCombinationRunes: boolean;
+    firstTimeLoad: boolean;
+    autoSlayer: boolean;
+}
+declare type BoolKey = keyof BoolSaveGame;
+interface SerializableSaveGame {
+    bank: BankItem[];
+    statsGeneral: GameStat[];
+    statsWoodcutting: GameStat[];
+    statsFiremaking: GameStat[];
+    statsFishing: GameStat[];
+    statsCooking: GameStat[];
+    statsMining: GameStat[];
+    statsSmithing: GameStat[];
+    statsCombat: GameStat[];
+    statsThieving: GameStat[];
+    statsFarming: GameStat[];
+    statsFletching: GameStat[];
+    statsCrafting: GameStat[];
+    statsRunecrafting: GameStat[];
+    statsHerblore: GameStat[];
+    glovesTracker: typeof glovesTracker;
+    rockData: RockData[];
+    herbloreBonuses: HerbloreBonus[];
+    tutorialTips: typeof tutorialTips;
+    shopItemsPurchased: [ShopCategory, number][];
+    combatData: MinCombatData;
+    equippedFood: ItemQuantity2[];
+    SETTINGS: typeof SETTINGS;
+    monsterStats: MonsterStat[];
+    petUnlocked: boolean[];
+    skillsUnlocked: boolean[];
+    equipmentSets: EquipmentSet[];
+    skillXP: number[];
+    dungeonCompleteCount: number[];
+    selectedAttackStyle: number[];
+    lockedItems: number[];
+    golbinRaidStats: number[];
+    slayerTask: SlayerTask[];
+    slayerTaskCompletion: number[];
+    chosenAgilityObstacles: number[];
+    agilityObstacleBuildCount: number[];
+    itemsAlreadyFound: number[];
+    saveStateBeforeRaid: number[];
+}
+declare type SerialKey = keyof SerializableSaveGame;
+interface NestedSerializeableSaveGame {
+    newFarmingAreas: FarmingArea[];
+    MASTERY: Mastery;
+    golbinRaidHistory: RaidHistory[];
+    itemStats: ItemStat[];
+}
+declare type NestedKey = keyof NestedSerializeableSaveGame;
+interface OtherSaveGame {
+    offline: Offline;
+    titleNewsID: string[];
+    scheduledPushNotifications: StringDictionary<string>;
+    username: string;
+    gameUpdateNotification: string;
+    randomModifiers: typeof randomModifiers;
+    summoningData: typeof summoningData;
+}
+declare type OtherKey = keyof OtherSaveGame;
+interface ReconstructedSaveGame {
+    skillLevel: number[];
+    nextLevelProgress: number[];
+    equippedItems: number[];
+    ammo: number;
+}
+declare type ReconKey = keyof ReconstructedSaveGame;
+declare type NewSaveGame = NumberSaveGame & BoolSaveGame & SerializableSaveGame & NestedSerializeableSaveGame & OtherSaveGame & ReconstructedSaveGame;
+interface Serializer<T> {
+    (saveVar: T): number[];
+}
+interface NestedSerializer<T> {
+    (saveVar: T): number[][];
+}
+interface Deserializer<T> {
+    (sData: number[], version: number): T;
+}
+interface NestedDeserializer<T> {
+    (sData: number[][], version: number): T;
+}
+declare type StatsData = {
+    stats: number[];
+    items: number[];
+};
+declare type MinCombatData = {
+    player: {
+        hitpoints: number;
+    };
+    enemy: {};
+};
+declare type SerializerVar<T, U> = {
+    saveKey: U;
+    serialize: Serializer<T>;
+    deserialize: Deserializer<T>;
+};
+declare type NestedSerializerVar<T, U> = {
+    saveKey: U;
+    serialize: NestedSerializer<T>;
+    deserialize: NestedDeserializer<T>;
+};
+declare type MapToSerializer<Type> = {
+    [Property in keyof Type]: SerializerVar<Type[Property], Property>;
+};
+declare type MapToNested<Type> = {
+    [Property in keyof Type]: NestedSerializerVar<Type[Property], Property>;
+};
+declare type PackagedSave = {
+    v: number;
+    n: number[];
+    b: number[];
+    s: number[][];
+    ns: number[][][];
+    o: string[];
+};
+declare type GamemodeData = {
+    name: string;
+    media: string;
+    description: string;
+    rules: string[];
+    textClass: string;
+    btnClass: string;
+    isPermaDeath: boolean;
+    isEvent: boolean;
+    endDate: number;
+    combatTriangle: number;
+    numberMultiplier: number;
+};
+declare type RandomModifier = {
+    modifier: ModifierKeys;
+    value: number | number[][];
+};
+declare type SummoningData = {
+    Settings: SummoningSettings;
+    Marks: SummoningMarks;
+    Synergies: SummoningSynergies;
+};
+declare type SummoningSettings = {
+    recipeGPCost: number;
+};
+declare type SummoningMarks = {
+    Levels: number[];
+};
+declare type SummoningSynergies = NumberDictionary<NumberDictionary<SynergyData>>;
+declare type SynergyData = {
+    description: string;
+    modifiers: ModifierData;
+};
+declare type PlayerSummoningData = {
+    MarksDiscovered?: NumberDictionary<number>;
+    defaultRecipe?: number[];
+};
+declare type SummoningItem = {
+    itemID: ItemID;
+    summoningLevel: number;
+    summoningID: number;
+    summoningCategory: number;
+};
+declare type SummoningSearch = {
+    description: string;
+    name1: string;
+    name2: string;
+    summon1: number;
+    summon2: number;
+};
+interface FindEnemyAreaFcn {
+    (enemy: MonsterID, name: true): string;
+    (enemy: MonsterID, name: false): [number, number];
+}
+declare const enum SettingID {
+    IgnoreBankFull = 1,
+    DefaultPageOnLoad = 2,
+    LevelUpScreen = 3,
+    ContinueThievingOnStun = 4,
+    ShowItemNotify = 5,
+    AutoRestartDungeon = 6,
+    AutoSaveCloud = 7,
+    DarkMode = 8,
+    ShowGPNotify = 9,
+    ShowEnemySkillLevels = 12,
+    ConfirmationOnClose = 13,
+    EnableAccessibility = 14,
+    AutoPotion = 15,
+    AutoUseSpecialAttack = 16,
+    ShowHPNotify = 17,
+    AutoSlayerTask = 18,
+    ShowCommas = 19,
+    ShowVirtualLevels = 20,
+    FormatNumberSetting = 21,
+    PauseOfflineActions = 22,
+    ShowSaleNotifications = 23,
+    ShowShopNotifications = 24,
+    ShowCombatMinibar = 25,
+    ShowCombatMinibarCombat = 26,
+    UseCombinationRunes = 27,
+    ShowSkillMinibar = 28,
+    DisableAds = 29,
+    CurrentEquipDefault = 30,
+    HideMaxLevel = 31,
+    AutoSlayer = 32,
+    ConfirmationCheckpoint = 33
+}
+declare type NumBool = 0 | 1;
+interface ChangeSettingsFcn {
+    (s: SettingID.IgnoreBankFull, t: boolean, i?: boolean): void;
+    (s: SettingID.DefaultPageOnLoad, t: PageID, i?: boolean): void;
+    (s: SettingID.LevelUpScreen, t: NumBool, i?: boolean): void;
+    (s: SettingID.ContinueThievingOnStun, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowItemNotify, t: NumBool, i?: boolean): void;
+    (s: SettingID.AutoRestartDungeon, t: boolean, i?: boolean): void;
+    (s: SettingID.AutoSaveCloud, t: boolean, i?: boolean): void;
+    (s: SettingID.DarkMode, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowGPNotify, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowEnemySkillLevels, t: boolean, i?: boolean): void;
+    (s: SettingID.ConfirmationOnClose, t: boolean, i?: boolean): void;
+    (s: SettingID.EnableAccessibility, t: boolean, i?: boolean): void;
+    (s: SettingID.AutoPotion, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowHPNotify, t: boolean, i?: boolean): void;
+    (s: SettingID.AutoSlayerTask, t: true, i?: boolean): void;
+    (s: SettingID.ShowCommas, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowVirtualLevels, t: boolean, i?: boolean): void;
+    (s: SettingID.FormatNumberSetting, t: NumBool, i?: boolean): void;
+    (s: SettingID.PauseOfflineActions, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowSaleNotifications, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowShopNotifications, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowCombatMinibar, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowCombatMinibarCombat, t: boolean, i?: boolean): void;
+    (s: SettingID.ShowSkillMinibar, t: boolean, i?: boolean): void;
+    (s: SettingID.DisableAds, t: boolean, i?: boolean): void;
+    (s: SettingID.CurrentEquipDefault, t: boolean, i?: boolean): void;
+    (s: SettingID.HideMaxLevel, t: boolean, i?: boolean): void;
+    (s: SettingID.ConfirmationCheckpoint, t: boolean, i?: boolean): void;
+}
+declare type ValFcnForInput = (() => string) & ((value: string) => void);
+interface JQueryStatic {
+    (selector: '#username-set-main'): JQueryInputElement;
+    (selector: '#username-set'): JQueryInputElement;
+    (selector: '#searchTextbox'): JQueryInputElement;
+    (selector: '#dropdown-content-custom-amount'): JQueryInputElement;
+    (selector: '#dropdown-content-custom-amount-1'): JQueryInputElement;
+    (selector: '#import-save-character-selection'): JQueryInputElement;
+}
+interface JQueryInputElement extends Omit<JQuery<HTMLElement>, 'val'> {
+    val: ValFcnForInput;
+}
+interface Document {
+    getElementById(elementID: 'username-change'): HTMLInputElement;
+    getElementById(elementID: 'game-broke-error-msg'): HTMLTextAreaElement;
+    getElementById(elementID: 'exportSaveField'): HTMLTextAreaElement;
+    getElementById(elementID: 'exportSaveField2'): HTMLTextAreaElement;
+    getElementById(elementID: 'exportSaveFieldUpdate'): HTMLTextAreaElement;
+    getElementById(elementID: 'exportSaveFieldUpdate2'): HTMLTextAreaElement;
+    getElementById(elementID: 'importSaveField'): HTMLTextAreaElement;
+}
+interface ObjectConstructor {
+    keys(obj: Partial<StandardModifierObject<number>>): StandardModifierKeys[];
+    keys(obj: ModifierData): ModifierKeys[];
+    keys(obj: ModifierActive): ModifierKeys[];
+    keys(obj: Shop): ShopCategory[];
+    keys(obj: EnemyModifierData): EnemyModiferKey[];
+    entries(obj: ModifierActive): ModifierActiveEntry[];
+    entries(obj: ModifierData): ModifierDataEntry[];
+}
+/** onClick callback function */
+declare function setAccount(forceReload?: boolean): void;
 /**
- * @param {any} bankItemID
- * @param {number} bankButtonID defaults to 0
+ *
+ * @param {GameMode} gamemode
  */
-declare function createBankItem(bankItemID: any, bankButtonID?: number): void;
-
-declare function createChangelog(): void;
-
+declare function setupGamemode(gamemode: GameMode): void;
+/** onClick callback function (that is being used as href) */
+declare function showUsernameChange(): void;
+/** onclick callback function */
+declare function changeName(): void;
+declare function accountDeletion(confirmation?: boolean, characterID?: number, characterName?: string): void;
+declare function gameUpdate(): void;
+/** Save game variable */
+declare var firstTime: number;
+/** Save game variable */
+declare var nameChanges: number;
+/** Save game variable */
+declare var username: string;
+declare const gameVersion: "Alpha v0.20";
+declare const previousGameVersion: "Alpha v0.19.2";
+declare const characterSelectAnnouncementVersion: 2;
+/** Save game variable */
+declare var gameUpdateNotification: string;
+/** Save game variable */
+declare var accountGameVersion: number;
+/** @type {NumberDictionary<GamemodeData>} */
+declare const GAMEMODES: NumberDictionary<GamemodeData>;
+/** @type {(keyof SaveGame)[]} */
+declare var allVars: (keyof SaveGame)[];
+/** @type {(keyof SaveGame)[]} */
+declare const importantSaveVars: (keyof SaveGame)[];
+declare namespace CONSTANTS {
+    const skill: SkillObject<number>;
+    namespace shop {
+        namespace general {
+            const Extra_Bank_Slot: number;
+            const Auto_Eat_Tier_I: number;
+            const Auto_Eat_Tier_II: number;
+            const Auto_Eat_Tier_III: number;
+            const Extra_Equipment_Set_I: number;
+            const Extra_Equipment_Set_II: number;
+            const Dungeon_Equipment_Swapping: number;
+            const Multi_Tree: number;
+        }
+        namespace skillUpgrades {
+            const Iron_Axe: number;
+            const Steel_Axe: number;
+            const Black_Axe: number;
+            const Mithril_Axe: number;
+            const Adamant_Axe: number;
+            const Rune_Axe: number;
+            const Dragon_Axe: number;
+            const Iron_Fishing_Rod: number;
+            const Steel_Fishing_Rod: number;
+            const Black_Fishing_Rod: number;
+            const Mithril_Fishing_Rod: number;
+            const Adamant_Fishing_Rod: number;
+            const Rune_Fishing_Rod: number;
+            const Dragon_Fishing_Rod: number;
+            const Iron_Pickaxe: number;
+            const Steel_Pickaxe: number;
+            const Black_Pickaxe: number;
+            const Mithril_Pickaxe: number;
+            const Adamant_Pickaxe: number;
+            const Rune_Pickaxe: number;
+            const Dragon_Pickaxe: number;
+            const Normal_Cooking_Fire: number;
+            const Oak_Cooking_Fire: number;
+            const Willow_Cooking_Fire: number;
+            const Teak_Cooking_Fire: number;
+            const Maple_Cooking_Fire: number;
+            const Mahogany_Cooking_Fire: number;
+            const Yew_Cooking_Fire: number;
+            const Magic_Cooking_Fire: number;
+            const Redwood_Cooking_Fire: number;
+            const Perpetual_Haste: number;
+            const Expanded_Knowledge: number;
+            const Master_of_Nature: number;
+            const Art_of_Control: number;
+        }
+        namespace slayer {
+            const Auto_Slayer: number;
+            const Basic_Resupply: number;
+            const Standard_Resupply: number;
+            const Generous_Resupply: number;
+            const Mirror_Shield: number;
+            const Magical_Ring: number;
+            const Desert_Hat: number;
+            const Blazing_Lantern: number;
+            const Climbing_Boots: number;
+            const Confetti_Crossbow: number;
+            const Skull_Cape: number;
+            const Green_Party_Hat: number;
+            const Slayer_Helmet_Basic: number;
+            const Slayer_Platebody_Basic: number;
+            const Slayer_Cowl_Basic: number;
+            const Slayer_Leather_Body_Basic: number;
+            const Slayer_Wizard_Hat_Basic: number;
+            const Slayer_Wizard_Robes_Basic: number;
+            const Slayer_Upgrade_Kit_Strong: number;
+            const Slayer_Upgrade_Kit_Elite: number;
+            const Slayer_Upgrade_Kit_Master: number;
+        }
+        namespace gloves {
+            const Cooking_Gloves: number;
+            const Mining_Gloves: number;
+            const Gem_Gloves: number;
+            const Smithing_Gloves: number;
+            const Thieving_Gloves: number;
+        }
+        namespace skillcapes {
+            const Max_Skillcape: number;
+            const Agility_Skillcape: number;
+            const Attack_Skillcape: number;
+            const Cooking_Skillcape: number;
+            const Crafting_Skillcape: number;
+            const Defence_Skillcape: number;
+            const Farming_Skillcape: number;
+            const Firemaking_Skillcape: number;
+            const Fishing_Skillcape: number;
+            const Fletching_Skillcape: number;
+            const Herblore_Skillcape: number;
+            const Hitpoints_Skillcape: number;
+            const Magic_Skillcape: number;
+            const Mining_Skillcape: number;
+            const Prayer_Skillcape: number;
+            const Ranged_Skillcape: number;
+            const Runecrafting_Skillcape: number;
+            const Slayer_Skillcape: number;
+            const Smithing_Skillcape: number;
+            const Strength_Skillcape: number;
+            const Thieving_Skillcape: number;
+            const Woodcutting_Skillcape: number;
+        }
+        namespace materials {
+            const Feathers: number;
+            const Compost: number;
+            const Weird_Gloop: number;
+            const Bowstring: number;
+            const Leather: number;
+            const Green_Dragonhide: number;
+            const Blue_Dragonhide: number;
+            const Red_Dragonhide: number;
+            const Red_Party_Hat: number;
+        }
+    }
+    namespace mastery {
+        const Smithing: NumberDictionary<string>;
+    }
+    namespace attackType {
+        const Melee: number;
+        const Ranged: number;
+        const Magic: number;
+    }
+    namespace attackStyle {
+        export const Stab: number;
+        export const Slash: number;
+        export const Block: number;
+        export const Accurate: number;
+        export const Rapid: number;
+        export const Longrange: number;
+        const Magic_1: number;
+        export { Magic_1 as Magic };
+        export const Defensive: number;
+    }
+    namespace equipmentSlot {
+        const Helmet: number;
+        const Platebody: number;
+        const Platelegs: number;
+        const Boots: number;
+        const Weapon: number;
+        const Shield: number;
+        const Amulet: number;
+        const Ring: number;
+        const Gloves: number;
+        const Quiver: number;
+        const Cape: number;
+        const Passive: number;
+        const Summon: number;
+    }
+    namespace axe {
+        const Bronze: number;
+        const Iron: number;
+        const Steel: number;
+        const Black: number;
+        const Mithril: number;
+        const Adamant: number;
+        const Rune: number;
+        const Dragon: number;
+    }
+    namespace fishingRod {
+        const Bronze_1: number;
+        export { Bronze_1 as Bronze };
+        const Iron_1: number;
+        export { Iron_1 as Iron };
+        const Steel_1: number;
+        export { Steel_1 as Steel };
+        const Black_1: number;
+        export { Black_1 as Black };
+        const Mithril_1: number;
+        export { Mithril_1 as Mithril };
+        const Adamant_1: number;
+        export { Adamant_1 as Adamant };
+        const Rune_1: number;
+        export { Rune_1 as Rune };
+        const Dragon_1: number;
+        export { Dragon_1 as Dragon };
+    }
+    namespace pickaxe {
+        const Bronze_2: number;
+        export { Bronze_2 as Bronze };
+        const Iron_2: number;
+        export { Iron_2 as Iron };
+        const Steel_2: number;
+        export { Steel_2 as Steel };
+        const Black_2: number;
+        export { Black_2 as Black };
+        const Mithril_2: number;
+        export { Mithril_2 as Mithril };
+        const Adamant_2: number;
+        export { Adamant_2 as Adamant };
+        const Rune_2: number;
+        export { Rune_2 as Rune };
+        const Dragon_2: number;
+        export { Dragon_2 as Dragon };
+    }
+    namespace combatArea {
+        const Farmlands: number;
+        const Dragon_Valley: number;
+        const Wet_Forest: number;
+        const Wizard_Tower: number;
+        const Castle_of_Kings: number;
+        const Bandit_Hideout: number;
+        const Giant_Dungeon: number;
+        const Sandy_Shores: number;
+        const Icy_Hills: number;
+        const Goblin_Village: number;
+        const Graveyard: number;
+    }
+    namespace slayerArea {
+        const Penumbra: number;
+        const Strange_Cave: number;
+        const High_Lands: number;
+        const Holy_Isles: number;
+        const Forest_of_Goo: number;
+        const Desolate_Plains: number;
+        const Runic_Ruins: number;
+        const Arid_Plains: number;
+        const Shrouded_Badlands: number;
+        const Perilous_Peaks: number;
+        const Dark_Waters: number;
+    }
+    namespace dungeon {
+        const Chicken_Coop: number;
+        const Undead_Graveyard: number;
+        const Spider_Forest: number;
+        const Frozen_Cove: number;
+        const Deep_Sea_Ship: number;
+        const Volcanic_Cave: number;
+        const Bandit_Base: number;
+        const Hall_of_Wizards: number;
+        const Air_God_Dungeon: number;
+        const Water_God_Dungeon: number;
+        const Earth_God_Dungeon: number;
+        const Fire_God_Dungeon: number;
+        const Dragons_Den: number;
+        const Miolite_Caves: number;
+        const Infernal_Stronghold: number;
+        const Into_the_Mist: number;
+    }
+    namespace spellType {
+        const Air: number;
+        const Water: number;
+        const Earth: number;
+        const Fire: number;
+    }
+    namespace specialEvent {
+        const aprilFools2020: number;
+        const easter2020: number;
+        const christmas2020: number;
+    }
+    namespace bones {
+        const Bones: number;
+        const Dragon_Bones: number;
+        const Magic_Bones: number;
+    }
+    namespace spell {
+        const Wind_Strike: number;
+        const Water_Strike: number;
+        const Earth_Strike: number;
+        const Fire_Strike: number;
+        const Wind_Bolt: number;
+        const Water_Bolt: number;
+        const Earth_Bolt: number;
+        const Fire_Bolt: number;
+        const Wind_Blast: number;
+        const Water_Blast: number;
+        const Earth_Blast: number;
+        const Fire_Blast: number;
+        const Wind_Wave: number;
+        const Water_Wave: number;
+        const Earth_Wave: number;
+        const Fire_Wave: number;
+        const Wind_Surge: number;
+        const Water_Surge: number;
+        const Earth_Surge: number;
+        const Fire_Surge: number;
+    }
+    namespace curse {
+        const Blinding_I: number;
+        const Soul_Split_I: number;
+        const Weakening_I: number;
+        const Anguish_I: number;
+        const Blinding_II: number;
+        const Soul_Split_II: number;
+        const Weakening_II: number;
+        const Confusion: number;
+        const Anguish_II: number;
+        const Blinding_III: number;
+        const Soul_Split_III: number;
+        const Weakening_III: number;
+        const Anguish_III: number;
+        const Decay: number;
+    }
+    namespace aurora {
+        const Surge_I: number;
+        const Fury_I: number;
+        const Fervor_I: number;
+        const Surge_II: number;
+        const Charged_I: number;
+        const Fury_II: number;
+        const Fervor_II: number;
+        const Surge_III: number;
+        const Charged_II: number;
+        const Fury_III: number;
+        const Fervor_III: number;
+        const Charged_III: number;
+    }
+    namespace prayer {
+        const Thick_Skin: number;
+        const Burst_of_Strength: number;
+        const Clarity_of_Thought: number;
+        const Sharp_Eye: number;
+        const Mystic_Will: number;
+        const Rock_Skin: number;
+        const Superhuman_Strength: number;
+        const Improved_Reflexes: number;
+        const Rapid_Heal: number;
+        const Protect_Item: number;
+        const Hawk_Eye: number;
+        const Mystic_Lore: number;
+        const Steel_Skin: number;
+        const Ultimate_Strength: number;
+        const Incredible_Reflexes: number;
+        const Protect_from_Magic: number;
+        const Protect_from_Ranged: number;
+        const Protect_from_Melee: number;
+        const Eagle_Eye: number;
+        const Mystic_Might: number;
+        const Redemption: number;
+        const Chivalry: number;
+        const Piety: number;
+        const Rigour: number;
+        const Augury: number;
+    }
+    namespace slayerTier {
+        const Easy: number;
+        const Normal: number;
+        const Hard: number;
+        const Elite: number;
+        const Master: number;
+    }
+    namespace gamemode {
+        const Standard: number;
+        const Hardcore: number;
+        const Adventure: number;
+        const Chaos: number;
+    }
+    namespace item {
+        export const Normal_Logs: number;
+        export const Oak_Logs: number;
+        export const Willow_Logs: number;
+        export const Teak_Logs: number;
+        export const Maple_Logs: number;
+        export const Mahogany_Logs: number;
+        export const Yew_Logs: number;
+        export const Magic_Logs: number;
+        export const Redwood_Logs: number;
+        export const Raw_Shrimp: number;
+        export const Raw_Sardine: number;
+        export const Raw_Herring: number;
+        export const Raw_Trout: number;
+        export const Raw_Salmon: number;
+        export const Raw_Lobster: number;
+        export const Raw_Swordfish: number;
+        export const Raw_Crab: number;
+        export const Raw_Shark: number;
+        export const Raw_Cave_Fish: number;
+        export const Raw_Manta_Ray: number;
+        export const Raw_Whale: number;
+        export const Shrimp: number;
+        export const Sardine: number;
+        export const Herring: number;
+        export const Trout: number;
+        export const Salmon: number;
+        export const Lobster: number;
+        export const Swordfish: number;
+        export const Crab: number;
+        export const Shark: number;
+        export const Cave_Fish: number;
+        export const Manta_Ray: number;
+        export const Whale: number;
+        export const Burnt_Shrimp: number;
+        export const Burnt_Sardine: number;
+        export const Burnt_Herring: number;
+        export const Burnt_Trout: number;
+        export const Burnt_Salmon: number;
+        export const Burnt_Lobster: number;
+        export const Burnt_Swordfish: number;
+        export const Burnt_Crab: number;
+        export const Burnt_Shark: number;
+        export const Burnt_Cave_Fish: number;
+        export const Burnt_Manta_Ray: number;
+        export const Burnt_Whale: number;
+        export const Copper_Ore: number;
+        export const Tin_Ore: number;
+        export const Iron_Ore: number;
+        export const Coal_Ore: number;
+        export const Silver_Ore: number;
+        export const Gold_Ore: number;
+        export const Mithril_Ore: number;
+        export const Adamantite_Ore: number;
+        export const Runite_Ore: number;
+        export const Dragonite_Ore: number;
+        export const Bronze_Bar: number;
+        export const Iron_Bar: number;
+        export const Steel_Bar: number;
+        export const Gold_Bar: number;
+        export const Mithril_Bar: number;
+        export const Adamantite_Bar: number;
+        export const Runite_Bar: number;
+        export const Dragonite_Bar: number;
+        export const Bronze_Dagger: number;
+        export const Bronze_Sword: number;
+        export const Bronze_Battleaxe: number;
+        export const Bronze_2H_Sword: number;
+        export const Bronze_Helmet: number;
+        export const Bronze_Boots: number;
+        export const Bronze_Platelegs: number;
+        export const Bronze_Platebody: number;
+        export const Iron_Dagger: number;
+        export const Iron_Sword: number;
+        export const Iron_Battleaxe: number;
+        export const Iron_2H_Sword: number;
+        export const Iron_Helmet: number;
+        export const Iron_Boots: number;
+        export const Iron_Platelegs: number;
+        export const Iron_Platebody: number;
+        export const Steel_Dagger: number;
+        export const Steel_Sword: number;
+        export const Steel_Battleaxe: number;
+        export const Steel_2H_Sword: number;
+        export const Steel_Helmet: number;
+        export const Steel_Boots: number;
+        export const Steel_Platelegs: number;
+        export const Steel_Platebody: number;
+        export const Mithril_Dagger: number;
+        export const Mithril_Sword: number;
+        export const Mithril_Battleaxe: number;
+        export const Mithril_2H_Sword: number;
+        export const Mithril_Helmet: number;
+        export const Mithril_Boots: number;
+        export const Mithril_Platelegs: number;
+        export const Mithril_Platebody: number;
+        export const Adamant_Dagger: number;
+        export const Adamant_Sword: number;
+        export const Adamant_Battleaxe: number;
+        export const Adamant_2H_Sword: number;
+        export const Adamant_Helmet: number;
+        export const Adamant_Boots: number;
+        export const Adamant_Platelegs: number;
+        export const Adamant_Platebody: number;
+        export const Rune_Dagger: number;
+        export const Rune_Sword: number;
+        export const Rune_Battleaxe: number;
+        export const Rune_2H_Sword: number;
+        export const Rune_Helmet: number;
+        export const Rune_Boots: number;
+        export const Rune_Platelegs: number;
+        export const Rune_Platebody: number;
+        export const Dragon_Dagger: number;
+        export const Dragon_Sword: number;
+        export const Dragon_Battleaxe: number;
+        export const Dragon_2H_Sword: number;
+        export const Dragon_Helmet: number;
+        export const Dragon_Boots: number;
+        export const Dragon_Platelegs: number;
+        export const Dragon_Platebody: number;
+        export const Bird_Nest: number;
+        export const Treasure_Chest: number;
+        export const Bronze_Shield: number;
+        export const Iron_Shield: number;
+        export const Steel_Shield: number;
+        export const Mithril_Shield: number;
+        export const Adamant_Shield: number;
+        export const Rune_Shield: number;
+        export const Dragon_Shield: number;
+        export const Topaz: number;
+        export const Sapphire: number;
+        export const Ruby: number;
+        export const Emerald: number;
+        export const Diamond: number;
+        export const Silver_Bar: number;
+        export const Black_Dagger: number;
+        export const Black_Sword: number;
+        export const Black_Battleaxe: number;
+        export const Black_2H_Sword: number;
+        export const Black_Helmet: number;
+        export const Black_Boots: number;
+        export const Black_Platelegs: number;
+        export const Black_Platebody: number;
+        export const Black_Shield: number;
+        export const Potato_Seed: number;
+        export const Onion_Seed: number;
+        export const Cabbage_Seed: number;
+        export const Tomato_Seed: number;
+        export const Sweetcorn_Seed: number;
+        export const Strawberry_Seed: number;
+        export const Watermelon_Seed: number;
+        export const Snape_Grass_Seed: number;
+        export const Potatoes: number;
+        export const Onions: number;
+        export const Cabbage: number;
+        export const Tomatoes: number;
+        export const Sweetcorn: number;
+        export const Strawberries: number;
+        export const Watermelon: number;
+        export const Snape_Grass: number;
+        const Compost_1: number;
+        export { Compost_1 as Compost };
+        export const Oak_Tree_Seed: number;
+        export const Willow_Tree_Seed: number;
+        export const Maple_Tree_Seed: number;
+        export const Yew_Tree_Seed: number;
+        export const Magic_Tree_Seed: number;
+        export const Bronze_Helmet_T_S: number;
+        export const Bronze_Boots_T_S: number;
+        export const Bronze_Platelegs_T_S: number;
+        export const Bronze_Platebody_T_S: number;
+        export const Bronze_Shield_T_S: number;
+        export const Iron_Helmet_T_S: number;
+        export const Iron_Boots_T_S: number;
+        export const Iron_Platelegs_T_S: number;
+        export const Iron_Platebody_T_S: number;
+        export const Iron_Shield_T_S: number;
+        export const Steel_Helmet_T_S: number;
+        export const Steel_Boots_T_S: number;
+        export const Steel_Platelegs_T_S: number;
+        export const Steel_Platebody_T_S: number;
+        export const Steel_Shield_T_S: number;
+        export const Black_Helmet_T_S: number;
+        export const Black_Boots_T_S: number;
+        export const Black_Platelegs_T_S: number;
+        export const Black_Platebody_T_S: number;
+        export const Black_Shield_T_S: number;
+        export const Mithril_Helmet_T_S: number;
+        export const Mithril_Boots_T_S: number;
+        export const Mithril_Platelegs_T_S: number;
+        export const Mithril_Platebody_T_S: number;
+        export const Mithril_Shield_T_S: number;
+        export const Adamant_Helmet_T_S: number;
+        export const Adamant_Boots_T_S: number;
+        export const Adamant_Platelegs_T_S: number;
+        export const Adamant_Platebody_T_S: number;
+        export const Adamant_Shield_T_S: number;
+        export const Rune_Helmet_T_S: number;
+        export const Rune_Boots_T_S: number;
+        export const Rune_Platelegs_T_S: number;
+        export const Rune_Platebody_T_S: number;
+        export const Rune_Shield_T_S: number;
+        export const Dragon_Helmet_T_S: number;
+        export const Dragon_Boots_T_S: number;
+        export const Dragon_Platelegs_T_S: number;
+        export const Dragon_Platebody_T_S: number;
+        export const Dragon_Shield_T_S: number;
+        export const Bronze_Helmet_T_G: number;
+        export const Bronze_Boots_T_G: number;
+        export const Bronze_Platelegs_T_G: number;
+        export const Bronze_Platebody_T_G: number;
+        export const Bronze_Shield_T_G: number;
+        export const Iron_Helmet_T_G: number;
+        export const Iron_Boots_T_G: number;
+        export const Iron_Platelegs_T_G: number;
+        export const Iron_Platebody_T_G: number;
+        export const Iron_Shield_T_G: number;
+        export const Steel_Helmet_T_G: number;
+        export const Steel_Boots_T_G: number;
+        export const Steel_Platelegs_T_G: number;
+        export const Steel_Platebody_T_G: number;
+        export const Steel_Shield_T_G: number;
+        export const Black_Helmet_T_G: number;
+        export const Black_Boots_T_G: number;
+        export const Black_Platelegs_T_G: number;
+        export const Black_Platebody_T_G: number;
+        export const Black_Shield_T_G: number;
+        export const Mithril_Helmet_T_G: number;
+        export const Mithril_Boots_T_G: number;
+        export const Mithril_Platelegs_T_G: number;
+        export const Mithril_Platebody_T_G: number;
+        export const Mithril_Shield_T_G: number;
+        export const Adamant_Helmet_T_G: number;
+        export const Adamant_Boots_T_G: number;
+        export const Adamant_Platelegs_T_G: number;
+        export const Adamant_Platebody_T_G: number;
+        export const Adamant_Shield_T_G: number;
+        export const Rune_Helmet_T_G: number;
+        export const Rune_Boots_T_G: number;
+        export const Rune_Platelegs_T_G: number;
+        export const Rune_Platebody_T_G: number;
+        export const Rune_Shield_T_G: number;
+        export const Dragon_Helmet_T_G: number;
+        export const Dragon_Boots_T_G: number;
+        export const Dragon_Platelegs_T_G: number;
+        export const Dragon_Platebody_T_G: number;
+        export const Dragon_Shield_T_G: number;
+        export const Amulet_of_Fishing: number;
+        export const Amulet_of_Strength: number;
+        export const Amulet_of_Accuracy: number;
+        export const Amulet_of_Defence: number;
+        export const Amulet_of_Glory: number;
+        export const Normal_Shortbow: number;
+        export const Oak_Shortbow: number;
+        export const Willow_Shortbow: number;
+        export const Maple_Shortbow: number;
+        export const Yew_Shortbow: number;
+        export const Magic_Shortbow: number;
+        export const Normal_Longbow: number;
+        export const Oak_Longbow: number;
+        export const Willow_Longbow: number;
+        export const Maple_Longbow: number;
+        export const Yew_Longbow: number;
+        export const Magic_Longbow: number;
+        export const Bronze_Arrows: number;
+        export const Iron_Arrows: number;
+        export const Steel_Arrows: number;
+        export const Mithril_Arrows: number;
+        export const Adamant_Arrows: number;
+        export const Rune_Arrows: number;
+        export const Dragon_Arrows: number;
+        export const Bronze_Arrowtips: number;
+        export const Iron_Arrowtips: number;
+        export const Steel_Arrowtips: number;
+        export const Mithril_Arrowtips: number;
+        export const Adamant_Arrowtips: number;
+        export const Rune_Arrowtips: number;
+        export const Dragon_Arrowtips: number;
+        export const Arrow_Shafts: number;
+        export const Headless_Arrows: number;
+        const Feathers_1: number;
+        export { Feathers_1 as Feathers };
+        export const Normal_Shortbow_U: number;
+        export const Oak_Shortbow_U: number;
+        export const Willow_Shortbow_U: number;
+        export const Maple_Shortbow_U: number;
+        export const Yew_Shortbow_U: number;
+        export const Magic_Shortbow_U: number;
+        export const Normal_Longbow_U: number;
+        export const Oak_Longbow_U: number;
+        export const Willow_Longbow_U: number;
+        export const Maple_Longbow_U: number;
+        export const Yew_Longbow_U: number;
+        export const Magic_Longbow_U: number;
+        const Bowstring_1: number;
+        export { Bowstring_1 as Bowstring };
+        const Leather_1: number;
+        export { Leather_1 as Leather };
+        const Green_Dragonhide_1: number;
+        export { Green_Dragonhide_1 as Green_Dragonhide };
+        const Blue_Dragonhide_1: number;
+        export { Blue_Dragonhide_1 as Blue_Dragonhide };
+        const Red_Dragonhide_1: number;
+        export { Red_Dragonhide_1 as Red_Dragonhide };
+        export const Black_Dragonhide: number;
+        export const Leather_Gloves: number;
+        export const Leather_Boots: number;
+        export const Leather_Cowl: number;
+        export const Leather_Vambraces: number;
+        export const Leather_Body: number;
+        export const Leather_Chaps: number;
+        export const Green_Dhide_Vambraces: number;
+        export const Green_Dhide_Chaps: number;
+        export const Green_Dhide_Body: number;
+        export const Blue_Dhide_Vambraces: number;
+        export const Blue_Dhide_Chaps: number;
+        export const Blue_Dhide_Body: number;
+        export const Red_Dhide_Vambraces: number;
+        export const Red_Dhide_Chaps: number;
+        export const Red_Dhide_Body: number;
+        export const Black_Dhide_Vambraces: number;
+        export const Black_Dhide_Chaps: number;
+        export const Black_Dhide_Body: number;
+        export const Silver_Topaz_Ring: number;
+        export const Silver_Sapphire_Ring: number;
+        export const Silver_Ruby_Ring: number;
+        export const Silver_Emerald_Ring: number;
+        export const Silver_Diamond_Ring: number;
+        export const Gold_Topaz_Ring: number;
+        export const Gold_Sapphire_Ring: number;
+        export const Gold_Ruby_Ring: number;
+        export const Gold_Emerald_Ring: number;
+        export const Gold_Diamond_Ring: number;
+        export const Silver_Topaz_Necklace: number;
+        export const Silver_Sapphire_Necklace: number;
+        export const Silver_Ruby_Necklace: number;
+        export const Silver_Emerald_Necklace: number;
+        export const Silver_Diamond_Necklace: number;
+        export const Gold_Topaz_Necklace: number;
+        export const Gold_Sapphire_Necklace: number;
+        export const Gold_Ruby_Necklace: number;
+        export const Gold_Emerald_Necklace: number;
+        export const Gold_Diamond_Necklace: number;
+        const Cooking_Gloves_1: number;
+        export { Cooking_Gloves_1 as Cooking_Gloves };
+        const Mining_Gloves_1: number;
+        export { Mining_Gloves_1 as Mining_Gloves };
+        const Smithing_Gloves_1: number;
+        export { Smithing_Gloves_1 as Smithing_Gloves };
+        const Thieving_Gloves_1: number;
+        export { Thieving_Gloves_1 as Thieving_Gloves };
+        const Gem_Gloves_1: number;
+        export { Gem_Gloves_1 as Gem_Gloves };
+        export const Cape_Of_Prat: number;
+        export const Obsidian_Cape: number;
+        export const Elite_Amulet_of_Strength: number;
+        export const Elite_Amulet_of_Accuracy: number;
+        export const Elite_Amulet_of_Defence: number;
+        export const Elite_Amulet_of_Glory: number;
+        export const Egg_Chest: number;
+        export const Ancient_Sword: number;
+        export const Ancient_Helmet: number;
+        export const Ancient_Platelegs: number;
+        export const Ancient_Platebody: number;
+        export const Ancient_Shield: number;
+        export const Ancient_Helmet_T_S: number;
+        export const Ancient_Platelegs_T_S: number;
+        export const Ancient_Platebody_T_S: number;
+        export const Ancient_Shield_T_S: number;
+        export const Ancient_Helmet_T_G: number;
+        export const Ancient_Platelegs_T_G: number;
+        export const Ancient_Platebody_T_G: number;
+        export const Ancient_Shield_T_G: number;
+        export const Pirate_Booty: number;
+        export const Fire_Cape: number;
+        export const Elite_Chest: number;
+        export const Spider_Chest: number;
+        export const Rangers_Hat: number;
+        export const Ranger_Boots: number;
+        export const Amulet_of_Fury: number;
+        export const Amulet_of_Torture: number;
+        export const Amulet_of_Ranged: number;
+        export const Ice_Dagger: number;
+        export const Ice_Sword: number;
+        export const Ice_Battleaxe: number;
+        export const Ice_2h_Sword: number;
+        export const Ice_Helmet: number;
+        export const Ice_Boots: number;
+        export const Ice_Platelegs: number;
+        export const Ice_Platebody: number;
+        export const Ice_Shield: number;
+        export const Ice_Arrows: number;
+        export const Ice_Shortbow: number;
+        export const Ice_Longbow: number;
+        export const Frozen_Chest: number;
+        export const Standard_Chest: number;
+        export const Amulet_of_Looting: number;
+        export const Redwood_Shortbow_U: number;
+        export const Redwood_Shortbow: number;
+        export const Redwood_Longbow_U: number;
+        export const Redwood_Longbow: number;
+        export const Rune_Essence: number;
+        export const Air_Rune: number;
+        export const Mind_Rune: number;
+        export const Water_Rune: number;
+        export const Earth_Rune: number;
+        export const Fire_Rune: number;
+        export const Body_Rune: number;
+        export const Chaos_Rune: number;
+        export const Death_Rune: number;
+        export const Blood_Rune: number;
+        export const Ancient_Rune: number;
+        export const Staff_of_Air: number;
+        export const Staff_of_Water: number;
+        export const Staff_of_Earth: number;
+        export const Staff_of_Fire: number;
+        export const Air_Battlestaff: number;
+        export const Water_Battlestaff: number;
+        export const Earth_Battlestaff: number;
+        export const Fire_Battlestaff: number;
+        export const Mystic_Air_Staff: number;
+        export const Mystic_Water_Staff: number;
+        export const Mystic_Earth_Staff: number;
+        export const Mystic_Fire_Staff: number;
+        export const Green_Wizard_Hat: number;
+        export const Green_Wizard_Robes: number;
+        export const Green_Wizard_Bottoms: number;
+        export const Green_Wizard_Boots: number;
+        export const Blue_Wizard_Hat: number;
+        export const Blue_Wizard_Robes: number;
+        export const Blue_Wizard_Bottoms: number;
+        export const Blue_Wizard_Boots: number;
+        export const Red_Wizard_Hat: number;
+        export const Red_Wizard_Robes: number;
+        export const Red_Wizard_Bottoms: number;
+        export const Red_Wizard_Boots: number;
+        export const Black_Wizard_Hat: number;
+        export const Black_Wizard_Robes: number;
+        export const Black_Wizard_Bottoms: number;
+        export const Black_Wizard_Boots: number;
+        export const Ancient_Wizard_Hat: number;
+        export const Ancient_Wizard_Robes: number;
+        export const Ancient_Wizard_Bottoms: number;
+        export const Ancient_Wizard_Boots: number;
+        export const Bronze_Scimitar: number;
+        export const Iron_Scimitar: number;
+        export const Steel_Scimitar: number;
+        export const Black_Scimitar: number;
+        export const Mithril_Scimitar: number;
+        export const Adamant_Scimitar: number;
+        export const Rune_Scimitar: number;
+        export const Dragon_Scimitar: number;
+        const Bones_1: number;
+        export { Bones_1 as Bones };
+        const Dragon_Bones_1: number;
+        export { Dragon_Bones_1 as Dragon_Bones };
+        const Magic_Bones_1: number;
+        export { Magic_Bones_1 as Magic_Bones };
+        export const Bandit_Chest: number;
+        export const Ancient_Longbow: number;
+        const Attack_Skillcape_1: number;
+        export { Attack_Skillcape_1 as Attack_Skillcape };
+        const Cooking_Skillcape_1: number;
+        export { Cooking_Skillcape_1 as Cooking_Skillcape };
+        const Crafting_Skillcape_1: number;
+        export { Crafting_Skillcape_1 as Crafting_Skillcape };
+        const Defence_Skillcape_1: number;
+        export { Defence_Skillcape_1 as Defence_Skillcape };
+        const Farming_Skillcape_1: number;
+        export { Farming_Skillcape_1 as Farming_Skillcape };
+        const Firemaking_Skillcape_1: number;
+        export { Firemaking_Skillcape_1 as Firemaking_Skillcape };
+        const Fishing_Skillcape_1: number;
+        export { Fishing_Skillcape_1 as Fishing_Skillcape };
+        const Fletching_Skillcape_1: number;
+        export { Fletching_Skillcape_1 as Fletching_Skillcape };
+        const Hitpoints_Skillcape_1: number;
+        export { Hitpoints_Skillcape_1 as Hitpoints_Skillcape };
+        const Magic_Skillcape_1: number;
+        export { Magic_Skillcape_1 as Magic_Skillcape };
+        const Mining_Skillcape_1: number;
+        export { Mining_Skillcape_1 as Mining_Skillcape };
+        const Ranged_Skillcape_1: number;
+        export { Ranged_Skillcape_1 as Ranged_Skillcape };
+        const Runecrafting_Skillcape_1: number;
+        export { Runecrafting_Skillcape_1 as Runecrafting_Skillcape };
+        const Smithing_Skillcape_1: number;
+        export { Smithing_Skillcape_1 as Smithing_Skillcape };
+        const Strength_Skillcape_1: number;
+        export { Strength_Skillcape_1 as Strength_Skillcape };
+        const Thieving_Skillcape_1: number;
+        export { Thieving_Skillcape_1 as Thieving_Skillcape };
+        const Woodcutting_Skillcape_1: number;
+        export { Woodcutting_Skillcape_1 as Woodcutting_Skillcape };
+        export const Magic_Chest: number;
+        export const Bronze_Gloves: number;
+        export const Iron_Gloves: number;
+        export const Steel_Gloves: number;
+        export const Mithril_Gloves: number;
+        export const Adamant_Gloves: number;
+        export const Rune_Gloves: number;
+        export const Dragon_Gloves: number;
+        export const Carrot_Seeds: number;
+        export const Carrot: number;
+        export const Mastery_Token_Cooking: number;
+        export const Mastery_Token_Crafting: number;
+        export const Mastery_Token_Farming: number;
+        export const Mastery_Token_Firemaking: number;
+        export const Mastery_Token_Fishing: number;
+        export const Mastery_Token_Fletching: number;
+        export const Mastery_Token_Mining: number;
+        export const Mastery_Token_Runecrafting: number;
+        export const Mastery_Token_Smithing: number;
+        export const Mastery_Token_Thieving: number;
+        export const Mastery_Token_Woodcutting: number;
+        export const Bobbys_Pocket: number;
+        const Prayer_Skillcape_1: number;
+        export { Prayer_Skillcape_1 as Prayer_Skillcape };
+        const Slayer_Helmet_Basic_1: number;
+        export { Slayer_Helmet_Basic_1 as Slayer_Helmet_Basic };
+        const Slayer_Platebody_Basic_1: number;
+        export { Slayer_Platebody_Basic_1 as Slayer_Platebody_Basic };
+        export const Slayer_Helmet_Strong: number;
+        export const Slayer_Platebody_Strong: number;
+        export const Slayer_Helmet_Elite: number;
+        export const Slayer_Platebody_Elite: number;
+        export const Magic_Wand_Basic: number;
+        export const Magic_Wand_Powerful: number;
+        export const Magic_Wand_Elite: number;
+        export const Book_of_Eli: number;
+        const Mirror_Shield_1: number;
+        export { Mirror_Shield_1 as Mirror_Shield };
+        export const Eyeball: number;
+        export const Dragon_Claw_Fragment: number;
+        export const Dragon_Claw: number;
+        export const Ancient_Claw_Fragment: number;
+        export const Ancient_Claw: number;
+        export const Holy_Dust: number;
+        export const Cape_of_Arrow_Preservation: number;
+        const Magical_Ring_1: number;
+        export { Magical_Ring_1 as Magical_Ring };
+        export const Ancient_Arrow: number;
+        export const Ancient_2H_Sword: number;
+        const Slayer_Skillcape_1: number;
+        export { Slayer_Skillcape_1 as Slayer_Skillcape };
+        export const Big_Bones: number;
+        const Slayer_Wizard_Hat_Basic_1: number;
+        export { Slayer_Wizard_Hat_Basic_1 as Slayer_Wizard_Hat_Basic };
+        const Slayer_Wizard_Robes_Basic_1: number;
+        export { Slayer_Wizard_Robes_Basic_1 as Slayer_Wizard_Robes_Basic };
+        export const Slayer_Wizard_Hat_Strong: number;
+        export const Slayer_Wizard_Robes_Strong: number;
+        export const Slayer_Wizard_Hat_Elite: number;
+        export const Slayer_Wizard_Robes_Elite: number;
+        const Slayer_Cowl_Basic_1: number;
+        export { Slayer_Cowl_Basic_1 as Slayer_Cowl_Basic };
+        const Slayer_Leather_Body_Basic_1: number;
+        export { Slayer_Leather_Body_Basic_1 as Slayer_Leather_Body_Basic };
+        export const Slayer_Cowl_Strong: number;
+        export const Slayer_Leather_Body_Strong: number;
+        export const Slayer_Cowl_Elite: number;
+        export const Slayer_Leather_Body_Elite: number;
+        export const Garum_Herb: number;
+        export const Sourweed_Herb: number;
+        export const Mantalyme_Herb: number;
+        export const Lemontyle_Herb: number;
+        export const Oxilyme_Herb: number;
+        export const Poraxx_Herb: number;
+        export const Pigtayle_Herb: number;
+        export const Barrentoe_Herb: number;
+        export const Garum_Seed: number;
+        export const Sourweed_Seed: number;
+        export const Mantalyme_Seed: number;
+        export const Lemontyle_Seed: number;
+        export const Oxilyme_Seed: number;
+        export const Poraxx_Seed: number;
+        export const Pigtayle_Seed: number;
+        export const Barrentoe_Seed: number;
+        export const Melee_Accuracy_Potion_I: number;
+        export const Melee_Accuracy_Potion_II: number;
+        export const Melee_Accuracy_Potion_III: number;
+        export const Melee_Accuracy_Potion_IV: number;
+        export const Melee_Strength_Potion_I: number;
+        export const Melee_Strength_Potion_II: number;
+        export const Melee_Strength_Potion_III: number;
+        export const Melee_Strength_Potion_IV: number;
+        export const Melee_Evasion_Potion_I: number;
+        export const Melee_Evasion_Potion_II: number;
+        export const Melee_Evasion_Potion_III: number;
+        export const Melee_Evasion_Potion_IV: number;
+        export const Ranged_Assistance_Potion_I: number;
+        export const Ranged_Assistance_Potion_II: number;
+        export const Ranged_Assistance_Potion_III: number;
+        export const Ranged_Assistance_Potion_IV: number;
+        export const Magic_Assistance_Potion_I: number;
+        export const Magic_Assistance_Potion_II: number;
+        export const Magic_Assistance_Potion_III: number;
+        export const Magic_Assistance_Potion_IV: number;
+        export const Regeneration_Potion_I: number;
+        export const Regeneration_Potion_II: number;
+        export const Regeneration_Potion_III: number;
+        export const Regeneration_Potion_IV: number;
+        export const Damage_Reduction_Potion_I: number;
+        export const Damage_Reduction_Potion_II: number;
+        export const Damage_Reduction_Potion_III: number;
+        export const Damage_Reduction_Potion_IV: number;
+        export const Bird_Nest_Potion_I: number;
+        export const Bird_Nest_Potion_II: number;
+        export const Bird_Nest_Potion_III: number;
+        export const Bird_Nest_Potion_IV: number;
+        export const Fishermans_Potion_I: number;
+        export const Fishermans_Potion_II: number;
+        export const Fishermans_Potion_III: number;
+        export const Fishermans_Potion_IV: number;
+        export const Controlled_Heat_Potion_I: number;
+        export const Controlled_Heat_Potion_II: number;
+        export const Controlled_Heat_Potion_III: number;
+        export const Controlled_Heat_Potion_IV: number;
+        export const Generous_Cook_Potion_I: number;
+        export const Generous_Cook_Potion_II: number;
+        export const Generous_Cook_Potion_III: number;
+        export const Generous_Cook_Potion_IV: number;
+        export const Perfect_Swing_Potion_I: number;
+        export const Perfect_Swing_Potion_II: number;
+        export const Perfect_Swing_Potion_III: number;
+        export const Perfect_Swing_Potion_IV: number;
+        export const Seeing_Gold_Potion_I: number;
+        export const Seeing_Gold_Potion_II: number;
+        export const Seeing_Gold_Potion_III: number;
+        export const Seeing_Gold_Potion_IV: number;
+        export const Gentle_Hands_Potion_I: number;
+        export const Gentle_Hands_Potion_II: number;
+        export const Gentle_Hands_Potion_III: number;
+        export const Gentle_Hands_Potion_IV: number;
+        export const Farming_Potion_I: number;
+        export const Farming_Potion_II: number;
+        export const Farming_Potion_III: number;
+        export const Farming_Potion_IV: number;
+        export const Fletching_Potion_I: number;
+        export const Fletching_Potion_II: number;
+        export const Fletching_Potion_III: number;
+        export const Fletching_Potion_IV: number;
+        export const Crafting_Potion_I: number;
+        export const Crafting_Potion_II: number;
+        export const Crafting_Potion_III: number;
+        export const Crafting_Potion_IV: number;
+        export const Elemental_Potion_I: number;
+        export const Elemental_Potion_II: number;
+        export const Elemental_Potion_III: number;
+        export const Elemental_Potion_IV: number;
+        export const Herblore_Potion_I: number;
+        export const Herblore_Potion_II: number;
+        export const Herblore_Potion_III: number;
+        export const Herblore_Potion_IV: number;
+        export const Ranged_Strength_Potion_I: number;
+        export const Ranged_Strength_Potion_II: number;
+        export const Ranged_Strength_Potion_III: number;
+        export const Ranged_Strength_Potion_IV: number;
+        export const Magic_Damage_Potion_I: number;
+        export const Magic_Damage_Potion_II: number;
+        export const Magic_Damage_Potion_III: number;
+        export const Magic_Damage_Potion_IV: number;
+        export const Large_Horn: number;
+        export const Herb_Sack: number;
+        export const Sunset_Rapier: number;
+        export const Chest_of_Witwix: number;
+        export const Amulet_of_Calculated_Promotion: number;
+        export const Hard_Leather_Gloves: number;
+        export const Hard_Leather_Boots: number;
+        export const Hard_Leather_Cowl: number;
+        export const Hard_Leather_Vambraces: number;
+        export const Hard_Leather_Body: number;
+        export const Hard_Leather_Chaps: number;
+        export const Chapeau_Noir: number;
+        export const Mastery_Token_Herblore: number;
+        const Herblore_Skillcape_1: number;
+        export { Herblore_Skillcape_1 as Herblore_Skillcape };
+        export const Diamond_Luck_Potion_I: number;
+        export const Diamond_Luck_Potion_II: number;
+        export const Diamond_Luck_Potion_III: number;
+        export const Diamond_Luck_Potion_IV: number;
+        export const Divine_Potion_I: number;
+        export const Divine_Potion_II: number;
+        export const Divine_Potion_III: number;
+        export const Divine_Potion_IV: number;
+        export const Lucky_Herb_Potion_I: number;
+        export const Lucky_Herb_Potion_II: number;
+        export const Lucky_Herb_Potion_III: number;
+        export const Lucky_Herb_Potion_IV: number;
+        export const Signet_Ring_Half_A: number;
+        export const Signet_Ring_Half_B: number;
+        export const Aorpheats_Signet_Ring: number;
+        export const Old_Boot: number;
+        export const Old_Hat: number;
+        export const Seaweed: number;
+        export const Rusty_Key: number;
+        export const Shell: number;
+        export const Rope: number;
+        export const Glass_Bottle: number;
+        export const Rubber_Ducky: number;
+        export const Raw_Blowfish: number;
+        export const Raw_Poison_Fish: number;
+        export const Leaping_Trout: number;
+        export const Leaping_Salmon: number;
+        export const Leaping_Broad_Fish: number;
+        export const Raw_Magic_Fish: number;
+        export const Raw_Anglerfish: number;
+        export const Raw_Fanfish: number;
+        export const Raw_Seahorse: number;
+        export const Raw_Carp: number;
+        export const Raw_Skeleton_Fish: number;
+        export const Pirates_Lost_Ring: number;
+        export const Message_In_A_Bottle: number;
+        export const Barbarian_Gloves: number;
+        export const Ancient_Ring_Of_Skills: number;
+        export const Anglerfish: number;
+        export const Fanfish: number;
+        export const Seahorse: number;
+        export const Carp: number;
+        export const Burnt_Anglerfish: number;
+        export const Burnt_Fanfish: number;
+        export const Burnt_Seahorse: number;
+        export const Burnt_Carp: number;
+        const Weird_Gloop_1: number;
+        export { Weird_Gloop_1 as Weird_Gloop };
+        export const Clue_Chasers_Insignia: number;
+        export const Lemon: number;
+        export const Lemons: number;
+        export const Lemonade: number;
+        export const Topaz_Bolts: number;
+        export const Sapphire_Bolts: number;
+        export const Ruby_Bolts: number;
+        export const Emerald_Bolts: number;
+        export const Diamond_Bolts: number;
+        export const Bronze_Crossbow: number;
+        export const Iron_Crossbow: number;
+        export const Steel_Crossbow: number;
+        export const Mithril_Crossbow: number;
+        export const Adamant_Crossbow: number;
+        export const Rune_Crossbow: number;
+        export const Dragon_Crossbow: number;
+        export const Ancient_Crossbow: number;
+        export const Bronze_Javelin: number;
+        export const Iron_Javelin: number;
+        export const Steel_Javelin: number;
+        export const Mithril_Javelin: number;
+        export const Adamant_Javelin: number;
+        export const Rune_Javelin: number;
+        export const Dragon_Javelin: number;
+        export const Ancient_Javelin: number;
+        export const Bronze_Throwing_Knife: number;
+        export const Iron_Throwing_Knife: number;
+        export const Steel_Throwing_Knife: number;
+        export const Mithril_Throwing_Knife: number;
+        export const Adamant_Throwing_Knife: number;
+        export const Rune_Throwing_Knife: number;
+        export const Dragon_Throwing_Knife: number;
+        export const Ancient_Throwing_Knife: number;
+        export const Aeris_God_Helmet: number;
+        export const Aeris_God_Platelegs: number;
+        export const Aeris_God_Platebody: number;
+        export const Aeris_God_Boots: number;
+        export const Aeris_God_Gloves: number;
+        export const Glacia_God_Helmet: number;
+        export const Glacia_God_Platelegs: number;
+        export const Glacia_God_Platebody: number;
+        export const Glacia_God_Boots: number;
+        export const Glacia_God_Gloves: number;
+        export const Headless_Bolts: number;
+        export const Bronze_Crossbow_Head: number;
+        export const Iron_Crossbow_Head: number;
+        export const Steel_Crossbow_Head: number;
+        export const Mithril_Crossbow_Head: number;
+        export const Adamant_Crossbow_Head: number;
+        export const Rune_Crossbow_Head: number;
+        export const Dragon_Crossbow_Head: number;
+        export const Bronze_Javelin_Heads: number;
+        export const Iron_Javelin_Heads: number;
+        export const Steel_Javelin_Heads: number;
+        export const Mithril_Javelin_Heads: number;
+        export const Adamant_Javelin_Heads: number;
+        export const Rune_Javelin_Heads: number;
+        export const Dragon_Javelin_Heads: number;
+        export const Green_Dhide_Vambraces_U: number;
+        export const Green_Dhide_Chaps_U: number;
+        export const Green_Dhide_Body_U: number;
+        export const Blue_Dhide_Vambraces_U: number;
+        export const Blue_Dhide_Chaps_U: number;
+        export const Blue_Dhide_Body_U: number;
+        export const Red_Dhide_Vambraces_U: number;
+        export const Red_Dhide_Chaps_U: number;
+        export const Red_Dhide_Body_U: number;
+        export const Black_Dhide_Vambraces_U: number;
+        export const Black_Dhide_Chaps_U: number;
+        export const Black_Dhide_Body_U: number;
+        export const Ancient_Dhide_Vambraces: number;
+        export const Ancient_Dhide_Chaps: number;
+        export const Ancient_Dhide_Body: number;
+        export const Ancient_Dhide_Vambraces_U: number;
+        export const Ancient_Dhide_Chaps_U: number;
+        export const Ancient_Dhide_Body_U: number;
+        export const Elite_Amulet_of_Ranged: number;
+        export const Elder_Dragonhide: number;
+        export const Green_Dhide_Shield: number;
+        export const Blue_Dhide_Shield: number;
+        export const Red_Dhide_Shield: number;
+        export const Black_Dhide_Shield: number;
+        export const Ancient_Dhide_Shield: number;
+        export const Green_Dhide_Shield_U: number;
+        export const Blue_Dhide_Shield_U: number;
+        export const Red_Dhide_Shield_U: number;
+        export const Black_Dhide_Shield_U: number;
+        export const Ancient_Dhide_Shield_U: number;
+        export const Air_Shard: number;
+        export const Water_Shard: number;
+        export const Earth_Shard: number;
+        export const Fire_Shard: number;
+        export const Air_Chest: number;
+        export const Water_Chest: number;
+        export const Earth_Chest: number;
+        export const Fire_Chest: number;
+        export const Terran_God_Helmet: number;
+        export const Terran_God_Platelegs: number;
+        export const Terran_God_Platebody: number;
+        export const Terran_God_Boots: number;
+        export const Terran_God_Gloves: number;
+        export const Ragnar_God_Helmet: number;
+        export const Ragnar_God_Platelegs: number;
+        export const Ragnar_God_Platebody: number;
+        export const Ragnar_God_Boots: number;
+        export const Ragnar_God_Gloves: number;
+        export const Deadeye_Ring: number;
+        export const Deadeye_Amulet: number;
+        export const Scroll_of_Aeris: number;
+        export const Scroll_of_Glacia: number;
+        export const Scroll_of_Terran: number;
+        export const Scroll_of_Ragnar: number;
+        export const Warlock_Ring: number;
+        export const Warlock_Amulet: number;
+        export const Guardian_Ring: number;
+        export const Guardian_Amulet: number;
+        export const Fighter_Ring: number;
+        export const Fighter_Amulet: number;
+        export const Aeris_Godsword: number;
+        export const Glacia_Godsword: number;
+        export const Terran_Godsword: number;
+        export const Ragnar_Godsword: number;
+        export const Bank_Slot_Token: number;
+        export const Stormsnap: number;
+        export const Big_Ron: number;
+        const Confetti_Crossbow_1: number;
+        export { Confetti_Crossbow_1 as Confetti_Crossbow };
+        export const Slayer_Crossbow: number;
+        export const Slayer_Crossbow_Head: number;
+        export const Eight: number;
+        export const Twin_Exiles: number;
+        const Max_Skillcape_1: number;
+        export { Max_Skillcape_1 as Max_Skillcape };
+        export const Bobs_Rake: number;
+        export const Earth_Layered_Shield: number;
+        export const Elder_Chest: number;
+        export const Cloudburst_Staff: number;
+        export const Amulet_of_Magic: number;
+        export const Elite_Amulet_of_Magic: number;
+        export const Bone_Necklace: number;
+        const Skull_Cape_1: number;
+        export { Skull_Cape_1 as Skull_Cape };
+        export const Fury_of_the_Elemental_Zodiac: number;
+        export const Light_Rune: number;
+        export const Nature_Rune: number;
+        export const Havoc_Rune: number;
+        export const Spirit_Rune: number;
+        export const Mist_Rune: number;
+        export const Dust_Rune: number;
+        export const Mud_Rune: number;
+        export const Smoke_Rune: number;
+        export const Steam_Rune: number;
+        export const Lava_Rune: number;
+        export const Air_Acolyte_Wizard_Hat: number;
+        export const Air_Acolyte_Wizard_Robes: number;
+        export const Air_Acolyte_Wizard_Bottoms: number;
+        export const Air_Acolyte_Wizard_Boots: number;
+        export const Water_Acolyte_Wizard_Hat: number;
+        export const Water_Acolyte_Wizard_Robes: number;
+        export const Water_Acolyte_Wizard_Bottoms: number;
+        export const Water_Acolyte_Wizard_Boots: number;
+        export const Earth_Acolyte_Wizard_Hat: number;
+        export const Earth_Acolyte_Wizard_Robes: number;
+        export const Earth_Acolyte_Wizard_Bottoms: number;
+        export const Earth_Acolyte_Wizard_Boots: number;
+        export const Fire_Acolyte_Wizard_Hat: number;
+        export const Fire_Acolyte_Wizard_Robes: number;
+        export const Fire_Acolyte_Wizard_Bottoms: number;
+        export const Fire_Acolyte_Wizard_Boots: number;
+        export const Air_Adept_Wizard_Hat: number;
+        export const Air_Adept_Wizard_Robes: number;
+        export const Air_Adept_Wizard_Bottoms: number;
+        export const Air_Adept_Wizard_Boots: number;
+        export const Water_Adept_Wizard_Hat: number;
+        export const Water_Adept_Wizard_Robes: number;
+        export const Water_Adept_Wizard_Bottoms: number;
+        export const Water_Adept_Wizard_Boots: number;
+        export const Earth_Adept_Wizard_Hat: number;
+        export const Earth_Adept_Wizard_Robes: number;
+        export const Earth_Adept_Wizard_Bottoms: number;
+        export const Earth_Adept_Wizard_Boots: number;
+        export const Fire_Adept_Wizard_Hat: number;
+        export const Fire_Adept_Wizard_Robes: number;
+        export const Fire_Adept_Wizard_Bottoms: number;
+        export const Fire_Adept_Wizard_Boots: number;
+        export const Air_Expert_Wizard_Hat: number;
+        export const Air_Expert_Wizard_Robes: number;
+        export const Air_Expert_Wizard_Bottoms: number;
+        export const Air_Expert_Wizard_Boots: number;
+        export const Water_Expert_Wizard_Hat: number;
+        export const Water_Expert_Wizard_Robes: number;
+        export const Water_Expert_Wizard_Bottoms: number;
+        export const Water_Expert_Wizard_Boots: number;
+        export const Earth_Expert_Wizard_Hat: number;
+        export const Earth_Expert_Wizard_Robes: number;
+        export const Earth_Expert_Wizard_Bottoms: number;
+        export const Earth_Expert_Wizard_Boots: number;
+        export const Fire_Expert_Wizard_Hat: number;
+        export const Fire_Expert_Wizard_Robes: number;
+        export const Fire_Expert_Wizard_Bottoms: number;
+        export const Fire_Expert_Wizard_Boots: number;
+        export const Air_Imbued_Wand: number;
+        export const Water_Imbued_Wand: number;
+        export const Earth_Imbued_Wand: number;
+        export const Fire_Imbued_Wand: number;
+        const Red_Party_Hat_1: number;
+        export { Red_Party_Hat_1 as Red_Party_Hat };
+        export const Dragonfire_Shield: number;
+        export const Circlet_of_Rhaelyx: number;
+        export const Jewel_of_Rhaelyx: number;
+        export const Charge_Stone_of_Rhaelyx: number;
+        export const Crown_of_Rhaelyx: number;
+        export const Enchanted_Cape: number;
+        export const Enchanted_Shield: number;
+        export const Mysterious_Stone: number;
+        export const Event_Clue_1: number;
+        export const Event_Clue_2: number;
+        export const Event_Clue_3: number;
+        export const Event_Clue_4: number;
+        export const Cake_Base: number;
+        export const Candle: number;
+        export const Magical_Icing: number;
+        export const Magical_Flavouring: number;
+        export const Birthday_Cake: number;
+        export const Birthday_Token: number;
+        export const Purple_Party_Hat: number;
+        export const Ancient_Ring_Of_Mastery: number;
+        export const Cape_of_Completion: number;
+        const Desert_Hat_1: number;
+        export { Desert_Hat_1 as Desert_Hat };
+        const Blazing_Lantern_1: number;
+        export { Blazing_Lantern_1 as Blazing_Lantern };
+        const Climbing_Boots_1: number;
+        export { Climbing_Boots_1 as Climbing_Boots };
+        export const Miolite_Helmet: number;
+        export const Miolite_Boots: number;
+        export const Miolite_Platelegs: number;
+        export const Miolite_Platebody: number;
+        export const Miolite_Shield: number;
+        export const Miolite_Sceptre: number;
+        export const Thief_Gloves: number;
+        export const Shaman_Ring: number;
+        export const Book_of_Occults: number;
+        export const Elementalist_Gloves: number;
+        export const Sand_Treaders: number;
+        export const Desert_Wrappings: number;
+        export const Desert_Sabre: number;
+        export const Desert_Shortbow: number;
+        export const Sandstorm_Ring: number;
+        export const Darksteel_Dagger: number;
+        export const Elder_Crown: number;
+        export const Tormented_Ring: number;
+        export const Sanguine_Blade: number;
+        export const Recoil_Shield: number;
+        export const Wasteful_Ring: number;
+        export const Infernal_Claw: number;
+        export const Tidal_Edge_Fragment: number;
+        export const Tidal_Edge: number;
+        export const Ocean_Song_Fragment: number;
+        export const Ocean_Song: number;
+        export const Shockwave_Fragment: number;
+        export const Shockwave: number;
+        export const Jadestone_Bolts: number;
+        export const Paladin_Gloves: number;
+        export const Priest_Hat: number;
+        export const Almighty_Lute: number;
+        export const Miolite_Chest: number;
+        export const Infernal_Core: number;
+        export const Infernal_Cape: number;
+        export const Slayer_Helmet_Master: number;
+        export const Slayer_Platebody_Master: number;
+        export const Slayer_Cowl_Master: number;
+        export const Slayer_Leather_Body_Master: number;
+        export const Slayer_Wizard_Hat_Master: number;
+        export const Slayer_Wizard_Robes_Master: number;
+        const Green_Party_Hat_1: number;
+        export { Green_Party_Hat_1 as Green_Party_Hat };
+        export const Hunters_Ring: number;
+        export const Futures_Prophecy: number;
+        export const Unknown_Evil: number;
+        export const New_Dawn: number;
+        const Slayer_Upgrade_Kit_Strong_1: number;
+        export { Slayer_Upgrade_Kit_Strong_1 as Slayer_Upgrade_Kit_Strong };
+        const Slayer_Upgrade_Kit_Elite_1: number;
+        export { Slayer_Upgrade_Kit_Elite_1 as Slayer_Upgrade_Kit_Elite };
+        const Slayer_Upgrade_Kit_Master_1: number;
+        export { Slayer_Upgrade_Kit_Master_1 as Slayer_Upgrade_Kit_Master };
+        export const Santa_Hat: number;
+        export const Christmas_Cracker: number;
+        export const Friendship_Bracelet: number;
+        export const Candy_Cane: number;
+        export const Christmas_Coal: number;
+        export const Christmas_Sweater: number;
+        export const Christmas_Wreath: number;
+        export const Yellow_Party_Hat: number;
+        export const Mastery_Token_Agility: number;
+        const Agility_Skillcape_1: number;
+        export { Agility_Skillcape_1 as Agility_Skillcape };
+        export const Performance_Enhancing_Potion_I: number;
+        export const Performance_Enhancing_Potion_II: number;
+        export const Performance_Enhancing_Potion_III: number;
+        export const Performance_Enhancing_Potion_IV: number;
+        export const Easter_Egg: number;
+        export const Summoning_Shard_Red: number;
+        export const Summoning_Shard_Green: number;
+        export const Summoning_Shard_Blue: number;
+        export const Summoning_Shard_Silver: number;
+        export const Summoning_Shard_Gold: number;
+        export const Summoning_Shard_Black: number;
+        export const Summoning_Familiar_Golbin_Thief: number;
+        export const Summoning_Familiar_Occultist: number;
+        export const Summoning_Familiar_Wolf: number;
+        export const Summoning_Familiar_Ent: number;
+        export const Summoning_Familiar_Mole: number;
+        export const Summoning_Familiar_Octopus: number;
+        export const Summoning_Familiar_Minotaur: number;
+        export const Summoning_Familiar_Centaur: number;
+        export const Summoning_Familiar_Witch: number;
+        export const Summoning_Familiar_Pig: number;
+        export const Summoning_Familiar_Crow: number;
+        export const Summoning_Familiar_Leprechaun: number;
+        export const Summoning_Familiar_Cyclops: number;
+        export const Summoning_Familiar_Yak: number;
+        export const Summoning_Familiar_Unicorn: number;
+        export const Summoning_Familiar_Dragon: number;
+        export const Summoning_Familiar_Monkey: number;
+        export const Summoning_Familiar_Salamander: number;
+        export const Summoning_Familiar_Bear: number;
+        export const Summoning_Familiar_Devil: number;
+        export const Mastery_Token_Summoning: number;
+        export const Summoning_Skillcape: number;
+        export const Abnormal_Log: number;
+        export const Red_Herring: number;
+        export const Necromancer_Potion_I: number;
+        export const Necromancer_Potion_II: number;
+        export const Necromancer_Potion_III: number;
+        export const Necromancer_Potion_IV: number;
+        export const Necromancer_Hat: number;
+        export const Necromancer_Robes: number;
+        export const Necromancer_Bottoms: number;
+        export const Necromancer_Boots: number;
+    }
+}
+declare const defaultBankSort: number[];
+type general = number;
+type skillUpgrades = number;
+type slayer = number;
+type skillcapes = number;
+type materials = number;
+declare function loadAgility(forceRestart?: boolean): void;
+declare function createAgilityContainer(): void;
+declare function startAgility(obstacle?: number, clear?: boolean, keepGoing?: boolean): void;
+declare function getAgilityGPMultiplier(): number;
 /**
- * @param {any} char
+ *
+ * @param {ObstacleID} obstacleID
+ * @param {boolean} [offline=false]
  */
-declare function createPlayFabSaves(char: any): any;
-
-declare function createRuneCountContainer(): void;
-
+declare function provideAgilityCompletionBonuses(obstacleID: ObstacleID, offline?: boolean): {
+    gp: number;
+    items: ItemQuantity2[];
+};
+declare function updateAgilityIntervals(): void;
+/**
+ *
+ * @param {number} obstacleID
+ * @param {AgilityPillar[]} agilityArray
+ */
+declare function displayPassiveBonuses(obstacleID: number, agilityArray?: AgilityPillar[]): string;
+declare function createAgilityProgress(): void;
+/**
+ *
+ * @param {ObstacleID} id
+ */
+declare function createObstacleBuilderElement(id: ObstacleID): string;
+declare function createPassivePillarBuilderElement(): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ */
+declare function updateChosenAgilityObstaclePassiveBonuses(obstacleID: ObstacleID): void;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @param {boolean} [obstacleActive=true]
+ */
+declare function createChosenAgilityObstacleElement(obstacleID: ObstacleID, obstacleActive?: boolean): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ */
+declare function createSelectAgilityObstacleElement(obstacleID: ObstacleID): string;
+/**
+ *
+ * @param {PillarID} pillarID
+ */
+declare function createSelectPassivePillarElement(pillarID: PillarID): string;
+/**
+ *
+ * @param {PillarID} pillarID
+ * @param {boolean} isActive
+ */
+declare function createChosenPassivePillarElement(pillarID: PillarID, isActive: boolean): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @param {boolean} [showMasteryLevelSeparate=false]
+ * @param {boolean} [showCostReduction=false]
+ */
+declare function createSelectAgilityObstacleDescription(obstacleID: ObstacleID, showMasteryLevelSeparate?: boolean, showCostReduction?: boolean): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @returns {string}
+ */
+declare function getAgilityObstacleCostReductionElement(obstacleID: ObstacleID): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ */
+declare function getSelectAgilityObstacleBenefits(obstacleID: ObstacleID): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @returns {string}
+ */
+declare function getAgilityObstacleGPBonus(obstacleID: ObstacleID): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ */
+declare function updateAgilityObstacleGPBonus(obstacleID: ObstacleID): void;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @returns {string}
+ */
+declare function getAgilityObstacleXPBonus(obstacleID: ObstacleID): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ */
+declare function updateAgilityObstacleXPBonus(obstacleID: ObstacleID): void;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @returns
+ */
+declare function getAgilityObstacleSlayerCoinsBonus(obstacleID: ObstacleID): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ */
+declare function updateAgilityObstacleSlayerCoinsBonus(obstacleID: ObstacleID): void;
+declare function updateAllAgilityBonusesPerObstacle(): void;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ */
+declare function getSelectAgilityObstacleRequirements(obstacleID: ObstacleID): string;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @returns {number}
+ */
+declare function getAgilityObstacleCostReduction(obstacleID: ObstacleID): number;
+/**
+ *
+ * @param {ObstacleID} obstacleID
+ * @returns {number}
+ */
+declare function getAgilityObstacleItemCostReduction(obstacleID: ObstacleID): number;
+/**
+ *
+ * @param {number} obstacleID
+ * @param {AgilityPillar[]} agilityArray
+ * @param {boolean} [reduceCosts=true]
+ */
+declare function getSelectAgilityObstacleCost(obstacleID: number, agilityArray?: AgilityPillar[], reduceCosts?: boolean): string;
+/**
+ * onClick callback function
+ * @param {ObstacleCategories} category
+ */
+declare function displaySelectAgilityObstacle(category: ObstacleCategories): void;
+/**
+ * onClick callback function
+ */
+declare function displaySelectPassivePillar(): void;
+/**
+ * onClick callback function
+ * @param {ObstacleCategories} category
+ * @param {boolean} [confirmed=false]
+ */
+declare function destroyAgilityObstacle(category: ObstacleCategories, confirmed?: boolean): void;
+/**
+ * onClick callback function
+ * @param {boolean} [confirmed=false]
+ */
+declare function destroyAgilityPassivePillar(confirmed?: boolean): void;
+/**
+ * onClick callback function
+ * @param {ObstacleID} obstacleID
+ * @param {boolean} [confirmed=false]
+ */
+declare function buildAgilityObstacle(obstacleID: ObstacleID, confirmed?: boolean): void;
+/**
+ * onClick callback function
+ * @param {PillarID} pillarID
+ * @param {boolean} [confirmed=false]
+ */
+declare function buildAgilityPassivePillar(pillarID: PillarID, confirmed?: boolean): void;
+/**
+ *
+ * @param {ObstacleCost} definedCosts
+ * @param {ObstacleID} obstacleID
+ * @param {number} qty
+ * @param {boolean} [reduceCosts=true]
+ */
+declare function applyCostsToPlayer(definedCosts: ObstacleCost, obstacleID: ObstacleID, qty?: number, reduceCosts?: boolean): void;
+/**
+ *
+ * @param {ObstacleCost} definedCosts
+ * @param {UnlockRequirement} definedRequirements
+ * @param {ObstacleID} obstacleID
+ * @param {boolean} [reduceCosts=true]
+ */
+declare function canIAffordThis(definedCosts: ObstacleCost, definedRequirements: UnlockRequirement, obstacleID: ObstacleID, reduceCosts?: boolean): boolean;
+/**
+ *
+ * @param {UnlockRequirement} definedRequirements
+ */
+declare function checkUnlockRequirements(definedRequirements: UnlockRequirement): boolean;
+declare function updateAgilityBreakdown(): void;
+/**
+ * onClick callback function
+ */
+declare function showAllAgilityPassives(): void;
+/**
+ * @template {number|SkillModifierData} T
+ * @param {ObstacleID} obstacleID
+ * @param {ModifierKeys} key
+ * @param {T} value
+ * @returns {T}
+ */
+declare function getAgilityModifierValue<T extends number | SkillModifierData>(obstacleID: ObstacleID, key: ModifierKeys, value: T): T;
+/** @type {AgilityObstacle[]} */
+declare const agilityObstacles: AgilityObstacle[];
+/** @type {AgilityPillar[]} */
+declare const agilityPassivePillars: AgilityPillar[];
+/** Save game variable */
+declare var agilityPassivePillarActive: number;
+/** @type {ModifierActive} */
+declare var agilityPassiveBonuses: ModifierActive;
+/**
+ * Save game variable
+ * @type {ObstacleID[]} */
+declare var chosenAgilityObstacles: ObstacleID[];
+/**
+ * Save game variable
+ * @type {number[]} */
+declare var agilityObstacleBuildCount: number[];
+declare var isAgility: boolean;
+declare var currentObstacle: number;
+/** @type {TimeoutID} */
+declare var agilityTimer: TimeoutID;
+declare function loadItemsAlreadyFound(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function checkBrandNewItem(itemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateBrandNewItem(itemID: ItemID): void;
+/**
+ *
+ * @param {string} search
+ */
+declare function updateBankSearch(search: string): void;
+/**
+ * Initial loading of the bank. Used to refresh entire bank as well.
+ */
+declare function loadBank(): void;
+/**
+ * onClick callback function
+ */
+declare function clearBankSearch(): void;
+declare function updateBank(): void;
+declare function getBankValue(): void;
+/**
+ * Update an existing item in the bank. It only runs if the condition that executes this finds the same item in the bank already.
+ * @param {BankID|false} bankID
+ * @param {ItemID} itemID
+ * @param {number} quantity
+ * @param {boolean} [ignoreAdd=false]
+ * @param {boolean} [ignoreUpdate=false]
+ */
+declare function updateItemInBank(bankID: BankID | false, itemID: ItemID, quantity: number, ignoreAdd?: boolean, ignoreUpdate?: boolean): void;
+/**
+ * onClick callback function
+ */
+declare function sortBank(): void;
+/**
+ * Remove an item from the bank when qty = 0
+ * Assumes itemID exists in bank
+ * @param {ItemID} itemID
+ */
+declare function removeItemFromBank(itemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function checkBankForItem(itemID: ItemID): boolean;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function getBankId(itemID: ItemID): number;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns {number}
+ */
+declare function getBankQty(itemID: ItemID): number;
+/**
+ *
+ * @param {number} currentBankSpace
+ */
+declare function checkAddItemToBank(currentBankSpace: number): boolean;
+/**
+ * Add a new item to the bank.
+ * @param {ItemID} itemID
+ * @param {number} quantity
+ * @param {boolean} [found=true]
+ * @param {boolean} [showNotification=true]
+ * @param {boolean} [ignoreBankSpace=false]
+ */
+declare function addItemToBank(itemID: ItemID, quantity: number, found?: boolean, showNotification?: boolean, ignoreBankSpace?: boolean): boolean;
+declare function getMaxBankSpace(): number;
+/**
+ * creation of a bank item
+ * @param {ItemID} bankItemID
+ * @param {BankID} [bankButtonID=0]
+ * @returns {[number,string]}
+ */
+declare function createBankItem(bankItemID: ItemID, bankButtonID?: BankID): [number, string];
+/**
+ *
+ * @param {ItemID} bankItemID
+ */
+declare function createBankItemEvents(bankItemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {boolean} [showStats=false]
+ * @returns {string}
+ */
+declare function createItemInformationTooltip(itemID: ItemID, showStats?: boolean): string;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns {string}
+ */
+declare function getItemSpecialAttackInformation(itemID: ItemID): string;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns {string}
+ */
+declare function getItemBaseStatsBreakdown(itemID: ItemID): string;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function getItemSalePrice(itemID: ItemID): number;
+/**
+ *
+ * @param {ItemID} item
+ * @param {boolean} [toggleSidebar=true]
+ */
+declare function selectBankItem(item: ItemID, toggleSidebar?: boolean): void;
+declare function updateBankItemSettings(): void;
+declare function getTotalGPSaleMode(): number;
+declare function getTotalCountSaleMode(): number;
+declare function updateSelectedBankItemQty(): void;
+/**
+ * onClick callback function
+ * @param {boolean} [confirmed=false]
+ */
+declare function confirmSellModeSelection(confirmed?: boolean): void;
+/**
+ * onClick callback function
+ */
+declare function confirmMoveModeSelection(): void;
+/**
+ * onClick callback function
+ */
+declare function sellItem(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} qty
+ * @param {number} [saleModifier=1]
+ */
+declare function processItemSale(itemID: ItemID, qty: number, saleModifier?: number): void;
 declare function createVirtualBank(): void;
-
-declare var currentAutoEat: number;
-
-declare var currentAxe: number;
-
-declare var currentBank: number;
-
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} qty
+ */
+declare function addItemToVirtualBank(itemID: ItemID, qty: number): boolean;
+/**
+ * onClick callback function
+ */
+declare function openBankItem(): void;
+/**
+ * onClick callback function
+ * @param {ItemID} [itemID=-1]
+ */
+declare function viewItemContents(itemID?: ItemID): void;
+/**
+ * onClick callback function
+ * @param {MonsterID} monsterID
+ */
+declare function viewMonsterDrops(monsterID: MonsterID): void;
+/**
+ * onClick callback function
+ * @param {ItemID} itemID
+ * @param {boolean} [showAll=false]
+ */
+declare function viewItemStats(itemID: ItemID, showAll?: boolean): void;
+/**
+ * onClick callback function
+ */
+declare function upgradeItem(): void;
+/**
+ * onClick callback function
+ * @param {ItemID} itemID
+ * @param {ItemID} upgradeItemID
+ */
+declare function confirmUpgradeItemAll(itemID: ItemID, upgradeItemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {ItemID} upgradeItemID
+ * @param {number} [qty=1]
+ */
+declare function confirmUpgradeItem(itemID: ItemID, upgradeItemID: ItemID, qty?: number): void;
+/**
+ * onClick callback function
+ * @param {0|1} option
+ */
+declare function updateSellQty(option: 0 | 1): void;
+declare function claimToken(forceItem?: number, forceQty?: number, updateSpendXP?: boolean): void;
+/**
+ * onClick callback function
+ */
+declare function buryItem(): void;
+/**
+ * onClick callback function
+ */
+declare function findAFriend(): void;
+/**
+ * onClick callback function
+ * @param {ItemID} itemID
+ */
+declare function readItem(itemID: ItemID): void;
+/**
+ * onClick callback function
+ */
+declare function claimBankToken(): void;
+/**
+ * onClick callback function
+ */
+declare function lockItem(): void;
+declare function updateLockedItemIcon(): void;
+/**
+ * onClick callback function
+ */
+declare function useEight(): void;
+/**
+ * onClick callback function
+ */
+declare function toggleBankBorders(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {boolean} [format=true]
+ */
+declare function getItemQty(itemID: ItemID, format?: boolean): string | number;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} [qty=null]
+ */
+declare function updateSellRangeSlider(itemID: ItemID, qty?: number): void;
+/**
+ *
+ * @param {number} from
+ * @param {number} max
+ */
+declare function checkSaleButtons(from: number, max: number): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {boolean} [ignoreSetting=false]
+ */
+declare function updateEquipItemContainer(itemID: ItemID, ignoreSetting?: boolean): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateEquipItemQuantitySlider(itemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateEquipFoodSlider(itemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateOpenItemSlider(itemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateBuryItemSlider(itemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateClaimTokenSlider(itemID: ItemID): void;
+declare function deselectBankItem(): void;
+/**
+ *
+ * @param {EquipSetID} set
+ * @param {boolean} [updateEquip=true]
+ */
+declare function changeEquipToSet(set: EquipSetID, updateEquip?: boolean): void;
+/**
+ * onClick callback function
+ * @param {BankTabID} tab
+ */
+declare function showBankTab(tab: BankTabID): void;
+/**
+ * ondragover callback function
+ * @param {BankTabID} tab
+ */
+declare function setTabToDrag(tab: BankTabID): void;
+/**
+ * ondragleave callback function
+ * @param {BankTabID} tab
+ */
+declare function unsetTabToDrag(tab: BankTabID): void;
+/**
+ * ondrop callback function
+ * @param {BankTabID} tab
+ */
+declare function dropItemNewTab(tab: BankTabID): void;
+declare function sortBankByTabs(): void;
+/**
+ *
+ * @param {number} index
+ */
+declare function getNewBankIndex(index: number): number;
+/**
+ *
+ * @param {number} currentIndex
+ * @param {BankTabID} tab
+ */
+declare function getIndexOfItem(currentIndex: number, tab: BankTabID): number;
+/**
+ *
+ * @param {BankTabID} tab
+ * @param {boolean} [returnSrc=false]
+ */
+declare function updateBankTabImage(tab: BankTabID, returnSrc?: boolean): string;
+declare function updateBankTabImages(): void;
+/**
+ * onclick callback function
+ */
+declare function openDefaultBankTabDropdown(): void;
+declare function createSortableInstances(): void;
+/**
+ *
+ * @param {number} newIndex
+ * @param {number} oldIndex
+ * @param {BankTabID} tab
+ */
+declare function fireOnEnd(newIndex: number, oldIndex: number, tab: BankTabID): void;
+/**
+ * @template T
+ * @template {keyof T} K
+ * @param {T[]} array
+ * @param {number[]} order
+ * @param {K} key
+ */
+declare function mapOrder<T, K extends keyof T>(array: T[], order: number[], key: K): T[];
+declare function toggleSellItemMode(): void;
+declare function updateSellItemMode(): void;
+/**
+ *
+ * @param {ItemID} item
+ */
+declare function addItemToItemSaleArray(item: ItemID): void;
+/**
+ *
+ * @param {ItemID} item
+ */
+declare function addItemToItemMoveArray(item: ItemID): void;
+/**
+ *
+ * @param {ItemID} item
+ */
+declare function updateItemToSellBorder(item: ItemID): void;
+declare function updateItemToSellSummary(): void;
+declare function updateItemToMoveSummary(): void;
+/**
+ *
+ * @param {ItemID} item
+ */
+declare function updateItemToMoveBorder(item: ItemID): void;
+declare function removeSellItemBorders(): void;
+declare function removeMoveItemBorders(): void;
+declare function toggleMoveItemMode(): void;
+declare function updateMoveItemMode(): void;
+/**
+ * onclick callback function
+ * @param {0|1|2|3|4} sort
+ */
+declare function setDefaultBankSorting(sort: 0 | 1 | 2 | 3 | 4): void;
+declare function fixBankArray(): void;
+declare function createBankStackValue(): void;
+/**
+ *
+ * @param {BankID} bankID
+ */
+declare function updateBankStackValue(bankID: BankID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function assignDefaultItemTab(itemID: ItemID): number;
+/**
+ *
+ * @param {BankTabID} tab
+ * @param {ItemID} itemID
+ */
+declare function setDefaultItemTab(tab: BankTabID, itemID: ItemID): void;
+/**
+ * onClick callback function
+ * @param {BankTabID} tab
+ */
+declare function setMoveItemTab(tab: BankTabID): void;
+/**
+ *
+ * @param {string} message
+ */
+declare function logConsole(message: string): void;
+/** @type {BankItem[]} */
+declare var bank: BankItem[];
+/**
+ * @deprecated Old save variable.
+ * This is probably what should have been used for the shop upgrade conversion
+*/
 declare var currentBankUpgrade: number;
-
-declare var currentBonfireHandler: any;
-
-declare var currentCharacter: number;
-
-declare var currentCombatFood: number;
-
-declare var currentCookingFire: number;
-
-declare var currentCraft: any;
-
-declare var currentFarmingArea: any;
-
-declare var currentFishingArea: any;
-
-declare var currentFletch: any;
-
-declare var currentGamemode: number;
-
-declare var currentHerblore: any;
-
-declare var currentlyBurning: any;
-
-declare var currentlyCatchingUp: boolean;
-
-declare var currentlyCooking: any;
-
-declare var currentlyCutting: number;
-
-declare var currentlyEquipping: any;
-
-declare var currentlyUnequipping: any;
-
-declare var currentMagicSpell: number;
-
-declare var currentMastery: number[];
-
-declare var currentPage: number;
-
-declare var currentPickaxe: number;
-
-declare var currentRock: any;
-
-declare var currentRod: number;
-
-declare var currentRunecraft: any;
-
-declare var currentSmith: any;
-
-declare var currentTrees: number[];
-
-declare var currentView: number;
-
+declare const baseBankMax: 12;
+declare const maxTabs: 10;
+/** @deprecated Old Save Variable */
+declare var bankMax: number;
+/** Save game variable */
+declare var myBankVersion: number;
+/** Save game variable */
+declare var sellQty: number;
+/** @type {ItemID|null} */
+declare var selectedBankItem: ItemID | null;
+/** @type {null|TimeoutID} */
+declare var addItemUpdateTimer: null | TimeoutID;
+/** @type {number[]} */
+declare var nextItem: number[];
+/** @type {ItemQuantity[]} */
+declare var vBank: ItemQuantity[];
+/** @type {BankID|null} */
+declare var itemInViewPos: BankID | null;
 /**
- * @param {any} treeID
- * @param {any} ignore
- */
-declare function cutTree(treeID: any, ignore: any): any;
-
+ * Save game variable
+ * @type {ItemID[]} */
+declare var lockedItems: ItemID[];
+declare var allButOne: boolean;
+/** @type {ItemID|null} */
+declare var bankItemSelected: ItemID | null;
+declare var openItemQty: number;
+declare var claimTokenQty: number;
+declare var buryItemQty: number;
+/** @type {EquipSetID} */
+declare var equipToSet: EquipSetID;
+/** @type {BankTabID} */
+declare var selectedBankTab: BankTabID;
+declare var newTabSelected: boolean;
+/** @type {null|BankTabID} */
+declare var newTabToDrag: null | BankTabID;
+declare var itemBeingDragged: number;
+declare let sellItemMode: boolean;
+/** @type {ItemID[]} */
+declare let itemsToSell: ItemID[];
+declare let moveItemMode: boolean;
+/** @type {ItemID[]} */
+declare let itemsToMove: ItemID[];
+/** @type {BankTabID} */
+declare let moveItemModeTab: BankTabID;
+declare var equipFoodQty: number;
+/** @type {ItemID[]} */
+declare var itemsAlreadyFound: ItemID[];
+/** @type {null|TimeoutID} */
+declare let updateSalePriceTimer: null | TimeoutID;
+/** @type {BankCache} */
+declare var bankCache: BankCache;
+/** @type {null|TimeoutID} */
+declare var getBankValueTimer: null | TimeoutID;
+declare function updateBankSearchArray(): void;
+/** @type {BankSearch[]} */
+declare var bankSearch: BankSearch[];
+declare function updateMbucks(): void;
+declare function begParentsForMBucksBecauseImBrokeAndCantAffordToBuyItInTheP2WShopEvenThoughIShouldProbablyMakeDragonJavsForMoneyOhWaitLol(): void;
+declare function viewItemsAcquired(): void;
 /**
- * @param {any} dmg
+ *
+ * @param {number} qty
  */
-declare function damageEnemy(dmg: any): void;
-
-declare var damageMultiplier: number;
-
+declare function buyMbucks(qty: number): void;
+declare var mbucks: number;
+declare var caseInventory: any[];
+declare var totalMbucksSpent: number;
 /**
- * @param {any} dmg
+ * onClick callback function
+ * @param {boolean} [confirmed=false]
  */
-declare function damagePlayer(dmg: any): void;
-
-declare var damageReduction: number;
-
-declare var darkMode: boolean;
-
-declare var dataDeleted: boolean;
-
-declare var defaultPageOnLoad: number;
-
+declare function loadCloudSave(confirmed?: boolean): void;
+declare function startCloudSync(init?: boolean): void;
+declare function getCloudCharacters(): void;
+declare function checkConnectionToCloud(forceLoad?: boolean, accessCheck?: boolean): void;
 declare function deleteCloudSave(): void;
-
-declare function deleteData(): void;
-
-declare function deletePlayFabSave(): void;
-
-declare function disableActivePrayers(): void;
-
-declare var disableAds: boolean;
-
+declare function forceSync(closeAfter?: boolean, ignorePlayFab?: boolean): void;
+declare function forceSyncCooldown(): void;
+declare function checkGameVersion(): void;
+declare function checkPatreon(): void;
 /**
- * @param {boolean} update defaults to true
+ * onClick callback function
+ */
+declare function disconnectPatreon(): void;
+/**
+ *
+ * @param {boolean} isCloud
+ */
+declare function loadCloudOptions(isCloud: boolean): void;
+declare function checkTestAccess(): void;
+declare function checkTestAccessInit(forceLoad?: boolean, accessCheck?: boolean): void;
+declare function checkTestAccessPatreon(forceLoad?: boolean, accessCheck?: boolean): void;
+declare function confirmTestAccess(): void;
+declare function killPage(): void;
+declare function connectToPlayfabOffline(): void;
+declare function generatePlayfabOfflineID(): void;
+/**
+ *
+ * @param {string} playFabID
+ * @param {boolean} [offlineID=false]
+ */
+declare function playFabLoginWithCustomID(playFabID: string, offlineID?: boolean): void;
+declare function getPlayFabSave(): void;
+/** @type {PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>} */
+declare function loadCallback(result: PlayFabModule.SuccessContainer<PlayFabClientModels.GetUserDataResult>, error: PlayFabModule.IPlayFabError): void;
+declare function playFabSaveData(forceSave?: boolean, closeAfterSave?: boolean): void;
+/** @type {PlayFabModule.ApiCallback<PlayFabClientModels.UpdateUserDataResult>} */
+declare function saveCallback(result: PlayFabModule.SuccessContainer<PlayFabClientModels.UpdateUserDataResult>, error: PlayFabModule.IPlayFabError, forceSave?: boolean): void;
+/**
+ *
+ * @param {CharacterID} char
+ */
+declare function createPlayFabSaves(char: CharacterID): string;
+declare function enableCloudCharacterButton(): void;
+declare function deletePlayFabSave(characterID?: number): void;
+/**
+ *
+ * @param {string} eventName
+ * @param {PlayFabEventBody} args
+ */
+declare function sendPlayFabEvent(eventName: string, args: PlayFabEventBody): void;
+/**
+ * @deprecated Unused but commented out
+ * @type {PlayFabModule.ApiCallback<PlayFabClientModels.WriteEventResponse>} */
+declare function sendPlayFabEventCallback(result: PlayFabModule.SuccessContainer<PlayFabClientModels.WriteEventResponse>, error: PlayFabModule.IPlayFabError): void;
+/**
+ *
+ * @param {string} eventName
+ * @param {PlayFabEventBody} args
+ */
+declare function queuePlayFabEvents(eventName: string, args: PlayFabEventBody): void;
+declare function submitQueuedPlayFabEvents(): void;
+declare function fetchLatestTitleNews(): void;
+/** @type {PlayFabModule.ApiCallback<PlayFabClientModels.GetTitleNewsResult>} */
+declare function displayLatestTitleNews(result: PlayFabModule.SuccessContainer<PlayFabClientModels.GetTitleNewsResult>, error: PlayFabModule.IPlayFabError): void;
+/**
+ *
+ * @param {string} timestamp
+ * @param {string} title
+ * @param {string} body
+ * @param {string} newsId
+ */
+declare function createTitleNewsElement(timestamp: string, title: string, body: string, newsId: string): string;
+/**
+ * onClick callback function
+ */
+declare function readPlayFabNews(): void;
+/**
+ * onClick callback function
+ */
+declare function loginToMelvorCloud(): void;
+/**
+ * onClick callback function
+ */
+declare function registerToMelvorCloud(): void;
+/**
+ * onClick callback function
+ */
+declare function logoutMelvorCloud(): void;
+/**
+ * onClick callback function
+ */
+declare function forgotPasswordMelvorCloud(): void;
+declare function disableLoginForm(): void;
+declare function enableLoginForm(): void;
+declare function disableRegisterForm(): void;
+declare function enableRegisterForm(): void;
+declare function disableForgotForm(): void;
+declare function enableForgotForm(): void;
+declare function disableChangeEmailForm(): void;
+declare function enableChangeEmailForm(): void;
+declare function disableChangePasswordForm(): void;
+declare function enableChangePasswordForm(): void;
+/**
+ * onClick callback function
+ */
+declare function updateEmailMelvorCloud(): void;
+/**
+ * onClick callback function
+ */
+declare function updatePasswordMelvorCloud(): void;
+/**
+ * Mobile/Steam specific function
+ */
+declare function cloudSaveAndExit(): void;
+declare function updateLastCloudSaveTimestamp(): void;
+/** @type {TimeoutID|null} */
+declare var cloudSaveTimer: TimeoutID | null;
+/** @type {SaveString|null} */
+declare var cloudSave: SaveString | null;
+declare var forceSaveCooldown: boolean;
+/** @type {TimeoutID|null} */
+declare var forceSyncCooldownTimer: TimeoutID | null;
+declare var connectedToCloud: boolean;
+declare var connectedToPlayFab: boolean;
+declare var connectedToPlayFabOffline: boolean;
+/** @type {string[]} */
+declare var storedCloudSaves: string[];
+/** @type {(null|SaveString)[]} */
+declare var playFabSaves: (null | SaveString)[];
+declare var playFabLoginTimestamp: number;
+declare let forceSave: boolean;
+/** @type {Date|number} */
+declare var lastSaveTimestamp: Date | number;
+declare var saveAndClose: boolean;
+/** @type {TimeoutID|null} */
+declare var forceSyncSpamPrevention: TimeoutID | null;
+declare var connectingToCloud: boolean;
+/** @type {PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>} */
+declare const playFabLoginCallback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>;
+/** @type {PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>} */
+declare const playFabLoginCallbackOffline: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>;
+declare function regenerateHitpoints(): void;
+/**
+ * Starts combat
+ * @param {0|1|2} timer 0 starts player and enemy, 1 starts player, 2 starts enemy
+ * @param {boolean} [eat=false] Was started by manual eating
+ */
+declare function startCombat(timer?: 0 | 1 | 2, eat?: boolean): void;
+declare function startSummonAttackTimer(): void;
+declare function updateCombat(): void;
+declare function calculatePlayerChanceToHitEnemy(): number;
+/**
+ *
+ * @param {boolean} [playerSpec=false] Attack is Special
+ * @param {PlayerSpecialID|false} [specID=false]
+ * @param {boolean} [canAncientAttack=true]
+ * @param {boolean} [useAncientRunes=true]
+ */
+declare function attackEnemy(playerSpec?: boolean, specID?: PlayerSpecialID | false, canAncientAttack?: boolean, useAncientRunes?: boolean): void;
+/**
+ *
+ * @param {CurseID} curse
+ * @param {number} [forceTurns=3]
+ * @param {boolean} [forceApply=false]
+ */
+declare function applyCurseToEnemy(curse: CurseID, forceTurns?: number, forceApply?: boolean): void;
+declare function resetEnemyCurse(): void;
+/**
+ *
+ * @param {AuroraID} aurora
+ */
+declare function activatePlayerAurora(aurora: AuroraID): void;
+/**
+ *
+ * @param {boolean} [useRunes=true]
+ */
+declare function updatePlayerAurora(useRunes?: boolean): void;
+/**
+ *
+ * @param {boolean} [update=true]
  */
 declare function disablePlayerAurora(update?: boolean): void;
-
-declare function disconnectPatreon(): void;
-
+declare function activateEnemyBuffs(): void;
+declare function removeEnemyBuffs(): void;
+declare function removePlayerDebuffsfromSpec(): void;
+declare function removePlayerMarkOfDeath(): void;
 /**
- * @param {boolean} backup defaults to false
+ *
+ * @param {number} [stacks=1]
  */
-declare function downloadSave(backup?: boolean): void;
-
+declare function applyMarkOfDeathToPlayer(stacks?: number): void;
 /**
- * @param {any} enemy
+ *
+ * @param {MonsterID} [enemy=enemyInCombat]
  */
-declare function dropBones(enemy: any): void;
-
+declare function calculateEnemyAccuracy(enemy?: MonsterID): void;
 /**
- * @param {any} enemy
+ *
+ * @param {MonsterID} [enemy=enemyInCombat]
  */
-declare function dropLoot(enemy: any): void;
-
-declare var droppedLoot: any[];
-
+declare function calculateEnemyStrength(enemy?: MonsterID): void;
 /**
- * @param {any} levelReq
- * @param {boolean} offline defaults to false
+ *
+ * @param {MonsterID} [enemy=enemyInCombat]
  */
-declare function dropRingHalfA(levelReq: any, offline?: boolean): any;
-
-declare var dungeonCompleteCount: number[];
-
-declare var dungeonCount: any;
-
-declare var easterLoaded: boolean;
-
+declare function calculateEnemyDefence(enemy?: MonsterID): void;
+declare function updateEnemyValues(): void;
+declare function updateEnemyDebuffs(): void;
+declare function updatePlayerDebuffs(): void;
+declare function applyBurnToPlayer(): void;
+declare function applyBurnToEnemy(): void;
+declare function removeEnemyBurnDebuff(): void;
 /**
- * @param {number} efficiency defaults to 100
- * @param {boolean} autoEat defaults to false
+ *
+ * @param {number} bleedHPPerProc Damage to do per bleed proc
+ * @param {number} interval Interval between bleed procs in [ms]
+ * @param {number} bleedCount Total number of bleed procs
+ */
+declare function applyBleedToEnemy(bleedHPPerProc: number, interval: number, bleedCount: number): void;
+declare function removeEnemyBleedDebuff(): void;
+/**
+ *
+ * @param {0|1} debuffID
+ */
+declare function removePlayerDebuffs(debuffID: 0 | 1): void;
+/**
+ *
+ * @param {boolean} enemySpec
+ * @param {number|false} [specID=false]
+ */
+declare function attackPlayer(enemySpec?: boolean, specID?: number | false): void;
+declare function applyPlayerDamageModifiers(): number;
+/**
+ *
+ * @param {number} dmg
+ * @param {boolean} [playerHit=false]
+ * @returns
+ */
+declare function damageEnemy(dmg: number, playerHit?: boolean): number;
+/**
+ *
+ * @param {number} dmg
+ */
+declare function damagePlayer(dmg: number): void;
+declare function resetPlayerAttackBarStyle(): void;
+declare function resetPlayerSummonBar(): void;
+declare function resetPlayerAttackBar(): void;
+/**
+ *
+ * @param {boolean} [eat=false]
+ */
+declare function resetPlayerAttack(eat?: boolean): void;
+declare function resetEnemyAttackBar(): void;
+declare function resetPlayerCombatData(): void;
+declare function removePlayerAffliction(): void;
+/**
+ *
+ * @param {boolean} [death=false]
+ * @param {boolean} [stopDungeon=false]
+ * @param {boolean} [runAway=false]
+ */
+declare function stopCombat(death?: boolean, stopDungeon?: boolean, runAway?: boolean): void;
+declare function applyDeathPenalty(): void;
+/**
+ * Checks if enemy or player is dead
+ * @param {0|1} check 0: Check player, 1: Check enemy
+ */
+declare function checkCombatStatus(check: 0 | 1): boolean;
+/**
+ *
+ * @param {boolean|number} heal Useless input that does nothing
+ */
+declare function updateHitpoints(heal?: boolean | number): void;
+declare function updateEnemyHitpointsValue(): void;
+declare function updateHitpointVisuals(): void;
+declare function resetEnemyScreen(): void;
+declare function findEnemy(): void;
+/**
+ *
+ * @param {MonsterID} m
+ * @param {boolean} [continueDungeon=false]
+ */
+declare function selectMonster(m: MonsterID, continueDungeon?: boolean): void;
+declare function loadNewEnemy(): void;
+/**
+ *
+ * @param {MonsterID} enemy
+ * @param {boolean} [loadPassives=false]
+ */
+declare function loadEnemySpecialAttacks(enemy: MonsterID, loadPassives?: boolean): void;
+/**
+ *
+ * @param {EnemySpecialID} specID
+ * @param {number} chance
+ * @returns
+ */
+declare function getEnemySpecialAttackDescriptions(specID: EnemySpecialID, chance: number): string;
+declare function pauseDungeon(): void;
+/**
+ * onClick callback function
+ */
+declare function resumeDungeon(): void;
+declare function updatePlayerSpecialWeapon(): void;
+declare function updateEnemyChanceToHit(): void;
+declare function updatePlayerChanceToHit(): void;
+declare function updateEnemyMaxHit(): void;
+declare function updateNav(): void;
+/**
+ * onClick callback function
+ * @param {0|1|2|3} spellbook
+ */
+declare function selectSpellbook(spellbook: 0 | 1 | 2 | 3): void;
+declare function createRuneCountContainer(): void;
+/**
+ *
+ * @param {boolean} [isOffline=false]
+ */
+declare function updateRuneCount(isOffline?: boolean): void;
+declare function updateRunesCurrentlyUsed(): void;
+declare function updateSpellbook(): void;
+/**
+ *
+ * @param {SpellID} spell
+ */
+declare function selectSpell(spell: SpellID): void;
+/**
+ *
+ * @param {CurseID} curse
+ */
+declare function selectCurse(curse: CurseID): void;
+/**
+ * onClick callback function
+ * @param {AuroraID} aurora
+ */
+declare function selectAurora(aurora: AuroraID): void;
+/**
+ * onClick callback function
+ * @param {AncientID} ancient
+ */
+declare function selectAncient(ancient: AncientID): void;
+/**
+ *
+ * @param {boolean} [refresh=false]
+ */
+declare function loadCombatGear(refresh?: boolean): void;
+declare function loadEquipmentSets(): void;
+declare function updateEquipmentSetTooltips(): void;
+/**
+ *
+ * @param {ItemID} item
+ * @param {number} qty
+ * @param {EquipSetID} equipmentSet
+ * @param {boolean} [bypass=false]
+ * @param {boolean} [isPassive=false]
+ * @param {false|number} [forceSlot=false]
+ */
+declare function equipItem(item: ItemID, qty: number, equipmentSet: EquipSetID, bypass?: boolean, isPassive?: boolean, forceSlot?: false | number): void;
+/**
+ *
+ * @param {EquipSlotID} equipmentSlot
+ * @param {EquipSetID|null} [equipmentSet=null]
+ * @param {boolean} [bypass=false]
+ */
+declare function unequipItem(equipmentSlot: EquipSlotID, equipmentSet?: EquipSetID | null, bypass?: boolean): boolean;
+declare function updateEquipTooltips(): void;
+declare function updateEnemyAttackSpeed(): void;
+declare function updatePlayerAttackSpeed(): void;
+declare function updatePlayerStats(): void;
+declare function getSummonMaxHit(): number;
+declare function updatePlayerCombatLevels(): void;
+declare function resetPlayerBaseStats(): void;
+declare function updatePlayerBaseStats(): void;
+declare function applyCombatTriangleModifiers(): void;
+declare function calculatePlayerDamageReduction(): number;
+declare function calculatePlayerAccuracyRating(): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getSkillHiddenLevels(skill: SkillID): number;
+declare function calculatePlayerEvasionRating(): void;
+declare function calculatePlayerMaxHit(): void;
+declare function calculatePlayerAttackSpeed(): void;
+/**
+ *
+ * @param {number} value
+ */
+declare function calculateAreaEffectValue(value: number): number;
+declare function updateAutoEatData(): void;
+declare function updateMaxHitpoints(): void;
+/**
+ *
+ * @param {PlayerSpecialID[]} overrideSpecialAttacks
+ */
+declare function updatePlayerSpecialAttack(overrideSpecialAttacks?: PlayerSpecialID[]): void;
+/**
+ * Gets the current combat triangle damage multiplier
+ * @returns {number} Note: This could return false, but in theory is never called when it can be
+ */
+declare function setCombatDamageAdjustment(): number;
+declare function updateAmmo(): void;
+/**
+ *
+ * @param {AttackStyleID} [style=attackStyle]
+ */
+declare function setAttackStyle(style?: AttackStyleID): void;
+declare function updateAttackStyleOptions(): void;
+/**
+ *
+ * @param {boolean} [jumpToTop=true]
+ */
+declare function showMap(jumpToTop?: boolean): void;
+/**
+ * The only part of this function that does anything in it's current usage is the last 2 lines
+ * @param {null} combatArea This function seems to only ever be called with null
+ */
+declare function selectCombatArea(combatArea: null): void;
+declare function loadEquippedFood(): void;
+/**
+ *
+ * @param {0|1|2|3} food
+ * @param {boolean} [bypass=false]
+ */
+declare function selectEquippedFood(food: 0 | 1 | 2 | 3, bypass?: boolean): void;
+declare function updateEquippedFoodQty(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function getFoodHealValue(itemID: ItemID): number;
+/**
+ *
+ * @param {number} [efficiency=100]
+ * @param {boolean} [autoEat=false]
  */
 declare function eatFood(efficiency?: number, autoEat?: boolean): void;
-
+/**
+ * onClick callback function
+ */
+declare function equipFood(): void;
+/**
+ * onClick callback function
+ */
+declare function unequipFood(): void;
+/** Updates the Loot to Collect on the combat page */
+declare function loadLoot(): void;
+/**
+ *
+ * @param {MonsterID} enemy
+ */
+declare function dropBones(enemy: MonsterID): void;
+/**
+ *
+ * @param {MonsterID} enemy
+ */
+declare function dropLoot(enemy: MonsterID): void;
+/**
+ * onClick callback function
+ * @param {LootID} lootID
+ * @param {ItemID} itemID
+ * @param {number} qty
+ */
+declare function collectLoot(lootID: LootID, itemID: ItemID, qty: number): void;
+declare function clearLoot(): void;
+declare function lootAll(): void;
+/**
+ *
+ * @param {DungeonID} dungeon
+ * @param {boolean} [forceStart=false]
+ */
+declare function selectDungeon(dungeon: DungeonID, forceStart?: boolean): void;
+declare function updateDungeonEnemyCount(): void;
+/**
+ *
+ * @param {0|1|2|3|4} spellbook
+ * @param {SpellID|CurseID|AuroraID|AncientID|AltmagicID} spell
+ * @param {boolean} [useRunes=true]
+ * @param {boolean} [isOffline=false]
+ */
+declare function checkRuneCount(spellbook: 0 | 1 | 2 | 3 | 4, spell: SpellID | CurseID | AuroraID | AncientID | AltmagicID, useRunes?: boolean, isOffline?: boolean): boolean;
+/**
+ *
+ * @param {MonsterID|null} [monster=null]
+ */
+declare function updateKillCount(monster?: MonsterID | null): void;
+/**
+ *
+ * @param {DungeonID|null} [dungeon=null]
+ */
+declare function updateDungeonCount(dungeon?: DungeonID | null): void;
+declare function updateGameTitle(): void;
+/**
+ * onClick callback function
+ * @param {0|1|2} areaType
+ * @param {CombatAreaID|SlayerAreaID|DungeonID} areaID
+ */
+declare function viewMonsters(areaType: 0 | 1 | 2, areaID: CombatAreaID | SlayerAreaID | DungeonID): void;
+declare function loadAreas(): void;
+/**
+ *
+ * @param {string} text
+ */
+declare function createLockedDungeon(text: string): string;
+declare function updateSlayerAreaRequirements(): void;
+/**
+ * Callback for toggling the display of an area types monsters/dungeons
+ * When called with AreaType, toggles opening and closing the area.
+ * When called with null, and area is open, closes the open area
+ * @param {AreaType|null} areaID
+ */
+declare function showCombatArea(areaID: AreaType | null): void;
+/**
+ *
+ * @param {0|1|2|3|4|5} menu
+ */
+declare function changeCombatMenu(menu: 0 | 1 | 2 | 3 | 4 | 5): void;
+declare function updatePrayerMenu(forceUpdate?: boolean): void;
+declare function loadPrayer(): void;
+/**
+ *
+ * @param {PrayerID} prayer
+ */
+declare function togglePrayer(prayer: PrayerID): void;
+declare function updatePrayerPassiveBonuses(): void;
+/**
+ *
+ * @param {number} qty
+ * @param {boolean} [bury=false]
+ */
+declare function updatePrayerPoints(qty?: number, bury?: boolean): void;
+/**
+ *
+ * @param {number} qty
+ * @returns {number}
+ */
+declare function applyModifiersToPrayerCost(qty: number): number;
+/**
+ *
+ * @param {MonsterID} enemy
+ */
+declare function updateSlayer(enemy: MonsterID): void;
+/**
+ *
+ * @param {number} [qty=0]
+ */
+declare function updateSlayerCoins(qty?: number): void;
+/**
+ *
+ * @param {number} qty
+ */
+declare function updateSlayerTask(qty: number): void;
+/**
+ *
+ * @param {SlayerTier} tier
+ */
+declare function getSlayerTier(tier: SlayerTier): "Easy" | "Normal" | "Hard" | "Elite" | "Master";
+declare function displaySlayerTask(): void;
+/**
+ *
+ * @param {MonsterID} monster
+ * @param {SlayerTier} [tier=0]
+ */
+declare function getSlayerTask(monster: MonsterID, tier?: SlayerTier): void;
+/**
+ *
+ * @param {SlayerTier} tier
+ */
+declare function getSlayerCount(tier: SlayerTier): number;
+declare function getSlayerTaskExtensionCost(): number;
+/**
+ * onClick callback function
+ */
+declare function extendSlayerTask(): void;
+/**
+ *
+ * @param {'player'} [id]
+ */
+declare function updateCombatLevel(id?: 'player'): void;
+declare function getPlayerCombatLevel(): number;
+/**
+ *
+ * @param {MonsterID} monster
+ * @param {boolean} [setData=false]
+ */
+declare function getMonsterCombatLevel(monster: MonsterID, setData?: boolean): number;
+/**
+ *
+ * @param {MonsterID} monster
+ * @param {SlayerTier} tier
+ */
+declare function newSlayerTask(monster: MonsterID, tier?: SlayerTier): void;
+/**
+ * onClick callback function
+ */
+declare function showSlayerTaskSelection(): void;
+/**
+ * onClick callback function
+ */
+declare function hideSlayerTaskSelection(): void;
+declare function showNewSlayerTaskButton(): void;
+declare function showCancelSlayerTaskSelection(): void;
+declare function createSlayerTaskSelection(): void;
+/**
+ *
+ * @param {SlayerTier} tier
+ * @param {boolean} [cost=true]
+ */
+declare function selectNewSlayerTask(tier: SlayerTier, cost?: boolean): void;
+declare function getSlayerCost(): number;
+/**
+ * @template {true|false} T
+ * @param {MonsterID} enemy
+ * @param {T} [name=true]
+ * @returns {T extends true ? string : [number, number]}
+ */
+declare function findEnemyArea<T extends boolean>(enemy: MonsterID, name?: T): T extends true ? string : [number, number];
+/**
+ *
+ * @param {MonsterID} enemy
+ */
+declare function jumpToEnemy(enemy: MonsterID): void;
+declare function updateEquipmentHeader(): void;
+/**
+ *
+ * @param {number} qty
+ */
+declare function updatePlayerHitpoints(qty: number): void;
+/**
+ *
+ * @param {number} qty
+ */
+declare function updateEnemyHitpoints(qty: number): void;
+/**
+ *
+ * @param {EquipSetID} set
+ * @param {boolean} [bypass=false]
+ */
+declare function setEquipmentSet(set: EquipSetID, bypass?: boolean): void;
+/**
+ * Mobile/Steam specific function
+ */
+declare function togglePlayerContainer(): void;
+declare function updatePlayerSpecialAttackIcon(): void;
+declare function updateCombatInfoIcons(): void;
+declare function disableActivePrayers(): void;
+declare function updateEnemyPassive(): void;
+declare function buildActiveSpecialAttacks(): void;
+declare function resetActiveEnemySpecialAttacks(): void;
+declare function resetActivePlayerSpecialAttacks(): void;
+/**
+ *
+ * @param {MonsterID} enemy
+ * @returns {boolean}
+ */
+declare function isEnemySlayerTask(enemy: MonsterID): boolean;
+declare function showStunnedNotification(): void;
+declare function showSleepNotification(): void;
+/** @type {CombatArea[]} */
+declare const combatAreas: CombatArea[];
+/** @type {SlayerArea[]} */
+declare const slayerAreas: SlayerArea[];
+/** @type {Dungeon[]} */
+declare const DUNGEONS: Dungeon[];
+declare const combatAreaDisplayOrder: number[];
+declare const slayerAreaDisplayOrder: number[];
+declare const dungeonAreaDisplayOrder: number[];
+declare const godDungeonID: number[];
+declare var dungeonPaused: boolean;
+/** @type {Slayer} */
+declare const SLAYER: Slayer;
+/** Save game variable */
+declare var slayerTaskCompletion: number[];
+/** @type {CombatPassive[]} */
+declare const combatPassive: CombatPassive[];
+/** @type {EnemySpecialAttack[]} */
+declare const enemySpecialAttacks: EnemySpecialAttack[];
+/** @type {PlayerSpecialAttack[]} */
+declare var playerSpecialAttacks: PlayerSpecialAttack[];
+declare const totalEquipmentSets: 3;
+declare var combatLevel: number;
+declare var isInCombat: boolean;
+/** @type {TimeoutID|null} */
+declare var enemyFinder: TimeoutID | null;
+declare var playerAttackSpeed: number;
+declare const enemySpawnTimer: 3000;
+/**
+ * Save game variable
+ * @type {EquippedFoodID} */
+declare var currentCombatFood: EquippedFoodID;
+/** @type {MonsterID|null} */
+declare var forcedEnemy: MonsterID | null;
+declare var itemLost: number;
+/** Save game variable */
+declare var selectedSpell: number;
+/** @type {CurseID|null} */
+declare var selectedCurse: CurseID | null;
+/**
+ * Save game variable
+ * @type {MonsterStat[]} */
+declare var monsterStats: MonsterStat[];
+/**
+ * Save game variable
+ * @type {number[]} */
+declare var dungeonCompleteCount: number[];
+declare const me: "w";
+declare const itemDropMax: 16;
+declare const combatMenuCount: 6;
+/**
+ * Save game variable
+ * @type {SlayerTask[]} */
+declare var slayerTask: SlayerTask[];
+/**
+ * Seems to be bugged and always null
+ * @type {null}
+ */
+declare var slayerLockedItem: null;
+declare var isCurrentlyEquipping: boolean;
+declare var isCurrentlyUnequipping: boolean;
+/** @type {EquipSlotID|null} */
+declare var currentlyEquipping: EquipSlotID | null;
+/** @type {EquipSlotID|null} */
+declare var currentlyUnequipping: EquipSlotID | null;
+/** @type {MonsterID} */
+declare var enemyInCombat: MonsterID;
+/** @type {TimeoutID} */
+declare var playerTimer: TimeoutID;
+/** @type {TimeoutID} */
+declare var summonTimer: TimeoutID;
+/** @type {TimeoutID} */
+declare var enemyTimer: TimeoutID;
+/** @type {string|null} */
+declare var selectedCombatArea: string | null;
+declare var isDungeon: boolean;
+/** @type {DungeonID|null|false} */
+declare var selectedDungeon: DungeonID | null | false;
+/** @type {number|null} */
+declare var dungeonCount: number | null;
+/** @type {number} */
 declare var effectiveAttackLevel: number;
-
+/** @type {number} */
+declare var maximumAttackRoll: number;
+/** @type {number} */
+declare var effectiveStrengthLevel: number;
+/** @type {number} Player max hit, with combat triangle factored in*/
+declare var baseMaxHit: number;
+/** @type {number} */
+declare var summoningMaxHit: number;
+/** @type {number} */
 declare var effectiveDefenceLevel: number;
-
-declare var effectiveMagicDefenceLevel: number;
-
+/** @type {number} */
+declare var maximumDefenceRoll: number;
+/** @type {number} */
 declare var effectiveRangedDefenceLevel: number;
-
-declare var effectiveStrengthLevel: any;
-
-declare var eightSeconds: boolean;
-
-declare var el: HTMLElement;
-
-declare var enableAccessibility: boolean;
-
-declare function enableCloudCharacterButton(): void;
-
-declare var enemyAttackSpeedMultiplier: number;
-
-declare var enemyAttackTimer: any;
-
-declare var enemyBleeding: boolean;
-
-declare var enemyBleedInterval: any;
-
-declare var enemyDamageTimer: any;
-
-declare var enemyFinder: any;
-
-declare var enemyInCombat: any;
-
-declare var enemySlowTimer: any;
-
-declare var enemySpecialAttacks: {
-    DOTInterval: any;
-    DOTMaxProcs: any;
-    activeBuffTurns?: number;
-    activeBuffs: boolean;
-    attackCount: number;
-    attackInterval: number;
-    attackSpeedDebuff?: number;
-    attackSpeedDebuffTurns?: number;
-    attackSpeedSlow?: any;
-    attackSpeedSlowTurns?: any;
-    burnDebuff?: number;
-    canStun: boolean;
-    chance: number;
-    description: string;
-    forceHit: boolean;
-    id: number;
-    increasedDamageReduction?: any;
-    increasedMagicEvasion?: number;
-    increasedMeleeEvasion?: number;
-    increasedRangedEvasion?: number;
-    name: string;
-    reflectMagic?: any;
-    reflectMelee?: number;
-    reflectRanged?: any;
-    setDOTDamage: any;
-    setDamage: any;
-    stunDamageMultiplier: number;
-    stunTurns: any;
-}[];
-
-declare var enemyTimer: any;
-
+/** @type {number} */
+declare var maximumRangedDefenceRoll: number;
+/** @type {number} */
+declare var effectiveMagicDefenceLevel: number;
+/** @type {number} */
+declare var maximumMagicDefenceRoll: number;
+declare var damageReduction: number;
+declare var isPrayer: boolean;
+declare var prayerLoaded: boolean;
+/** @type {boolean[]} */
+declare var activePrayer: boolean[];
+declare var prayerBonusProtectItem: number;
+/** @deprecated Bonus for rapid heal, but does nothing since it is hardcoded */
+declare var prayerBonusHitpoints: number;
+declare var prayerBonusProtectFromMelee: number;
+declare var prayerBonusProtectFromRanged: number;
+declare var prayerBonusProtectFromMagic: number;
+declare var prayerBonusHitpointHeal: number;
+declare var newEnemyLoading: boolean;
+/** @type {TimeoutID|null} */
+declare var enemyAttackTimer: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var updateHitpointTimer: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var burnInterval: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var enemyBurnInterval: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var enemyBleedInterval: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var reflectDamageTimer: TimeoutID | null;
+declare var reflectCooldown: boolean;
+declare const protectFromValue: 15;
+declare var attackCount: number;
+/** @type {TimeoutID|null} */
+declare var attackTimer: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var enemyDamageTimer: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var playerDamageTimer: TimeoutID | null;
+declare var increasedMinSpellDmg: number[];
 /**
- * @param {any} bankID
- * @param {any} itemID
- * @param {any} qty
- */
-declare function equipFood(bankID: any, itemID: any, qty: any): void;
-
+ * Save game variable
+ * @type {AuroraID|null} */
+declare var activeAurora: AuroraID | null;
+/** @type {AncientID|null} */
+declare var selectedAncient: AncientID | null;
+declare var isSpellAncient: boolean;
+/** @type {AreaType|null} */
+declare var selectedCombatAreaID: AreaType | null;
+/** Save game variable */
+declare var equippedItems: number[];
 /**
- * @param {any} bankItemID
- * @param {any} item
- * @param {number} qty defaults to 1
- * @param {any} equipmentSet
- * @param {boolean} bypass defaults to false
- */
-declare function equipItem(bankItemID: any, item: any, qty?: number, equipmentSet?: any, bypass?: boolean): void;
-
-declare var equipmentSetCount: number;
-
-declare var equipmentSets: {
-    ammo: number;
-    equipment: number[];
-}[];
-
-declare var equipmentSetsPurchased: boolean[];
-
-declare var equipmentSwapPurchased: boolean;
-
+ * Save game variable
+ * @type {EquipmentSet[]} */
+declare var equipmentSets: EquipmentSet[];
+/**
+ * Save game variable
+ * @type {EquipSetID} */
+declare var selectedEquipmentSet: EquipSetID;
+declare const emptyGear: string[];
+declare const emptyGearName: string[];
+/** Save game variable */
 declare var equippedFood: {
     itemID: number;
     qty: number;
 }[];
-
-declare var equippedItems: number[];
-
-declare namespace exp {
-    /**
-     * @param {any} xp
-     */
-    function equate(xp: any): any;
-
-    /**
-     * @param {any} level
-     */
-    function level_to_xp(level: any): any;
-
-    /**
-     * @param {any} xp
-     */
-    function xp_to_level(xp: any): any;
-}
-
+/** @type {ItemQuantity2[]} */
+declare var droppedLoot: ItemQuantity2[];
+/** Save game variable */
+declare var ammo: number;
+declare var summonAmmo: number[];
+/** Save game variable */
+declare var prayerPoints: number;
+/** @type {TimeoutID|null} */
+declare var loadLootTimer: TimeoutID | null;
+declare var selectedSpellbook: number;
+declare var playerIsAttacking: boolean;
+declare var enemyIsAttacking: boolean;
+/** @type {Partial<StandardModifierObject<number>>} */
+declare var prayerModifiers: Partial<StandardModifierObject<number>>;
+/** @type {TimeoutID|null} */
+declare var autoEatTooltipUpdateTimer: TimeoutID | null;
 /**
- * @param {boolean} update defaults to false
- */
-declare function exportSave(update?: boolean): void;
-
-declare var farmingGlower: number;
-
-declare var farmingMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare function finaliseLoad(): void;
-
-declare function findEnemy(): void;
-
-/**
- * @param {any} enemy
- */
-declare function findEnemyArea(enemy: any): any;
-
-declare var firstTime: number;
-
-declare var fishingItems: {
-    fishingID: number;
-    fishingLevel: number;
-    itemID: number;
-}[];
-
-declare var fishingTimeout: any;
-
-declare var fishMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-/**
- * @param {boolean} confirmed defaults to false
- */
-declare function fixMySave(confirmed?: boolean): void;
-
-/**
- * @param {any} cat
- */
-declare function fletchCategory(cat: any): void;
-
-declare var fletchingItems: {
-    fletchingID: number;
-    fletchingLevel: number;
-    itemID: number;
-}[];
-
-declare var fletchingMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var fletchingTimeout: any;
-
-declare var fletchInterval: number;
-
-declare var fletchReqCheck: any[];
-
-declare var foodCache: any;
-
-declare var foodCacheID: any;
-
-declare var forcedEnemy: any;
-
-declare var forceSaveCooldown: boolean;
-
-declare function forceSync(): void;
-
-declare function forceSyncCooldown(): void;
-
-declare var forceSyncCooldownTimer: any;
-
-/**
- * @param {any} number
- */
-declare function formatNumber(number: any): any;
-
-declare var formatNumberSetting: number;
-
-declare var gameSaved: boolean;
-
-declare function gameUpdate(): void;
-
-declare var gameUpdateNotification: string;
-
-declare var gameVersion: string;
-
-declare var gameVersionChecker: number;
-
-/**
- * @param {any} itemID
- */
-declare function getBankId(itemID: any): any;
-
-declare function getBankValue(): void;
-
-declare function getCloudCharacters(): void;
-
-/**
- * @param {any} itemID
- */
-declare function getCraftQty(itemID: any): any;
-
-declare function getGolbinBonuses(): any;
-
-/**
- * @param {boolean} hitpoints defaults to false
- */
-declare function getGolbinLevel(hitpoints?: boolean): any;
-
-/**
- * @param {any} itemID
- * @param {any} tier
- */
-declare function getHerbloreMasteryID(itemID: any, tier: any): any;
-
-/**
- * @param {any} itemID
- */
-declare function getHerbloreQty(itemID: any): any;
-
-/**
- * @param {any} id
- */
-declare function getHerbloreTier(id: any): any;
-
-/**
- * @param {any} key
- */
-declare function getItem(key: any): any;
-
-/**
- * @param {any} save
- * @param {any} item
- */
-declare function getItemFromSave(save: any, item: any): any;
-
-/**
- * @param {any} itemID
- */
-declare function getItemMedia(itemID: any): any;
-
-/**
- * @param {any} itemID
- * @param {boolean} format defaults to true
- */
-declare function getItemQty(itemID: any, format?: boolean): any;
-
-/**
- * @param {any} masteryID
- * @param {any} skill
- */
-declare function getMasteryMedia(masteryID: any, skill: any): any;
-
-/**
- * @param {any} masteryID
- * @param {any} masteryArray
- */
-declare function getMasteryProgress(masteryID: any, masteryArray: any): any;
-
-/**
- * @param {any} skill
- * @param {boolean} offline defaults to false
- */
-declare function getMasteryToken(skill: any, offline?: boolean): any;
-
-/**
- * @param {any} monster
- * @param {boolean} setData defaults to false
- */
-declare function getMonsterCombatLevel(monster: any, setData?: boolean): any;
-
-/**
- * @param {any} monster
- */
-declare function getMonsterMedia(monster: any): any;
-
-declare function getPlayFabSave(): void;
-
-/**
- * @param {any} itemID
- */
-declare function getQty(itemID: any): any;
-
-/**
- * @param {any} itemID
- */
-declare function getRunecraftQty(itemID: any): any;
-
-/**
- * @param {boolean} customKey defaults to false
- * @param {number} char defaults to 0
- */
-declare function getSave(customKey?: boolean, char?: number): any;
-
-/**
- * @param {any} save
- */
-declare function getSaveDetails(save: any): any;
-
-/**
- * @param {any} save
- */
-declare function getSaveJSON(save: any): any;
-
-declare function getSaveRaw(): any;
-
-/**
- * @param {any} save
- */
-declare function getSaveTimestamp(save: any): any;
-
-/**
- * @param {any} save
- */
-declare function getSaveTotalXP(save: any): any;
-
-declare function getSlayerCost(): any;
-
-declare function getSlayerCount(): any;
-
-declare function getSlayerTask(): void;
-
-/**
- * @param {any} itemID
- */
-declare function getSmithQty(itemID: any): any;
-
-declare function getSync(): void;
-
-declare function gloopAll(): void;
-
-declare function gloveCheck(): void;
-
-declare var glovesCost: number[];
-
-declare var glovesTracker: {
-    isActive: boolean;
-    name: string;
-    remainingActions: number;
-}[];
-
-declare var godDungeonID: number[];
-
-declare var godUpgrade: boolean[];
-
-declare var golbinEnemyCount: number;
-
-declare var golbinFood: any[];
-
-declare var golbinInventory: any[];
-
-declare var golbinItemSelection: any[];
-
-declare var golbinKillCount: number;
-
-declare var golbinModifier: number;
-
-declare var golbinRaidHistory: any[];
-
-declare var golbinRaidStats: number[];
-
-declare var golbinSelectionInProgress: boolean;
-
-declare var golbinSkillLevels: number[];
-
-declare var golbinTimestamp: number[];
-
-declare var golbinWave: number;
-
-declare var goldDeductionTracker: number;
-
-declare var gp: number;
-
-/**
- * @param {any} qty
- */
-declare function gpNotify(qty: any): void;
-
-/**
- * @param {any} areaID
- * @param {any} patchID
- */
-declare function growCrops(areaID: any, patchID: any): void;
-
-declare function harvestAll(): void;
-
-declare var harvestReadyTimer: any;
-
-/**
- * @param {any} areaID
- * @param {any} patchID
- * @param {boolean} all defaults to true
- */
-declare function harvestSeed(areaID: any, patchID: any, all?: boolean): void;
-
-declare var herbloreBonuses: {
-    bonus: any[];
-    charges: number;
-    itemID: number;
-}[];
-
-/**
- * @param {any} cat
- */
-declare function herbloreCategory(cat: any): void;
-
-declare var herbloreInterval: number;
-
-declare var herbloreItemData: {
-    category: number;
-    herbloreLevel: number;
-    herbloreXP: number;
-    id: number;
-    itemID: number[];
-    name: string;
-}[];
-
-declare var herbloreItems: {
-    category: number;
-    herbloreLevel: number;
-    herbloreXP: number;
-    id: number;
-    itemID: number[];
-    name: string;
-}[];
-
-declare var herbloreMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var herbloreReqCheck: any[];
-
-declare var herbloreTimeout: any;
-
-declare var herbSeeds: {
-    itemID: number;
-    level: number;
-}[];
-
-declare var hitpointRegen: number;
-
-declare function httpsCheck(): void;
-
-declare var i: number;
-
-/**
- * @param {any} currentSkill
- */
-declare function idleChecker(currentSkill: any): any;
-
-declare var ignoreBankFull: boolean;
-
-declare function importSave(): void;
-
-declare var increasedMinSpellDmg: number[];
-
-declare function initiateLoad(): void;
-
-declare function initMinibar(): void;
-
-declare function initTooltips(): void;
-
-/**
- * @param {any} func
- * @param {any} primaryKey
- * @param {any} secondaryKey
- * @param {any} inject
- * @param {any} err
- */
-declare function injectIntoFunction(func: any, primaryKey: any, secondaryKey: any, inject: any, err: any): any;
-
-declare var isBurning: boolean;
-
-declare var isCooking: boolean;
-
-declare var isCrafting: boolean;
-
-declare var isCurrentlyEquipping: boolean;
-
-declare var isCurrentlyUnequipping: boolean;
-
-declare var isDungeon: boolean;
-
-declare var isFireBurning: boolean;
-
-declare var isFishing: boolean;
-
-declare var isFletching: boolean;
-
-declare var isGolbinRaid: boolean;
-
-declare var isHerblore: boolean;
-
-declare var isInCombat: boolean;
-
-declare var isLoaded: boolean;
-
-declare var isMagic: boolean;
-
-declare var isMining: boolean;
-
-declare var isPatreon: boolean;
-
-declare var isPrayer: boolean;
-
-declare var isRunecrafting: boolean;
-
-declare var isSmithing: boolean;
-
-declare var isSpellAncient: boolean;
-
-declare var isStunned: boolean;
-
-declare var isTest: boolean;
-
-declare var isThieving: boolean;
-
-declare var itemInView: any;
-
-declare var itemInViewPos: any;
-
-declare var itemLog: any[];
-
-declare var itemLogBuilt: boolean;
-
-declare var itemLost: number;
-
-/**
- * @param {any} itemID
- * @param {any} qty
- */
-declare function itemNotify(itemID: any, qty: any): void;
-
-declare var itemQty: string;
-
-declare var itemQtyCurrent: string;
-
-declare var items: {
-    ammoPreservation?: number;
-    ammoType?: number;
-    ammoTypeRequired?: number;
-    attackBonus?: number[];
-    attackLevelRequired?: number;
-    attackSpeed?: number;
-    baseChanceToPreserve?: number;
-    baseDropRate?: number;
-    bonusSkillXP?: number;
-    bossStrengthMultiplier?: number;
-    burntItemID?: number;
-    buysFor?: number;
-    buysForItems?: number[][];
-    buysForLeather?: number;
-    canEat?: boolean;
-    canEquip?: boolean;
-    canMultiUpgrade?: boolean;
-    canOpen?: boolean;
-    canRead?: boolean;
-    canUpgrade?: boolean;
-    canUpgrde?: boolean;
-    category: string;
-    chanceToCrit?: number;
-    chanceToDoubleLoot?: number;
-    chanceToDoubleResources?: number;
-    chanceToPreserve?: number;
-    clueID?: number;
-    cookedItemID?: number;
-    cookingCategory?: number;
-    cookingID?: number;
-    cookingLevel?: number;
-    cookingXP?: number;
-    craftQty?: number;
-    craftReq?: {
-        id: number;
-        qty: number;
-    }[];
-    craftingID?: number;
-    craftingLevel?: number;
-    craftingXP?: number;
-    critDamage?: number;
-    damageReduction?: number;
-    defenceBonus?: number;
-    defenceLevelRequired?: number;
-    description?: string;
-    dropQty?: number[];
-    dropRate?: number;
-    dropTable?: number[][];
-    equipmentSlot?: number;
-    farmingLevel?: number;
-    farmingXP?: number;
-    firemakingID: number;
-    fishingBonusXP?: number;
-    fishingCatchWeight?: number;
-    fishingID?: number;
-    fishingLevel?: number;
-    fishingSpeedBonus?: number;
-    fishingXP?: number;
-    fletchQty?: number;
-    fletchReq?: {
-        id: number;
-        qty: number;
-    }[];
-    fletchingID?: number;
-    fletchingLevel?: number;
-    fletchingXP?: number;
-    gloveID?: number;
-    gpMultiplier?: number;
-    gpMultiplierCap?: number;
-    gpMultiplierMin?: number;
-    grownItemID?: number;
-    harvestBonus?: number;
-    hasSpecialAttack?: boolean;
-    hasStats?: boolean;
-    healsFor?: number;
-    herbloreMasteryID?: number;
-    herbloreReq?: {
-        id: number;
-        qty: number;
-    }[];
-    hpRegenBonus?: number;
-    id: number;
-    increasedEarthFireSpellDmg?: number;
-    increasedItemChance?: number;
-    increasedMaxHitpoints?: number;
-    increasedMinAirSpellDmg?: number;
-    increasedMinEarthSpellDmg?: number;
-    increasedMinFireSpellDmg?: number;
-    increasedMinWaterSpellDmg?: number;
-    increasedWaterAirSpellDmg?: number;
-    increasedWaterSpellDamage?: number;
-    isAmmo?: boolean;
-    isBankToken?: boolean;
-    isBones?: boolean;
-    isMagic?: boolean;
-    isPotion?: boolean;
-    isStreamer?: boolean;
-    isToken?: boolean;
-    isTwoHanded?: boolean;
-    itemsRequired?: number[][];
-    magicAttackBonus?: number;
-    magicDamageBonus?: number;
-    magicDefenceBonus?: number;
-    magicLevelRequired?: number;
-    masteryID: number[];
-    maxDropRate?: number;
-    maxFishingInterval?: number;
-    maxMiningRespawnInterval?: number;
-    media: string;
-    minFishingInterval?: number;
-    miningID?: number;
-    miningLevel?: number;
-    miningRespawnInterval?: number;
-    miningXP?: number;
-    name: string;
-    potionBonus?: number;
-    potionBonusID?: number;
-    potionCharges?: number;
-    potionPage?: number;
-    potionSkill?: number;
-    potionTier?: number;
-    prayerBonus?: number;
-    prayerPoints?: number;
-    providesRune?: number[];
-    providesRuneQty?: number;
-    rangedAttackBonus?: number;
-    rangedDefenceBonus?: number;
-    rangedLevelRequired?: number;
-    rangedStrengthBonus?: number;
-    readText?: string;
-    readTitle?: string;
-    runecraftQty?: number;
-    runecraftReq?: {
-        id: number;
-        qty: number;
-    }[];
-    runecraftingCategory?: number;
-    runecraftingID?: number;
-    runecraftingLevel?: number;
-    runecraftingXP?: number;
-    seedsRequired?: number;
-    sellsFor: number;
-    skill?: number;
-    slayerBonusXP?: number;
-    slayerCost?: number;
-    slayerLevelRequired?: number;
-    slayerStrengthMultiplier?: number;
-    smithReq?: {
-        id: number;
-        qty: number;
-    }[];
-    smithingID?: number;
-    smithingLevel?: number;
-    smithingQty?: number;
-    smithingXP?: number;
-    specialAttackID?: number;
-    spellHeal?: number;
-    strengthBonus?: number;
-    strengthXP?: number;
-    tier?: string;
-    timeToGrow?: number;
-    trimmedGPCost?: number;
-    trimmedItemID?: number;
-    type: string;
-}[];
-
-declare var itemStats: {
-    amountUsedInCombat: number;
-    damageDealt: number;
-    damageTaken: number;
-    deathCount: number;
-    enemiesKilled: number;
-    gpFromSale: number;
-    harvestAmount: number;
-    healedFor: number;
-    itemID: number;
-    missedAttacks: number;
-    timeWaited: number;
-    timesDied: number;
-    timesEaten: number;
-    timesFound: number;
-    timesGrown: number;
-    timesOpened: number;
-    timesSold: number;
-    totalAttacks: number;
-}[];
-
-declare var itemToGive: any;
-
-/**
- * @param {any} enemy
- */
-declare function jumpToEnemy(enemy: any): void;
-
-declare var junkItems: number[];
-
-declare var key: string;
-
-/**
- * @param {any} a
- * @param {any} b
- */
-declare function keySorter(a: any, b: any): any;
-
-declare var keyTest: string;
-
-declare var keyVersion: string;
-
-declare var killCount: any[];
-
-declare function killPage(): void;
-
-/**
- * @param {any} skill
- */
-declare function levelUp(skill: any): void;
-
-/**
- * @param {any} skill
- * @param {any} id
- * @param {any} masteryArray
- * @param {boolean} token defaults to false
- * @param {boolean} notify defaults to true
- */
-declare function levelUpMastery(skill: any, id: any, masteryArray: any, token?: boolean, notify?: boolean): void;
-
-/**
- * @param {any} skill
- */
-declare function levelUpNotify(skill: any): void;
-
-declare var levelUpScreen: number;
-
-/**
- * @param {boolean} potion defaults to false
- */
-declare function lightBonfire(potion?: boolean): void;
-
-/**
- * @param {boolean} upgradeToFire defaults to false
- */
-declare function lightCookingFire(upgradeToFire?: boolean): any;
-
-/**
- * @param {any} bankID
- */
-declare function listener(bankID: any): void;
-
-declare var listView: boolean;
-
-declare function loadAreas(): void;
-
-declare function loadBank(): void;
-
-/**
- * @param {any} result
- * @param {any} error
- */
-declare function loadCallback(result: any, error: any): void;
-
-declare function loadCharacterSelection(): void;
-
-/**
- * @param {any} isCloud
- */
-declare function loadCloudOptions(isCloud: any): void;
-
-/**
- * @param {boolean} confirmed defaults to false
- */
-declare function loadCloudSave(confirmed?: boolean): void;
-
-declare function loadCombatAreas(): void;
-
-/**
- * @param {boolean} refresh defaults to false
- */
-declare function loadCombatGear(refresh?: boolean): void;
-
-declare function loadCooking(): any;
-
-declare function loadCrafting(): any;
-
-declare function loadCurrentSettings(): void;
-
-/**
- * @param {boolean} update defaults to false
- */
-declare function loadData(update?: boolean): void;
-
-declare function loadDungeons(): void;
-
-declare function loadEquipmentSets(): void;
-
-declare function loadEquippedFood(): void;
-
-/**
- * @param {any} areaID
- */
-declare function loadFarmingArea(areaID: any): void;
-
-declare function loadFishing(): any;
-
-declare function loadFletching(): any;
-
-/**
- * @param {boolean} update defaults to false
- */
-declare function loadGame(update?: boolean): void;
-
-/**
- * @param {any} save
- */
-declare function loadGameRaw(save: any): void;
-
-declare function loadGolbinRaidHistory(): void;
-
-/**
- * @param {boolean} update defaults to false
- */
-declare function loadHerblore(update?: boolean): any;
-
-declare function loadLoot(): void;
-
-declare var loadLootTimer: any;
-
-declare function loadMasteryTab(): void;
-
-declare function loadMiningOres(): void;
-
-declare function loadNewEnemy(): void;
-
-declare function loadPets(): void;
-
-declare function loadPotions(): void;
-
-declare function loadPrayer(): void;
-
-declare function loadProfile(): void;
-
-declare function loadRunecrafting(): any;
-
-declare function loadSeeds(): any;
-
-declare function loadSlayerShop(): void;
-
-declare function loadSmithing(): any;
-
-declare function loadThieving(): void;
-
-declare var lockedItems: number[];
-
-/**
- * @param {any} bankID
- */
-declare function lockItem(bankID: any): void;
-
-declare var logCache: any;
-
-declare var logCacheID: any;
-
-declare var logsData: {
-    bonfireBonus: number;
-    bonfireInterval: number;
-    interval: number;
-    level: number;
-    type: string;
-    xp: number;
-}[];
-
-declare var logsForFire: any[];
-
-declare var logsMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var lolYouDiedGetRekt: boolean;
-
-declare function lootAll(): void;
-
-declare var magicInterval: number;
-
-declare var magicTimeout: number;
-
-declare var mapLoaded: boolean;
-
-/**
- * @param {any} array
- * @param {any} order
- * @param {any} key
- */
-declare function mapOrder(array: any, order: any, key: any): any;
-
-declare namespace masteryExp {
-    /**
-     * @param {any} xp
-     */
-    function equate(xp: any): any;
-
-    /**
-     * @param {any} level
-     */
-    function level_to_xp(level: any): any;
-
-    /**
-     * @param {any} xp
-     */
-    function xp_to_level(xp: any): any;
-}
-
-declare var masteryMedia: {
-    '0': {
-        media: string;
-    }[];
-    '1': {
-        media: string;
-    }[];
-    '10': {
-        media: string;
-    }[];
-    '11': {
-        media: string;
-    }[];
-    '2': {
-        media: string;
-    }[];
-    '3': {
-        media: string;
-    }[];
-    '4': {
-        media: string;
-    }[];
-    '5': {
-        media: string;
-    }[];
-};
-
-/**
- * @param {any} mastery
- * @param {any} skill
- * @param {any} level
- */
-declare function masteryNotify(mastery: any, skill: any, level: any): void;
-
-declare var masteryUnlocks: {
-    '0': {
-        level: number;
-        unlock: string;
-    }[];
-    '1': {
-        level: number;
-        unlock: string;
-    }[];
-    '10': {
-        level: number;
-        unlock: string;
-    }[];
-    '11': {
-        level: number;
-        unlock: string;
-    }[];
-    '13': {
-        level: number;
-        unlock: string;
-    }[];
-    '14': {
-        level: number;
-        unlock: string;
-    }[];
-    '15': {
-        level: number;
-        unlock: string;
-    }[];
-    '19': {
-        level: number;
-        unlock: string;
-    }[];
-    '2': {
-        level: number;
-        unlock: string;
-    }[];
-    '3': {
-        level: number;
-        unlock: string;
-    }[];
-    '4': {
-        level: number;
-        unlock: string;
-    }[];
-    '5': {
-        level: number;
-        unlock: string;
-    }[];
-};
-
+ * Save game variable
+ * @type {CombatData} */
+declare var combatData: CombatData;
+/** Save game variable */
+declare var attackStyle: number;
+declare const attackStyleSkills: number[];
+/** Save game variable */
+declare var selectedAttackStyle: number[];
+declare const hitpointRegenInterval: 10000;
+/** @type {TimeoutID} */
+declare var hitpointRegen: TimeoutID;
 declare var maxHitpoints: number;
-
-declare var maximumAttackRoll: number;
-
-declare var maximumDefenceRoll: number;
-
-declare var maximumMagicDefenceRoll: number;
-
-declare var maximumRangedDefenceRoll: number;
-
-declare var mbucks: number;
-
-declare var milestoneMessage: string;
-
+declare var gameVersionChecker: number;
+declare var desktopAutoSave: number;
+/** @type {PlayerEnemyObject<NumberDictionary<SpecialAttackData>,NumberDictionary<SpecialAttackData>>} */
+declare var specialAttackData: PlayerEnemyObject<NumberDictionary<SpecialAttackData>, NumberDictionary<SpecialAttackData>>;
 /**
- * @param {any} ore
- * @param {boolean} clicked defaults to false
- * @param {boolean} ignoreDepletion defaults to false
+ * Contains arrays of player and enemy special attack ids
+ * @type {PlayerEnemyObject<number[],number[]>} */
+declare var activeSpecialAttacks: PlayerEnemyObject<number[], number[]>;
+/**
+ *
+ * @param {0|1} qty Unused
+ * @param {boolean} [ignore=true]
  */
-declare function mineRock(ore: any, clicked?: boolean, ignoreDepletion?: boolean): void;
-
-declare var miningData: {
-    level: number;
-    masteryID: number;
-    ore: number;
-    respawnInterval: number;
-}[];
-
-declare var miningItemID: any[];
-
-declare var miningOreMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var miningTimeout: any;
-
-declare var MONSTERS: {
-    attackBonus: number;
-    attackBonusMagic?: number;
-    attackBonusRanged: number;
-    attackLevel: number;
-    attackSpeed: number;
-    attackType: number;
-    boneQty?: number;
-    bones: number;
-    canSlayer: boolean;
-    damageBonusMagic?: number;
-    defenceBonus: number;
-    defenceBonusMagic: number;
-    defenceBonusRanged: number;
-    defenceLevel: number;
-    description?: string;
-    dropCoins: number[];
-    foundIn?: number;
-    hasSpecialAttack?: boolean;
-    hitpoints: number;
-    id: number;
-    isBoss?: boolean;
-    lootChance: number;
-    lootQty?: number[];
-    lootTable: number[][];
-    magicLevel: number;
-    media: string;
-    name: string;
-    overrideSpecialChances?: number[];
-    rangedLevel: number;
-    selectedSpell?: number;
-    setMaxHit?: number;
-    slayerXP?: number;
-    specialAttackID?: number[];
-    strengthBonus: number;
-    strengthBonusRanged?: number;
-    strengthLevel: number;
-}[];
-
-declare var monsterStats: {
-    damageDealtToPlayer: number;
-    damageTakenFromPlayer: number;
-    enemyMissed: number;
-    hitsFromPlayer: number;
-    hitsToPlayer: number;
-    killedByPlayer: number;
-    killedPlayer: number;
-    monsterID: number;
-    playerMissed: number;
-    ranAway: number;
-    seen: number;
-}[];
-
-declare var myBankVersion: number;
-
-declare var nameChanges: number;
-
-declare namespace newBankUpgradeCost {
-    /**
-     * @param {any} gp
-     */
-    function equate(gp: any): any;
-
-    /**
-     * @param {any} gp
-     */
-    function gp_to_level(gp: any): any;
-
-    /**
-     * @param {any} level
-     */
-    function level_to_gp(level: any): any;
-}
-
-declare var newEnemyLoading: boolean;
-
-declare var newFarmingAreas: {
-    areaName: string;
-    id: number;
-    patches: {
-        compost: number;
-        cost: number;
-        gloop: boolean;
-        hasGrown: boolean;
-        level: number;
-        seedID: number;
-        timePlanted: number;
-        timeout: number;
-        type: string;
-        unlocked: boolean;
-    }[];
-}[];
-
-declare namespace newNewBankUpgradeCost {
-    /**
-     * @param {any} level
-     */
-    function equate(level: any): any;
-
-    /**
-     * @param {any} level
-     */
-    function level_to_gp(level: any): any;
-}
-
-declare function newSlayerTask(): void;
-
-declare var nextItem: any[];
-
-declare var nextLevelProgress: number[];
-
-declare var nextMilestone: number;
-
+declare function startCooking(qty: 0 | 1, ignore?: boolean): void;
+declare function updateCookingFire(): void;
+declare function updateAvailableFood(): void;
 /**
- * @param {any} message
- * @param {any} type
+ *
+ * @param {ItemID} id
  */
-declare function notifyBirdNest(message: any, type: any): void;
-
+declare function selectFood(id: ItemID): void;
 /**
- * @param {any} message
+ *
+ * @param {ItemID} food
  */
-declare function notifyGemRock(message: any): void;
-
+declare function checkFoodExists(food: ItemID): boolean;
+declare function loadCooking(): void;
+/** @type {CookingItem[]} */
+declare var cookingItems: CookingItem[];
+declare var isCooking: boolean;
+/** @type {TimeoutID|null} */
+declare var currentlyCooking: TimeoutID | null;
+/** @type {ItemID|null} */
+declare var selectedFood: ItemID | null;
+/** @type {BankItem} */
+declare var foodCache: BankItem;
+/** @type {BankID} */
+declare var foodCacheID: BankID;
+/** @deprecated Old save variable */
+declare var upgradedToRange: boolean;
+declare function startCrafting(clicked?: boolean): void;
 /**
- * @param {any} skill
+ *
+ * @param {number} craftingID
+ * @param {boolean} [update=false]
  */
-declare function notifyGloves(skill: any): void;
-
+declare function selectCraft(craftingID: number, update?: boolean): void;
+declare function loadCrafting(): void;
+declare function updateCrafting(): void;
 /**
- * @param {any} skill
- * @param {any} args
+ *
+ * @param {ItemID} itemID
+ * @param {number} recipeIndex
+ * @param {boolean} [useCharge=false]
+ * @returns {number}
  */
-declare function notifyPlayer(skill: any, args: any): void;
-
-declare function notifyPlayerHarvestReady(): void;
-
+declare function getCraftingRecipeQty(itemID: ItemID, recipeIndex: number, useCharge?: boolean): number;
 /**
- * @param {any} qty
- * @param {string} type defaults to "success"
+ *
+ * @param {ItemID} itemID
  */
-declare function notifySlayer(qty: any, type?: string): void;
-
-declare var npcID: any;
-
-declare var numberMultiplier: number;
-
+declare function updateCraftQty(itemID: ItemID): void;
 /**
- * @param {any} x
+ * onClick callback function (using href)
+ * @param {0|1|2|3} cat
  */
-declare function numberWithCommas(x: any): any;
-
-declare var offline: {
-    action: any;
-    skill: any;
-    timestamp: any;
-};
-
-declare function offlineCatchup(): void;
-
-declare var offlinePause: boolean;
-
-declare namespace One {
-    /**
-     * @param {any} e
-     * @param {any} a
-     */
-    function block(e: any, a: any): void;
-
-    /**
-     * @param {any} e
-     */
-    function helpers(e: any, ...args: any[]): void;
-
-    function init(): void;
-
-    /**
-     * @param {any} e
-     */
-    function layout(e: any): void;
-
-    /**
-     * @param {any} e
-     * @param {any} a
-     */
-    function loader(e: any, a: any): void;
-}
-
+declare function craftCategory(cat: 0 | 1 | 2 | 3): void;
 /**
- * @param {any} bankID
- * @param {any} itemID
- * @param {boolean} openAll defaults to false
+ *
+ * @param {ItemID} itemID
  */
-declare function openBankItem(bankID: any, itemID: any, openAll?: boolean): void;
-
-declare function openItemLog(): void;
-
-declare function openMonsterLog(): void;
-
-declare function openPetLog(): void;
-
-declare var pages: string[];
-
+declare function checkCraftingReq(itemID: ItemID): boolean;
+/** @type {CraftingItem[]} */
+declare var craftingItems: CraftingItem[];
+/** @type {number|null} */
+declare var currentCraft: number | null;
+declare var isCrafting: boolean;
+/** @type {TimeoutID|null} */
+declare var craftingTimeout: TimeoutID | null;
+/** @type {number|numberMultiplier} */
+declare var selectedCraft: number | number;
+/** @type {QtyReqCheck[]} */
+declare var craftReqCheck: QtyReqCheck[];
+declare const er: "i";
+declare var craftInterval: number;
+/** @type {ItemID[]} */
+declare var craftingJewelleryIDs: ItemID[];
 /**
- * @param {any} skill
+ *
+ * @param {0|1|2|3} eventID
+ * @param {null|MonsterID|string} [enemyThatKilledYou=null]
  */
-declare function pauseOfflineAction(skill: any): void;
-
-declare var pauseOfflineActions: boolean;
-
-declare var PETS: {
-    acquiredBy: string;
-    chance: number;
-    description: string;
-    killCount?: number;
-    media: string;
-    name: string;
-    skill: number;
-}[];
-
-declare var petUnlocked: boolean[];
-
+declare function sendDiscordEvent(eventID: 0 | 1 | 2 | 3, enemyThatKilledYou?: null | MonsterID | string): void;
+/** @type {PlayFabModule.ApiCallback<PlayFabClientModels.ExecuteCloudScriptResult>} */
+declare function OnCloudDiscordEvent(result: PlayFabModule.SuccessContainer<PlayFabClientModels.ExecuteCloudScriptResult>): void;
+/** I'm pretty sure this function is effectively useless and only feeds through to the callback as result.customData */
+declare function OnErrorShared(error: any): void;
 /**
- * @param {any} npc
- * @param {boolean} clicked defaults to true
+ *
+ * @param {FarmingAreaID} areaID
  */
-declare function pickpocket(npc: any, clicked?: boolean): void;
-
+declare function loadFarmingArea(areaID: FarmingAreaID): void;
 /**
- * @param {boolean} plantAll defaults to false
+ * onClick callback function
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
+ */
+declare function unlockPlot(areaID: FarmingAreaID, patchID: number): void;
+/**
+ *
+ * @param {FarmingAreaID} areaID
+ */
+declare function updateTimeRemaining(areaID: FarmingAreaID): void;
+declare function showFarmingAreas(): void;
+declare function loadSeeds(): void;
+/**
+ * onClick callback function
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
+ * @param {boolean} [plantAll=false]
+ */
+declare function showSeeds(areaID: FarmingAreaID, patchID: number, plantAll?: boolean): void;
+/**
+ * onClick callback function
+ * @param {ItemID} itemID
+ * @param {boolean} [plantAll=false]
+ */
+declare function selectSeed(itemID: ItemID, plantAll?: boolean): void;
+/**
+ * onClick callback function
+ * @param {boolean} [plantAll=false]
  */
 declare function plantSeed(plantAll?: boolean): void;
-
-declare var playerAttackSpeed: number;
-
-declare var playerDamageTimer: any;
-
-declare var playerSpecialAttacks: {
-    attackCount: number;
-    attackInterval: number;
-    attackSpeedDebuff?: number;
-    attackSpeedDebuffTurns?: number;
-    bleedChance?: number;
-    bleedCount?: number;
-    bleedInterval?: number;
-    canBleed?: boolean;
-    canStun?: boolean;
-    chance: number;
-    damageMultiplier: number;
-    decreasedRangedEvasion?: number;
-    description: string;
-    forceHit: boolean;
-    healsFor: number;
-    id: number;
-    maxHit?: boolean;
-    name: string;
-    setDamage?: number;
-    stormsnap?: boolean;
-    stunChance?: number;
-    stunDamageMultiplier?: number;
-    stunTurns?: number;
-    totalBleedHP?: number;
-}[];
-
-declare var playerTimer: any;
-
-declare var playFabCounter: number;
-
-declare var playFabLoginTimestamp: number;
-
 /**
- * @param {any} playFabID
+ * onClick callback function
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
  */
-declare function playFabLoginWithCustomID(playFabID: any): void;
-
+declare function removeSeed(areaID: FarmingAreaID, patchID: number): void;
 /**
- * @param {boolean} forceSave defaults to false
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
+ * @param {boolean} [all=true]
  */
-declare function playFabSaveData(forceSave?: boolean): void;
-
-declare var playFabSaves: any[];
-
-declare var prayerBonusAttack: number;
-
-declare var prayerBonusAttackMagic: number;
-
-declare var prayerBonusAttackRanged: number;
-
-declare var prayerBonusDamageMagic: number;
-
-declare var prayerBonusDamageReduction: number;
-
-declare var prayerBonusDefence: number;
-
-declare var prayerBonusDefenceMagic: number;
-
-declare var prayerBonusDefenceRanged: number;
-
-declare var prayerBonusHitpointHeal: number;
-
-declare var prayerBonusHitpoints: number;
-
-declare var prayerBonusProtectFromMagic: number;
-
-declare var prayerBonusProtectFromMelee: number;
-
-declare var prayerBonusProtectFromRanged: number;
-
-declare var prayerBonusProtectItem: number;
-
-declare var prayerBonusStrength: number;
-
-declare var prayerBonusStrengthRanged: number;
-
-declare var prayerLoaded: boolean;
-
-declare var prayerPoints: number;
-
-declare var previousSlayerTask: any;
-
+declare function harvestSeed(areaID: FarmingAreaID, patchID: number, all?: boolean): void;
 /**
- * @param {any} charID
- * @param {any} save
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
+ * @param {boolean} [initialise=false]
  */
-declare function processCloudCharacters(charID: any, save: any): void;
-
+declare function startSeedTimer(areaID: FarmingAreaID, patchID: number, initialise?: boolean): void;
 /**
- * @param {any} itemID
- * @param {any} qty
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
  */
-declare function processItemSale(itemID: any, qty: any): void;
-
-declare function processLocalCharacters(): void;
-
+declare function getPlantInterval(areaID: FarmingAreaID, patchID: number): number;
 /**
- * @param {any} item
- * @param {any} skill
+ *
+ * @param {ItemID} seedID
  */
-declare function quickEquipItem(item: any, skill: any): void;
-
+declare function getSeedGrowTime(seedID: ItemID): number;
 /**
- * @param {any} skill
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
  */
-declare function quickEquipSkillcape(skill: any): void;
-
-declare var raidCoins: number;
-
+declare function setPlantInterval(areaID: FarmingAreaID, patchID: number): number;
+declare function notifyPlayerHarvestReady(): void;
 /**
- * @param {any} clue
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
  */
-declare function readClue(clue: any): void;
-
+declare function growCrops(areaID: FarmingAreaID, patchID: number): void;
 /**
- * @param {any} bankID
- * @param {any} itemID
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
+ * @param {number} [qty=1]
  */
-declare function readItem(bankID: any, itemID: any): void;
-
-declare var reflectCooldown: boolean;
-
-declare var reflectDamageTimer: any;
-
-declare function regenerateHitpoints(): void;
-
-declare function reinstatePreviousPlayerData(): void;
-
-declare function removeChargeRhaelyx(): void;
-
-declare function removeEnemyBleedDebuff(): void;
-
-declare function removeEnemyBuffs(): void;
-
-declare function removeForceReload(): void;
-
+declare function addCompost(areaID: FarmingAreaID, patchID: number, qty?: number): void;
 /**
- * @param {any} key
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
  */
-declare function removeItem(key: any): void;
-
+declare function addGloop(areaID: FarmingAreaID, patchID: number): void;
 /**
- * @param {any} itemID
- * @param {boolean} offlineUpdate defaults to false
+ *
+ * @param {FarmingAreaID} areaID
+ * @param {number} patchID
  */
-declare function removeItemFromBank(itemID: any, offlineUpdate?: boolean): void;
-
-/**
- * @param {any} debuffID
- */
-declare function removePlayerDebuffs(debuffID: any): void;
-
-/**
- * @param {any} areaID
- * @param {any} patchID
- */
-declare function removeSeed(areaID: any, patchID: any): void;
-
-declare function repairMastery(): void;
-
-/**
- * @param {any} func
- * @param {any} find
- * @param {any} replace
- * @param {any} err
- */
-declare function replaceInFunction(func: any, find: any, replace: any, err: any): any;
-
-declare function resetAccountData(): void;
-
-/**
- * @param {any} charID
- */
-declare function resetCharacterSelection(charID: any): void;
-
-declare function resetEnemyAttackBar(): void;
-
-declare function resetEnemyCurse(): void;
-
-declare function resetEnemyScreen(): void;
-
-/**
- * @param {any} areaID
- * @param {any} patchID
- */
-declare function resetFarmingPatch(areaID: any, patchID: any): void;
-
-declare function resetGolbinEquipment(): void;
-
-declare function resetGolbinFood(): void;
-
-/**
- * @param {boolean} eat defaults to false
- */
-declare function resetPlayerAttack(eat?: boolean): void;
-
-declare function resetPlayerAttackBar(): void;
-
-declare function resetPlayerAttackBarStyle(): void;
-
-declare function resetPlayerCombatData(): void;
-
-declare function resetTutotialTips(): void;
-
-declare var rockData: {
-    damage: number;
-    depleted: boolean;
-    maxHP: number;
-    respawnTimer: any;
-}[];
-
-/**
- * @param {any} ore
- */
-declare function rockReset(ore: any): any;
-
-/**
- * @param {any} petID
- * @param {any} timePerAction
- * @param {boolean} offline defaults to false
- */
-declare function rollForPet(petID: any, timePerAction: any, offline?: boolean): any;
-
-/**
- * @param {any} skill
- * @param {boolean} offline defaults to false
- */
-declare function rollForRhaelyx(skill: any, offline?: boolean): any;
-
-declare var runeCheck: any[];
-
-/**
- * @param {any} cat
- */
-declare function runecraftingCategory(cat: any): void;
-
-declare var runecraftingItems: {
-    itemID: number;
-    runecraftingCategory: number;
-    runecraftingID: number;
-    runecraftingLevel: number;
-}[];
-
-declare var runecraftingMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var runecraftingReqCheck: any[];
-
-declare var runecraftingSorted: {
-    itemID: number;
-    runecraftingCategory: number;
-    runecraftingID: number;
-    runecraftingLevel: number;
-}[];
-
-declare var runecraftingTimeout: any;
-
-declare var runecraftInterval: number;
-
-declare var runecraftReqCheck: any[];
-
-/**
- * @param {any} save
- */
-declare function saveBackup(save: any): void;
-
-/**
- * @param {any} result
- * @param {any} error
- * @param {boolean} forceSave defaults to false
- */
-declare function saveCallback(result: any, error: any, forceSave?: boolean): void;
-
-/**
- * @param {string} vars defaults to 'all'
- */
-declare function saveData(vars?: string): void;
-
-declare var saveStateBeforeRaid: any[];
-
-declare var saveTimestamp: number;
-
-declare function secretAreaCheck(): void;
-
-declare var secretAreaUnlocked: boolean;
-
-declare var seedContainer: any;
-
-/**
- * @param {any} ancient
- */
-declare function selectAncient(ancient: any): void;
-
-/**
- * @param {any} aurora
- */
-declare function selectAurora(aurora: any): void;
-
-/**
- * @param {any} item
- * @param {any} id
- */
-declare function selectBankItem(item: any, id: any): void;
-
-/**
- * @param {any} char
- * @param {boolean} confirmed defaults to false
- */
-declare function selectCharacter(char: any, confirmed?: boolean): void;
-
-/**
- * @param {any} combatArea
- */
-declare function selectCombatArea(combatArea: any): void;
-
-/**
- * @param {any} craftingID
- * @param {boolean} update defaults to false
- */
-declare function selectCraft(craftingID: any, update?: boolean): void;
-
-/**
- * @param {any} curse
- */
-declare function selectCurse(curse: any): void;
-
-/**
- * @param {any} dungeon
- * @param {boolean} forceStart defaults to false
- */
-declare function selectDungeon(dungeon: any, forceStart?: boolean): void;
-
-declare var selectedAltMagic: number;
-
-declare var selectedAncient: any;
-
-declare var selectedAttackStyle: number[];
-
-declare var selectedBankItem: any;
-
-declare var selectedCombatArea: any;
-
-declare var selectedCraft: any;
-
-declare var selectedCurse: any;
-
-declare var selectedDungeon: any;
-
-declare var selectedEquipmentSet: number;
-
-declare var selectedFish: any[];
-
-declare var selectedFletch: any;
-
-declare var selectedFletchLog: number;
-
-declare var selectedFood: any;
-
-declare var selectedHerblore: any;
-
-declare var selectedLog: any;
-
-declare var selectedMagicItem: any[];
-
-declare var selectedPatch: any[];
-
-declare var selectedRunecraft: any;
-
-declare var selectedSeed: number;
-
-declare var selectedSmith: any;
-
-declare var selectedSpell: number;
-
-declare var selectedSpellbook: number;
-
-/**
- * @param {any} food
- * @param {boolean} bypass defaults to false
- */
-declare function selectEquippedFood(food: any, bypass?: boolean): void;
-
-/**
- * @param {any} areaID
- * @param {any} fishID
- */
-declare function selectFish(areaID: any, fishID: any): void;
-
-/**
- * @param {any} fletchingID
- * @param {number} log defaults to 0
- * @param {boolean} update defaults to false
- */
-declare function selectFletch(fletchingID: any, log?: number, update?: boolean): void;
-
-/**
- * @param {any} id
- */
-declare function selectFood(id: any): void;
-
-/**
- * @param {any} itemID
- */
-declare function selectFromDropTable(itemID: any): any;
-
-/**
- * @param {any} skill
- * @param {any} id
- */
-declare function selectFromLootTable(skill: any, id: any): any;
-
-/**
- * @param {any} itemID
- * @param {any} qty
- */
-declare function selectGolbinFood(itemID: any, qty: any): void;
-
-/**
- * @param {any} herbloreID
- * @param {boolean} update defaults to false
- */
-declare function selectHerblore(herbloreID: any, update?: boolean): void;
-
-/**
- * @param {any} id
- * @param {string} selectedItem defaults to selectedMagicItem[id]
- * @param {boolean} select defaults to true
- */
-declare function selectItemForMagic(id: any, selectedItem?: string, select?: boolean): void;
-
-/**
- * @param {any} id
- * @param {number} skill defaults to CONSTANTS.skill.Firemaking
- */
-declare function selectLog(id: any, skill?: number): void;
-
-/**
- * @param {any} altMagicID
- * @param {boolean} update defaults to false
- */
-declare function selectMagic(altMagicID: any, update?: boolean): void;
-
-/**
- * @param {any} m
- * @param {boolean} continueDungeon defaults to false
- */
-declare function selectMonster(m: any, continueDungeon?: boolean): void;
-
-/**
- * @param {any} runecraftingID
- * @param {boolean} update defaults to false
- */
-declare function selectRunecraft(runecraftingID: any, update?: boolean): void;
-
-/**
- * @param {any} itemID
- * @param {boolean} plantAll defaults to false
- */
-declare function selectSeed(itemID: any, plantAll?: boolean): void;
-
-/**
- * @param {any} smithingID
- */
-declare function selectSmith(smithingID: any): void;
-
-/**
- * @param {any} spell
- */
-declare function selectSpell(spell: any): void;
-
-/**
- * @param {any} spellbook
- */
-declare function selectSpellbook(spellbook: any): void;
-
-/**
- * @param {any} itemID
- * @param {number} qty defaults to sellQty
- */
-declare function sellItem(itemID: any, qty?: number): void;
-
-declare var sellQty: number;
-
-declare var SEMI_VERSION: string;
-
-/**
- * @param {boolean} forceReload defaults to false
- */
-declare function setAccount(forceReload?: boolean): void;
-
-/**
- * @param {number} style defaults to attackStyle
- */
-declare function setAttackStyle(style?: number): void;
-
-declare function setBackupSave(): void;
-
-/**
- * @param {any} save
- */
-declare function setBackupSaveDetails(save: any): void;
-
-declare function setBaseGolbinEquipment(): void;
-
-declare function setCombatDamageAdjustment(): any;
-
-/**
- * @param {any} set
- * @param {boolean} bypass defaults to false
- */
-declare function setEquipmentSet(set: any, bypass?: boolean): void;
-
-/**
- * @param {any} character
- * @param {boolean} reloadNow defaults to false
- */
-declare function setForceReload(character: any, reloadNow?: boolean): void;
-
-/**
- * @param {any} gamemode
- */
-declare function setGamemode(gamemode: any): void;
-
-/**
- * @param {any} key
- * @param {any} value
- */
-declare function setItem(key: any, value: any): void;
-
-/**
- * @param {any} itemID
- */
-declare function setMagicItemImg(itemID: any): void;
-
-/**
- * @param {any} string
- */
-declare function setToLowercase(string: any): any;
-
-/**
- * @param {any} string
- */
-declare function setToUppercase(string: any): any;
-
-declare function setupFishingAreas(): void;
-
-declare function setupNewCharacter(): void;
-
-/**
- * @param {string} cat defaults to null
- */
-declare function shopCategory(cat?: string): void;
-
-/**
- * @param {any} areaID
- */
-declare function showCombatArea(areaID: any): void;
-
-declare var showCombatMinibar: boolean;
-
-declare var showCombatMinibarCombat: boolean;
-
-declare var showCommas: boolean;
-
-declare var showEnemySkillLevels: boolean;
-
-/**
- * @param {boolean} init defaults to true
- * @param {number} category defaults to 0
- */
-declare function showEquipmentSelection(init?: boolean, category?: number): void;
-
-declare function showFarmingAreas(): void;
-
-/**
- * @param {any} id
- */
-declare function showForm(id: any): void;
-
-declare var showGPNotify: boolean;
-
-/**
- * @param {boolean} ready defaults to true
- */
+declare function resetFarmingPatch(areaID: FarmingAreaID, patchID: number): void;
+declare function checkReadyToHarvest(): void;
 declare function showHarvestReady(ready?: boolean): void;
-
-declare var showHPNotify: boolean;
-
-declare var showItemNotify: number;
-
 /**
- * @param {boolean} jumpToTop defaults to true
+ * onClick callback function
  */
-declare function showMap(jumpToTop?: boolean): void;
-
+declare function harvestAll(): void;
 /**
- * @param {any} skill
- * @param {any} masteryArray
+ * onClick callback function
  */
-declare function showMasteryProgress(skill: any, masteryArray: any): void;
-
+declare function compostAll(): void;
 /**
- * @param {any} skill
+ * onClick callback function
  */
-declare function showMasteryUnlocks(skill: any): void;
-
-declare var showSaleNotifications: boolean;
-
+declare function gloopAll(): void;
+declare function updateCompostQty(): void;
 /**
- * @param {any} areaID
- * @param {any} patchID
- * @param {boolean} plantAll defaults to false
- */
-declare function showSeeds(areaID: any, patchID: any, plantAll?: boolean): void;
-
-declare var showShopNotifications: boolean;
-
-declare var showSkillMinibar: boolean;
-
-declare function showUsernameChange(): void;
-
-declare var showVirtualLevels: boolean;
-
+ * Save game variable
+ * @type {FarmingArea[]} */
+declare var newFarmingAreas: FarmingArea[];
+/** @type {Seed[]} */
+declare var allotmentSeeds: Seed[];
+/** @type {Seed[]} */
+declare var herbSeeds: Seed[];
+/** @type {Seed[]} */
+declare var treeSeeds: Seed[];
+/** @type {ItemID} */
+declare var selectedSeed: ItemID;
+/** @type {[FarmingAreaID,number]|[]} */
+declare var selectedPatch: [FarmingAreaID, number] | [];
+/** @type {FarmingAreaID|null} */
+declare var currentFarmingArea: FarmingAreaID | null;
+/** @type {TimeoutID|null} */
+declare var farmingGlower: TimeoutID | null;
+declare const harvestAllCost: 2000;
+declare const compostAllCost: 2000;
+declare const plantAllCost: 5000;
+/** @type {TimeoutID|null} */
+declare var harvestReadyTimer: TimeoutID | null;
 /**
- * @param {any} petID
- * @param {any} timePerAction
- * @param {any} qty
- * @param {any} chanceValue
+ * @deprecated Unused variable?
+ * @type {null}
  */
-declare function simulateRollForPet(petID: any, timePerAction: any, qty: any, chanceValue: any): void;
-
-declare var skillLevel: number[];
-
-declare var skillName: string[];
-
-declare var SKILLS: {
-    '0': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '1': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '10': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '11': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '12': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '13': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '14': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '15': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '16': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '17': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '18': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '19': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '2': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '3': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '4': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '5': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '6': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '7': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '8': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-    '9': {
-        hasMastery: boolean;
-        maxLevel: number;
-        media: string;
-        name: string;
-    };
-};
-
-declare var skillsMenu: boolean;
-
-declare var skillXP: number[];
-
-declare var slayerAreas: {
-    areaName: string;
-    difficulty: number[];
-    media: string;
-    monsters: number[];
-    slayerItem: number;
-    slayerLevel: number;
+declare var sendFarmingNotificationTimer: null;
+declare function burnLog(ignore?: boolean): void;
+/**
+ * onClick callback function
+ * @param {boolean} [potion=false]
+ */
+declare function lightBonfire(potion?: boolean): void;
+/**
+ *
+ * @param {FiremakingID} log FiremakingID of log
+ */
+declare function checkLogExists(log: FiremakingID): boolean;
+declare function updateAvailableLogs(skill?: number): void;
+/**
+ *
+ * @param {FiremakingID} id
+ * @param {SkillID} skill
+ */
+declare function selectLog(id: FiremakingID, skill?: SkillID): void;
+declare const logsData: {
     type: string;
-}[];
-
-declare var slayerCoins: number;
-
-declare var slayerLockedItem: any;
-
-declare var slayerTask: {
-    count: number;
-    monsterID: number;
-}[];
-
-/**
- * @param {any} cat
- */
-declare function smithCategory(cat: any): void;
-
-declare var smithingItems: {
-    category: number;
-    itemID: number;
-    name: string;
-    smithingID: number;
-    smithingLevel: number;
-}[];
-
-declare var smithingMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var smithingReqCheck: any[];
-
-declare var smithingSorted: {
-    category: number;
-    itemID: number;
-    name: string;
-    smithingID: number;
-    smithingLevel: number;
-}[];
-
-declare var smithingTimeout: any;
-
-declare var smithInterval: number;
-
-declare var smithReqCheck: {
-    bankID: number;
-    check: number;
-    reqID: number;
-}[];
-
-declare namespace sortable {
-    /**
-     * @param {any} t
-     */
-    function addAnimationState(t: any): void;
-
-    /**
-     * @param {any} t
-     * @param {any} e
-     * @param {any} n
-     * @param {any} o
-     */
-    function animate(t: any, e: any, n: any, o: any): void;
-
-    /**
-     * @param {any} t
-     */
-    function animateAll(t: any): any;
-
-    function captureAnimationState(): void;
-
-    /**
-     * @param {any} t
-     * @param {any} e
-     */
-    function closest(t: any, e: any): any;
-
-    function destroy(): void;
-
-    /**
-     * @param {any} t
-     */
-    function handleEvent(t: any): void;
-
-    /**
-     * @param {any} t
-     * @param {any} e
-     */
-    function option(t: any, e: any): any;
-
-    /**
-     * @param {any} t
-     */
-    function removeAnimationState(t: any): any;
-
-    function save(): void;
-
-    /**
-     * @param {any} t
-     */
-    function sort(t: any): void;
-
-    function toArray(): any;
-
-    namespace multiDrag {
-        /**
-         * @param {any} t
-         */
-        function clone(t: any): void;
-
-        function delayEnded(): void;
-
-        /**
-         * @param {any} t
-         */
-        function delayStartGlobal(t: any): void;
-
-        function destroyGlobal(): void;
-
-        /**
-         * @param {any} t
-         */
-        function dragOver(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function dragOverAnimationCapture(t: any): void;
-
-        function dragOverAnimationComplete(): void;
-
-        /**
-         * @param {any} t
-         */
-        function dragOverCompleted(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function dragStartGlobal(t: any): any;
-
-        /**
-         * @param {any} t
-         */
-        function dragStarted(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function drop(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function hideClone(t: any): void;
-
-        function nullingGlobal(): void;
-
-        /**
-         * @param {any} t
-         */
-        function revert(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function setupClone(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function showClone(t: any): void;
-
-        namespace defaults {
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function setData(t: any, e: any): void;
-
-            var multiDragKey: any;
-
-            var selectedClass: string;
-        }
-
-        namespace options {
-            function direction(): any;
-
-            /**
-             * @param {any} evt
-             */
-            function onChoose(evt: any): void;
-
-            /**
-             * @param {any} evt
-             */
-            function onEnd(evt: any): void;
-
-            function onMove(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function setData(t: any, e: any): void;
-
-            namespace group {
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPull(t: any, e: any, n: any, o: any): any;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPut(t: any, e: any, n: any, o: any): any;
-
-                var name: any;
-
-                var revertClone: any;
-            }
-
-            var animation: number;
-
-            var bubbleScroll: boolean;
-
-            var chosenClass: string;
-
-            var dataIdAttr: string;
-
-            var delay: number;
-
-            var delayOnTouchOnly: boolean;
-
-            var disabled: boolean;
-
-            var dragClass: string;
-
-            var draggable: string;
-
-            var dragoverBubble: boolean;
-
-            var dropBubble: boolean;
-
-            var easing: any;
-
-            var emptyInsertThreshold: number;
-
-            var fallbackClass: string;
-
-            var fallbackOffset: {
-                x: number;
-                y: number;
-            };
-
-            var fallbackOnBody: boolean;
-
-            var fallbackTolerance: number;
-
-            var filter: any;
-
-            var forceFallback: boolean;
-
-            var ghostClass: string;
-
-            var handle: any;
-
-            var ignore: string;
-
-            var invertSwap: boolean;
-
-            var invertedSwapThreshold: any;
-
-            var multiDragKey: any;
-
-            var preventOnFilter: boolean;
-
-            var removeCloneOnHide: boolean;
-
-            var scroll: boolean;
-
-            var scrollSensitivity: number;
-
-            var scrollSpeed: number;
-
-            var selectedClass: string;
-
-            var sort: boolean;
-
-            var store: any;
-
-            var supportPointer: boolean;
-
-            var swapClass: string;
-
-            var swapThreshold: number;
-
-            var touchStartThreshold: number;
-        }
-
-        namespace sortable {
-            /**
-             * @param {any} t
-             */
-            function addAnimationState(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             * @param {any} n
-             * @param {any} o
-             */
-            function animate(t: any, e: any, n: any, o: any): void;
-
-            /**
-             * @param {any} t
-             */
-            function animateAll(t: any): any;
-
-            function captureAnimationState(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function closest(t: any, e: any): any;
-
-            function destroy(): void;
-
-            /**
-             * @param {any} t
-             */
-            function handleEvent(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function option(t: any, e: any): any;
-
-            /**
-             * @param {any} t
-             */
-            function removeAnimationState(t: any): any;
-
-            function save(): void;
-
-            /**
-             * @param {any} t
-             */
-            function sort(t: any): void;
-
-            function toArray(): any;
-
-            namespace multiDrag {
-                /**
-                 * @param {any} t
-                 */
-                function clone(t: any): void;
-
-                function delayEnded(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function delayStartGlobal(t: any): void;
-
-                function destroyGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOver(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverAnimationCapture(t: any): void;
-
-                function dragOverAnimationComplete(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStartGlobal(t: any): any;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function hideClone(t: any): void;
-
-                function nullingGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function revert(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function setupClone(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function showClone(t: any): void;
-
-                namespace defaults {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.defaults
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.defaults
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.defaults
-                    var setData: any;
-                }
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.multiDrag.sortable
-                    var toArray: any;
-                }
-
-                var isMultiDrag: boolean;
-
-                var multiDragKeyDown: boolean;
-            }
-
-            namespace options {
-                function direction(): any;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onChoose(evt: any): void;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onEnd(evt: any): void;
-
-                function onMove(): void;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 */
-                function setData(t: any, e: any): void;
-
-                namespace group {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.options.group
-                    var checkPull: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.options.group
-                    var checkPut: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.options.group
-                    var name: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.options.group
-                    var revertClone: any;
-                }
-
-                var animation: number;
-
-                var bubbleScroll: boolean;
-
-                var chosenClass: string;
-
-                var dataIdAttr: string;
-
-                var delay: number;
-
-                var delayOnTouchOnly: boolean;
-
-                var disabled: boolean;
-
-                var dragClass: string;
-
-                var draggable: string;
-
-                var dragoverBubble: boolean;
-
-                var dropBubble: boolean;
-
-                var easing: any;
-
-                var emptyInsertThreshold: number;
-
-                var fallbackClass: string;
-
-                var fallbackOffset: {
-                    x: number;
-                    y: number;
-                };
-
-                var fallbackOnBody: boolean;
-
-                var fallbackTolerance: number;
-
-                var filter: any;
-
-                var forceFallback: boolean;
-
-                var ghostClass: string;
-
-                var handle: any;
-
-                var ignore: string;
-
-                var invertSwap: boolean;
-
-                var invertedSwapThreshold: any;
-
-                var multiDragKey: any;
-
-                var preventOnFilter: boolean;
-
-                var removeCloneOnHide: boolean;
-
-                var scroll: boolean;
-
-                var scrollSensitivity: number;
-
-                var scrollSpeed: number;
-
-                var selectedClass: string;
-
-                var sort: boolean;
-
-                var store: any;
-
-                var supportPointer: boolean;
-
-                var swapClass: string;
-
-                var swapThreshold: number;
-
-                var touchStartThreshold: number;
-            }
-
-            namespace removeOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.removeOnSpill.sortable
-                    var toArray: any;
-                }
-            }
-
-            namespace revertOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.revertOnSpill.sortable
-                    var toArray: any;
-                }
-
-                var startIndex: any;
-            }
-
-            namespace scroll {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                function drop(): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.scroll.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    bubbleScroll: boolean;
-                    scroll: boolean;
-                    scrollSensitivity: number;
-                    scrollSpeed: number;
-                };
-            }
-
-            namespace swap {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverValid(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.multiDrag.sortable.swap.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    swapClass: string;
-                };
-            }
-
-            var el: HTMLElement;
-
-            var nativeDraggable: boolean;
-        }
-
-        var isMultiDrag: boolean;
-
-        var multiDragKeyDown: boolean;
-    }
-
-    namespace options {
-        function direction(): any;
-
-        /**
-         * @param {any} evt
-         */
-        function onChoose(evt: any): void;
-
-        /**
-         * @param {any} evt
-         */
-        function onEnd(evt: any): void;
-
-        function onMove(): void;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         */
-        function setData(t: any, e: any): void;
-
-        namespace group {
-            /**
-             * @param {any} t
-             * @param {any} e
-             * @param {any} n
-             * @param {any} o
-             */
-            function checkPull(t: any, e: any, n: any, o: any): any;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             * @param {any} n
-             * @param {any} o
-             */
-            function checkPut(t: any, e: any, n: any, o: any): any;
-
-            var name: any;
-
-            var revertClone: any;
-        }
-
-        var animation: number;
-
-        var bubbleScroll: boolean;
-
-        var chosenClass: string;
-
-        var dataIdAttr: string;
-
-        var delay: number;
-
-        var delayOnTouchOnly: boolean;
-
-        var disabled: boolean;
-
-        var dragClass: string;
-
-        var draggable: string;
-
-        var dragoverBubble: boolean;
-
-        var dropBubble: boolean;
-
-        var easing: any;
-
-        var emptyInsertThreshold: number;
-
-        var fallbackClass: string;
-
-        var fallbackOffset: {
-            x: number;
-            y: number;
-        };
-
-        var fallbackOnBody: boolean;
-
-        var fallbackTolerance: number;
-
-        var filter: any;
-
-        var forceFallback: boolean;
-
-        var ghostClass: string;
-
-        var handle: any;
-
-        var ignore: string;
-
-        var invertSwap: boolean;
-
-        var invertedSwapThreshold: any;
-
-        var multiDragKey: any;
-
-        var preventOnFilter: boolean;
-
-        var removeCloneOnHide: boolean;
-
-        var scroll: boolean;
-
-        var scrollSensitivity: number;
-
-        var scrollSpeed: number;
-
-        var selectedClass: string;
-
-        var sort: boolean;
-
-        var store: any;
-
-        var supportPointer: boolean;
-
-        var swapClass: string;
-
-        var swapThreshold: number;
-
-        var touchStartThreshold: number;
-    }
-
-    namespace removeOnSpill {
-        /**
-         * @param {any} t
-         */
-        function drop(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function onSpill(t: any): void;
-
-        namespace options {
-            function direction(): any;
-
-            /**
-             * @param {any} evt
-             */
-            function onChoose(evt: any): void;
-
-            /**
-             * @param {any} evt
-             */
-            function onEnd(evt: any): void;
-
-            function onMove(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function setData(t: any, e: any): void;
-
-            namespace group {
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPull(t: any, e: any, n: any, o: any): any;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPut(t: any, e: any, n: any, o: any): any;
-
-                var name: any;
-
-                var revertClone: any;
-            }
-
-            var animation: number;
-
-            var bubbleScroll: boolean;
-
-            var chosenClass: string;
-
-            var dataIdAttr: string;
-
-            var delay: number;
-
-            var delayOnTouchOnly: boolean;
-
-            var disabled: boolean;
-
-            var dragClass: string;
-
-            var draggable: string;
-
-            var dragoverBubble: boolean;
-
-            var dropBubble: boolean;
-
-            var easing: any;
-
-            var emptyInsertThreshold: number;
-
-            var fallbackClass: string;
-
-            var fallbackOffset: {
-                x: number;
-                y: number;
-            };
-
-            var fallbackOnBody: boolean;
-
-            var fallbackTolerance: number;
-
-            var filter: any;
-
-            var forceFallback: boolean;
-
-            var ghostClass: string;
-
-            var handle: any;
-
-            var ignore: string;
-
-            var invertSwap: boolean;
-
-            var invertedSwapThreshold: any;
-
-            var multiDragKey: any;
-
-            var preventOnFilter: boolean;
-
-            var removeCloneOnHide: boolean;
-
-            var scroll: boolean;
-
-            var scrollSensitivity: number;
-
-            var scrollSpeed: number;
-
-            var selectedClass: string;
-
-            var sort: boolean;
-
-            var store: any;
-
-            var supportPointer: boolean;
-
-            var swapClass: string;
-
-            var swapThreshold: number;
-
-            var touchStartThreshold: number;
-        }
-
-        namespace sortable {
-            /**
-             * @param {any} t
-             */
-            function addAnimationState(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             * @param {any} n
-             * @param {any} o
-             */
-            function animate(t: any, e: any, n: any, o: any): void;
-
-            /**
-             * @param {any} t
-             */
-            function animateAll(t: any): any;
-
-            function captureAnimationState(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function closest(t: any, e: any): any;
-
-            function destroy(): void;
-
-            /**
-             * @param {any} t
-             */
-            function handleEvent(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function option(t: any, e: any): any;
-
-            /**
-             * @param {any} t
-             */
-            function removeAnimationState(t: any): any;
-
-            function save(): void;
-
-            /**
-             * @param {any} t
-             */
-            function sort(t: any): void;
-
-            function toArray(): any;
-
-            namespace multiDrag {
-                /**
-                 * @param {any} t
-                 */
-                function clone(t: any): void;
-
-                function delayEnded(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function delayStartGlobal(t: any): void;
-
-                function destroyGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOver(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverAnimationCapture(t: any): void;
-
-                function dragOverAnimationComplete(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStartGlobal(t: any): any;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function hideClone(t: any): void;
-
-                function nullingGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function revert(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function setupClone(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function showClone(t: any): void;
-
-                namespace defaults {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.defaults
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.defaults
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.defaults
-                    var setData: any;
-                }
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.multiDrag.sortable
-                    var toArray: any;
-                }
-
-                var isMultiDrag: boolean;
-
-                var multiDragKeyDown: boolean;
-            }
-
-            namespace options {
-                function direction(): any;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onChoose(evt: any): void;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onEnd(evt: any): void;
-
-                function onMove(): void;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 */
-                function setData(t: any, e: any): void;
-
-                namespace group {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.options.group
-                    var checkPull: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.options.group
-                    var checkPut: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.options.group
-                    var name: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.options.group
-                    var revertClone: any;
-                }
-
-                var animation: number;
-
-                var bubbleScroll: boolean;
-
-                var chosenClass: string;
-
-                var dataIdAttr: string;
-
-                var delay: number;
-
-                var delayOnTouchOnly: boolean;
-
-                var disabled: boolean;
-
-                var dragClass: string;
-
-                var draggable: string;
-
-                var dragoverBubble: boolean;
-
-                var dropBubble: boolean;
-
-                var easing: any;
-
-                var emptyInsertThreshold: number;
-
-                var fallbackClass: string;
-
-                var fallbackOffset: {
-                    x: number;
-                    y: number;
-                };
-
-                var fallbackOnBody: boolean;
-
-                var fallbackTolerance: number;
-
-                var filter: any;
-
-                var forceFallback: boolean;
-
-                var ghostClass: string;
-
-                var handle: any;
-
-                var ignore: string;
-
-                var invertSwap: boolean;
-
-                var invertedSwapThreshold: any;
-
-                var multiDragKey: any;
-
-                var preventOnFilter: boolean;
-
-                var removeCloneOnHide: boolean;
-
-                var scroll: boolean;
-
-                var scrollSensitivity: number;
-
-                var scrollSpeed: number;
-
-                var selectedClass: string;
-
-                var sort: boolean;
-
-                var store: any;
-
-                var supportPointer: boolean;
-
-                var swapClass: string;
-
-                var swapThreshold: number;
-
-                var touchStartThreshold: number;
-            }
-
-            namespace removeOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.removeOnSpill.sortable
-                    var toArray: any;
-                }
-            }
-
-            namespace revertOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.revertOnSpill.sortable
-                    var toArray: any;
-                }
-
-                var startIndex: any;
-            }
-
-            namespace scroll {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                function drop(): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.scroll.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    bubbleScroll: boolean;
-                    scroll: boolean;
-                    scrollSensitivity: number;
-                    scrollSpeed: number;
-                };
-            }
-
-            namespace swap {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverValid(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.removeOnSpill.sortable.swap.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    swapClass: string;
-                };
-            }
-
-            var el: HTMLElement;
-
-            var nativeDraggable: boolean;
-        }
-    }
-
-    namespace revertOnSpill {
-        /**
-         * @param {any} t
-         */
-        function dragStart(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function drop(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function onSpill(t: any): void;
-
-        namespace options {
-            function direction(): any;
-
-            /**
-             * @param {any} evt
-             */
-            function onChoose(evt: any): void;
-
-            /**
-             * @param {any} evt
-             */
-            function onEnd(evt: any): void;
-
-            function onMove(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function setData(t: any, e: any): void;
-
-            namespace group {
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPull(t: any, e: any, n: any, o: any): any;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPut(t: any, e: any, n: any, o: any): any;
-
-                var name: any;
-
-                var revertClone: any;
-            }
-
-            var animation: number;
-
-            var bubbleScroll: boolean;
-
-            var chosenClass: string;
-
-            var dataIdAttr: string;
-
-            var delay: number;
-
-            var delayOnTouchOnly: boolean;
-
-            var disabled: boolean;
-
-            var dragClass: string;
-
-            var draggable: string;
-
-            var dragoverBubble: boolean;
-
-            var dropBubble: boolean;
-
-            var easing: any;
-
-            var emptyInsertThreshold: number;
-
-            var fallbackClass: string;
-
-            var fallbackOffset: {
-                x: number;
-                y: number;
-            };
-
-            var fallbackOnBody: boolean;
-
-            var fallbackTolerance: number;
-
-            var filter: any;
-
-            var forceFallback: boolean;
-
-            var ghostClass: string;
-
-            var handle: any;
-
-            var ignore: string;
-
-            var invertSwap: boolean;
-
-            var invertedSwapThreshold: any;
-
-            var multiDragKey: any;
-
-            var preventOnFilter: boolean;
-
-            var removeCloneOnHide: boolean;
-
-            var scroll: boolean;
-
-            var scrollSensitivity: number;
-
-            var scrollSpeed: number;
-
-            var selectedClass: string;
-
-            var sort: boolean;
-
-            var store: any;
-
-            var supportPointer: boolean;
-
-            var swapClass: string;
-
-            var swapThreshold: number;
-
-            var touchStartThreshold: number;
-        }
-
-        namespace sortable {
-            /**
-             * @param {any} t
-             */
-            function addAnimationState(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             * @param {any} n
-             * @param {any} o
-             */
-            function animate(t: any, e: any, n: any, o: any): void;
-
-            /**
-             * @param {any} t
-             */
-            function animateAll(t: any): any;
-
-            function captureAnimationState(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function closest(t: any, e: any): any;
-
-            function destroy(): void;
-
-            /**
-             * @param {any} t
-             */
-            function handleEvent(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function option(t: any, e: any): any;
-
-            /**
-             * @param {any} t
-             */
-            function removeAnimationState(t: any): any;
-
-            function save(): void;
-
-            /**
-             * @param {any} t
-             */
-            function sort(t: any): void;
-
-            function toArray(): any;
-
-            namespace multiDrag {
-                /**
-                 * @param {any} t
-                 */
-                function clone(t: any): void;
-
-                function delayEnded(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function delayStartGlobal(t: any): void;
-
-                function destroyGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOver(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverAnimationCapture(t: any): void;
-
-                function dragOverAnimationComplete(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStartGlobal(t: any): any;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function hideClone(t: any): void;
-
-                function nullingGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function revert(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function setupClone(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function showClone(t: any): void;
-
-                namespace defaults {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.defaults
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.defaults
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.defaults
-                    var setData: any;
-                }
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.multiDrag.sortable
-                    var toArray: any;
-                }
-
-                var isMultiDrag: boolean;
-
-                var multiDragKeyDown: boolean;
-            }
-
-            namespace options {
-                function direction(): any;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onChoose(evt: any): void;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onEnd(evt: any): void;
-
-                function onMove(): void;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 */
-                function setData(t: any, e: any): void;
-
-                namespace group {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.options.group
-                    var checkPull: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.options.group
-                    var checkPut: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.options.group
-                    var name: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.options.group
-                    var revertClone: any;
-                }
-
-                var animation: number;
-
-                var bubbleScroll: boolean;
-
-                var chosenClass: string;
-
-                var dataIdAttr: string;
-
-                var delay: number;
-
-                var delayOnTouchOnly: boolean;
-
-                var disabled: boolean;
-
-                var dragClass: string;
-
-                var draggable: string;
-
-                var dragoverBubble: boolean;
-
-                var dropBubble: boolean;
-
-                var easing: any;
-
-                var emptyInsertThreshold: number;
-
-                var fallbackClass: string;
-
-                var fallbackOffset: {
-                    x: number;
-                    y: number;
-                };
-
-                var fallbackOnBody: boolean;
-
-                var fallbackTolerance: number;
-
-                var filter: any;
-
-                var forceFallback: boolean;
-
-                var ghostClass: string;
-
-                var handle: any;
-
-                var ignore: string;
-
-                var invertSwap: boolean;
-
-                var invertedSwapThreshold: any;
-
-                var multiDragKey: any;
-
-                var preventOnFilter: boolean;
-
-                var removeCloneOnHide: boolean;
-
-                var scroll: boolean;
-
-                var scrollSensitivity: number;
-
-                var scrollSpeed: number;
-
-                var selectedClass: string;
-
-                var sort: boolean;
-
-                var store: any;
-
-                var supportPointer: boolean;
-
-                var swapClass: string;
-
-                var swapThreshold: number;
-
-                var touchStartThreshold: number;
-            }
-
-            namespace removeOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.removeOnSpill.sortable
-                    var toArray: any;
-                }
-            }
-
-            namespace revertOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.revertOnSpill.sortable
-                    var toArray: any;
-                }
-
-                var startIndex: any;
-            }
-
-            namespace scroll {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                function drop(): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.scroll.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    bubbleScroll: boolean;
-                    scroll: boolean;
-                    scrollSensitivity: number;
-                    scrollSpeed: number;
-                };
-            }
-
-            namespace swap {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverValid(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.revertOnSpill.sortable.swap.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    swapClass: string;
-                };
-            }
-
-            var el: HTMLElement;
-
-            var nativeDraggable: boolean;
-        }
-
-        var startIndex: any;
-    }
-
-    namespace scroll {
-        /**
-         * @param {any} t
-         */
-        function dragOverCompleted(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function dragStarted(t: any): void;
-
-        function drop(): void;
-
-        function nulling(): void;
-
-        namespace options {
-            function direction(): any;
-
-            /**
-             * @param {any} evt
-             */
-            function onChoose(evt: any): void;
-
-            /**
-             * @param {any} evt
-             */
-            function onEnd(evt: any): void;
-
-            function onMove(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function setData(t: any, e: any): void;
-
-            namespace group {
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPull(t: any, e: any, n: any, o: any): any;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPut(t: any, e: any, n: any, o: any): any;
-
-                var name: any;
-
-                var revertClone: any;
-            }
-
-            var animation: number;
-
-            var bubbleScroll: boolean;
-
-            var chosenClass: string;
-
-            var dataIdAttr: string;
-
-            var delay: number;
-
-            var delayOnTouchOnly: boolean;
-
-            var disabled: boolean;
-
-            var dragClass: string;
-
-            var draggable: string;
-
-            var dragoverBubble: boolean;
-
-            var dropBubble: boolean;
-
-            var easing: any;
-
-            var emptyInsertThreshold: number;
-
-            var fallbackClass: string;
-
-            var fallbackOffset: {
-                x: number;
-                y: number;
-            };
-
-            var fallbackOnBody: boolean;
-
-            var fallbackTolerance: number;
-
-            var filter: any;
-
-            var forceFallback: boolean;
-
-            var ghostClass: string;
-
-            var handle: any;
-
-            var ignore: string;
-
-            var invertSwap: boolean;
-
-            var invertedSwapThreshold: any;
-
-            var multiDragKey: any;
-
-            var preventOnFilter: boolean;
-
-            var removeCloneOnHide: boolean;
-
-            var scroll: boolean;
-
-            var scrollSensitivity: number;
-
-            var scrollSpeed: number;
-
-            var selectedClass: string;
-
-            var sort: boolean;
-
-            var store: any;
-
-            var supportPointer: boolean;
-
-            var swapClass: string;
-
-            var swapThreshold: number;
-
-            var touchStartThreshold: number;
-        }
-
-        namespace sortable {
-            /**
-             * @param {any} t
-             */
-            function addAnimationState(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             * @param {any} n
-             * @param {any} o
-             */
-            function animate(t: any, e: any, n: any, o: any): void;
-
-            /**
-             * @param {any} t
-             */
-            function animateAll(t: any): any;
-
-            function captureAnimationState(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function closest(t: any, e: any): any;
-
-            function destroy(): void;
-
-            /**
-             * @param {any} t
-             */
-            function handleEvent(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function option(t: any, e: any): any;
-
-            /**
-             * @param {any} t
-             */
-            function removeAnimationState(t: any): any;
-
-            function save(): void;
-
-            /**
-             * @param {any} t
-             */
-            function sort(t: any): void;
-
-            function toArray(): any;
-
-            namespace multiDrag {
-                /**
-                 * @param {any} t
-                 */
-                function clone(t: any): void;
-
-                function delayEnded(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function delayStartGlobal(t: any): void;
-
-                function destroyGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOver(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverAnimationCapture(t: any): void;
-
-                function dragOverAnimationComplete(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStartGlobal(t: any): any;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function hideClone(t: any): void;
-
-                function nullingGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function revert(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function setupClone(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function showClone(t: any): void;
-
-                namespace defaults {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.defaults
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.defaults
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.defaults
-                    var setData: any;
-                }
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.multiDrag.sortable
-                    var toArray: any;
-                }
-
-                var isMultiDrag: boolean;
-
-                var multiDragKeyDown: boolean;
-            }
-
-            namespace options {
-                function direction(): any;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onChoose(evt: any): void;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onEnd(evt: any): void;
-
-                function onMove(): void;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 */
-                function setData(t: any, e: any): void;
-
-                namespace group {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.options.group
-                    var checkPull: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.options.group
-                    var checkPut: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.options.group
-                    var name: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.options.group
-                    var revertClone: any;
-                }
-
-                var animation: number;
-
-                var bubbleScroll: boolean;
-
-                var chosenClass: string;
-
-                var dataIdAttr: string;
-
-                var delay: number;
-
-                var delayOnTouchOnly: boolean;
-
-                var disabled: boolean;
-
-                var dragClass: string;
-
-                var draggable: string;
-
-                var dragoverBubble: boolean;
-
-                var dropBubble: boolean;
-
-                var easing: any;
-
-                var emptyInsertThreshold: number;
-
-                var fallbackClass: string;
-
-                var fallbackOffset: {
-                    x: number;
-                    y: number;
-                };
-
-                var fallbackOnBody: boolean;
-
-                var fallbackTolerance: number;
-
-                var filter: any;
-
-                var forceFallback: boolean;
-
-                var ghostClass: string;
-
-                var handle: any;
-
-                var ignore: string;
-
-                var invertSwap: boolean;
-
-                var invertedSwapThreshold: any;
-
-                var multiDragKey: any;
-
-                var preventOnFilter: boolean;
-
-                var removeCloneOnHide: boolean;
-
-                var scroll: boolean;
-
-                var scrollSensitivity: number;
-
-                var scrollSpeed: number;
-
-                var selectedClass: string;
-
-                var sort: boolean;
-
-                var store: any;
-
-                var supportPointer: boolean;
-
-                var swapClass: string;
-
-                var swapThreshold: number;
-
-                var touchStartThreshold: number;
-            }
-
-            namespace removeOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.removeOnSpill.sortable
-                    var toArray: any;
-                }
-            }
-
-            namespace revertOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.revertOnSpill.sortable
-                    var toArray: any;
-                }
-
-                var startIndex: any;
-            }
-
-            namespace scroll {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                function drop(): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.scroll.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    bubbleScroll: boolean;
-                    scroll: boolean;
-                    scrollSensitivity: number;
-                    scrollSpeed: number;
-                };
-            }
-
-            namespace swap {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverValid(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.scroll.sortable.swap.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    swapClass: string;
-                };
-            }
-
-            var el: HTMLElement;
-
-            var nativeDraggable: boolean;
-        }
-
-        var defaults: {
-            bubbleScroll: boolean;
-            scroll: boolean;
-            scrollSensitivity: number;
-            scrollSpeed: number;
-        };
-    }
-
-    namespace swap {
-        /**
-         * @param {any} t
-         */
-        function dragOverValid(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function dragStart(t: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function drop(t: any): void;
-
-        function nulling(): void;
-
-        namespace options {
-            function direction(): any;
-
-            /**
-             * @param {any} evt
-             */
-            function onChoose(evt: any): void;
-
-            /**
-             * @param {any} evt
-             */
-            function onEnd(evt: any): void;
-
-            function onMove(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function setData(t: any, e: any): void;
-
-            namespace group {
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPull(t: any, e: any, n: any, o: any): any;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 * @param {any} n
-                 * @param {any} o
-                 */
-                function checkPut(t: any, e: any, n: any, o: any): any;
-
-                var name: any;
-
-                var revertClone: any;
-            }
-
-            var animation: number;
-
-            var bubbleScroll: boolean;
-
-            var chosenClass: string;
-
-            var dataIdAttr: string;
-
-            var delay: number;
-
-            var delayOnTouchOnly: boolean;
-
-            var disabled: boolean;
-
-            var dragClass: string;
-
-            var draggable: string;
-
-            var dragoverBubble: boolean;
-
-            var dropBubble: boolean;
-
-            var easing: any;
-
-            var emptyInsertThreshold: number;
-
-            var fallbackClass: string;
-
-            var fallbackOffset: {
-                x: number;
-                y: number;
-            };
-
-            var fallbackOnBody: boolean;
-
-            var fallbackTolerance: number;
-
-            var filter: any;
-
-            var forceFallback: boolean;
-
-            var ghostClass: string;
-
-            var handle: any;
-
-            var ignore: string;
-
-            var invertSwap: boolean;
-
-            var invertedSwapThreshold: any;
-
-            var multiDragKey: any;
-
-            var preventOnFilter: boolean;
-
-            var removeCloneOnHide: boolean;
-
-            var scroll: boolean;
-
-            var scrollSensitivity: number;
-
-            var scrollSpeed: number;
-
-            var selectedClass: string;
-
-            var sort: boolean;
-
-            var store: any;
-
-            var supportPointer: boolean;
-
-            var swapClass: string;
-
-            var swapThreshold: number;
-
-            var touchStartThreshold: number;
-        }
-
-        namespace sortable {
-            /**
-             * @param {any} t
-             */
-            function addAnimationState(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             * @param {any} n
-             * @param {any} o
-             */
-            function animate(t: any, e: any, n: any, o: any): void;
-
-            /**
-             * @param {any} t
-             */
-            function animateAll(t: any): any;
-
-            function captureAnimationState(): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function closest(t: any, e: any): any;
-
-            function destroy(): void;
-
-            /**
-             * @param {any} t
-             */
-            function handleEvent(t: any): void;
-
-            /**
-             * @param {any} t
-             * @param {any} e
-             */
-            function option(t: any, e: any): any;
-
-            /**
-             * @param {any} t
-             */
-            function removeAnimationState(t: any): any;
-
-            function save(): void;
-
-            /**
-             * @param {any} t
-             */
-            function sort(t: any): void;
-
-            function toArray(): any;
-
-            namespace multiDrag {
-                /**
-                 * @param {any} t
-                 */
-                function clone(t: any): void;
-
-                function delayEnded(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function delayStartGlobal(t: any): void;
-
-                function destroyGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOver(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverAnimationCapture(t: any): void;
-
-                function dragOverAnimationComplete(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStartGlobal(t: any): any;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function hideClone(t: any): void;
-
-                function nullingGlobal(): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function revert(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function setupClone(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function showClone(t: any): void;
-
-                namespace defaults {
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.defaults
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.defaults
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.defaults
-                    var setData: any;
-                }
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.multiDrag.sortable
-                    var toArray: any;
-                }
-
-                var isMultiDrag: boolean;
-
-                var multiDragKeyDown: boolean;
-            }
-
-            namespace options {
-                function direction(): any;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onChoose(evt: any): void;
-
-                /**
-                 * @param {any} evt
-                 */
-                function onEnd(evt: any): void;
-
-                function onMove(): void;
-
-                /**
-                 * @param {any} t
-                 * @param {any} e
-                 */
-                function setData(t: any, e: any): void;
-
-                namespace group {
-                    // Too-deep object hierarchy from sortable.swap.sortable.options.group
-                    var checkPull: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.options.group
-                    var checkPut: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.options.group
-                    var name: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.options.group
-                    var revertClone: any;
-                }
-
-                var animation: number;
-
-                var bubbleScroll: boolean;
-
-                var chosenClass: string;
-
-                var dataIdAttr: string;
-
-                var delay: number;
-
-                var delayOnTouchOnly: boolean;
-
-                var disabled: boolean;
-
-                var dragClass: string;
-
-                var draggable: string;
-
-                var dragoverBubble: boolean;
-
-                var dropBubble: boolean;
-
-                var easing: any;
-
-                var emptyInsertThreshold: number;
-
-                var fallbackClass: string;
-
-                var fallbackOffset: {
-                    x: number;
-                    y: number;
-                };
-
-                var fallbackOnBody: boolean;
-
-                var fallbackTolerance: number;
-
-                var filter: any;
-
-                var forceFallback: boolean;
-
-                var ghostClass: string;
-
-                var handle: any;
-
-                var ignore: string;
-
-                var invertSwap: boolean;
-
-                var invertedSwapThreshold: any;
-
-                var multiDragKey: any;
-
-                var preventOnFilter: boolean;
-
-                var removeCloneOnHide: boolean;
-
-                var scroll: boolean;
-
-                var scrollSensitivity: number;
-
-                var scrollSpeed: number;
-
-                var selectedClass: string;
-
-                var sort: boolean;
-
-                var store: any;
-
-                var supportPointer: boolean;
-
-                var swapClass: string;
-
-                var swapThreshold: number;
-
-                var touchStartThreshold: number;
-            }
-
-            namespace removeOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.removeOnSpill.sortable
-                    var toArray: any;
-                }
-            }
-
-            namespace revertOnSpill {
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function onSpill(t: any): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.revertOnSpill.sortable
-                    var toArray: any;
-                }
-
-                var startIndex: any;
-            }
-
-            namespace scroll {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverCompleted(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStarted(t: any): void;
-
-                function drop(): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.scroll.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    bubbleScroll: boolean;
-                    scroll: boolean;
-                    scrollSensitivity: number;
-                    scrollSpeed: number;
-                };
-            }
-
-            namespace swap {
-                /**
-                 * @param {any} t
-                 */
-                function dragOverValid(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function dragStart(t: any): void;
-
-                /**
-                 * @param {any} t
-                 */
-                function drop(t: any): void;
-
-                function nulling(): void;
-
-                namespace options {
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var animation: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var bubbleScroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var chosenClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var dataIdAttr: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var delay: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var delayOnTouchOnly: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var direction: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var disabled: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var dragClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var draggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var dragoverBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var dropBubble: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var easing: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var emptyInsertThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var fallbackClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var fallbackOffset: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var fallbackOnBody: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var fallbackTolerance: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var filter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var forceFallback: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var ghostClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var group: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var handle: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var ignore: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var invertSwap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var invertedSwapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var multiDragKey: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var onChoose: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var onEnd: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var onMove: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var preventOnFilter: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var removeCloneOnHide: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var scrollSensitivity: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var scrollSpeed: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var selectedClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var setData: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var store: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var supportPointer: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var swapClass: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var swapThreshold: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.options
-                    var touchStartThreshold: any;
-                }
-
-                namespace sortable {
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var addAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var animate: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var animateAll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var captureAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var closest: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var destroy: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var el: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var handleEvent: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var multiDrag: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var nativeDraggable: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var option: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var options: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var removeAnimationState: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var removeOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var revertOnSpill: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var save: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var scroll: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var sort: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var swap: any;
-
-                    // Too-deep object hierarchy from sortable.swap.sortable.swap.sortable
-                    var toArray: any;
-                }
-
-                var defaults: {
-                    swapClass: string;
-                };
-            }
-
-            var el: HTMLElement;
-
-            var nativeDraggable: boolean;
-        }
-
-        var defaults: {
-            swapClass: string;
-        };
-    }
-
-    var el: HTMLElement;
-
-    var nativeDraggable: boolean;
-}
-
-declare class Sortable {
-    constructor(t: any, e: any);
-
-    /**
-     * @param {any} t
-     * @param {any} e
-     */
-    closest(t: any, e: any): any;
-
-    destroy(): void;
-
-    /**
-     * @param {any} t
-     */
-    handleEvent(t: any): void;
-
-    /**
-     * @param {any} t
-     * @param {any} e
-     */
-    option(t: any, e: any): any;
-
-    save(): void;
-
-    /**
-     * @param {any} t
-     */
-    sort(t: any): void;
-
-    toArray(): any;
-
-    static create(t: any, e: any): any;
-
-    static get(t: any): any;
-
-    static mount(...args: any[]): void;
-}
-
-declare namespace Sortable {
-    namespace utils {
-        /**
-         * @param {any} t
-         */
-        function cancelNextTick(t: any): any;
-
-        /**
-         * @param {any} t
-         */
-        function clone(t: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         * @param {any} n
-         * @param {any} o
-         */
-        function closest(t: any, e: any, n: any, o: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         * @param {any} n
-         */
-        function css(t: any, e: any, n: any): any;
-
-        /**
-         * @param {any} t
-         */
-        function deselect(t: any): void;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         */
-        function detectDirection(t: any, e: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         */
-        function extend(t: any, e: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         * @param {any} n
-         */
-        function find(t: any, e: any, n: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         * @param {any} n
-         */
-        function getChild(t: any, e: any, n: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         */
-        function index(t: any, e: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         */
-        function is(t: any, e: any): any;
-
-        /**
-         * @param {any} t
-         */
-        function nextTick(t: any): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         * @param {any} n
-         */
-        function off(t: any, e: any, n: any): void;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         * @param {any} n
-         */
-        function on(t: any, e: any, n: any): void;
-
-        /**
-         * @param {any} t
-         */
-        function select(t: any): void;
-
-        /**
-         * @param {any} e
-         * @param {any} n
-         */
-        function throttle(e: any, n: any, ...args: any[]): any;
-
-        /**
-         * @param {any} t
-         * @param {any} e
-         * @param {any} n
-         */
-        function toggleClass(t: any, e: any, n: any): void;
-    }
-
-    var eventCanceled: boolean;
-
-    var version: string;
-}
-
-declare function sortBank(): void;
-
-declare var specialItems: number[][];
-
-declare function startCloudSync(): void;
-
-declare function startClueHunt(): void;
-
-/**
- * @param {number} timer defaults to 0
- * @param {boolean} eat defaults to false
- */
-declare function startCombat(timer?: number, eat?: boolean): void;
-
-/**
- * @param {any} qty
- * @param {boolean} ignore defaults to true
- */
-declare function startCooking(qty: any, ignore?: boolean): any;
-
-/**
- * @param {boolean} clicked defaults to false
- */
-declare function startCrafting(clicked?: boolean): void;
-
-/**
- * @param {any} areaID
- * @param {any} fishID
- * @param {boolean} clicked defaults to false
- */
-declare function startFishing(areaID: any, fishID: any, clicked?: boolean): void;
-
-/**
- * @param {boolean} clicked defaults to false
- */
-declare function startFletching(clicked?: boolean): void;
-
-/**
- * @param {number} modifier defaults to 2
- */
-declare function startGolbinRaid(modifier?: number): void;
-
-/**
- * @param {boolean} clicked defaults to false
- */
-declare function startHerblore(clicked?: boolean): void;
-
-/**
- * @param {boolean} clicked defaults to false
- */
-declare function startRunecrafting(clicked?: boolean): void;
-
-/**
- * @param {any} areaID
- * @param {any} patchID
- * @param {boolean} initialise defaults to false
- */
-declare function startSeedTimer(areaID: any, patchID: any, initialise?: boolean): void;
-
-/**
- * @param {boolean} clicked defaults to false
- */
-declare function startSmithing(clicked?: boolean): void;
-
-declare var statsCombat: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsCooking: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsCrafting: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsFarming: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsFiremaking: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsFishing: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsFletching: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsGeneral: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsHerblore: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsMining: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsRunecrafting: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsSmithing: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsThieving: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-declare var statsWoodcutting: {
-    count: number;
-    id: string;
-    stat: string;
-}[];
-
-/**
- * @param {boolean} death defaults to false
- * @param {boolean} stopDungeon defaults to false
- * @param {boolean} runAway defaults to false
- */
-declare function stopCombat(death?: boolean, stopDungeon?: boolean, runAway?: boolean): void;
-
-/**
- * @param {boolean} gameLoading defaults to false
- */
-declare function stopGolbinRaid(gameLoading?: boolean): void;
-
-declare var storedCloudSaves: any[];
-
-/**
- * @param {any} damage
- */
-declare function stunNotify(damage: any): void;
-
-declare function switchView(): void;
-
-declare function syncSave(): void;
-
-declare var thievingMastery: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var thievingNPC: {
-    baseSuccess: number;
     level: number;
-    lootTable: any[];
-    maxCoins: number;
-    maxHit: number;
-    maxSuccess: number;
-    media: string;
-    name: string;
+    interval: number;
+    bonfireInterval: number;
+    bonfireBonus: number;
     xp: number;
 }[];
-
-declare var thievingTimer: any;
-
+/** @type {FiremakingID|null} */
+declare var selectedLog: FiremakingID | null;
+declare var isBurning: boolean;
+/** @type {TimeoutID|null} */
+declare var currentlyBurning: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var currentBonfireHandler: TimeoutID | null;
+declare var bonfireBonus: number;
+/** @type {BankItem} */
+declare var logCache: BankItem;
+/** @type {BankID} */
+declare var logCacheID: BankID;
 /**
- * @param {any} achievement
- * @param {string} skill defaults to null
- * @param {string} itemID defaults to null
+ *
+ * @param {FishingAreaID} areaID
+ * @param {FishID} fishID
+ * @param {boolean} [clicked=false]
  */
-declare function timestamp(achievement: any, skill?: string, itemID?: string): void;
-
+declare function startFishing(areaID: FishingAreaID, fishID: FishID, clicked?: boolean): void;
+declare function loadFishing(): void;
+declare function setupFishingAreas(): void;
 /**
- * @param {any} t
- * @param {any} e
+ *
+ * @param {FishingAreaID} areaID
+ * @param {FishID} fishID
  */
-declare function tippy(t: any, e: any): any;
-
-declare namespace tippy {
-    /**
-     * @param {any} t
-     * @param {any} e
-     */
-    function createSingleton(t: any, e: any): any;
-
-    /**
-     * @param {any} t
-     * @param {any} e
-     */
-    function delegate(t: any, e: any): any;
-
-    /**
-     * @param {any} t
-     */
-    function hideAll(t: any): void;
-
-    /**
-     * @param {any} t
-     */
-    function setDefaultProps(t: any): void;
-
-    namespace defaultProps {
-        function appendTo(): any;
-
-        function onAfterUpdate(): void;
-
-        function onBeforeUpdate(): void;
-
-        function onClickOutside(): void;
-
-        function onCreate(): void;
-
-        function onDestroy(): void;
-
-        function onHidden(): void;
-
-        function onHide(): void;
-
-        function onMount(): void;
-
-        function onShow(): void;
-
-        function onShown(): void;
-
-        function onTrigger(): void;
-
-        function onUntrigger(): void;
-
-        /**
-         * @param {any} t
-         */
-        function render(t: any): any;
-
-        namespace render {
-            var $$tippy: boolean;
-        }
-
-        var allowHTML: boolean;
-
-        var animateFill: boolean;
-
-        var animation: string;
-
-        var aria: {
-            content: string;
-            expanded: string;
-        };
-
-        var arrow: boolean;
-
-        var content: string;
-
-        var delay: number;
-
-        var duration: number[];
-
-        var followCursor: boolean;
-
-        var getReferenceClientRect: any;
-
-        var hideOnClick: boolean;
-
-        var ignoreAttributes: boolean;
-
-        var inertia: boolean;
-
-        var inlinePositioning: boolean;
-
-        var interactive: boolean;
-
-        var interactiveBorder: number;
-
-        var interactiveDebounce: number;
-
-        var maxWidth: number;
-
-        var moveTransition: string;
-
-        var offset: number[];
-
-        var placement: string;
-
-        var plugins: {
-            defaultValue: boolean;
-            fn: any;
-            name: string;
-        }[];
-
-        var popperOptions: {};
-
-        var role: string;
-
-        var showOnCreate: boolean;
-
-        var sticky: boolean;
-
-        var theme: string;
-
-        var touch: boolean;
-
-        var trigger: string;
-
-        var triggerTarget: any;
-
-        var zIndex: number;
-    }
-
-    var currentInput: {
-        isTouch: boolean;
-    };
-
-    var roundArrow: string;
-}
-
-declare class Toastify {
-    constructor(t: any);
-
-    buildToast(): any;
-
-    hideToast(): void;
-
-    /**
-     * @param {any} t
-     */
-    init(t: any): any;
-
-    /**
-     * @param {any} t
-     */
-    removeElement(t: any): void;
-
-    showToast(): any;
-
-    static reposition(): any;
-}
-
-declare namespace Toastify {
-    namespace lib {
-        class init {
-            constructor(t: any);
-
-            buildToast(): any;
-
-            hideToast(): void;
-
-            /**
-             * @param {any} t
-             */
-            init(t: any): any;
-
-            /**
-             * @param {any} t
-             */
-            removeElement(t: any): void;
-
-            showToast(): any;
-        }
-
-        function buildToast(): any;
-
-        function hideToast(): void;
-
-        /**
-         * @param {any} t
-         */
-        function removeElement(t: any): void;
-
-        function showToast(): any;
-
-        var toastify: string;
-    }
-}
-
+declare function selectFish(areaID: FishingAreaID, fishID: FishID): void;
 /**
- * @param {boolean} update defaults to false
+ *
+ * @param {FishingAreaID} areaID
+ * @param {FishID} fishID
  */
-declare function toggleAutoPotion(update?: boolean): void;
-
-declare function toggleBankBorders(): void;
-
-declare function toggleCharacterSelectionView(): void;
-
-declare function toggleCombatSkillMenu(): void;
-
+declare function updateFishingAreaWeights(areaID: FishingAreaID, fishID: FishID): void;
+declare function updateAvailableFish(): void;
 /**
- * @param {any} menu
+ *
+ * @param {FishingAreaID} areaID
+ * @param {FishID} fishID
  */
-declare function toggleMenu(menu: any): void;
-
-declare function togglePlayerContainer(): void;
-
-/**
- * @param {any} prayer
- */
-declare function togglePrayer(prayer: any): void;
-
-/**
- * @param {any} setting
- * @param {boolean} ignore defaults to false
- */
-declare function toggleSetting(setting: any, ignore?: boolean): void;
-
-/**
- * @param {any} menu
- */
-declare function toggleShopMenu(menu: any): void;
-
-declare function toggleSkillMinibar(): void;
-
-declare var tokenInterval: any;
-
-declare var toolsVersion: string;
-
-declare var tooltip: string;
-
-declare var tooltipInstances: {
-    bank: {
-        clearDelayTimeouts: any;
-        destroy: any;
-        disable: any;
-        enable: any;
-        hide: any;
-        hideWithInteractivity: any;
-        id: number;
-        plugins: {
-            defaultValue: boolean;
-            fn: any;
-            name: string;
-        }[];
-        popper: HTMLElement;
-        popperInstance: any;
-        props: {
-            allowHTML: boolean;
-            animateFill: boolean;
-            animation: boolean;
-            appendTo: any;
-            aria: {
-                content: string;
-                expanded: boolean;
-            };
-            arrow: boolean;
-            content: string;
-            delay: number;
-            duration: number[];
-            followCursor: boolean;
-            getReferenceClientRect: any;
-            hideOnClick: boolean;
-            ignoreAttributes: boolean;
-            inertia: boolean;
-            inlinePositioning: boolean;
-            interactive: boolean;
-            interactiveBorder: number;
-            interactiveDebounce: number;
-            maxWidth: number;
-            moveTransition: string;
-            offset: number[];
-            onAfterUpdate: any;
-            onBeforeUpdate: any;
-            onClickOutside: any;
-            onCreate: any;
-            onDestroy: any;
-            onHidden: any;
-            onHide: any;
-            onMount: any;
-            onShow: any;
-            onShown: any;
-            onTrigger: any;
-            onUntrigger: any;
-            placement: string;
-            plugins: {
-                defaultValue: boolean;
-                fn: any;
-                name: string;
-            }[];
-            popperOptions: {
-                modifiers: {
-                    enabled: boolean;
-                    fn: any;
-                    name: string;
-                    phase: string;
-                }[];
-            };
-            render: any;
-            role: string;
-            showOnCreate: boolean;
-            sticky: boolean;
-            theme: string;
-            touch: string;
-            trigger: string;
-            triggerTarget: any;
-            zIndex: number;
-        };
-        reference: HTMLElement;
-        setContent: any;
-        setProps: any;
-        show: any;
-        state: {
-            isDestroyed: boolean;
-            isEnabled: boolean;
-            isMounted: boolean;
-            isShown: boolean;
-            isVisible: boolean;
-        };
-        unmount: any;
-    }[];
-    combatInfo: any[];
-    equipment: {
-        clearDelayTimeouts: any;
-        destroy: any;
-        disable: any;
-        enable: any;
-        hide: any;
-        hideWithInteractivity: any;
-        id: number;
-        plugins: {
-            defaultValue: boolean;
-            fn: any;
-            name: string;
-        }[];
-        popper: HTMLElement;
-        popperInstance: any;
-        props: {
-            allowHTML: boolean;
-            animateFill: boolean;
-            animation: boolean;
-            appendTo: any;
-            aria: {
-                content: string;
-                expanded: boolean;
-            };
-            arrow: boolean;
-            content: string;
-            delay: number;
-            duration: number[];
-            followCursor: boolean;
-            getReferenceClientRect: any;
-            hideOnClick: boolean;
-            ignoreAttributes: boolean;
-            inertia: boolean;
-            inlinePositioning: boolean;
-            interactive: boolean;
-            interactiveBorder: number;
-            interactiveDebounce: number;
-            maxWidth: number;
-            moveTransition: string;
-            offset: number[];
-            onAfterUpdate: any;
-            onBeforeUpdate: any;
-            onClickOutside: any;
-            onCreate: any;
-            onDestroy: any;
-            onHidden: any;
-            onHide: any;
-            onMount: any;
-            onShow: any;
-            onShown: any;
-            onTrigger: any;
-            onUntrigger: any;
-            placement: string;
-            plugins: {
-                defaultValue: boolean;
-                fn: any;
-                name: string;
-            }[];
-            popperOptions: {
-                modifiers: {
-                    enabled: boolean;
-                    fn: any;
-                    name: string;
-                    phase: string;
-                }[];
-            };
-            render: any;
-            role: string;
-            showOnCreate: boolean;
-            sticky: boolean;
-            theme: string;
-            touch: boolean;
-            trigger: string;
-            triggerTarget: any;
-            zIndex: number;
-        };
-        reference: HTMLElement;
-        setContent: any;
-        setProps: any;
-        show: any;
-        state: {
-            isDestroyed: boolean;
-            isEnabled: boolean;
-            isMounted: boolean;
-            isShown: boolean;
-            isVisible: boolean;
-        };
-        unmount: any;
-    }[];
-    equipmentSets: {
-        clearDelayTimeouts: any;
-        destroy: any;
-        disable: any;
-        enable: any;
-        hide: any;
-        hideWithInteractivity: any;
-        id: number;
-        plugins: {
-            defaultValue: boolean;
-            fn: any;
-            name: string;
-        }[];
-        popper: HTMLElement;
-        popperInstance: any;
-        props: {
-            allowHTML: boolean;
-            animateFill: boolean;
-            animation: boolean;
-            appendTo: any;
-            aria: {
-                content: string;
-                expanded: boolean;
-            };
-            arrow: boolean;
-            content: string;
-            delay: number;
-            duration: number[];
-            followCursor: boolean;
-            getReferenceClientRect: any;
-            hideOnClick: boolean;
-            ignoreAttributes: boolean;
-            inertia: boolean;
-            inlinePositioning: boolean;
-            interactive: boolean;
-            interactiveBorder: number;
-            interactiveDebounce: number;
-            maxWidth: number;
-            moveTransition: string;
-            offset: number[];
-            onAfterUpdate: any;
-            onBeforeUpdate: any;
-            onClickOutside: any;
-            onCreate: any;
-            onDestroy: any;
-            onHidden: any;
-            onHide: any;
-            onMount: any;
-            onShow: any;
-            onShown: any;
-            onTrigger: any;
-            onUntrigger: any;
-            placement: string;
-            plugins: {
-                defaultValue: boolean;
-                fn: any;
-                name: string;
-            }[];
-            popperOptions: {
-                modifiers: {
-                    enabled: boolean;
-                    fn: any;
-                    name: string;
-                    phase: string;
-                }[];
-            };
-            render: any;
-            role: string;
-            showOnCreate: boolean;
-            sticky: boolean;
-            theme: string;
-            touch: boolean;
-            trigger: string;
-            triggerTarget: any;
-            zIndex: number;
-        };
-        reference: HTMLElement;
-        setContent: any;
-        setProps: any;
-        show: any;
-        state: {
-            isDestroyed: boolean;
-            isEnabled: boolean;
-            isMounted: boolean;
-            isShown: boolean;
-            isVisible: boolean;
-        };
-        unmount: any;
-    }[];
-    minibar: {
-        clearDelayTimeouts: any;
-        destroy: any;
-        disable: any;
-        enable: any;
-        hide: any;
-        hideWithInteractivity: any;
-        id: number;
-        plugins: {
-            defaultValue: boolean;
-            fn: any;
-            name: string;
-        }[];
-        popper: HTMLElement;
-        popperInstance: any;
-        props: {
-            allowHTML: boolean;
-            animateFill: boolean;
-            animation: boolean;
-            appendTo: any;
-            aria: {
-                content: string;
-                expanded: boolean;
-            };
-            arrow: boolean;
-            content: string;
-            delay: number;
-            duration: number[];
-            followCursor: boolean;
-            getReferenceClientRect: any;
-            hideOnClick: boolean;
-            ignoreAttributes: boolean;
-            inertia: boolean;
-            inlinePositioning: boolean;
-            interactive: boolean;
-            interactiveBorder: number;
-            interactiveDebounce: number;
-            maxWidth: number;
-            moveTransition: string;
-            offset: number[];
-            onAfterUpdate: any;
-            onBeforeUpdate: any;
-            onClickOutside: any;
-            onCreate: any;
-            onDestroy: any;
-            onHidden: any;
-            onHide: any;
-            onMount: any;
-            onShow: any;
-            onShown: any;
-            onTrigger: any;
-            onUntrigger: any;
-            placement: string;
-            plugins: {
-                defaultValue: boolean;
-                fn: any;
-                name: string;
-            }[];
-            popperOptions: {
-                modifiers: {
-                    enabled: boolean;
-                    fn: any;
-                    name: string;
-                    phase: string;
-                }[];
-            };
-            render: any;
-            role: string;
-            showOnCreate: boolean;
-            sticky: boolean;
-            theme: string;
-            touch: boolean;
-            trigger: string;
-            triggerTarget: any;
-            zIndex: number;
-        };
-        reference: HTMLElement;
-        setContent: any;
-        setProps: any;
-        show: any;
-        state: {
-            isDestroyed: boolean;
-            isEnabled: boolean;
-            isMounted: boolean;
-            isShown: boolean;
-            isVisible: boolean;
-        };
-        unmount: any;
-    }[];
-    specialAttack: any[];
-    spellbook: {
-        clearDelayTimeouts: any;
-        destroy: any;
-        disable: any;
-        enable: any;
-        hide: any;
-        hideWithInteractivity: any;
-        id: number;
-        plugins: {
-            defaultValue: boolean;
-            fn: any;
-            name: string;
-        }[];
-        popper: HTMLElement;
-        popperInstance: any;
-        props: {
-            allowHTML: boolean;
-            animateFill: boolean;
-            animation: boolean;
-            appendTo: any;
-            aria: {
-                content: string;
-                expanded: boolean;
-            };
-            arrow: boolean;
-            content: string;
-            delay: number;
-            duration: number[];
-            followCursor: boolean;
-            getReferenceClientRect: any;
-            hideOnClick: boolean;
-            ignoreAttributes: boolean;
-            inertia: boolean;
-            inlinePositioning: boolean;
-            interactive: boolean;
-            interactiveBorder: number;
-            interactiveDebounce: number;
-            maxWidth: number;
-            moveTransition: string;
-            offset: number[];
-            onAfterUpdate: any;
-            onBeforeUpdate: any;
-            onClickOutside: any;
-            onCreate: any;
-            onDestroy: any;
-            onHidden: any;
-            onHide: any;
-            onMount: any;
-            onShow: any;
-            onShown: any;
-            onTrigger: any;
-            onUntrigger: any;
-            placement: string;
-            plugins: {
-                defaultValue: boolean;
-                fn: any;
-                name: string;
-            }[];
-            popperOptions: {
-                modifiers: {
-                    enabled: boolean;
-                    fn: any;
-                    name: string;
-                    phase: string;
-                }[];
-            };
-            render: any;
-            role: string;
-            showOnCreate: boolean;
-            sticky: boolean;
-            theme: string;
-            touch: boolean;
-            trigger: string;
-            triggerTarget: any;
-            zIndex: number;
-        };
-        reference: HTMLElement;
-        setContent: any;
-        setProps: any;
-        show: any;
-        state: {
-            isDestroyed: boolean;
-            isEnabled: boolean;
-            isMounted: boolean;
-            isShown: boolean;
-            isVisible: boolean;
-        };
-        unmount: any;
-    }[];
-};
-
-declare var totalMastery: number[];
-
-declare var totalMbucksSpent: number;
-
-declare var treeAutoHandler: boolean[];
-
-declare var treeCutLimit: number;
-
-declare var treeCuttingHandler: any[];
-
-declare var treeMasteryData: {
-    mastery: number;
-    masteryXP: number;
-}[];
-
-declare var treeSeeds: {
-    itemID: number;
-    level: number;
-}[];
-
-declare var tutorialTipData: {
+declare function updateFishingMastery(areaID: FishingAreaID, fishID: FishID): void;
+declare function updateFishing(): void;
+declare function secretAreaCheck(): void;
+declare function barbarianAreaCheck(): void;
+declare const fishingAreas: ({
+    name: string;
+    fishChance: number;
+    junkChance: number;
+    specialChance: number;
+    fish: number[];
+    description?: undefined;
+} | {
+    name: string;
     description: string;
+    fishChance: number;
+    junkChance: number;
+    specialChance: number;
+    fish: number[];
+})[];
+/** @type {FishingItem[]} */
+declare var fishingItems: FishingItem[];
+/** @type {ItemID[]} */
+declare var junkItems: ItemID[];
+/** @type {LootTable} */
+declare var specialItems: LootTable;
+declare var isFishing: boolean;
+/** @type {FishingAreaID|null} */
+declare var currentFishingArea: FishingAreaID | null;
+/** @type {(null|FishingID)[]} */
+declare var selectedFish: (null | FishingID)[];
+/** @type {TimeoutID|null} */
+declare var fishingTimeout: TimeoutID | null;
+/** Save game variable */
+declare var secretAreaUnlocked: boolean;
+/**
+ *
+ * @param {boolean} [clicked=false]
+ */
+declare function startFletching(clicked?: boolean): void;
+/**
+ *
+ * @param {FletchingID} fletchingID
+ * @param {FletchLog} [log=0]
+ * @param {boolean} [update=false]
+ */
+declare function selectFletch(fletchingID: FletchingID, log?: FletchLog, update?: boolean): void;
+declare function loadFletching(): void;
+declare function updateFletching(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} recipeIndex
+ * @returns
+ */
+declare function getFletchingRecipeQty(itemID: ItemID, recipeIndex: number): number;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateQty(itemID: ItemID): void;
+/**
+ * onClick callback function (using href)
+ * @param {FletchingCategory} cat
+ */
+declare function fletchCategory(cat: FletchingCategory): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {FletchLog} [fletchLog=0]
+ * @param {boolean} [offline=false]
+ */
+declare function checkFletchingReq(itemID: ItemID, fletchLog?: FletchLog, offline?: boolean): boolean;
+/** @type {FletchingItem[]} */
+declare var fletchingItems: FletchingItem[];
+/** @type {FletchingID|null} */
+declare var currentFletch: FletchingID | null;
+declare var isFletching: boolean;
+/** @type {TimeoutID|null} */
+declare var fletchingTimeout: TimeoutID | null;
+/** @type {QtyReqCheck[]} */
+declare var fletchReqCheck: QtyReqCheck[];
+/** @type {FletchingID|null} */
+declare var selectedFletch: FletchingID | null;
+/** @type {FletchLog} */
+declare var selectedFletchLog: FletchLog;
+declare var fletchInterval: number;
+/**
+ * onClick callback function
+ * @param {number} [modifier=2]
+ */
+declare function startGolbinRaid(modifier?: number): void;
+declare function stopGolbinRaid(gameLoading?: boolean, death?: boolean): void;
+declare function updateRaidCoins(qty?: number): void;
+declare function getPrayerPointsToAdd(): number;
+declare function isPrayerUnlockedGolbinRaid(): boolean;
+declare function getGolbinWaveSkipCost(): number;
+/**
+ * onclick callback function
+ */
+declare function skipGolbinWave(): void;
+declare function resetGolbinEquipment(): void;
+declare function resetGolbinFood(): void;
+declare function setBaseGolbinEquipment(): void;
+declare function getGolbinLevel(hitpoints?: boolean): number;
+declare function getGolbinBonuses(): number;
+declare function updateGolbinRaid(waveSkip?: boolean): void;
+declare function buildGolbinItemSelection(): void;
+declare function showEquipmentSelection(init?: boolean, category?: number, forceItemID?: number, forceQty?: number): void;
+declare function getRandomAmmoRoll(): number;
+declare function getRandomFoodRoll(): number;
+declare function getRandomRuneRoll(): number;
+declare function continueGolbinRaid(): void;
+/**
+ * onClick callback function
+ * @param {ItemID} itemID
+ * @param {number} qty
+ */
+declare function selectGolbinFood(itemID: ItemID, qty: number): void;
+declare function reinstatePreviousPlayerData(): void;
+declare function updatePlayerGolbinStats(): void;
+/**
+ * onClick callback function
+ * @param {ItemID} itemID
+ * @param {number} qty
+ */
+declare function addItemToGolbinInventory(itemID: ItemID, qty: number): void;
+declare function updateGolbinRaidHistory(raidCoinsEarned?: number): void;
+declare function loadGolbinRaidHistory(): void;
+/**
+ *
+ * @param {number} historyID
+ * @returns {string}
+ */
+declare function getGolbinRaidHistory(historyID: number): string;
+declare function getGolbinName(): string;
+declare const golbinItemSelectionCount: number[];
+/** @type {ItemQuantity[]} */
+declare var golbinInventory: ItemQuantity[];
+declare var isGolbinRaid: boolean;
+declare var golbinSkillLevels: number[];
+declare var golbinWave: number;
+declare var golbinEnemyCount: number;
+/** @type {ItemQuantity[]} */
+declare var golbinFood: ItemQuantity[];
+/** @type {{itemID: ItemID}[][]} */
+declare var golbinItemSelection: {
+    itemID: ItemID;
+}[][];
+/**
+ * Save game variable
+ * @type {[number,EquipSetID,EquippedFoodID]|[]} */
+declare var saveStateBeforeRaid: [number, EquipSetID, EquippedFoodID] | [];
+/**
+ * Save game variable
+ * @type {RaidHistory[]} */
+declare var golbinRaidHistory: RaidHistory[];
+declare var golbinTimestamp: number[];
+declare var golbinKillCount: number;
+declare var golbinModifier: number;
+/** Save game variable */
+declare var raidCoins: number;
+/** Save game variable */
+declare var golbinRaidStats: number[];
+declare var golbinSelectionInProgress: boolean;
+/** @type {ItemID[]} */
+declare var specialWeaponsForRaid: ItemID[];
+declare var golbinRaidPrayerPoints: number;
+declare const bannedGolbinRaidItems: number[];
+declare const golbinNames: string[];
+declare const golbinTraits: string[];
+declare function startHerblore(clicked?: boolean): void;
+declare function loadHerblore(update?: boolean): void;
+/**
+ *
+ * @param {HerbloreItemID} herbloreID
+ * @param {boolean} [update=false]
+ */
+declare function selectHerblore(herbloreID: HerbloreItemID, update?: boolean): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} recipeIndex
+ * @returns
+ */
+declare function getHerbloreRecipeQty(itemID: ItemID, recipeIndex: number): number;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateHerbloreQty(itemID: ItemID): void;
+/**
+ *
+ * @param {HerbloreItemID} id
+ */
+declare function getHerbloreTier(id: HerbloreItemID): number;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function checkHerbloreReq(itemID: ItemID): boolean;
+/**
+ * onClick callback function (uses href)
+ * @param {HerbloreCategory} cat
+ */
+declare function herbloreCategory(cat: HerbloreCategory): void;
+/**
+ * onClick callback function
+ */
+declare function loadPotions(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {boolean} [isOffline=false]
+ */
+declare function usePotion(itemID: ItemID, isOffline?: boolean): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} [qty=-1]
+ * @param {boolean} [use=false]
+ * @param {boolean} [isOffline=false]
+ */
+declare function updateHerbloreBonuses(itemID: ItemID, qty?: number, use?: boolean, isOffline?: boolean): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns {number}
+ */
+declare function getPotionCharges(itemID: ItemID): number;
+declare function updatePotionHeader(): void;
+/** @type {HerbloreItem[]} */
+declare const herbloreItemData: HerbloreItem[];
+/** @type {typeof herbloreItemData} */
+declare var herbloreItems: typeof herbloreItemData;
+declare var isHerblore: boolean;
+/** @type {TimeoutID|null} */
+declare var herbloreTimeout: TimeoutID | null;
+/** @type {QtyReqCheck[]} */
+declare var herbloreReqCheck: QtyReqCheck[];
+/** @type {HerbloreItemID|null} */
+declare var selectedHerblore: HerbloreItemID | null;
+/** @type {HerbloreItemID|null} */
+declare var currentHerblore: HerbloreItemID | null;
+declare var herbloreInterval: number;
+declare const masteryTiers: number[];
+/**
+ * Save game variable
+ * @type {HerbloreBonus[]} */
+declare var herbloreBonuses: HerbloreBonus[];
+/** @type {GenericItem[]} */
+declare const items: GenericItem[];
+declare function castMagic(clicked?: boolean, offlineIsPaused?: boolean): void;
+/**
+ *
+ * @param {AltmagicID} altMagicID
+ * @param {boolean} [update=false]
+ */
+declare function selectMagic(altMagicID: AltmagicID, update?: boolean): void;
+/**
+ *
+ * @param {ItemID} id
+ * @param {ItemID} selectedItem
+ * @param {boolean} [select=true]
+ */
+declare function selectItemForMagic(id: ItemID, selectedItem?: ItemID, select?: boolean): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function setMagicItemImg(itemID: ItemID): void;
+/** @type {Spell[]} */
+declare const SPELLS: Spell[];
+/** @type {Curse[]} */
+declare const CURSES: Curse[];
+/** @type {BaseAurora[]} */
+declare const AURORAS: BaseAurora[];
+/** @type {Ancient[]} */
+declare const ANCIENT: Ancient[];
+/** @type {Altmagic[]} */
+declare const ALTMAGIC: Altmagic[];
+declare var isMagic: boolean;
+/** @type {AltmagicID|null} */
+declare var selectedAltMagic: AltmagicID | null;
+/** @type {AltmagicID|null} */
+declare var currentMagicSpell: AltmagicID | null;
+/** @type {[ItemID|null,ItemID|null,ItemID|null]} */
+declare var selectedMagicItem: [ItemID | null, ItemID | null, ItemID | null];
+declare var magicInterval: number;
+/** @type {TimeoutID|null} */
+declare var magicTimeout: TimeoutID | null;
+declare function updateWindow(cloudSave?: boolean): void;
+declare function updateGP(value?: number, disableDOMChanges?: boolean): void;
+/**
+ *
+ * @param {SkillID} currentSkill
+ */
+declare function idleChecker(currentSkill: SkillID): boolean;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {string} extraID
+ */
+declare function updateSkillVisuals(skill: SkillID, extraID?: string): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function updateSkillWindow(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function updateLevelProgress(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {boolean} [offline=false]
+ */
+declare function levelUp(skill: SkillID, offline?: boolean): void;
+declare function Exp(): void;
+declare class Exp {
+    /**
+     *
+     * @param {number} xp
+     */
+    equate: (xp: number) => number;
+    /**
+     *
+     * @param {number} level
+     */
+    level_to_xp: (level: number) => number;
+    /**
+     *
+     * @param {number} xp
+     * @param {number} level
+     * @returns {number}
+     */
+    xp_to_level: (xp: number, level?: number) => number;
+}
+/**
+ *
+ * @param {number} currentGP
+ */
+declare function convertGP(currentGP: number): string;
+/**
+ *
+ * @param {number|string} number
+ */
+declare function formatNumber(number: number | string): string;
+/**
+ *
+ * @param {number|string} x
+ * @returns {string}
+ */
+declare function numberWithCommas(x: number | string): string;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function unlockSkill(skill: SkillID): void;
+declare function getPriceToUnlockSkill(): number;
+/**
+ *
+ * @param {PageID} page
+ * @param {boolean} [gameLoading=false]
+ * @param {boolean} [toggleSidebar=true]
+ * @param {boolean} [showRaidShop=false]
+ * @param {SkillID} [skillID=-1]
+ */
+declare function changePage(page: PageID, gameLoading?: boolean, toggleSidebar?: boolean, showRaidShop?: boolean, skillID?: SkillID): void;
+/**
+ *
+ * @param {string} string
+ */
+declare function setToUppercase(string: string): string;
+/**
+ *
+ * @param {string} string
+ */
+declare function setToLowercase(string: string): string;
+declare function updateTooltips(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} qty
+ */
+declare function itemNotify(itemID: ItemID, qty: number): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} qty
+ */
+declare function processItemNotify(itemID: ItemID, qty: number): void;
+/**
+ *
+ * @param {number} qty
+ */
+declare function gpNotify(qty: number): void;
+/**
+ *
+ * @param {number} damage
+ */
+declare function stunNotify(damage: number): void;
+declare function bankFullNotify(): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function levelUpNotify(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} oldLevel
+ * @param {number} newLevel
+ */
+declare function createNewMilestoneModal(skill: SkillID, oldLevel: number, newLevel: number): string;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function showNewMilstones(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {string} message
+ * @param {NotificationType} type
+ */
+declare function notifyPlayer(skill: SkillID, message: string, type?: NotificationType): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function notifyGloves(skill: SkillID): void;
+/**
+ *
+ * @param {number|string} qty
+ * @param {NotificationType} type
+ */
+declare function notifySlayer(qty: number | string, type?: NotificationType): void;
+/**
+ * Shows up as unused, but is in HTML
+ * @param {SkillID} skill
+ */
+declare function updateMilestoneTab(skill: SkillID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function selectFromDropTable(itemID: ItemID): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {MonsterID|ThievingID} id
+ */
+declare function selectFromLootTable(skill: SkillID, id: MonsterID | ThievingID): number;
+/**
+ *
+ * @param {GloveID} gloves
+ * @param {SkillID} skill
+ */
+declare function updateGloves(gloves: GloveID, skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} xp
+ * @param {boolean} [forceSkill=false] Seems to do nothing
+ * @param {boolean} [dropRares=true] Drop mastery tokens and rhaelyx parts
+ * @param {boolean} [offline=false]
+ */
+declare function addXP(skill: SkillID, xp: number, forceSkill?: boolean, dropRares?: boolean, offline?: boolean): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} xp
+ * @param {boolean} [forceSkill=false]
+ * @returns {number}
+ */
+declare function getSkillXPToAdd(skill: SkillID, xp: number, forceSkill?: boolean): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {boolean} [offline=false]
+ */
+declare function getMasteryToken(skill: SkillID, offline?: boolean): number;
+declare function gloveCheck(): void;
+/**
+ * Shows as unused, but is in HTML
+ * @param {0|1} menu
+ */
+declare function toggleMenu(menu: 0 | 1): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} totalBaseActions
+ * @param {PetID} petID
+ * @param {number} interval
+ * @param {ItemID} tokenID
+ * @param {number} levelReq
+ */
+declare function rollForGeneralRareItems(skill: SkillID, totalBaseActions: number, petID: PetID, interval: number, tokenID: ItemID, levelReq: number): {
+    itemsGained: number;
+    actions: number;
+}[];
+declare function updateOffline(continueAction?: boolean): void;
+declare function clearOffline(): void;
+declare function offlineCatchup(): void;
+/**
+ * Onclick Callback function
+ */
+declare function toggleCombatSkillMenu(): void;
+/**
+ *
+ * @param {number} levelReq
+ * @param {boolean} [offline=false]
+ */
+declare function dropRingHalfA(levelReq: number, offline?: boolean): number;
+/**
+ *
+ * @param {TutorialtipID} tipID
+ */
+declare function activateTutorialTip(tipID: TutorialtipID): void;
+declare function updateSaveFileChanges(): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function pauseOfflineAction(skill: SkillID): void;
+declare function initMinibar(): void;
+/**
+ *
+ * @param {string} pageName
+ */
+declare function updateMinibar(pageName: string): void;
+/** Onclick callback function */
+declare function toggleSkillMinibar(): void;
+/**
+ * Onclick callback function
+ * @param {SkillID} skill
+ */
+declare function quickEquipSkillcape(skill: SkillID): void;
+/**
+ * Onclick callback function
+ * @param {ItemID} item
+ * @param {SkillID} skill
+ */
+declare function quickEquipItem(item: ItemID, skill: SkillID): void;
+/**
+ *
+ * @param {GameMode} gamemode
+ */
+declare function setGamemode(gamemode: GameMode): void;
+declare function loadCharacterSelection(returnToGame?: boolean): void;
+/**
+ *
+ * @param {boolean} cloudSave
+ * @param {string} keySuffix
+ * @param {GameMode} gamemode
+ * @param {string} timestamp
+ * @param {SaveString} save
+ * @param {CharacterID} characterID
+ */
+declare function createCharacterSelectionBox(cloudSave: boolean, keySuffix: string, gamemode: GameMode, timestamp: string, save: SaveString, characterID: CharacterID): string;
+declare function createNewCharacterElement(characterID?: number): string;
+declare function compareSaveTimestamps(): {
+    local: number;
+    cloud: number;
+}[];
+declare function displaySaveTimestampComparison(): void;
+declare function processLocalCharacters(): void;
+/**
+ *
+ * @param {CharacterID} charID
+ * @param {SaveString} save
+ */
+declare function processCloudCharacters(charID: CharacterID, save: SaveString): void;
+/**
+ *
+ * @param {CharacterID} charID
+ */
+declare function resetCharacterSelection(charID: CharacterID): void;
+/**
+ * onClick callback function
+ */
+declare function toggleCharacterSelectionView(): void;
+/**
+ *
+ * @param {CharacterID} char
+ * @param {boolean} [confirmed=false]
+ */
+declare function selectCharacter(char: CharacterID, confirmed?: boolean): void;
+declare function resetAccountData(): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {boolean} [offline=false]
+ */
+declare function rollForRhaelyx(skill: SkillID, offline?: boolean): number | false;
+declare function checkRhaelyx(isOffline?: boolean, useCharge?: boolean): boolean;
+/**
+ *
+ * @param {boolean} [isOffline=false]
+ */
+declare function removeChargeRhaelyx(isOffline?: boolean): void;
+declare function initTooltips(): void;
+declare function finaliseLoad(): void;
+declare function setupNewCharacter(): void;
+/**
+ *
+ * @param {string} mediaQuery
+ */
+declare function checkMediaQuery(mediaQuery: string): boolean;
+/**
+ * onClick callback function
+ */
+declare function viewGameGuide(): void;
+/**
+ *
+ * @param {number} $mean
+ * @param {number} $stdDev
+ */
+declare function generateGaussianNumber($mean: number, $stdDev: number): number;
+/**
+ *
+ * @param {number} numActions
+ * @param {number} probability
+ */
+declare function getMean(numActions: number, probability: number): number;
+/**
+ *
+ * @param {number} numActions
+ * @param {number} probability
+ */
+declare function getStdDev(numActions: number, probability: number): number;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getMasteryTokenChance(skill: SkillID): number;
+/**
+ *
+ * @param {number} levelReq
+ */
+declare function dropRingHalfAChance(levelReq: number): number;
+declare function getRhaelyxChance(): number;
+declare function getRhaelyxStoneChance(): 0 | 0.0001;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getRhaelyxPiece(skill: SkillID): number;
+/**
+ *
+ * @param {PetID} petID
+ * @param {number} timePerAction
+ * @param {false|SkillID} [forceSkill=false]
+ */
+declare function getPetChance(petID: PetID, timePerAction: number, forceSkill?: false | SkillID): number;
+declare function openNextModal(): void;
+/**
+ *
+ * @param {SweetAlertOptions} modal
+ */
+declare function addModalToQueue(modal: SweetAlertOptions): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function getItemMedia(itemID: ItemID): string;
+/**
+ *
+ * @param {MonsterID} monsterID
+ */
+declare function getMonsterMedia(monsterID: MonsterID): string;
+/**
+ * Mobile/Steam Specific function
+ * @param {string} localURL
+ */
+declare function getMiscMedia(localURL: string): string;
+declare function initSteam(): void;
+declare function checkForSteamAchievements(): void;
+/**
+ *
+ * @param {string} achievementName
+ * @param {number} i
+ */
+declare function unlockSteamAchievement(achievementName: string, i: number): void;
+/**
+ * Steam specific function
+ */
+declare function resetSteamAchievements(): void;
+declare function cleanSaveFile(): void;
+/**
+ * Mobile/steam specific function
+ * @param {0} noticeID
+ */
+declare function agreeToNotice(noticeID: 0): void;
+declare function checkForItemsToAddToBank(): void;
+declare function checkCompletionCapeRequirements(): boolean;
+declare function checkMaxCapeRequirements(): boolean;
+/**
+ *
+ * @param {string} div
+ * @param {number} interval
+ * @param {boolean} [stayFull=true]
+ */
+declare function animateProgress(div: string, interval: number, stayFull?: boolean): void;
+/**
+ *
+ * @param {string} div
+ */
+declare function resetProgressAnimation(div: string): void;
+/**
+ * Rolls a percentage chance
+ * @param {number} chance
+ */
+declare function rollPercentage(chance: number): boolean;
+declare function updateAllPlayerModifiers(): void;
+declare function calculateSummoningSynergyModifiers(): void;
+declare function calculateRandomModifiers(): void;
+declare function calculateEnemySpecialAttackModifiers(): void;
+declare function calculatePlayerSpecialAttackModifiers(): void;
+declare function calculatePotionModifiers(): void;
+declare function calculateMiscModifiers(): void;
+declare function calculateMiscSummoningModifiers(): void;
+declare function calculateShopModifiers(): void;
+declare function calculateAgilityModifiers(): void;
+declare function calculatePrayerModifiers(): void;
+declare function calculateEquippedItemModifiers(): void;
+declare function calculatePetModifiers(): void;
+declare function calculateCombatAreaEffectModifiers(): void;
+/**
+ * Modifies baseStat by modifier
+ * @param {number} baseStat
+ * @param {number} modifier
+ * @param {0|1|2} type 0 applies a percentage bonus, 1 applies an additive bonus, 2: applies a negative additive bonus
+ */
+declare function applyModifier(baseStat: number, modifier: number, type?: 0 | 1 | 2): number;
+/**
+ * Best description is likely 2 functions with overrides, or by manually inserting some type gaurds into this
+ * the value.length typeguards to array[key] being SkillModifierActive
+ * @param {ModifierActive} array Nvm this can be an object and not an array, think this is typically a modifier object
+ * @param {ModifierKeys} key Potential key of the object "array"
+ * @param {SkillModifierData|number} value
+ */
+declare function updateKeyValuePair(array: ModifierActive, key: ModifierKeys, value: SkillModifierData | number): void;
+/**
+ *
+ * @param {SkillModifierKeys} key
+ * @param {SkillID} id
+ */
+declare function getTotalFromModifierArray(key: SkillModifierKeys, id: SkillID): number;
+/**
+ *
+ * @param {number} n Pos Integer, number of trials
+ * @param {number} p Float [0,1], probability
+ * @param {number} epsilon Cutoff
+ */
+declare function binomial_distribution(n: number, p: number, epsilon?: number): number[];
+/**
+ *
+ * @param {number} numberTrials
+ * @param {number} chance
+ */
+declare function sample_from_binomial(numberTrials: number, chance: number): number;
+/**
+ *
+ * @param {SkillID} skillID
+ * @param {number} baseInterval
+ * @param {number} action
+ * @param {boolean} [useCharge=true]
+ * @returns {number}
+ */
+declare function calculateSkillInterval(skillID: SkillID, baseInterval: number, action?: number, useCharge?: boolean): number;
+/**
+ *
+ * @param {SkillID} skillID
+ * @param {number} action
+ * @param {ItemID} itemID
+ * @param {boolean} [useCharges=true]
+ * @param {number} [interval=1000]
+ * @returns {number}
+ */
+declare function calculateSkillPreservationChance(skillID: SkillID, action?: number, itemID?: ItemID, useCharges?: boolean, interval?: number): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {boolean} [isCombat=false]
+ * @param {number} [baseChance=0]
+ * @param {number} [action=0]
+ */
+declare function calculateChanceToDouble(skill: SkillID, isCombat?: boolean, baseChance?: number, action?: number, itemID?: number, useCharge?: boolean, interval?: number): number;
+/**
+ * @template {ModifierKeys} T
+ * @param {T} modifier
+ * @param {ModifierObject<SkillModifierData,number>[T]} value
+ * @returns {[string,string]}
+ */
+declare function printPlayerModifier<T extends keyof SkillModifierObject<any> | keyof StandardModifierObject<any>>(modifier: T, value: ModifierObject<SkillModifierData, number>[T]): [string, string];
+/**
+ *
+ * @param {number} value
+ * @returns {number}
+ */
+declare function getNumberMultiplierValue(value: number): number;
+declare function createGamemodeSelectionElements(): string;
+/**
+ *
+ * @param {GameMode} gamemode
+ * @returns {string}
+ */
+declare function getGamemodeSelectionRules(gamemode: GameMode): string;
+/**
+ *
+ * @param {GameMode} gamemode
+ * @returns {string}
+ */
+declare function getGamemodeSafety(gamemode: GameMode): string;
+/**
+ *
+ * @param {GameMode} gamemode
+ * @returns {string}
+ */
+declare function getGamemodeDescription(gamemode: GameMode): string;
+/**
+ *
+ * @param {GameMode} gamemode
+ * @returns {string}
+ */
+declare function getGamemodeEventStatus(gamemode: GameMode): string;
+/**
+ *
+ * @param {GameMode} gamemode
+ * @returns {string}
+ */
+declare function getGamemodeName(gamemode: GameMode): string;
+/**
+ *
+ * @param {number} count
+ * @param {keyof randomModifiers} key
+ * @param {EquipSlotID} equipmentSlot
+ * @returns {RandomModifier[]}
+ */
+declare function rollRandomModifiers(count: number, key: keyof {
+    equipment: NumberDictionary<ModifierData>;
+    player: NumberDictionary<ModifierData>;
+}, equipmentSlot?: EquipSlotID): RandomModifier[];
+/**
+ *
+ * @param {EquipSlotID} equipmentSlot
+ */
+declare function getEquipmentCorruption(equipmentSlot: EquipSlotID): void;
+declare function loadCorruption(): void;
+/**
+ *
+ * @param {EquipSlotID} equipmentSlot
+ * @param {RandomModifier[]} mods
+ */
+declare function updateHTMLRandomMod(equipmentSlot: EquipSlotID, mods: RandomModifier[]): void;
+/**
+ *
+ * @param {number} tier
+ * @returns {number}
+ */
+declare function getRandomModifiersDestroyChance(tier: number): number;
+/**
+ *
+ * @param {number} tier
+ * @returns {number}
+ */
+declare function getRandomModifierMaxValue(tier: number): number;
+/**
+ *
+ * @param {EquipSlotID} equipmentSlot
+ * @returns {number}
+ */
+declare function getRandomModifierCost(equipmentSlot: EquipSlotID): number;
+/**
+ *
+ * @param {EquipSlotID} equipmentSlot
+ * @returns {number}
+ */
+declare function getRandomModifierTier(equipmentSlot: EquipSlotID): number;
+/**
+ *
+ * @param {EquipSlotID} equipmentSlot
+ */
+declare function updateRandomModifierInfo(equipmentSlot: EquipSlotID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns
+ */
+declare function getItemQtyRandomModifier(itemID: ItemID): number[];
+/**
+ *
+ * @param {*} object
+ */
+declare function deleteKeysFromObject(object: any): void;
+declare function activateChaosMode(): void;
+/**
+ *
+ * @param {number[]} elements
+ * @returns {number}
+ */
+declare function getAverage(elements?: number[]): number;
+declare function buildDataFromItemsArray(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number|string} [qty=0]
+ * @param {string} [elementID='']
+ * @param {string} [qtyStyle='bg-secondary']
+ * @returns
+ */
+declare function createItemRecipeElement(itemID: ItemID, qty?: number | string, elementID?: string, qtyStyle?: string): string;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {string} [qtyStyle='bg-secondary']
+ * @param {string|-1} [itemMedia=-1]
+ * @param {boolean} [showQty=true]
+ * @returns {string}
+ */
+declare function createSummonSynergySearchElement(itemID: ItemID, qtyStyle?: string, itemMedia?: string | -1, showQty?: boolean): string;
+/**
+ *
+ * @param {string} qtyStyle
+ * @returns {string}
+ */
+declare function getItemRecipeBorder(qtyStyle: string): string;
+/**
+ *
+ * @param {string} elementID
+ * @param {boolean} [isInvalid=false]
+ */
+declare function updateItemRecipeBorder(elementID: string, isInvalid?: boolean): void;
+declare function getCloudSaveHeartbeatInterval(): number;
+/**
+ *
+ * @param {number} interval
+ */
+declare function startProgressBarTimer(interval: number): void;
+declare const useCDN: true;
+declare const CDNVersion: "v018";
+declare const CDNEndpoint: "https://cdn.melvor.net/core";
+declare const DEBUGENABLED: false;
+declare var CDNDIR: string;
+/** @type {NumberDictionary<SkillData>} */
+declare const SKILLS: NumberDictionary<SkillData>;
+declare const pages: string[];
+declare const specialEvents: {
+    active: boolean;
+}[];
+declare const gameTitle: "Melvor Idle :: Alpha v0.20";
+/**
+ * Save game variable
+ * @type {string[]} */
+declare var titleNewsID: string[];
+/** @type {string[]} */
+declare var currentTitleNewsID: string[];
+/** @type {{eventName: string;args: PlayFabEventBody}[]} */
+declare var playFabEventQueue: {
+    eventName: string;
+    args: PlayFabEventBody;
+}[];
+declare var exp: Exp;
+/** Save game variable */
+declare var gp: number;
+/** Save game variable */
+declare var slayerCoins: number;
+declare var currentPage: number;
+declare const us: "w";
+declare const p: 848;
+/** Save game variable */
+declare var saveTimestamp: number;
+/**
+ * @deprecated Old save game variable
+ * @type {boolean[]} */
+declare var itemLog: boolean[];
+/**
+ * Save game variable
+ * @type {ItemStat[]} */
+declare var itemStats: ItemStat[];
+/** @type {MonsterStat[]} */
+declare var monsterStats: MonsterStat[];
+declare var isLoaded: boolean;
+declare let confirmedLoaded: boolean;
+declare var currentlyCatchingUp: boolean;
+/** @type {number[]} */
+declare var killCount: number[];
+declare const tutorialT: 168;
+declare const ar: number[];
+/**
+ * Save game variable
+ * @type {Offline} */
+declare var offline: Offline;
+declare const IItemID: number;
+declare var skillsMenu: boolean;
+declare var combatMenu: boolean;
+declare var easterLoaded: boolean;
+declare var offlinePause: boolean;
+/**
+ * Save game variable
+ * @type {GameMode} */
+declare var currentGamemode: GameMode;
+/** @type {number[]} */
+declare var steamAchievements: number[];
+declare var connectedToSteam: boolean;
+/** @type {TimeoutID|null} */
+declare var offlineProgressTimer: TimeoutID | null;
+/** @type {TimeoutID|null} */
+declare var updateTooltipsTimer: TimeoutID | null;
+/** @type {ItemQuantity2[]} */
+declare var itemNotifyToProcess: ItemQuantity2[];
+/** @type {TimeoutID|null} */
+declare var itemNotifyTimer: TimeoutID | null;
+declare var offlineActionIsPaused: boolean;
+declare var tutorialTipData: {
     id: number;
     title: string;
     titleImg: string;
+    description: string;
 }[];
-
+/** Save game variable */
 declare var tutorialTips: {
     activated: boolean;
 }[];
-
-declare function unequipFood(): void;
-
+/** @type {TooltipInstances} */
+declare var tooltipInstances: TooltipInstances;
+/** @type {SumFunction} */
+declare const arrSum: SumFunction;
+declare var eightSeconds: boolean;
+declare var currentView: number;
+declare var lolYouDiedGetRekt: boolean;
+declare let characterLoading: boolean;
+/** Save game variable */
+declare var firstTimeLoad: boolean;
+declare var skillName: string[];
+/** Savegame variable. Stores skill experience. */
+declare var skillXP: number[];
+/** Savegame variable. Stores skill level. */
+declare var skillLevel: number[];
+/** Savegame variable */
+declare var nextLevelProgress: number[];
 /**
- * @param {any} equipmentSlot
- * @param {string} equipmentSet defaults to null
- * @param {boolean} bypass defaults to false
- */
-declare function unequipItem(equipmentSlot: any, equipmentSet?: string, bypass?: boolean): any;
-
+ * Save Game Variable
+ * @type {boolean[]} */
+declare var skillsUnlocked: boolean[];
+declare var priceToUnlockSkill: number[];
+declare var currentSkillLevel: number;
+declare var numberMultiplier: number;
+/** @type {ModifierActive} */
+declare var playerModifiers: ModifierActive;
+declare var inCharacterSelection: boolean;
+declare var returnToGameAfterSubmission: boolean;
+/** @type {SweetAlertOptions[]} */
+declare var modalQueue: SweetAlertOptions[];
+declare var cloudSaveHeartbeatLevel: number;
+declare var loadingOfflineProgress: boolean;
+declare var modalIsOpen: boolean;
+/** @type {string} */
+declare var offlineProgressCache: string;
+declare var marksFoundOffline: number;
+/** @type {{equipment: NumberDictionary<ModifierData>,player: NumberDictionary<ModifierData>}} */
+declare var randomModifiers: {
+    equipment: NumberDictionary<ModifierData>;
+    player: NumberDictionary<ModifierData>;
+};
+/** @type {number} */
+declare var progressBarTimer: number;
+declare function MasteryExp(): void;
+declare class MasteryExp {
+    /**
+     *
+     * @param {number} xp
+     */
+    equate: (xp: number) => number;
+    /**
+     *
+     * @param {number} level
+     */
+    level_to_xp: (level: number) => number;
+    /**
+     *
+     * @param {number} xp
+     * @param {number} level
+     */
+    xp_to_level: (xp: number, level?: number) => number;
+}
+declare function loadMasteryTab(): void;
 /**
- * @param {any} petID
+ *
+ * @param {SkillID} skill
  */
-declare function unlockPet(petID: any): void;
-
+declare function updateTotalMastery(skill: SkillID): void;
 /**
- * @param {any} areaID
- * @param {any} patchID
+ * onclick callback function (used in href)
+ * handle the display of mastery progress
+ * @param {SkillID} skill
  */
-declare function unlockPlot(areaID: any, patchID: any): void;
-
-declare function updateAmmo(): void;
-
-declare function updateAttackStyleOptions(): void;
-
-declare function updateAvailableFish(): void;
-
-declare function updateAvailableFood(): void;
-
+declare function showMasteryUnlocks(skill: SkillID): void;
+/** @type {number[]} */
+declare var currentMastery: number[];
+/** @type {number[]} */
+declare var totalMastery: number[];
+declare const na: "t";
+declare var masteryExp: MasteryExp;
+/** @type {NumberDictionary<MasteryUnlock[]>} */
+declare var masteryUnlocks: NumberDictionary<MasteryUnlock[]>;
 /**
- * @param {number} skill defaults to CONSTANTS.skill.Firemaking
- */
-declare function updateAvailableLogs(skill?: number): void;
-
-declare function updateBank(): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var treeMasteryData: OldMasteryArray;
 /**
- * @param {any} search
- */
-declare function updateBankSearch(search: any): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var fishMastery: OldMasteryArray;
 /**
- * @param {any} qty
- */
-declare function updateBuyQty(qty: any): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var logsMastery: OldMasteryArray;
 /**
- * @param {any} clue
- * @param {any} progress
- */
-declare function updateClueProgress(clue: any, progress: any): void;
-
-declare function updateCombat(): void;
-
-declare function updateCombatInfoIcons(): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var cookingMastery: OldMasteryArray;
 /**
- * @param {string} id defaults to "player"
- */
-declare function updateCombatLevel(id?: string): void;
-
-declare function updateCompletionLog(): void;
-
-declare function updateCompostQty(): void;
-
-declare function updateCookingFire(): void;
-
-declare function updateCrafting(): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var miningOreMastery: OldMasteryArray;
 /**
- * @param {any} itemID
- */
-declare function updateCraftQty(itemID: any): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var smithingMastery: OldMasteryArray;
 /**
- * @param {any} skill
- * @param {any} masteryArray
- */
-declare function updateCurrentMastery(skill: any, masteryArray: any): void;
-
-declare function updateDebuffs(): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var thievingMastery: OldMasteryArray;
 /**
- * @param {string} dungeon defaults to null
- */
-declare function updateDungeonCount(dungeon?: string): void;
-
-declare function updateDungeonEnemyCount(): void;
-
-declare function updateEnemyAttackSpeed(): void;
-
-declare function updateEnemyChanceToHit(): void;
-
-declare function updateEnemyDebuffs(): void;
-
-declare function updateEnemyMaxHit(): void;
-
-declare function updateEnemyValues(): void;
-
-declare function updateEquipmentHeader(): void;
-
-declare function updateEquipmentSetTooltips(): void;
-
-declare function updateEquippedFoodQty(): void;
-
-declare function updateEquipTooltips(): void;
-
-declare function updateFishing(): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var farmingMastery: OldMasteryArray;
 /**
- * @param {any} areaID
- * @param {any} fishID
- */
-declare function updateFishingAreaWeights(areaID: any, fishID: any): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var fletchingMastery: OldMasteryArray;
 /**
- * @param {any} areaID
- * @param {any} fishID
- */
-declare function updateFishingMastery(areaID: any, fishID: any): void;
-
-declare function updateFishingMasteryArray(): void;
-
-declare function updateFletching(): void;
-
-declare function updateGameTitle(): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var craftingMastery: OldMasteryArray;
 /**
- * @param {any} gloves
- * @param {any} skill
- */
-declare function updateGloves(gloves: any, skill: any): void;
-
-declare function updateGolbinRaid(): void;
-
-declare function updateGolbinRaidHistory(): void;
-
-declare function updateGP(): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var runecraftingMastery: OldMasteryArray;
 /**
- * @param {any} itemID
- * @param {number} qty defaults to -1
- * @param {boolean} use defaults to false
- */
-declare function updateHerbloreBonuses(itemID: any, qty?: number, use?: boolean): void;
-
+ * @deprecated Old save variable
+ * @type {OldMasteryArray} */
+declare var herbloreMastery: OldMasteryArray;
+declare function populateMasteryObject(): void;
+declare function createMasteryPoolElements(): void;
 /**
- * @param {any} itemID
+ *
+ * @param {SkillID} skill
+ * @param {boolean} [mainButtons=true]
  */
-declare function updateHerbloreQty(itemID: any): void;
-
+declare function getMasteryPoolElement(skill: SkillID, mainButtons?: boolean): string;
 /**
- * @param {boolean} heal defaults to false
+ *
+ * @param {SkillID} skill
+ * @param {number} id
  */
-declare function updateHitpoints(heal?: boolean): void;
-
-declare var updateHitpointTimer: number;
-
-declare function updateHitpointVisuals(): void;
-
+declare function createVisualMasteryElement(skill: SkillID, id: number): string;
 /**
- * @param {any} bankID
- * @param {any} itemID
- * @param {any} quantity
- * @param {boolean} ignoreAdd defaults to false
- * @param {boolean} offlineUpdate defaults to false
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
  */
-declare function updateItemInBank(
-    bankID: any,
-    itemID: any,
-    quantity: any,
-    ignoreAdd?: boolean,
-    offlineUpdate?: boolean
-): void;
-
+declare function getMasteryLevel(skill: SkillID, masteryID: number): number;
 /**
- * @param {string} item defaults to null
- * @param {number} quantity defaults to 0
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
  */
-declare function updateItemLog(item?: string, quantity?: number): void;
-
-declare function updateKeys(): void;
-
+declare function getMasteryProgressXP(skill: SkillID, masteryID: number): string;
 /**
- * @param {string} monster defaults to null
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
  */
-declare function updateKillCount(monster?: string): void;
-
+declare function updateMasteryLevel(skill: SkillID, masteryID: number): void;
 /**
- * @param {any} skill
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
  */
-declare function updateLevelProgress(skill: any): void;
-
-declare function updateMasteryArrays(): void;
-
+declare function updateMasteryProgress(skill: SkillID, masteryID: number): void;
 /**
- * @param {any} skill
- * @param {any} id
- * @param {any} masteryArray
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
  */
-declare function updateMasteryLevel(skill: any, id: any, masteryArray: any): void;
-
+declare function processUpdateMasteryProgress(skill: SkillID, masteryID: number): void;
 /**
- * @param {any} skill
- * @param {any} masteryID
- * @param {any} masteryArray
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
  */
-declare function updateMasteryProgress(skill: any, masteryID: any, masteryArray: any): void;
-
-declare function updateMasteryTokensClaimAll(): void;
-
-declare function updateMbucks(): void;
-
+declare function getMasteryProgress(skill: SkillID, masteryID: number): number;
 /**
- * @param {any} skill
+ *
+ * @param {SkillID} skill
  */
-declare function updateMilestoneTab(skill: any): void;
-
+declare function getMasteryPoolProgress(skill: SkillID): number;
 /**
- * @param {any} pageName
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ * @param {number} timePerAction
  */
-declare function updateMinibar(pageName: any): void;
-
+declare function getMasteryXpToAdd(skill: SkillID, masteryID: number, timePerAction: number): number;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getTotalUnlockedItems(skill: SkillID): number;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getCurrentTotalMasteryLevelForSkill(skill: SkillID): number;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getTotalMasteryLevelForSkill(skill: SkillID): number;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getTotalItemsInSkill(skill: SkillID): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} defaultTime
+ * @param {number} [masteryID=0]
+ */
+declare function getTimePerActionModifierMastery(skill: SkillID, defaultTime: number, masteryID?: number): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ * @param {number} timePerAction
+ * @param {boolean} [spendingXP=false]
+ * @param {number} xp
+ * @param {boolean} [addToPool=true]
+ * @param {boolean} [offline=false]
+ */
+declare function addMasteryXP(skill: SkillID, masteryID: number, timePerAction: number, spendingXP?: boolean, xp?: number, addToPool?: boolean, offline?: boolean): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ * @param {boolean} [offline=false]
+ */
+declare function notifyMasteryLevelUp(skill: SkillID, masteryID: number, offline?: boolean): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function getMasteryPoolTotalXP(skill: SkillID): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} xp
+ * @param {boolean} token
+ * @returns {number}
+ */
+declare function getMasteryXpToAddToPool(skill: SkillID, xp: number, token: boolean): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} xp
+ * @param {boolean} [offline=false]
+ * @param {boolean} [token=false]
+ */
+declare function addMasteryXPToPool(skill: SkillID, xp: number, offline?: boolean, token?: boolean): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function updateMasteryPoolProgress(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ */
+declare function getMasteryImage(skill: SkillID, masteryID: number): string;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ */
+declare function getMasteryName(skill: SkillID, masteryID: number): string;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function showSpendMasteryXP(skill: SkillID): void;
+/**
+ * onClick callback function
+ * @param {SkillID} skill
+ * @param {number} level
+ */
+declare function setMasteryPoolLevelUp(skill: SkillID, level: number): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ */
+declare function updateSpendMasteryScreen(skill: SkillID, masteryID: number): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ */
+declare function getMasteryXpForNextLevel(skill: SkillID, masteryID: number): number;
+/**
+ * onClick callback function
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ * @param {boolean} [confirmation=false]
+ */
+declare function levelUpMasteryWithPool(skill: SkillID, masteryID: number, confirmation?: boolean): void;
+/**
+ * onClick callback function
+ * @param {SkillID} skill
+ */
+declare function viewMasteryCheckpoints(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {MasteryCheckPoint} checkpoint
+ */
+declare function getMasteryCheckpointBonusStatus(skill: SkillID, checkpoint: MasteryCheckPoint): string;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {MasteryCheckPoint} checkpoint
+ */
+declare function getCheckpointBonusClass(skill: SkillID, checkpoint: MasteryCheckPoint): string;
+/**
+ * onClick callback function
+ * @param {SkillID} skill
+ */
+declare function toggleHideMaxLevel(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ */
+declare function sortMasteryView(skill: SkillID): void;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ */
+declare function updateMasteryLevelCache(skill: SkillID, masteryID: number): void;
+declare function populateMasteryLevelCache(): void;
+/**
+ * Save game variable
+ * @type {Mastery} */
+declare var MASTERY: Mastery;
+/** @type {MasteryLevelCache} */
+declare var masteryLevelCache: MasteryLevelCache;
+/** @type {TimeoutID} */
+declare let masteryUpdateTimer: TimeoutID;
+/** @type {NumberDictionary<MasteryPoolBonus>} */
+declare const masteryCheckpointBonuses: NumberDictionary<MasteryPoolBonus>;
+declare let masteryPoolLevelUp: number;
+declare const masteryCheckpoints: number[];
+/** @type {NumberDictionary<number[]>} */
+declare var masterySorted: NumberDictionary<number[]>;
+/**
+ * @type {MasteryCache}
+ */
+declare var masteryCache: MasteryCache;
+/**
+ * @type {{skill: SkillID, masteryID: number}[]}
+ */
+declare var masteryUpdatesToProcess: {
+    skill: SkillID;
+    masteryID: number;
+}[];
+/** @type {SkillObject<Milestone[]>} */
+declare const MILESTONES: SkillObject<Milestone[]>;
+/** @type {Monster[]} */
+declare const MONSTERS: Monster[];
+declare function loadPets(): void;
+/**
+ *
+ * @param {PetID} petID
+ * @param {boolean} [gameLoading=false]
+ */
+declare function updatePet(petID: PetID, gameLoading?: boolean): void;
+/**
+ *
+ * @param {PetID} petID
+ * @param {number} timePerAction
+ * @param {boolean} [offline=false]
+ * @param {false|SkillID} [forceSkill=false]
+ */
+declare function rollForPet(petID: PetID, timePerAction?: number, offline?: boolean, forceSkill?: false | SkillID): boolean;
+/**
+ *
+ * @param {PetID} petID
+ * @param {boolean} [offline=false]
+ */
+declare function unlockPet(petID: PetID, offline?: boolean): void;
+/**
+ *
+ * @param {PetID} petID
+ */
+declare function getPetUnlockModal(petID: PetID): {
+    title: string;
+    html: string;
+    imageUrl: string;
+    imageWidth: number;
+    imageHeight: number;
+    imageAlt: string;
+};
+/**
+ * onClick callback function
+ * @param {PetID} petID
+ */
+declare function petPet(petID: PetID): void;
+/**
+ *
+ * @param {PetID} petID
+ * @param {DungeonID} dungeonID
+ */
+declare function rollForPetDungeonPet(petID: PetID, dungeonID: DungeonID): void;
+/** @type {Pet[]} */
+declare const PETS: Pet[];
+/**
+ * Save game variable
+ * @type {boolean[]} */
+declare var petUnlocked: boolean[];
+declare var petXPToLevel: number;
+/** @type {Prayer[]} */
+declare const PRAYER: Prayer[];
+/**
+ *
+ * @param {MiningID} ore
+ * @param {boolean} [clicked=false]
+ * @param {boolean} [ignoreDepletion=false]
+ */
+declare function mineRock(ore: MiningID, clicked?: boolean, ignoreDepletion?: boolean): void;
+declare function loadMiningOres(): void;
 declare function updateMiningOres(): void;
-
+declare function updateOreLevelRequirements(): void;
+/**
+ *
+ * @param {number} ore
+ * @returns {number}
+ */
+declare function calculateIncreasedMiningMaxHP(ore: number): number;
+/**
+ *
+ * @param {MiningID} ore
+ * @param {boolean} [initialise=false]
+ */
+declare function updateRockHP(ore: MiningID, initialise?: boolean): void;
+/**
+ *
+ * @param {MiningID} ore
+ */
+declare function rockReset(ore: MiningID): void;
+declare function canMineDragonite(): boolean;
+declare function collectGem(offline?: boolean, rollDouble?: boolean): number;
 declare function updateMiningRates(): void;
-
-declare function updateNav(): void;
-
+declare const miningData: {
+    level: number;
+    respawnInterval: number;
+    ore: number;
+    masteryID: number;
+}[];
 /**
- * @param {boolean} continueAction defaults to true
- */
-declare function updateOffline(continueAction?: boolean): void;
-
+ * Save game variable
+ * @type {RockData[]} */
+declare var rockData: RockData[];
+declare const oreTypes: string[];
+declare var isMining: boolean;
+/** @type {MiningID|null} */
+declare var currentRock: MiningID | null;
+/** @type {TimeoutID|null} */
+declare var miningTimeout: TimeoutID | null;
+declare const baseMiningInterval: 3000;
+declare const baseRockHP: 5;
+declare function startRunecrafting(clicked?: boolean): void;
 /**
- * @param {any} petID
- * @param {boolean} gameLoading defaults to false
+ *
+ * @param {RunecraftingID} runecraftingID
+ * @param {boolean} [update=false]
  */
-declare function updatePet(petID: any, gameLoading?: boolean): void;
-
-declare function updatePetSidebar(): void;
-
-declare function updatePlayerAttackSpeed(): void;
-
-/**
- * @param {boolean} useRunes defaults to true
- */
-declare function updatePlayerAurora(useRunes?: boolean): void;
-
-declare function updatePlayerChanceToHit(): void;
-
-declare function updatePlayerDebuffs(): void;
-
-declare function updatePlayerGolbinStats(): void;
-
-/**
- * @param {any} qty
- * @param {boolean} notify defaults to true
- */
-declare function updatePlayerHitpoints(qty: any, notify?: boolean): void;
-
-declare function updatePlayerSpecialAttackIcon(): void;
-
-declare function updatePlayerSpecialWeapon(): void;
-
-declare function updatePlayerStats(): void;
-
-declare function updatePlayerValues(): void;
-
-declare function updatePotionHeader(): void;
-
-declare function updatePrayerMenu(): void;
-
-/**
- * @param {number} qty defaults to 0
- * @param {boolean} bury defaults to false
- */
-declare function updatePrayerPoints(qty?: number, bury?: boolean): void;
-
-/**
- * @param {any} itemID
- */
-declare function updateQty(itemID: any): void;
-
-/**
- * @param {any} ore
- * @param {boolean} initialise defaults to false
- */
-declare function updateRockHP(ore: any, initialise?: boolean): void;
-
-declare function updateRuneCount(): void;
-
+declare function selectRunecraft(runecraftingID: RunecraftingID, update?: boolean): void;
+declare function loadRunecrafting(): void;
 declare function updateRunecrafting(): void;
-
 /**
- * @param {any} itemID
+ *
+ * @param {ItemID} itemID
+ * @param {number} recipeIndex
+ * @returns
  */
-declare function updateRunecraftQty(itemID: any): void;
-
-declare function updateRunes(): void;
-
-declare function updateRunesCurrentlyUsed(): void;
-
-declare function updateSalePrice(): void;
-
-declare function updateSaveFileChanges(): void;
-
+declare function getRunecraftingRecipeQty(itemID: ItemID, recipeIndex: number): number;
 /**
- * @param {any} qty
- * @param {boolean} butOne defaults to false
- * @param {string} bankID defaults to null
+ *
+ * @param {ItemID} itemID
  */
-declare function updateSellQty(qty: any, butOne?: boolean, bankID?: string): void;
-
+declare function updateRunecraftQty(itemID: ItemID): void;
 /**
- * @param {any} identifier
+ *
+ * @param {ItemID} itemID
  */
-declare function updateShop(identifier: any): void;
-
-declare function updateShopPrices(): void;
-
+declare function checkRunecraftingReq(itemID: ItemID): boolean;
 /**
- * @param {any} skill
+ * onClick callback function
+ * @param {RunecraftingCategory} cat
  */
-declare function updateSkillWindow(skill: any): void;
-
+declare function runecraftingCategory(cat: RunecraftingCategory): void;
+/** @type {RunecraftingItem[]} */
+declare var runecraftingItems: RunecraftingItem[];
+/** @type {RunecraftingID|null} */
+declare var currentRunecraft: RunecraftingID | null;
+declare var isRunecrafting: boolean;
+/** @type {TimeoutID|null} */
+declare var runecraftingTimeout: TimeoutID | null;
+/** @type {RunecraftingID|null} */
+declare var selectedRunecraft: RunecraftingID | null;
+/** @type {QtyReqCheck[]} */
+declare var runecraftReqCheck: QtyReqCheck[];
+declare var runecraftInterval: number;
+/** @type {RunecraftingItem[]} */
+declare var runecraftingSorted: RunecraftingItem[];
+declare const elementals: number[];
+declare const combinations: number[];
+declare function disableSidebarSwipeTimer(): void;
+declare function updateKeys(): void;
+declare function getKeysForCharacter(charID?: number): string;
 /**
- * @param {any} enemy
+ *
+ * @param {string} key
+ * @param {*} value
  */
-declare function updateSlayer(enemy: any): void;
-
-declare function updateSlayerAreaRequirements(): void;
-
+declare function setItem(key: string, value: any): void;
 /**
- * @param {number} qty defaults to 0
+ *
+ * @param {string} key
  */
-declare function updateSlayerCoins(qty?: number): void;
-
+declare function getItem(key: string): any;
 /**
- * @param {any} qty
+ *
+ * @param {string} key
  */
-declare function updateSlayerTask(qty: any): void;
-
-declare function updateSmithing(): void;
-
+declare function removeItem(key: string): void;
 /**
- * @param {any} itemID
+ *
+ * @param {'all'|'offline'|true} vars
  */
-declare function updateSmithQty(itemID: any): void;
-
-declare function updateSpellbook(): void;
-
+declare function saveData(vars?: 'all' | 'offline' | true): void;
+declare function loadData(update?: boolean): void;
+declare function deleteData(characterID?: number): void;
 /**
- * @param {string} skill defaults to null
+ * onClick callback function
+ * @param {boolean} [update=false]
  */
-declare function updateStats(skill?: string): void;
-
-declare function updateThieving(): void;
-
+declare function exportSave(update?: boolean): void;
 /**
- * @param {any} areaID
+ *
+ * @param {SaveString|false} [forceSaveToImport=false]
+ * @param {CharacterID} characterID
  */
-declare function updateTimeRemaining(areaID: any): void;
-
-declare function updateTooltips(): void;
-
-declare function updateVisualSuccess(): void;
-
+declare function importSave(forceSaveToImport?: SaveString | false, characterID?: CharacterID): boolean;
 /**
- * @param {any} notify
+ * onClick callback function
+ * @param {CharacterID} characterID
  */
-declare function updateWCMilestone(notify: any): void;
-
-declare function updateWCRates(): void;
-
+declare function openImportSave(characterID?: CharacterID): void;
 /**
- * @param {boolean} cloudSave defaults to false
+ * onClick callback function
+ * @param {CharacterID} characterID
  */
-declare function updateWindow(cloudSave?: boolean): void;
-
+declare function openExportSave(characterID: CharacterID): void;
 /**
- * @param {boolean} confirmed defaults to false
+ * onClick callback function
+ * @param {CharacterID} characterID
  */
-declare function upgradeAutoEat(confirmed?: boolean): void;
-
+declare function openDownloadSave(characterID: CharacterID): void;
 /**
- * @param {boolean} confirmed defaults to false
+ * onClick callback function
+ * @param {CharacterID} [characterID=0]
+ * @param {string} [characterName='']
  */
-declare function upgradeAxe(confirmed?: boolean): void;
-
+declare function openCharacterSelectionSettings(characterID?: CharacterID, characterName?: string): void;
+declare function loadGame(update?: boolean): void;
 /**
- * @param {boolean} confirmed defaults to false
+ *
+ * @param {boolean|string} [customKey=false]
+ * @param {CharacterID} char
+ * @returns {SaveString}
  */
-declare function upgradeBank(confirmed?: boolean): void;
-
+declare function getSave(customKey?: boolean | string, char?: CharacterID): SaveString;
 /**
- * @param {boolean} confirmed defaults to false
+ *
+ * @param {string|boolean} [customKey=false]
+ * @param {CharacterID} [char=0]
+ * @returns
  */
-declare function upgradeCookingFire(confirmed?: boolean): void;
-
-declare var upgradedToFire: boolean;
-
-declare var upgradedToRange: boolean;
-
+declare function getSaveImportant(customKey?: string | boolean, char?: CharacterID): string;
+declare function downloadSave(backup?: boolean, save?: number): boolean;
 /**
- * @param {any} set
- * @param {boolean} confirmed defaults to false
+ *
+ * @param {SaveString} save
  */
-declare function upgradeEquipmentSet(set: any, confirmed?: boolean): void;
-
+declare function loadGameRaw(save: SaveString): void;
 /**
- * @param {boolean} confirmed defaults to false
+ *
+ * @param {SaveString} save
+ * @returns {SaveGame}
  */
-declare function upgradeEquipmentSwap(confirmed?: boolean): void;
-
+declare function getSaveJSON(save: SaveString): SaveGame;
+/** onClick callback function */
+declare function confirmLoadLocalSave(): void;
 /**
- * @param {any} bankID
- * @param {any} itemID
+ * onClick callback function
+ * @param {boolean} [confirmed=false]
  */
-declare function upgradeItem(bankID: any, itemID: any): void;
-
+declare function fixMySave(confirmed?: boolean): void;
 /**
- * @param {boolean} confirmed defaults to false
+ *
+ * @param {SaveString} save
  */
-declare function upgradeMultiTree(confirmed?: boolean): void;
-
+declare function setBackupSaveDetails(save: SaveString): void;
 /**
- * @param {boolean} confirmed defaults to false
+ * @template {keyof SaveGame} K
+ * @param {SaveString} save
+ * @param {K} item
  */
-declare function upgradePickaxe(confirmed?: boolean): void;
-
+declare function getItemFromSave<K extends keyof SaveGame>(save: SaveString, item: K): SaveGame[K];
 /**
- * @param {boolean} confirmed defaults to false
+ *
+ * @param {CharacterID} character
+ * @param {boolean} [reloadNow=false]
  */
-declare function upgradeRod(confirmed?: boolean): void;
-
+declare function setForceReload(character: CharacterID, reloadNow?: boolean): void;
+declare function removeForceReload(): void;
+declare function onloadEvent(accessCheck?: boolean, resetPage?: boolean): void;
+declare function resetEntirePage(accessCheck?: boolean): void;
+declare function handleBankSidebarScroll(): void;
+/**
+ *
+ * @param {PageID} page
+ */
+declare function changePageCharacterSelection(page: PageID): void;
+/**
+ * onClick callback function
+ * @param {GameMode} gamemode
+ */
+declare function setStartingGamemode(gamemode: GameMode): void;
+declare function resetVariablesToDefault(): void;
+declare var isTest: boolean;
+/** @type {CharacterID} */
+declare var currentCharacter: CharacterID;
+declare var characterSelected: boolean;
+/** @type {SaveString|null} */
+declare var backupSave: SaveString | null;
+declare var dataDeleted: boolean;
+declare var keyVersion: string;
+declare var keyTest: string;
+declare var key: string;
+declare var disableSidebarSwipe: boolean;
+declare var currentStartPage: number;
+/** @type {TimeoutID|null} */
+declare var sidebarSwipeTimer: TimeoutID | null;
+declare var startingGamemode: number;
+declare var panVal: number;
+/**
+ * Determines if an object is empty
+ * @param {Record<string,unknown>} obj
+ * @returns {obj is Record<string,never>}
+ */
+declare function isEmptyObject(obj: Record<string, unknown>): obj is Record<string, never>;
+/**
+ * Fixes the damagetaken stat on armour being applied to damagedealt
+ * @param {ItemStat[]} stats
+ */
+declare function fixStats(stats: ItemStat[]): void;
+/**
+ *
+ * @param {(item: GenericItem) => boolean} predicate
+ * @returns {(idList: number[], item: GenericItem, id: number) => number[]}
+ */
+declare function reduceToID(predicate: (item: GenericItem) => boolean): (idList: number[], item: GenericItem, id: number) => number[];
+/**
+ *
+ * @param {StatsData} portion
+ * @param {ItemStat[]} stats
+ * @returns {number[]}
+ */
+declare function serializeStatPortion(portion: StatsData, stats: ItemStat[]): number[];
+/**
+ *
+ * @param {StatsData} portion
+ * @param {number[]} subData
+ * @param {ItemStat[]} stats
+ */
+declare function deserializeItemStatsPortion(portion: StatsData, subData: number[], stats: ItemStat[]): void;
+/**
+ * Returns a deserializer for a GameStat object
+ * @param {GameStat[]} statVar
+ * @returns {Deserializer<GameStat[]>}
+ */
+declare function deserializeStats(statVar: GameStat[]): Deserializer<GameStat[]>;
+/**
+ * Returns a deserializer for glovesTracker
+ * @returns {Deserializer<typeof glovesTracker>}
+ */
+declare function deserializeGlovesTracker(): Deserializer<typeof glovesTracker>;
+/**
+ * Returns a deserializer for newFarmingAreas
+ * @returns {NestedDeserializer<FarmingArea[]>}
+ */
+declare function deserializeFarmingAreas(): NestedDeserializer<FarmingArea[]>;
+/**
+ *
+ * @param {SerializableSaveGame} saveGame
+ * @returns {number[][]}
+ */
+declare function serializeVars(saveGame: SerializableSaveGame): number[][];
+/**
+ *
+ * @param {NestedSerializeableSaveGame} saveGame
+ * @returns {number[][][]}
+ */
+declare function serializeNestedVars(saveGame: NestedSerializeableSaveGame): number[][][];
+/** Returns a packaged savefile ready for compression and encoding
+ * @param {NewSaveGame} saveGame
+ * @returns {PackagedSave}
+ */
+declare function packageSave(saveGame: NewSaveGame): PackagedSave;
+/** Gets a compressed save file from current global values
+ * @returns {string}
+ */
+declare function getCompressedSaveString(): string;
+/** Decodes and decompresses a save string
+ * @param {string} saveString
+ * @returns {PackagedSave}
+ */
+declare function decompressSaveString(saveString: string): PackagedSave;
+/** Gets a savegame object from a save string
+ * @param {string} saveString
+ * @returns {NewSaveGame}
+ */
+declare function getSaveFromString(saveString: string): NewSaveGame;
+/** Reconstructs variables that did not need to be saved (and performs some post processing for others)
+ * @param {NewSaveGame} saveGame
+ */
+declare function constructRedundantVars(saveGame: NewSaveGame): void;
+/** This is just a utility function for testing
+ * @param {NewSaveGame} saveGame
+ * @returns {StringDictionary<string>}
+ */
+declare function snapShotAllVars(saveGame: NewSaveGame): StringDictionary<string>;
+/** Gets a savegame object from the current global values
+ * @returns {NewSaveGame}
+ */
+declare function getSaveGameFromWindow(): NewSaveGame;
+/** Tests the old/new save compression methods */
+declare function testSaveMethods(): void;
+/** Compares the length between the old/new save compression methods */
+declare function testLength(): void;
+declare const reconstructedVars: string[];
+declare const currentSaveVersion: 1;
+/** Variables that store a number
+ * @type {NumberDictionary<NumberKey[]>}
+*/
+declare const numberVars: NumberDictionary<NumberKey[]>;
+/** Variables that store a boolean
+ * @type {NumberDictionary<BoolKey[]>}
+ */
+declare const boolVars: NumberDictionary<BoolKey[]>;
+/**  Old variables that should not be stored
+ * @type {SaveKey[]}
+ */
+declare const oldVars: SaveKey[];
+/** Variables with other types that are too mishapen or not fit for serialization
+ * @type {NumberDictionary<OtherKey[]>}
+ */
+declare const otherVars: NumberDictionary<OtherKey[]>;
+/** Varialbes that are serializable
+ * @type {NumberDictionary<SerialKey[]>}
+ */
+declare const serialVars: NumberDictionary<SerialKey[]>;
+/**
+ * Variables that are nested serializable
+ * @type {NumberDictionary<NestedKey[]>} */
+declare const nestedVars: NumberDictionary<NestedKey[]>;
+/** @type {Serializer<number[]>} */
+declare const serializeItemsFound: Serializer<number[]>;
+/** @type {Serializer<number[]>} */
+declare const serializeNumberArray: Serializer<number[]>;
+/** @type {Deserializer<number[]>} */
+declare const deserializeNumberArray: Deserializer<number[]>;
+/** @type {NestedSerializer<RaidHistory[]>} */
+declare const serializeRaidHistory: NestedSerializer<RaidHistory[]>;
+/** @type {NestedDeserializer<RaidHistory[]>} */
+declare const deserializeRaidHistory: NestedDeserializer<RaidHistory[]>;
+/** @type {NestedSerializer<Mastery>} */
+declare const serializeMastery: NestedSerializer<Mastery>;
+/** @type {NestedDeserializer<Mastery>} */
+declare const deserializeMastery: NestedDeserializer<Mastery>;
+/** @type {Serializer<EquipmentSet[]>} */
+declare const serializeEquipment: Serializer<EquipmentSet[]>;
+/** @type {Deserializer<EquipmentSet[]>} */
+declare const deserializeEquipment: Deserializer<EquipmentSet[]>;
+/** @type {Serializer<boolean[]>} */
+declare const serializeBoolArray: Serializer<boolean[]>;
+/** @type {Deserializer<boolean[]>} */
+declare const deserializeBoolArray: Deserializer<boolean[]>;
+/** @type {Serializer<MonsterStat[]>} */
+declare const serializeMonsterStats: Serializer<MonsterStat[]>;
+/** @type {Deserializer<MonsterStat[]>} */
+declare const deserializeMonsterStats: Deserializer<MonsterStat[]>;
+/** @type {NumberDictionary<string>&StringDictionary<number>} */
+declare var Stats: NumberDictionary<string> & StringDictionary<number>;
+declare namespace itemStatsData {
+    namespace all {
+        const stats: number[];
+        const items: number[];
+    }
+    namespace weapon {
+        const stats_1: number[];
+        export { stats_1 as stats };
+        const items_1: number[];
+        export { items_1 as items };
+    }
+    namespace quiver {
+        const stats_2: number[];
+        export { stats_2 as stats };
+        const items_2: number[];
+        export { items_2 as items };
+    }
+    namespace armour {
+        const stats_3: number[];
+        export { stats_3 as stats };
+        const items_3: number[];
+        export { items_3 as items };
+    }
+    namespace chests {
+        const stats_4: number[];
+        export { stats_4 as stats };
+        const items_4: number[];
+        export { items_4 as items };
+    }
+    namespace seeds {
+        const stats_5: number[];
+        export { stats_5 as stats };
+        const items_5: number[];
+        export { items_5 as items };
+    }
+    namespace harvest {
+        const stats_6: number[];
+        export { stats_6 as stats };
+        const items_6: any[];
+        export { items_6 as items };
+    }
+    namespace food {
+        const stats_7: number[];
+        export { stats_7 as stats };
+        const items_7: number[];
+        export { items_7 as items };
+    }
+    namespace rune {
+        const stats_8: number[];
+        export { stats_8 as stats };
+        const items_8: number[];
+        export { items_8 as items };
+    }
+}
+/** @type {(keyof typeof itemStatsData)[]} */
+declare const itemStatTypes: (keyof typeof itemStatsData)[];
+/** @type {NestedSerializer<ItemStat[]>} */
+declare const serializeItemStats: NestedSerializer<ItemStat[]>;
+/** @type {NestedDeserializer<ItemStat[]>} */
+declare const deserializeItemStats: NestedDeserializer<ItemStat[]>;
+declare const settingsMap: string[][];
+/** @type {Serializer<typeof SETTINGS>} */
+declare const serializeSettings: Serializer<typeof SETTINGS>;
+/** @type {Deserializer<typeof SETTINGS>} */
+declare const deserializeSettings: Deserializer<typeof SETTINGS>;
+/** @type {Serializer<BankDefaultItem[]>} */
+declare const serializeDefaultItemTabs: Serializer<BankDefaultItem[]>;
+/** @type {Deserializer<BankDefaultItem[]>} */
+declare const deserializeDefaultItemTabs: Deserializer<BankDefaultItem[]>;
+/** @type {Serializer<NumberKey[]>} */
+declare const serializeNumbers: Serializer<NumberKey[]>;
+/** @type {Serializer<BoolKey[]>} */
+declare const serializeBools: Serializer<BoolKey[]>;
+/** @type {Serializer<BankItem[]>} */
+declare const serializeBank: Serializer<BankItem[]>;
+/** @type {Deserializer<BankItem[]>} */
+declare const deserializeBank: Deserializer<BankItem[]>;
+/** @type {Serializer<GameStat[]>} */
+declare const serializeStats: Serializer<GameStat[]>;
+/** @type {Serializer<typeof glovesTracker>} */
+declare const serializeGlovesTracker: Serializer<typeof glovesTracker>;
+/** @type {Serializer<RockData[]>} */
+declare const serializeRockData: Serializer<RockData[]>;
+/** @type {Deserializer<RockData[]>} */
+declare const deserializeRockData: Deserializer<RockData[]>;
+/** @type {Serializer<SlayerTask[]>} */
+declare const serializeSlayerTask: Serializer<SlayerTask[]>;
+/** @type {Deserializer<SlayerTask[]>} */
+declare const deserializeSlayerTask: Deserializer<SlayerTask[]>;
+/** @type {NestedSerializer<FarmingArea[]>} */
+declare const serializeFarmingAreas: NestedSerializer<FarmingArea[]>;
+/** @type {Serializer<HerbloreBonus[]>} */
+declare const serializeHerbloreBonuses: Serializer<HerbloreBonus[]>;
+/** @type {Deserializer<HerbloreBonus[]>} */
+declare const deserializeHerbloreBonuses: Deserializer<HerbloreBonus[]>;
+/** @type {Serializer<typeof tutorialTips>} */
+declare const serializeTutorialTips: Serializer<typeof tutorialTips>;
+/** @type {Deserializer<typeof tutorialTips>} */
+declare const deserializeTutorialTips: Deserializer<typeof tutorialTips>;
+/** @type {Serializer<typeof shopItemsPurchased>} */
+declare const serializeShopItems: Serializer<typeof shopItemsPurchased>;
+/** @type {Deserializer<typeof shopItemsPurchased>} */
+declare const deserializeShopItems: Deserializer<typeof shopItemsPurchased>;
+/** @type {Serializer<MinCombatData>} */
+declare const serializeCombatData: Serializer<MinCombatData>;
+/** @type {Deserializer<MinCombatData>} */
+declare const deserializeCombatData: Deserializer<MinCombatData>;
+/** @type {Serializer<typeof equippedFood>} */
+declare const serailizeFood: Serializer<typeof equippedFood>;
+/** @type {Deserializer<typeof equippedFood>} */
+declare const deserializeFood: Deserializer<typeof equippedFood>;
+/** Contains the methods for variables that serialize to number[]
+ * @type {MapToSerializer<SerializableSaveGame>}
+ */
+declare const serializers: MapToSerializer<SerializableSaveGame>;
+/** Contains the methods for varialbes that serialize to number[][]
+ * @type {MapToNested<NestedSerializeableSaveGame>}
+ */
+declare const nestedSerializers: MapToNested<NestedSerializeableSaveGame>;
+/** @type {(keyof NewSaveGame)[]} */
+declare const newAllVars: (keyof NewSaveGame)[];
+/**
+ * Mobile/Steam Specific Function
+ * @param {number} zoomLevel
+ */
+declare function adjustZoom(zoomLevel: number): void;
+/**
+ * onClick callback function
+ * @param {27|32} setting
+ * @param {boolean} [ignore=false]
+ */
+declare function toggleSetting(setting: 27 | 32, ignore?: boolean): void;
+/**
+ *
+ * @param {1|2|3|4|5|6|7|8|9|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|28|29|30|31|33|34|35} setting
+ * @param {boolean|number} value
+ * @param {boolean} [ignore=false]
+ */
+declare function changeSetting(setting: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 28 | 29 | 30 | 31 | 33 | 34 | 35, value: boolean | number, ignore?: boolean): void;
+declare function loadCurrentSettings(): void;
+declare function toggleAutoPotion(update?: boolean): void;
+declare function setDefaultSettings(): void;
+declare namespace SETTINGS {
+    namespace bank {
+        const bankBorder: number;
+        const currentEquipDefault: boolean;
+        const defaultBankSort: number;
+        const defaultItemTab: BankDefaultItem[];
+    }
+    namespace mastery {
+        const hideMaxLevel: boolean;
+        const confirmationCheckpoint: boolean;
+    }
+    namespace general {
+        const pushNotificationOffline: boolean;
+        const pushNotificationFarming: boolean;
+    }
+    namespace notifications {
+        const combatStunned: boolean;
+        const combatSleep: boolean;
+    }
+}
+/** Save game variable */
+declare var ignoreBankFull: boolean;
+/** Save game variable */
+declare var defaultPageOnLoad: number;
+/** Save game variable */
+declare var levelUpScreen: number;
+/** Save game variable */
+declare var continueThievingOnStun: boolean;
+/** Save game variable */
+declare var showItemNotify: number;
+/** Save game variable */
+declare var showGPNotify: boolean;
+/** Save game variable */
+declare var autoRestartDungeon: boolean;
+/** Save game variable */
+declare var autoSaveCloud: boolean;
+/** Save game variable */
+declare var darkMode: boolean;
+/** Save game variable */
+declare var showEnemySkillLevels: boolean;
+/** Save game variable */
+declare var confirmationOnClose: boolean;
+/** Save game variable */
+declare var enableAccessibility: boolean;
+/** Save game variable */
+declare var autoPotion: boolean;
+/** @deprecated Old save variable */
+declare var autoUseSpecialAttack: boolean;
+/** @deprecated Old save variable */
+declare var showHPNotify: boolean;
+declare const autoSlayerTask: true;
+/** Save game variable */
+declare var showCommas: boolean;
+/** Save game variable */
+declare var showVirtualLevels: boolean;
+/** Save game variable */
+declare var formatNumberSetting: number;
+/** Save game variable */
+declare var pauseOfflineActions: boolean;
+/** Save game variable */
+declare var showSaleNotifications: boolean;
+/** Save game variable */
+declare var showShopNotifications: boolean;
+/** Save game variable */
+declare var showCombatMinibar: boolean;
+/** Save game variable */
+declare var showCombatMinibarCombat: boolean;
+/** Save game variable */
 declare var useCombinationRunes: boolean;
-
+/** Save game variable */
+declare var showSkillMinibar: boolean;
+/** Save game variable */
+declare var disableAds: boolean;
+declare function BankUpgradeCost(): void;
+declare class BankUpgradeCost {
+    /**
+     *
+     * @param {number} gp
+     */
+    equate: (gp: number) => number;
+    /**
+     *
+     * @param {number} level
+     */
+    level_to_gp: (level: number) => number;
+    /**
+     *
+     * @param {number} gp
+     */
+    gp_to_level: (gp: number) => number;
+}
+declare function NewNewBankUpgradeCost(): void;
+declare class NewNewBankUpgradeCost {
+    /**
+     *
+     * @param {number} level
+     */
+    equate: (level: number) => number;
+    /**
+     *
+     * @param {number} level
+     */
+    level_to_gp: (level: number) => number;
+}
+declare function NewBankUpgradeCost(): void;
+declare class NewBankUpgradeCost {
+    /**
+     *
+     * @param {number} gp
+     */
+    equate: (gp: number) => number;
+    /**
+     *
+     * @param {number} level
+     */
+    level_to_gp: (level: number) => number;
+    /**
+     *
+     * @param {number} gp
+     */
+    gp_to_level: (gp: number) => number;
+}
+declare function getBankUpgradeCost(): number;
 /**
- * @param {any} bankID
+ *
+ * @param {'axe'|'all'|'gloves'|'godUpgrades'|'autoeat'|'skillcapes'|'autoSlayer'|'pickaxe'|'multitree'|'cookingFire'|'equipmentSet'|'rod'|'bank'|'cookingRange'|'compost'|'feathers'} identifier
  */
-declare function useEight(bankID: any): void;
-
+declare function updateShop(identifier: 'axe' | 'all' | 'gloves' | 'godUpgrades' | 'autoeat' | 'skillcapes' | 'autoSlayer' | 'pickaxe' | 'multitree' | 'cookingFire' | 'equipmentSet' | 'rod' | 'bank' | 'cookingRange' | 'compost' | 'feathers'): void;
+declare function getCurrentPickaxe(): string;
+declare function getCurrentFishingRod(): string;
+declare function getCurrentPickaxeDescription(): string;
+declare function getCurrentFishingRodDescription(): string;
+declare function getCurrentAxe(): string;
+declare function getCurrentAxeDescription(): string;
+declare function updateAutoEatTooltip(): void;
 /**
- * @param {any} itemID
+ *
+ * @param {string} qty
  */
-declare function usePotion(itemID: any): void;
-
-declare var username: string;
-
-declare var useSpecialAttack: boolean;
-
-declare var vBank: any[];
-
+declare function updateBuyQty(qty: string): void;
 /**
- * @param {any} combatArea
+ * Maybe not deprecated? used in buyShopItem
+ * @param {GloveID} gloves
  */
-declare function viewCombatDetails(combatArea: any): void;
-
+declare function buyGloves(gloves: GloveID): void;
 /**
- * @param {any} dungeon
+ *
+ * @param {keyof Shop} category
+ * @param {number} id
+ * @param {boolean} [confirmed=false]
  */
-declare function viewDungeonDetails(dungeon: any): void;
-
+declare function buyShopItem(category: keyof Shop, id: number, confirmed?: boolean): void;
+declare function updateShopCosts(): void;
 /**
- * @param {any} itemID
+ *
+ * @param {keyof Shop} category
+ * @param {number} id
  */
-declare function viewItemContents(itemID: any): any;
-
-declare function viewItemsAcquired(): void;
-
+declare function checkShopUnlockRequirements(category: keyof Shop, id: number): boolean;
 /**
- * @param {any} bankID
- * @param {any} itemID
- * @param {boolean} showAll defaults to false
+ *
+ * @param {ShopCategory} category
+ * @param {number} id
+ * @param {string} [textClass="text-danger"]
  */
-declare function viewItemStats(bankID: any, itemID: any, showAll?: boolean): void;
-
+declare function printShopUnlockRequirements(category: ShopCategory, id: number, textClass?: string): string;
 /**
- * @param {any} monsterID
+ *
+ * @param {ShopCategory} category
+ * @param {number} id
+ * @returns {boolean}
  */
-declare function viewMonsterDrops(monsterID: any): any;
-
+declare function checkShopItemPurchased(category: ShopCategory, id: number): boolean;
 /**
- * @param {any} areaType
- * @param {any} areaID
+ *
+ * @param {ShopCostTypes} type
+ * @param {number} amount
+ * @param {ItemID} [itemID=0]
+ * @param {boolean} [hasQty=false]
  */
-declare function viewMonsters(areaType: any, areaID: any): void;
-
-declare function checkCompletionCapeRequirements(): boolean;
-
-declare function checkMaxCapeRequirements(): boolean;
+declare function getShopCostClass(type: ShopCostTypes, amount: number, itemID?: ItemID, hasQty?: boolean): string;
+/**
+ *
+ * @param {ShopCategory} category
+ * @param {number} id
+ */
+declare function checkShopBuyLimit(category: ShopCategory, id: number): boolean;
+/**
+ *
+ * @param {ShopCategory} category
+ * @param {number} id
+ */
+declare function printShopCost(category: ShopCategory, id: number): string;
+/**
+ *
+ * @param {ShopCategory} category
+ * @param {number} id
+ * @param {string} media
+ * @param {ShopCostTypes} type
+ * @param {number} cost
+ * @param {ItemID} itemID
+ * @param {boolean} hasQty
+ */
+declare function createShopCostElement(category: ShopCategory, id: number, media: string, type: ShopCostTypes, cost: number, itemID: ItemID, hasQty: boolean): string;
+/**
+ *
+ * @param {ShopCategory} category
+ * @param {number} id
+ */
+declare function determineShopCost(category: ShopCategory, id: number): string;
+declare function createShop(): void;
+/**
+ *
+ * @param {ShopCategory} category
+ * @param {number} i
+ */
+declare function createShopCategory(category: ShopCategory, i: number): string;
+/**
+ * onclick callback
+ * @param {0|1|2|4} menu
+ */
+declare function toggleShopMenu(menu: 0 | 1 | 2 | 4): void;
+/**
+ *
+ * @param {0|1|2|3|4|5|6} cat
+ */
+declare function shopCategory(cat?: 0 | 1 | 2 | 3 | 4 | 5 | 6): void;
+declare function checkForDuplicateShopPurchases(): void;
+/** @type {Record<ShopCategory,ShopCategoryData[]>} */
+declare const SHOP: Record<ShopCategory, ShopCategoryData[]>;
+/**
+ * Save game variable
+ * @type {[ShopCategory,number][]}
+ */
+declare var shopItemsPurchased: [ShopCategory, number][];
+/** @deprecated Old Save Variable */
+declare var currentAxe: number;
+/** @deprecated Old Save Variable */
+declare var currentRod: number;
+/** @deprecated Old Save Variable */
+declare var currentPickaxe: number;
+/** @deprecated Old Save Variable */
+declare var currentCookingFire: number;
+/** @deprecated Old Save Variable */
+declare var currentAutoEat: number;
+/** Save game variable */
+declare var buyQty: number;
+/** @deprecated Old Save variable */
+declare var autoSlayerUnlocked: boolean;
+/** Save game variable */
+declare var autoSlayer: boolean;
+declare var bankUpgradeCost: BankUpgradeCost;
+declare var newBankUpgradeCost: NewBankUpgradeCost;
+declare var newNewBankUpgradeCost: NewNewBankUpgradeCost;
+declare const autoEatData: {
+    title: string;
+    eatAt: number;
+    maxHP: number;
+    efficiency: number;
+    cost: number;
+}[];
+/** @deprecated Old save game variable */
+declare var equipmentSetsPurchased: boolean[];
+/** @deprecated Old save game variable */
+declare var equipmentSwapPurchased: boolean;
+/** The only part that is used is the media for the normal fire
+ * This var could be cleaned up with a little bit of effort
+*/
+declare const cookingFireData: {
+    tier: string;
+    fmLevel: number;
+    costGP: number;
+    costLogs: number[];
+    bonusXP: number;
+    media: string;
+}[];
+declare const skillcapeItems: number[];
+declare const glovesCost: number[];
+declare const glovesActions: number[];
+declare const gloveID: number[];
+/** Save game variable */
+declare var glovesTracker: {
+    name: string;
+    isActive: boolean;
+    remainingActions: number;
+}[];
+declare const godUpgradeData: {
+    name: string;
+    description: string;
+    cost: number;
+    dungeonID: number;
+    media: string;
+}[];
+/**
+ * @deprecated Use shopItemsPurchased instead
+ */
+declare var godUpgrade: boolean[];
+declare function startSmithing(clicked?: boolean): void;
+/**
+ *
+ * @param {number} smithingID
+ * @param {boolean} [update=false]
+ */
+declare function selectSmith(smithingID: number, update?: boolean): void;
+declare function loadSmithing(): void;
+declare function updateSmithing(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateSmithQty(itemID: ItemID): void;
+/**
+ * onClick callback function (being used as href)
+ * @param {SmithingCategory} cat
+ */
+declare function smithCategory(cat: SmithingCategory): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} recipeIndex
+ * @param {boolean} [useCharges=true]
+ * @returns {number}
+ */
+declare function getSmithingRecipeQty(itemID: ItemID, recipeIndex: number, useCharges?: boolean): number;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {boolean} [ignoreCoal=false]
+ */
+declare function checkSmithingReq(itemID: ItemID, ignoreCoal?: boolean): boolean;
+/** @type {SmithingItem[]} */
+declare var smithingItems: SmithingItem[];
+/** @type {SmithingItem[]} */
+declare var smithingSorted: SmithingItem[];
+/** @type {SmithingID|null} */
+declare var currentSmith: SmithingID | null;
+declare var isSmithing: boolean;
+/** @type {TimeoutID|null} */
+declare var smithingTimeout: TimeoutID | null;
+/**  @type {QtyReqCheck[]} */
+declare var smithReqCheck: QtyReqCheck[];
+/** @type {SmithingID|null} */
+declare var selectedSmith: SmithingID | null;
+declare var smithInterval: number;
+/**
+ *
+ * @param {string} key
+ * @param {string} [text='']
+ * @param {number} [sendAfter=0]
+ */
+declare function sendPushNotification(key: string, text?: string, sendAfter?: number): void;
+/**
+ *
+ * @param {string} key
+ * @param {string} pushID
+ */
+declare function storeScheduledPushNotification(key: string, pushID: string): void;
+/**
+ *
+ * @param {string} key
+ */
+declare function deleteScheduledPushNotification(key: string): void;
+/**
+ *
+ * @param {string} key
+ * @returns {boolean}
+ */
+declare function checkForExistingScheduledPushNotification(key: string): boolean;
+declare function connectDevicePushNotifications(): void;
+declare function disconnectDevicePushNotifications(): void;
+declare function getConnectedPushNotificationDevice(): void;
+declare function getPushNotificationPlatform(): string;
+/**
+ *
+ * @returns {Promise<string>}
+ */
+declare function getPushNotificationToken(): Promise<string>;
+/**
+ *
+ * @param {string} token
+ */
+declare function storePushNotificationToken(token: string): void;
+/**
+ *
+ * @param {string} platform
+ */
+declare function storePushNotificationPlatform(platform: string): void;
+/**
+ * Save game variable
+ * @type {StringDictionary<string>} */
+declare var scheduledPushNotifications: StringDictionary<string>;
+/** @type {StringDictionary<string>} */
+declare var storedPushNotificationData: StringDictionary<string>;
+/**
+ *
+ * @param {null|'general'|'woodcutting'|'fishing'|'firemaking'|'cooking'|'mining'|'smithing'|'combat'|'thieving'|'farming'|'fletching'|'crafting'|'runecrafting'|'herblore'|'summoning'} skill
+ */
+declare function updateStats(skill?: null | 'general' | 'woodcutting' | 'fishing' | 'firemaking' | 'cooking' | 'mining' | 'smithing' | 'combat' | 'thieving' | 'farming' | 'fletching' | 'crafting' | 'runecrafting' | 'herblore' | 'summoning'): void;
+declare function convertItemLog(): void;
+declare function convertMonsterLog(): void;
+/**
+ *
+ * @param {null|ItemID} item
+ * @param {number} [quantity=0]
+ */
+declare function updateItemLog(item?: null | ItemID, quantity?: number): void;
+/**
+ * onClick callback function
+ */
+declare function openItemLog(): void;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateBankItemStats(itemID: ItemID): void;
+/**
+ * onClick callback function
+ */
+declare function openMonsterLog(): void;
+/**
+ * onClick callback function
+ */
+declare function openPetLog(): void;
+declare function updateCompletionLog(): void;
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsGeneral: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsCombat: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsWoodcutting: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsFishing: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsFiremaking: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsCooking: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsMining: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsSmithing: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsThieving: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsFarming: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsFletching: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsCrafting: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsRunecrafting: GameStat[];
+/**
+ * Save game variable
+ * @type {GameStat[]} */
+declare var statsHerblore: GameStat[];
+declare var completionStats: number;
+/**
+ *
+ * @param {boolean} [clicked=false]
+ */
+declare function createSummon(clicked?: boolean): void;
+declare function getSummoningSynergyStatus(): string;
+declare function updateCombatSummonSynergyTooltip(): void;
+declare function loadSummoning(): void;
+declare function updateSummoning(): void;
+/**
+ *
+ * @param {number} summonID
+ * @param {number} [recipe=-1]
+ * @param {boolean} [update=false]
+ */
+declare function selectSummon(summonID: number, recipe?: number, update?: boolean): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns {number}
+ */
+declare function getSummoningCreationQty(itemID: ItemID): number;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns {boolean}
+ */
+declare function updateSummonRecipeSelection(itemID: ItemID): boolean;
+/**
+ *
+ * @param {ItemID} itemID
+ * @param {number} recipeID
+ * @param {number} recipeItemIndex
+ * @returns {number}
+ */
+declare function getSummoningRecipeQty(itemID: ItemID, recipeID: number, recipeItemIndex: number): number;
+/**
+ *
+ * @param {ItemID} itemID
+ */
+declare function updateSummoningQty(itemID: ItemID): void;
+/**
+ *
+ * @param {ItemID} itemID
+ * @returns {boolean}
+ */
+declare function checkSummoningReq(itemID: ItemID): boolean;
+/**
+ *
+ * @returns {string}
+ */
+declare function getSummonSynergy(): string;
+/**
+ *
+ * @param {string} synergy
+ * @returns {string}
+ */
+declare function formatSynergyHTML(synergy: string): string;
+/**
+ *
+ * @param {number} summon1
+ * @param {number} summon2
+ * @returns {0|1}
+ */
+declare function isSynergyUnlocked(summon1: number, summon2: number): 0 | 1;
+/**
+ *
+ * @param {number} summon1
+ * @param {number} summon2
+ * @returns {ModifierData}
+ */
+declare function getSummonSynergyModifiers(summon1: number, summon2: number): ModifierData;
+/**
+ *
+ * @param {number} summonID
+ * @param {number} interval
+ * @param {SkillID} skill
+ * @param {number} masteryID
+ * @returns {number}
+ */
+declare function getChanceForMark(summonID: number, interval: number, skill: SkillID, masteryID: number): number;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} summonID
+ * @param {number} baseInterval
+ * @param {number} interval
+ * @param {number} masteryID
+ * @returns {boolean}
+ */
+declare function rollForSummoningMark(skill: SkillID, summonID: number, baseInterval: number, interval: number, masteryID: number): boolean;
+/**
+ *
+ * @param {SkillID} skill
+ * @param {number} baseInterval
+ * @param {number} interval
+ * @param {number} masteryID
+ * @returns {boolean}
+ */
+declare function rollAllPossibleSummoningMarks(skill: SkillID, baseInterval: number, interval: number, masteryID?: number, useCharge?: boolean): boolean;
+/**
+ *
+ * @param {number} summon1
+ * @param {number} summon2
+ * @param {boolean} [useCharge=true]
+ * @param {number} interval
+ * @returns {boolean}
+ */
+declare function checkSummoningSynergyActive(summon1: number, summon2: number, useCharge?: boolean, interval?: number): boolean;
+/**
+ *
+ * @param {number} summonID
+ * @param {number} [chargesUsed=1]
+ * @param {number} [interval=1000]
+ */
+declare function useSummonCharge(summonID: number, chargesUsed?: number, interval?: number): void;
+/**
+ *
+ * @param {number} summonID
+ * @param {boolean} [useCharge=false]
+ * @param {number} [interval=1000]
+ * @returns {number}
+ */
+declare function getBaseSummoningXP(summonID: number, useCharge?: boolean, interval?: number): number;
+/**
+ *
+ * @param {number} summonID
+ */
+declare function discoverMark(summonID: number): void;
+/**
+ *
+ * @param {number} summonID
+ * @returns {SweetAlertOptions}
+ */
+declare function getMarkDiscoveredModal(summonID: number): SweetAlertOptions;
+/**
+ *
+ * @param {number} summonID
+ * @returns {SweetAlertOptions}
+ */
+declare function getMarkLevelUpModal(summonID: number): SweetAlertOptions;
+/**
+ *
+ * @returns {string}
+ */
+declare function createMarkDiscoveryElements(): string;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function getMarkDiscoveryElement(summonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ */
+declare function updateMarkDiscoveryElement(summonID: number): void;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function createMarkDiscoveryProgressElement(summonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function getSummoningMarkImg(summonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function getSummoningMarkStatus(summonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function getSummoningMarkStatusClass(summonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function getSummoningMarkName(summonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function getSummoningFamiliarName(summonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ * @returns {number}
+ */
+declare function getSummoningMarkProgress(summonID: number): number;
+/**
+ *
+ * @param {number} summonID
+ */
+declare function updateSummoningMarkProgress(summonID: number): void;
+/**
+ *
+ * @param {number} summonID
+ * @returns {0|1|2|3|4}
+ */
+declare function getSummoningMarkLevel(summonID: number): 0 | 1 | 2 | 3 | 4;
+/**
+ *
+ * @param {number} summonID
+ * @returns {string}
+ */
+declare function getSummoningMarkSkills(summonID: number): string;
+/**
+ *
+ * @param {0|1|2} cat
+ */
+declare function summoningCategory(cat: 0 | 1 | 2): void;
+/**
+ *
+ * @returns {string}
+ */
+declare function createSynergiesBreakdown(): string;
+declare function updateSynergyFamiliarFilter(): void;
+/**
+ *
+ * @param {number} summonID
+ */
+declare function filterSynergyFamiliar(summonID: number): void;
+/**
+ *
+ * @param {number} summon1
+ * @param {number} summon2
+ */
+declare function quickEquipSynergy(summon1: number, summon2: number): void;
+/**
+ *
+ * @param {number} summonID
+ * @param {number} otherSummonID
+ * @returns {string}
+ */
+declare function getSynergiesBreakdown(summonID: number, otherSummonID: number): string;
+/**
+ *
+ * @param {number} summonID
+ */
+declare function updateSynergiesBreakdown(summonID: number): void;
+declare function openSynergiesBreakdown(): void;
+/**
+ *
+ * @param {string} search
+ */
+declare function updateSummoningSynergySearch(search: string): void;
+declare function updateSummoningSynergySearchArray(): void;
+declare function checkForSummoningPet(): void;
+/** @type {SummoningData} */
+declare const SUMMONING: SummoningData;
+/** @type {PlayerSummoningData} */
+declare var summoningData: PlayerSummoningData;
+/** @type {NumberDictionary<number[]>} */
+declare var summoningMarkSkills: NumberDictionary<number[]>;
+/** @type {SummoningItem[]} */
+declare var summoningItems: SummoningItem[];
+/** @type {number|null} */
+declare var selectedSummon: number | null;
+/** @type {QtyReqCheck[]} */
+declare var summoningReqCheck: QtyReqCheck[];
+declare var isSummoning: boolean;
+/** @type {number|null} */
+declare var currentSummon: number | null;
+/** @type {TimeoutID|null} */
+declare var summoningTimeout: TimeoutID | null;
+/** @type {SummoningSearch[]} */
+declare var summoningSynergySearch: SummoningSearch[];
+/** @type {[number,number]} */
+declare var chargesUsedOffline: [number, number];
+/** @type {TimeoutID|null} */
+declare var updateSummoningTimer: TimeoutID | null;
+declare function resetAllPlayerModifiers(): void;
+/** @type {ModifierObject<number[]|number[][],number>} */
+declare const playerModifiersTemplate: ModifierObject<number[] | number[][], number>;
+/**
+ *
+ * @param {ThievingID} npc
+ * @param {boolean} [clicked=true]
+ */
+declare function pickpocket(npc: ThievingID, clicked?: boolean): void;
+declare function updateVisualSuccess(): void;
+declare function loadThieving(): void;
+declare function updateThieving(): void;
+/**
+ *
+ * @param {ThievingID} npcID
+ * @param {boolean} [useGloves=true]
+ * @param {boolean} [offline=false]
+ */
+declare function getSuccessRate(npcID: ThievingID, useGloves?: boolean, offline?: boolean): number;
+/**
+ *
+ * @param {number} npcID
+ * @param {number} [masteryLevel=-1]
+ * @param {number} [interval=1000]
+ * @returns {number}
+ */
+declare function calculateThievingGP(npcID: number, masteryLevel?: number, interval?: number): number;
+declare const thievingNPC: {
+    name: string;
+    level: number;
+    xp: number;
+    maxHit: number;
+    baseSuccess: number;
+    maxSuccess: number;
+    maxCoins: number;
+    lootTable: number[][];
+    media: string;
+}[];
+declare const baseThievingInterval: 3000;
+declare var isThieving: boolean;
+/** @type {ThievingID|null} */
+declare var npcID: ThievingID | null;
+/** @type {TimeoutID|null} */
+declare var thievingTimer: TimeoutID | null;
+declare var isStunned: boolean;
+declare function getWoodcuttingInterval(): number;
+declare function getBaseWoodcuttingInterval(): number;
+/**
+ *
+ * @param {number} tree
+ * @returns {number}
+ */
+declare function getWoodcuttingMultiplier(tree: number): number;
+/**
+ *
+ * @param {number} cutInterval
+ */
+declare function getWoodcuttingGrants(cutInterval: number): void;
+/**
+ *
+ * @param {WoodcuttingID} treeID
+ * @param {number|boolean} [ignore=0]
+ */
+declare function cutTree(treeID: WoodcuttingID, ignore?: number | boolean): void;
+/**
+ *
+ * @param {number} [notify] Unused Parameter
+ */
+declare function updateWCMilestone(notify?: number): void;
+declare function updateWCRates(): void;
+declare const trees: {
+    type: string;
+    level: number;
+    interval: number;
+    xp: number;
+    media: string;
+}[];
+declare var currentlyCutting: number;
+declare const baseCutLimit: 1;
+/** @type {WoodcuttingID[]} */
+declare var currentTrees: WoodcuttingID[];
+/** @type {(TimeoutID|null)[]} */
+declare var treeCuttingHandler: (TimeoutID | null)[];
+/** @type {TimeoutID|null} */
+declare var newTreeCuttingHandler: TimeoutID | null;
+/** @deprecated Old Save Variable */
+declare var treeCutLimit: number;
