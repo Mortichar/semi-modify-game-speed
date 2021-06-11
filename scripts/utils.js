@@ -56,10 +56,10 @@ const SEMIUtils = (() => {
 
     /** @param {number} id */
     const getBankQty = (id) => {
-        for (let i = 0; i < bank.length; i++) {
-            if (bank[i].id === id) {
-                return bank[i].qty;
-            }
+        const itemBankID = SEMIUtils.getBankId(id);
+
+        if (itemBankID !== false) {
+            return bank[itemBankID].qty;
         }
         return 0;
     };
@@ -397,6 +397,15 @@ const SEMIUtils = (() => {
         if (isInCombat) {
             return 'Hitpoints';
         }
+        if (isAgility) {
+            return 'Agility';
+        }
+        if (isMagic) {
+            return 'Alt Magic';
+        }
+        if (isSummoning) {
+            return 'Summoning';
+        }
         return '';
     };
 
@@ -450,6 +459,8 @@ const SEMIUtils = (() => {
                 return stopCombat(false, true, true);
             case 'Runecrafting':
                 return selectRunecraft(0);
+            case 'Summoning':
+                return selectSummon(0);
         }
     };
 
@@ -582,8 +593,19 @@ const SEMIUtils = (() => {
     };
 
     function getItemTooltip(itemId) {
-        let potionCharges = (description = spec = bankClassPopoverBorder = bankClassImg = bankClassPopover = bankClassQty = bankMinWidth = bankQtyPositioning = hp = bankLocked = bankContainer =
-            '');
+        let potionCharges =
+            (description =
+            spec =
+            bankClassPopoverBorder =
+            bankClassImg =
+            bankClassPopover =
+            bankClassQty =
+            bankMinWidth =
+            bankQtyPositioning =
+            hp =
+            bankLocked =
+            bankContainer =
+                '');
         if (items[itemId].isPotion)
             potionCharges =
                 "<small class='text-warning'>" + items[itemId].potionCharges + ' Potion Charges</small><br>';

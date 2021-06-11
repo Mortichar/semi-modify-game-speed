@@ -9,7 +9,7 @@ var SEMI = (() => {
     // Global Constants
     const ROOT_ID = 'SEMI-menu';
     const LOCAL_SETTINGS_PREFIX = 'SEMI';
-    const SUPPORTED_GAME_VERSION = 'Alpha v0.19.2';
+    const SUPPORTED_GAME_VERSION = 'Alpha v0.20';
 
     // Enums
     /**
@@ -28,8 +28,7 @@ var SEMI = (() => {
         },
         AUTO_SKILL: {
             ID: 'auto-skills',
-            Title:
-                'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.',
+            Title: 'One at a time, please! Mixing any two idle skill automations will cause problems as you can only idle one thing at once. Mixing these skill automations with combat is impossible, except for AutoReplant.',
             Header: 'Auto Skills',
         },
     };

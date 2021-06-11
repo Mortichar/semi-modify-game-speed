@@ -1,5 +1,30 @@
 # SEMI Changelog
 
+## v0.6.4
+[auto-agility]
+* New tweak by TheAlpacalypse
+* Automatically starts doing agility if you are idle as there are no consequences
+[auto-farm]
+* Fixes the equip config menu
+[auto-master]
+* Now claims bank tokens if you are not at max pool
+[auto-summon]
+* New auto-skill by TheAlpacalypse
+* This is still a WIP, and users should use caution. This will burn all recipe resources if you let it.
+[eta]
+* Incorporated fixes from TinyCoyote's patches
+[mastery-enhancements]
+* Currently broken
+[sort-override]
+* New tweak by TheAlpacalypse and 47Y
+* Overrides the default bank sort to provide a more logical sorting order with all of the item additions
+[core]
+* Adjusts the character loader to account for the no-refresh on character select
+[utils]
+* getBankQty now leverages the bank cache
+* getCurrentSkill now supports agility, alt magic, and summoning
+[types]
+* Updated types from CoolRox
 ## v0.6.3
 [auto-slayer]
 * No longer broken (we think). Please continue to test this script!

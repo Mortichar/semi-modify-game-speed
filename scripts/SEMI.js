@@ -114,6 +114,8 @@
         'cook',
         'mine',
         'runecraft',
+        'summon',
+        'agility',
         'sell-gems',
         'master',
         'smith',
@@ -142,32 +144,51 @@
         'thief-calc',
         'xp-per-hour',
         'save-on-close',
+        'sort-override',
     ];
     const libNames = ['fold-menus', 'drag-menus', 'menus'];
     const preloadedNames = ['event-bus', 'settings-migrator', 'injections'];
     // const preloadedPlugins = ['offline-time-limit'];
 
-    //Load and inject SEMI
-    const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;
-    addSemiVersion(semiVersion);
-    const navbar = document.getElementsByClassName('nav-main')[0];
-    const semiHeading = document.createElement('li');
-    semiHeading.className = 'nav-main-heading';
-    navbar.appendChild(semiHeading);
-    semiHeading.style = 'font-size: 12pt; color: white; text-transform: none;';
-    semiHeading.textContent = ` SEMI v${semiVersion}`;
-    semiHeading.title = 'Scripting Engine for Melvor Idle';
-    semiHeading.id = 'SEMI-heading';
-    semiHeading.insertBefore(createImage('icons/border-48.png', 'SEMI-menu-icon'), semiHeading.childNodes[0]);
+    // Verifies that a character is selected before allowing SEMI to load
+    const checkLoaded = () => {
+        const accountName = document.getElementById('account-name');
 
-    replaceScript('scripts/core.js', 'semi-inject-core');
-    replaceScript('scripts/utils.js', 'semi-inject-utils');
+        // Page isn't loaded, silently fail
+        if (!accountName) {
+            return;
+        }
 
-    // These items need to load with Melvor, not SEMI, but require Core functionality.
-    preloadedNames.forEach(addSemiLib);
+        // User hasn't selected their account yet
+        const isCharacterSelected = accountName.innerText.length > 0;
+        if (!isCharacterSelected) {
+            return;
+        }
+        clearInterval(preLoader);
 
-    // Plugins that need to load with Melvor
-    // preloadedPlugins.forEach(addPlugin);
+        //Load and inject SEMI
+        const navbar = document.getElementsByClassName('nav-main')[0];
+        const semiVersion = (isChrome ? chrome : browser).runtime.getManifest().version;
+        addSemiVersion(semiVersion);
+        const semiHeading = document.createElement('li');
+        semiHeading.className = 'nav-main-heading';
+        navbar.appendChild(semiHeading);
+        semiHeading.style = 'font-size: 12pt; color: white; text-transform: none;';
+        semiHeading.textContent = ` SEMI v${semiVersion}`;
+        semiHeading.title = 'Scripting Engine for Melvor Idle';
+        semiHeading.id = 'SEMI-heading';
+        semiHeading.insertBefore(createImage('icons/border-48.png', 'SEMI-menu-icon'), semiHeading.childNodes[0]);
+
+        replaceScript('scripts/core.js', 'semi-inject-core');
+        replaceScript('scripts/utils.js', 'semi-inject-utils');
+
+        // These items need to load with Melvor, not SEMI, but require Core functionality.
+        preloadedNames.forEach(addSemiLib);
+
+        // Plugins that need to load with Melvor
+        // preloadedPlugins.forEach(addPlugin);
+    };
+    const preLoader = setInterval(checkLoaded, 500);
 
     const loadPlugins = () => {
         if (!exists('SEMI-canary')) {
