@@ -2,12 +2,12 @@
 include:
   template: Jobs/Code-Quality.gitlab-ci.yml
 
-deployExtension:
-  stage: deploy
-  image: node:14
-  only:
-    - main
-  before_script:
-    - npm ci
-  script:
-    - CLIENT_ID=${CLIENT_ID} CLIENT_SECRET=${CLIENT_SECRET} EXTENSION_ID=${EXTENSION_ID} REFRESH_TOKEN=${REFRESH_TOKEN} node ./deploy.js
+# deployExtension:
+#   stage: deploy
+#   image: node:14
+#   only:
+#     - main
+#   before_script:
+#     - npm ci
+#   script:
+#     - CLIENT_ID=${CLIENT_ID} CLIENT_SECRET=${CLIENT_SECRET} EXTENSION_ID=${EXTENSION_ID} REFRESH_TOKEN=${REFRESH_TOKEN} node ./deploy.js
