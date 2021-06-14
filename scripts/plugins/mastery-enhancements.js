@@ -35,7 +35,7 @@
                         const tip = $(`#skill-nav-mastery-${id}`)[0]._tippy;
                         tip.setContent(((MASTERY[id].pool / getMasteryPoolTotalXP(id)) * 100).toFixed(2) + '%');
                     } else {
-                        const skillItem = $(`#skill-nav-name-${id}`)[0].parentNode;
+                        const skillItem = $(`.skill-nav-name-${id}`)[0].parentNode;
                         skillItem.style.flexWrap = 'wrap';
                         skillItem.style.setProperty('padding-top', '.25rem', 'important');
                         const progress = document.createElement('div');
@@ -57,10 +57,13 @@
                     }
                 }
             }
-        }, 5000);
+        }, 10000);
     }
 
     function loadScript() {
+        console.log(typeof confirmedLoaded);
+        console.log(confirmedLoaded);
+        console.log(!currentlyCatchingUp);
         if (typeof confirmedLoaded !== 'undefined' && confirmedLoaded && !currentlyCatchingUp) {
             clearInterval(interval);
             console.log('Loading Mastery Enhancements');

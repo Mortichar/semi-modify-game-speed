@@ -6,26 +6,22 @@
     const imgSrc = 'assets/media/bank/skillcape_farming.svg';
 
     const saveConfig = () => {
-        [
-            CONSTANTS.item.Bobs_Rake,
-            CONSTANTS.item.Farming_Skillcape,
-            CONSTANTS.item.Aorpheats_Signet_Ring,
-        ].forEach((equipConfigItem) => {
-            const toggled = $(`#${id}-${equipConfigItem}`).prop('checked');
-            SEMI.setValue(id, `${id}-${equipConfigItem}`, toggled);
-        });
+        [CONSTANTS.item.Bobs_Rake, CONSTANTS.item.Farming_Skillcape, CONSTANTS.item.Aorpheats_Signet_Ring].forEach(
+            (equipConfigItem) => {
+                const toggled = $(`#${id}-${equipConfigItem}`).prop('checked');
+                SEMI.setValue(id, `${id}-${equipConfigItem}`, toggled);
+            }
+        );
 
         SEMI.setItem(`${id}-config`, SEMI.getValues(id));
         SEMIUtils.customNotify(imgSrc, `${title} config saved!`);
     };
     const updateConfig = () => {
-        [
-            CONSTANTS.item.Bobs_Rake,
-            CONSTANTS.item.Farming_Skillcape,
-            CONSTANTS.item.Aorpheats_Signet_Ring,
-        ].forEach((equipConfigItem) => {
-            $(`#${id}-${equipConfigItem}`).prop('checked', SEMI.getValue(id, `${id}-${equipConfigItem}`));
-        });
+        [CONSTANTS.item.Bobs_Rake, CONSTANTS.item.Farming_Skillcape, CONSTANTS.item.Aorpheats_Signet_Ring].forEach(
+            (equipConfigItem) => {
+                $(`#${id}-${equipConfigItem}`).prop('checked', SEMI.getValue(id, `${id}-${equipConfigItem}`));
+            }
+        );
     };
 
     const configMenu = `<div class="form-group">
@@ -36,13 +32,13 @@
         </label>
     </div>
     <div class="custom-control custom-switch mb-1">
-        <input type="checkbox" class="custom-control-input" id="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}}" name="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}">
+        <input type="checkbox" class="custom-control-input" id="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}" name="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}">
         <label class="custom-control-label" for="${id}-${CONSTANTS.item.Aorpheats_Signet_Ring}">
             Aorpheats Signet Ring
         </label>
     </div>
     <div class="custom-control custom-switch mb-1">
-        <input type="checkbox" class="custom-control-input" id="${id}-${CONSTANTS.item.Bobs_Rake}}" name="${id}-${CONSTANTS.item.Bobs_Rake}">
+        <input type="checkbox" class="custom-control-input" id="${id}-${CONSTANTS.item.Bobs_Rake}" name="${id}-${CONSTANTS.item.Bobs_Rake}">
         <label class="custom-control-label" for="${id}-${CONSTANTS.item.Bobs_Rake}">
             Bobs Rake
         </label>
@@ -108,8 +104,7 @@
             return false;
         }
         const cost = n * items[CONSTANTS.item.Compost].buysFor;
-        const balanceAfter = gp - cost;
-        return false;
+        return gp - cost > 0;
     }
 
     function buyCompost(confirmed) {
@@ -262,7 +257,8 @@
             }
 
             if (equipConfigs[`auto-farm-equip-${CONSTANTS.item.Farming_Skillcape}`]) {
-                (checkCompletionCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape')) ||
+                (checkCompletionCapeRequirements() &&
+                    equipIfNotEquipped(CONSTANTS.item.Cape_of_Completion, 'Cape')) ||
                     (checkMaxCapeRequirements() && equipIfNotEquipped(CONSTANTS.item.Max_Skillcape, 'Cape')) ||
                     equipIfNotEquipped(CONSTANTS.item.Farming_Skillcape, 'Cape');
             }
