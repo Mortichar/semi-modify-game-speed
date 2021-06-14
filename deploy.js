@@ -29,11 +29,12 @@ const webStore = require('chrome-webstore-upload')({
 });
 
 (async () => {
-  await archive.finalize();
-  await webStore.uploadExisting(fs.createReadStream(zipName));
   try {
+    await archive.finalize();
+    await webStore.uploadExisting(fs.createReadStream(zipName));
     await webStore.publish('trustedTesters');
   } catch (err) {
-    console.error(`${err}`);
+    console.error(err);
+    process.exit(1);
   }
 })();
