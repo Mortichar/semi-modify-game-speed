@@ -32,7 +32,7 @@ const webStore = require('chrome-webstore-upload')({
   try {
     await archive.finalize();
     await webStore.uploadExisting(fs.createReadStream(zipName));
-    await webStore.publish('trustedTesters');
+    await webStore.publish();
   } catch (err) {
     console.error(err);
     process.exit(1);
