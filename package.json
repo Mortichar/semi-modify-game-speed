@@ -5,7 +5,7 @@
   "scripts": {
     "test": "web-ext lint",
     "build": "node build.js",
-    "deploy-amo": "web-ext sign --ignore-files package.json package-lock.json CHANGELOG.md CONTRIBUTING.md build.js deploy.js jsconfig.json LICENSE notes.md README.md types --api-key=$JWT_ISSUER --api-secret=$JWT_SECRET --id=$TEST_AMO_ID",
+    "deploy-amo": "web-ext sign --ignore-files package.json package-lock.json CHANGELOG.md CONTRIBUTING.md build.js deploy.js jsconfig.json LICENSE notes.md README.md types --api-key=$JWT_ISSUER --api-secret=$JWT_SECRET --id=$AMO_ID",
     "deploy-chrome": "node deploy.js"
   },
   "repository": {
