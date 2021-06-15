@@ -3,10 +3,10 @@
   "version": "0.6.4",
   "description": "QOL Scripting for Melvor Idle",
   "scripts": {
-    "test": "web-ext lint -s scripts",
+    "test": "web-ext lint",
     "build": "node build.js",
     "deploy-amo": "web-ext sign --ignore-files package.json package-lock.json CHANGELOG.md CONTRIBUTING.md build.js deploy.js jsconfig.json LICENSE notes.md README.md types --api-key=$JWT_ISSUER --api-secret=$JWT_SECRET",
-    "deploy-chrome": "EXTENSION_ID=${TEST_EXTENSION_ID} node deploy.js"
+    "deploy-chrome": "node deploy.js"
   },
   "repository": {
     "type": "git",

@@ -17,7 +17,8 @@ archive.directory('styles');
 archive.file('manifest.json');
 
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-const EXTENSION_ID = process.env.EXTENSION_ID;
+const EXTENSION_ID = process.env.TEST_EXTENSION_ID;
+// const EXTENSION_ID = process.env.EXTENSION_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const CLIENT_ID = process.env.CLIENT_ID;
 
