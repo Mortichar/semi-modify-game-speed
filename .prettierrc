@@ -6,7 +6,7 @@
     "semi": true,
     "overrides": [
         {
-            "files": ["scripts/semi/menus.js", ".gitlab-ci.yml", "deploy.js"],
+            "files": ["scripts/semi/menus.js", ".gitlab-ci.yml", "deploy.js", "package.json"],
             "options": {
                 "tabWidth": 2
             }
