@@ -1,4 +1,4 @@
 .directory
 cloud.md
 node_modules
-.build/outputs
+.build

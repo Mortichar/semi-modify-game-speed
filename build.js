@@ -4,7 +4,7 @@ const path = require('path');
 
 const { version } = require('./manifest.json');
 
-const zipName = path.join(__dirname, '.build', 'outputs', `SEMI-Build-v${version}.zip`);
+const zipName = path.join(__dirname, '.build', `SEMI-Build-v${version}.zip`);
 fs.mkdirSync(path.dirname(zipName), { recursive: true });
 
 const output = fs.createWriteStream(zipName);
