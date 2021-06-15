@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "SEMI CICD TESTING",
-  "version": "0.6.4.1003",
+  "version": "0.6.4.1004",
   "description": "QOL Scripting for SEMI REPO!",
   "icons": {
     "48": "icons/border-48.png",
