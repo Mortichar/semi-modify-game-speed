@@ -1,8 +1,3 @@
-image: node:14
-
-before_script:
-  - npm ci
-
 include:
   template: Jobs/Code-Quality.gitlab-ci.yml
 
@@ -12,9 +7,11 @@ code_quality:
       when: never
     - if: '$CODE_QUALITY_DISABLED'
       when: never
-#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"' # Run code quality job in merge request pipelines
-#     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'      # Run code quality job in pipelines on the master branch (but not in other branch pipelines)
-#     - if: '$CI_COMMIT_TAG'                               # Run code quality job in pipelines for tags
+
+image: node:14
+
+before_script:
+  - npm ci
 
 lint_test:
   stage: test
