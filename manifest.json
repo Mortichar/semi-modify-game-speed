@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Scripting Engine for Melvor Idle",
-  "version": "0.6.4",
-  "description": "QOL Scripting for Melvor Idle, the fun idle browser game!",
+  "name": "SEMI CICD TESTING",
+  "version": "0.6.4.1003",
+  "description": "QOL Scripting for SEMI REPO!",
   "icons": {
     "48": "icons/border-48.png",
     "128": "icons/icon_128.png"
