@@ -8,25 +8,23 @@ include:
 
 code_quality:
   rules:
-    - if: '$CI_COMMIT_BRANCH == "amo_cicd"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
       when: never
-#     - if: '$CODE_QUALITY_DISABLED'
-#       when: never
+    - if: '$CODE_QUALITY_DISABLED'
+      when: never
 #     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"' # Run code quality job in merge request pipelines
 #     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'      # Run code quality job in pipelines on the master branch (but not in other branch pipelines)
 #     - if: '$CI_COMMIT_TAG'                               # Run code quality job in pipelines for tags
 
 lint_test:
   stage: test
-  only:
-    - amo_cicd
   script:
     - npm run test
 
 deploy_amo:
   stage: deploy
   only:
-    - amo_cicd
+    - main
   allow_failure: true
   script:
     - npm run deploy-amo
@@ -34,6 +32,6 @@ deploy_amo:
 deploy_chrome:
   stage: deploy
   only:
-    - amo_cicd
+    - main
   script:
     - npm run deploy-chrome
