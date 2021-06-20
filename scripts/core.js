@@ -580,6 +580,16 @@ var SEMI = (() => {
         document.body.append(script);
     };
 
+    /** Remove injected function override script
+     * @param {string} fName
+     */
+    const removeReplacementFunc = (fName) => {
+        const script = $(`#${fName}-replacement-script`);
+        if (script) {
+            script.remove();
+        }
+    };
+
     return {
         add,
         toggle,
@@ -614,5 +624,6 @@ var SEMI = (() => {
         removeGlobalItem,
         getSemiCharacterData,
         replaceGameFunc,
+        removeReplacementFunc,
     };
 })();
